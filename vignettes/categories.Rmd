@@ -1,0 +1,19 @@
+---
+title: "EIA categories"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{EIA categories}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, comment = "#>", out.width = "100%",
+  message = FALSE, warning = FALSE, error = FALSE
+)
+```
+
+```{r setup}
+library(eia)
+```

@@ -1,13 +1,21 @@
 Package: eia
 Title: US Energy Information Administration API
 Version: 0.1.0
-Authors@R: person("Matthew", "Leonawicz", email = "matt_leonawicz@esource.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9452-2771"))
+Authors@R: c(
+    person("Matthew", "Leonawicz", email = "matt_leonawicz@esource.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9452-2771")),
+    person(given = "E Source", role = c("cph", "fnd"))
+    )
 Description: Provides API access to data from the US Energy Information Administration (EIA) <https://www.eia.gov/>.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 URL: https://github.com/leonawicz/eia
 BugReports: https://github.com/leonawicz/eia/issues
+Imports: 
+    tibble,
+    magrittr,
+    httr,
+    jsonlite
 Suggests: 
     testthat,
     knitr,

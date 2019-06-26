@@ -1,10 +1,38 @@
 url: http://leonawicz.github.io/eia
 
 authors:
-  Author Name:
+  Matthew Leonawicz:
     href: http://leonawicz.github.io/
+  E Source:
+    href: https://www.esource.com/
+    html: <img src="https://raw.githubusercontent.com/leonawicz/leonawicz.github.io/master/assets/img/esource_logo.png" height="24" />
+
+reference:
+- title: Package
+  contents:
+  - eia
+- title: Categories
+  contents:
+  - eia_cats
+- title: Other functions
+  contents:
+  - "%>%"
 
 navbar:
+  left:
+    - text: "Home"
+      icon: fa-home
+      href: "index.html"
+    - text: "Get Started"
+      href: "articles/eia.html"
+    - text: "Articles"
+      menu:
+        - text: "Categories"
+          href: "articles/categories.html"
+    - text: "Reference"
+      href: "reference/index.html"
+    - text: "Changelog"
+      href: "news/index.html"
   right:
     - icon: fa-github fa-lg
       href: https://github.com/leonawicz/eia
