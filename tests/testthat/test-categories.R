@@ -3,7 +3,7 @@ context("categories")
 key <- "data-raw/key.rds"
 
 test_that("eia_cats returns as expected", {
-  if(!file.exists(key)) skip()
+  if(!file.exists(key)) skip("API key not available.")
   key <- readRDS(key)
 
   x <- eia_cats(key, tidy = FALSE)
