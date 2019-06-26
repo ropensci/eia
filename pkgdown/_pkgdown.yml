@@ -1,0 +1,10 @@
+url: http://leonawicz.github.io/eia
+
+authors:
+  Author Name:
+    href: http://leonawicz.github.io/
+
+navbar:
+  right:
+    - icon: fa-github fa-lg
+      href: https://github.com/leonawicz/eia
