@@ -18,5 +18,5 @@ Add later...
 
 ```{r cats0}
 library(eia)
-key <- readRDS("key.rds")
+key <- Sys.getenv("eia_api_key")
 ```

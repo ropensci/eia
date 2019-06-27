@@ -1,11 +1,10 @@
 context("categories")
 
-key <- "../../data-raw/key.rds"
+key <- Sys.getenv("eia_api_key")
 
 test_that("category functions returns as expected", {
   message(getwd())
-  if(!file.exists(key)) skip("API key not available.")
-  key <- readRDS(key)
+  if(key == "") skip("API key not available.")
 
   x <- eia_cats(key, tidy = FALSE)
   expect_is(x, "list")

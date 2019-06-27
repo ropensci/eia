@@ -114,9 +114,9 @@
 <a href="#eia-categories" class="anchor"></a>EIA categories</h2>
 <p>Pulling data from the US Energy Information Administration (EIA) API requires a registered API key. A key can be obtained at no cost <a href="https://www.eia.gov/opendata/register.php">here</a>.A valid email and agreement to the API Terms of Service is required to obtain a key.</p>
 <p>Once you have your API key, it is helpful to be aware of various categories of data that are available. Each category has a unique ID number that is required to access associated data. The first call below does not include an ID. The result is a list of two data frames. The first is metadata associated with that position in the category hierarchy. The second is the child category information.</p>
-<p>Remember to store your API key somewhere secure. Do not commit it to a repository or otherwise share it.</p>
+<p>Remember to store your API key somewhere secure. Do not commit it to a repository or otherwise share it. For example, you could store it in your <code>.Renviron</code> file.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eia)</a>
-<a class="sourceLine" id="cb1-2" title="2">key &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(<span class="st">"key.rds"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2">key &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.getenv">Sys.getenv</a></span>(<span class="st">"eia_api_key"</span>)</a></code></pre></div>
 <p>Here is the top-level category information:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(key)</a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="co">#&gt; $category</span></a>

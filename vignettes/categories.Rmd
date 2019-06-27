@@ -18,7 +18,7 @@ It is helpful to be aware of various categories of data that are available. Each
 
 ```{r cats0}
 library(eia)
-key <- readRDS("key.rds")
+key <- Sys.getenv("eia_api_key")
 ```
 
 Here is the top-level category information:

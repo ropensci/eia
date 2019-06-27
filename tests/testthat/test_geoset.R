@@ -1,10 +1,9 @@
 context("geoset")
 
-key <- "../../data-raw/key.rds"
+key <- Sys.getenv("eia_api_key")
 
 test_that("geoset functions returns as expected", {
-  if(!file.exists(key)) skip("API key not available.")
-  key <- readRDS(key)
+  if(key == "") skip("API key not available.")
 
   id <- paste0("ELEC.GEN.ALL-99.", c("A", "Q", "M"))
   region <- c("USA-CA", "USA-NY")

@@ -22,11 +22,11 @@ Pulling data from the US Energy Information Administration (EIA) API requires a 
 
 Once you have your API key, it is helpful to be aware of various categories of data that are available. Each category has a unique ID number that is required to access associated data. The first call below does not include an ID. The result is a list of two data frames. The first is metadata associated with that position in the category hierarchy. The second is the child category information.
 
-Remember to store your API key somewhere secure. Do not commit it to a repository or otherwise share it.
+Remember to store your API key somewhere secure. Do not commit it to a repository or otherwise share it. For example, you could store it in your `.Renviron` file.
 
 ```{r cats0}
 library(eia)
-key <- readRDS("key.rds")
+key <- Sys.getenv("eia_api_key")
 ```
 
 Here is the top-level category information:

@@ -17,7 +17,10 @@ Imports:
     tibble,
     magrittr,
     httr,
-    jsonlite
+    jsonlite,
+    dplyr,
+    purrr,
+    tidyr
 Suggests: 
     testthat,
     knitr,

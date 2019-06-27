@@ -1,10 +1,9 @@
 context("series")
 
-key <- "../../data-raw/key.rds"
+key <- Sys.getenv("eia_api_key")
 
 test_that("time series functions returns as expected", {
-  if(!file.exists(key)) skip("API key not available.")
-  key <- readRDS(key)
+  if(key == "") skip("API key not available.")
 
   id <- paste0("ELEC.CONS_TOT_BTU.COW-AK-1.", c("A", "Q", "M"))
   x1 <- eia_series(key, id[1], start = 2016)
