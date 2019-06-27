@@ -123,9 +123,33 @@
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
+<p>Load a time series of total electricity consumption:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eia)</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="co">## basic example code</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-2" title="2">key &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.getenv">Sys.getenv</a></span>(<span class="st">"eia_api_key"</span>)</a>
+<a class="sourceLine" id="cb3-3" title="3">id &lt;-<span class="st"> "ELEC.CONS_TOT_BTU.COW-AK-1.A"</span></a>
+<a class="sourceLine" id="cb3-4" title="4">(d &lt;-<span class="st"> </span><span class="kw"><a href="reference/eia_series.html">eia_series</a></span>(key, id, <span class="dt">n =</span> <span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co">#&gt; # A tibble: 1 x 13</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt;   series_id name  units f     description copyright source iso3166</span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;  </span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="co">#&gt; 1 ELEC.CON~ Tota~ mill~ A     "Summation~ None      EIA, ~ USA-AK </span></a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="co">#&gt; # ... with 5 more variables: geography &lt;chr&gt;, start &lt;chr&gt;, end &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="co">#&gt; #   updated &lt;chr&gt;, data &lt;list&gt;</span></a>
+<a class="sourceLine" id="cb3-11" title="11"></a>
+<a class="sourceLine" id="cb3-12" title="12">d<span class="op">$</span>data[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="co">#&gt; # A tibble: 10 x 2</span></a>
+<a class="sourceLine" id="cb3-14" title="14"><span class="co">#&gt;     year value</span></a>
+<a class="sourceLine" id="cb3-15" title="15"><span class="co">#&gt;    &lt;int&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb3-16" title="16"><span class="co">#&gt;  1  2018  7.35</span></a>
+<a class="sourceLine" id="cb3-17" title="17"><span class="co">#&gt;  2  2017  5.95</span></a>
+<a class="sourceLine" id="cb3-18" title="18"><span class="co">#&gt;  3  2016  6.21</span></a>
+<a class="sourceLine" id="cb3-19" title="19"><span class="co">#&gt;  4  2015  7.58</span></a>
+<a class="sourceLine" id="cb3-20" title="20"><span class="co">#&gt;  5  2014  6.53</span></a>
+<a class="sourceLine" id="cb3-21" title="21"><span class="co">#&gt;  6  2013  2.59</span></a>
+<a class="sourceLine" id="cb3-22" title="22"><span class="co">#&gt;  7  2012  2.92</span></a>
+<a class="sourceLine" id="cb3-23" title="23"><span class="co">#&gt;  8  2011  2.42</span></a>
+<a class="sourceLine" id="cb3-24" title="24"><span class="co">#&gt;  9  2010  2.61</span></a>
+<a class="sourceLine" id="cb3-25" title="25"><span class="co">#&gt; 10  2009  2.88</span></a></code></pre></div>
+<p>See the package vignettes for more details and examples.</p>
 </div>
 </div>
   </div>
