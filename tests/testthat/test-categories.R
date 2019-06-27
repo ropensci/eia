@@ -1,8 +1,9 @@
 context("categories")
 
-key <- "data-raw/key.rds"
+key <- "../../data-raw/key.rds"
 
-test_that("eia_cats returns as expected", {
+test_that("category functions returns as expected", {
+  message(getwd())
   if(!file.exists(key)) skip("API key not available.")
   key <- readRDS(key)
 

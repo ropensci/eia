@@ -5,7 +5,9 @@ Authors@R: c(
     person("Matthew", "Leonawicz", email = "matt_leonawicz@esource.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9452-2771")),
     person(given = "E Source", role = c("cph", "fnd"))
     )
-Description: Provides API access to data from the US Energy Information Administration (EIA) <https://www.eia.gov/>.
+Description: Provides API access to data from the US Energy Information Administration (EIA) <https://www.eia.gov/>. Use of the API requires a free API key obtainable at <https://www.eia.gov/opendata/register.php>.
+    The package includes functions for accessing and searching EIA data categories, downloading time series datasets, and EIA geoset data. 
+    Datasets returned by these functions are provided in a tidy format, or alternatively in a relatively unprocessed list based on the original JSON data.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

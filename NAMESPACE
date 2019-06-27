@@ -3,6 +3,8 @@
 export("%>%")
 export(eia_cats)
 export(eia_child_cats)
+export(eia_geoset)
 export(eia_parent_cats)
+export(eia_series)
 importFrom(magrittr,"%>%")
 importFrom(tibble,tibble)
