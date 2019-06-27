@@ -14,11 +14,15 @@ knitr::opts_chunk$set(
 )
 ```
 
+This vignette provides a brief overview to the most important functions in `eia`. Other vignettes go into greater depth on specific topics and API endpoints.
+
+## EIA categories
+
 Pulling data from the US Energy Information Administration (EIA) API requires a registered API key. A key can be obtained at no cost [here](https://www.eia.gov/opendata/register.php).A valid email and agreement to the API Terms of Service is required to obtain a key.
 
 Once you have your API key, it is helpful to be aware of various categories of data that are available. Each category has a unique ID number that is required to access associated data. The first call below does not include an ID. The result is a list of two data frames. The first is metadata associated with that position in the category hierarchy. The second is the child category information.
 
-Remember to store your API key somewhere secure and do not commit it to a repo or otherwise share it.
+Remember to store your API key somewhere secure. Do not commit it to a repository or otherwise share it.
 
 ```{r cats0}
 library(eia)
@@ -36,3 +40,11 @@ The child category IDs can be used to query results from that category.
 ```{r cats2}
 eia_cats(key, 0)
 ```
+
+## EIA time series data
+
+Add later...
+
+## EIA geosets
+
+Add later...

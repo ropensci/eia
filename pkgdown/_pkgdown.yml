@@ -11,9 +11,11 @@ reference:
 - title: Package
   contents:
   - eia
-- title: Categories
+- title: API functions
   contents:
   - eia_cats
+  - eia_series
+  - eia_geoset
 - title: Other functions
   contents:
   - "%>%"
@@ -29,6 +31,10 @@ navbar:
       menu:
         - text: "Categories"
           href: "articles/categories.html"
+        - text: "Time series"
+          href: "articles/series.html"
+        - text: "Geosets"
+          href: "articles/geosets.html"
     - text: "Reference"
       href: "reference/index.html"
     - text: "Changelog"

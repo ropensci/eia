@@ -14,6 +14,33 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+It is helpful to be aware of various categories of data that are available. Each category has a unique ID number that is required to access associated data. The first call below does not include an ID. The result is a list of two data frames. The first is metadata associated with that position in the category hierarchy. The second is the child category information.
+
+```{r cats0}
 library(eia)
+key <- readRDS("key.rds")
+```
+
+Here is the top-level category information:
+
+```{r cats1}
+eia_cats(key)
+```
+
+The child category IDs can be used to query results from that category.
+
+```{r cats3}
+eia_cats(key, 0)
+```
+
+View the immediate child categories for a given parent category:
+
+```{r cats4}
+eia_child_cats(key, 389)
+```
+
+View all parent categories for a given child category:
+
+```{r cats5}
+eia_parent_cats(key, 742)
 ```

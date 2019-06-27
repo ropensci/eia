@@ -1,0 +1,22 @@
+---
+title: "EIA geosets"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{EIA geosets}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, comment = "#>", out.width = "100%",
+  message = FALSE, warning = FALSE, error = FALSE
+)
+```
+
+Add later...
+
+```{r cats0}
+library(eia)
+key <- readRDS("key.rds")
+```
