@@ -17,7 +17,9 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="US Energy Information Administration API">
-<meta property="og:description" content="Provides API access to data from the US Energy Information Administration (EIA) &lt;https://www.eia.gov/&gt;.">
+<meta property="og:description" content="Provides API access to data from the US Energy Information Administration (EIA) &lt;https://www.eia.gov/&gt;. Use of the API requires a free API key obtainable at &lt;https://www.eia.gov/opendata/register.php&gt;.
+    The package includes functions for accessing and searching EIA data categories, downloading time series datasets, and EIA geoset data. 
+    Datasets returned by these functions are provided in a tidy format, or alternatively in a relatively unprocessed list based on the original JSON data.">
 <meta property="og:image" content="http://leonawicz.github.io/eia/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -64,6 +66,12 @@
 <li>
       <a href="articles/categories.html">Categories</a>
     </li>
+    <li>
+      <a href="articles/series.html">Time series</a>
+    </li>
+    <li>
+      <a href="articles/geosets.html">Geosets</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -96,23 +104,31 @@
     
     
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<section id="eia" class="level1"><div class="page-header"><h1>eia <img src="reference/figures/logo.png" style="margin-left:10px;margin-bottom:5px;" width="120" align="right">
+<div id="eia" class="section level1">
+<div class="page-header"><h1 class="hasAnchor">
+<a href="#eia" class="anchor"></a>eia <img src="reference/figures/logo.png" style="margin-left:10px;margin-bottom:5px;" width="120" align="right">
 </h1></div>
 <p><strong>Author:</strong> <a href="https://leonawicz.github.io/blog/">Matthew Leonawicz</a> <a href="https://orcid.org/0000-0001-9452-2771" target="orcid.widget"> <image class="orcid" src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" height="16"></image></a> <br><strong>License:</strong> <a href="https://opensource.org/licenses/MIT">MIT</a><br></p>
 <p><a href="https://ci.appveyor.com/project/leonawicz/eia"><img src="https://ci.appveyor.com/api/projects/status/github/leonawicz/eia?branch=master&amp;svg=true" alt="AppVeyor build status"></a> <a href="https://travis-ci.org/leonawicz/eia"><img src="https://travis-ci.org/leonawicz/eia.svg?branch=master" alt="Travis build status"></a> <a href="https://codecov.io/gh/leonawicz/eia?branch=master"><img src="https://codecov.io/gh/leonawicz/eia/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></p>
 <p>The <code>eia</code> package provides API access to data from the US <a href="https://www.eia.gov/">Energy Information Administration</a> (EIA).</p>
-<section id="installation" class="level2"><h2>Installation</h2>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the released version of <code>eia</code> from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"eia"</span>)</a></code></pre></div>
 <p>You can install the development version of <code>eia</code> from GitHub with:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># install.packages("remotes")</span></a>
 <a class="sourceLine" id="cb2-2" title="2">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"leonawicz/eia"</span>)</a></code></pre></div>
-</section><section id="example" class="level2"><h2>Example</h2>
+</div>
+<div id="example" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example" class="anchor"></a>Example</h2>
 <p>This is a basic example which shows you how to solve a common problem:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eia)</a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="co">## basic example code</span></a></code></pre></div>
-</section></section>
 </div>
+</div>
+  </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <div class="links">

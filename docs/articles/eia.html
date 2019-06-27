@@ -64,6 +64,12 @@
 <li>
       <a href="../articles/categories.html">Categories</a>
     </li>
+    <li>
+      <a href="../articles/series.html">Time series</a>
+    </li>
+    <li>
+      <a href="../articles/geosets.html">Geosets</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -102,9 +108,13 @@
 
     
     
+<p>This vignette provides a brief overview to the most important functions in <code>eia</code>. Other vignettes go into greater depth on specific topics and API endpoints.</p>
+<div id="eia-categories" class="section level2">
+<h2 class="hasAnchor">
+<a href="#eia-categories" class="anchor"></a>EIA categories</h2>
 <p>Pulling data from the US Energy Information Administration (EIA) API requires a registered API key. A key can be obtained at no cost <a href="https://www.eia.gov/opendata/register.php">here</a>.A valid email and agreement to the API Terms of Service is required to obtain a key.</p>
 <p>Once you have your API key, it is helpful to be aware of various categories of data that are available. Each category has a unique ID number that is required to access associated data. The first call below does not include an ID. The result is a list of two data frames. The first is metadata associated with that position in the category hierarchy. The second is the child category information.</p>
-<p>Remember to store your API key somewhere secure and do not commit it to a repo or otherwise share it.</p>
+<p>Remember to store your API key somewhere secure. Do not commit it to a repository or otherwise share it.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eia)</a>
 <a class="sourceLine" id="cb1-2" title="2">key &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(<span class="st">"key.rds"</span>)</a></code></pre></div>
 <p>Here is the top-level category information:</p>
@@ -164,9 +174,29 @@
 <a class="sourceLine" id="cb3-28" title="28"><span class="co">#&gt; 17       41142 Quality of fossil fuels in electricity generation : sulfur ~</span></a>
 <a class="sourceLine" id="cb3-29" title="29"><span class="co">#&gt; 18       41143 Quality of fossil fuels in electricity generation : ash con~</span></a>
 <a class="sourceLine" id="cb3-30" title="30"><span class="co">#&gt; 19     1718389 Number of customer accounts</span></a></code></pre></div>
+</div>
+<div id="eia-time-series-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#eia-time-series-data" class="anchor"></a>EIA time series data</h2>
+<p>Add later…</p>
+</div>
+<div id="eia-geosets" class="section level2">
+<h2 class="hasAnchor">
+<a href="#eia-geosets" class="anchor"></a>EIA geosets</h2>
+<p>Add later…</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#eia-categories">EIA categories</a></li>
+      <li><a href="#eia-time-series-data">EIA time series data</a></li>
+      <li><a href="#eia-geosets">EIA geosets</a></li>
+      </ul>
+</div>
       </div>
 
 </div>

@@ -10,6 +10,12 @@
     <loc>http://leonawicz.github.io/eia/reference/eia_cats.html</loc>
   </url>
   <url>
+    <loc>http://leonawicz.github.io/eia/reference/eia_geoset.html</loc>
+  </url>
+  <url>
+    <loc>http://leonawicz.github.io/eia/reference/eia_series.html</loc>
+  </url>
+  <url>
     <loc>http://leonawicz.github.io/eia/reference/pipe.html</loc>
   </url>
   <url>
@@ -17,5 +23,11 @@
   </url>
   <url>
     <loc>http://leonawicz.github.io/eia/articles/eia.html</loc>
+  </url>
+  <url>
+    <loc>http://leonawicz.github.io/eia/articles/geoset.html</loc>
+  </url>
+  <url>
+    <loc>http://leonawicz.github.io/eia/articles/series.html</loc>
   </url>
 </urlset>
