@@ -39,9 +39,15 @@ remotes::install_github("leonawicz/eia")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+Load a time series of total electricity consumption:
 
 ```{r example}
 library(eia)
-## basic example code
+key <- Sys.getenv("eia_api_key")
+id <- "ELEC.CONS_TOT_BTU.COW-AK-1.A"
+(d <- eia_series(key, id, n = 10))
+
+d$data[[1]]
 ```
+
+See the package vignettes for more details and examples.
