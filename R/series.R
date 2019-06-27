@@ -46,7 +46,7 @@ eia_series <- function(api_key, id, start = NULL, end = NULL, n = NULL, tidy = T
     x <- tibble::as_tibble(x$data[[i]], .name_repair = f) %>%
       .eia_date(x$f[i])
     x$value <- as.numeric(x$value)
-    x
+    dplyr::select(x, c(2:ncol(x), 1))
   }
   x$data <- lapply(1:nrow(x), f2)
   tibble::as_tibble(x)

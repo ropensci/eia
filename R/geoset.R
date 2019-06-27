@@ -58,6 +58,7 @@ eia_geoset <- function(api_key, id, region, start = NULL, end = NULL, n = NULL, 
     if(is.null(s$latlon)) s$latlon <- NA_character_
     s$data <- list(tibble::as_tibble(s$data, .name_repair = f) %>% .eia_date(x$geoset$f))
     s$data[[1]]$value <- as.numeric(s$data[[1]]$value)
+    s$data[[1]] <- dplyr::select(s$data[[1]], c(2:ncol(s$data[[1]]), 1))
     idx <- which(names(s) != "data")
     d <- tibble::as_tibble(s[idx])
     d$data <- s$data
