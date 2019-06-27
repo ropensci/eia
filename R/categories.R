@@ -7,8 +7,8 @@
 #'
 #' \code{eia_child_cats} returns only the immediate child categories. \code{eia_parent_cats} returns all parents.
 #'
-#' @param api_key character value, API key.
-#' @param id integer, category id.
+#' @param api_key character, API key.
+#' @param id integer, category ID.
 #' @param tidy logical, return a tidier result. See details.
 #'
 #' @return a list for \code{eia_cats}; others functions return a tibble data frame.
@@ -57,7 +57,4 @@ eia_parent_cats <- function(api_key, id){
   f(api_key, id)
 }
 
-.eia_cat_url <- function(api_key, id = NULL){
-  id <- if(is.null(id)) "?" else paste0("?category_id=", id, "&")
-  paste0("http://api.eia.gov/category/", id, "api_key=", api_key, "&out=json")
-}
+.eia_cat_url <- function(api_key, id = NULL) .eia_url(api_key, id, "category")

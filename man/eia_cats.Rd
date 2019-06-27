@@ -13,9 +13,9 @@ eia_child_cats(api_key, id)
 eia_parent_cats(api_key, id)
 }
 \arguments{
-\item{api_key}{character value, API key.}
+\item{api_key}{character, API key.}
 
-\item{id}{integer, category id.}
+\item{id}{integer, category ID.}
 
 \item{tidy}{logical, return a tidier result. See details.}
 }
