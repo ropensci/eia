@@ -1,5 +1,6 @@
 context("categories")
 
+options(eia_antidos = 0)
 key <- Sys.getenv("EIA_KEY")
 
 test_that("category functions returns as expected", {

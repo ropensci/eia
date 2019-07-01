@@ -6,18 +6,20 @@
 \alias{eia_parent_cats}
 \title{EIA categories}
 \usage{
-eia_cats(api_key, id = NULL, tidy = TRUE)
+eia_cats(key, id = NULL, tidy = TRUE, cache = TRUE)
 
-eia_child_cats(api_key, id)
+eia_child_cats(key, id, cache = TRUE)
 
-eia_parent_cats(api_key, id)
+eia_parent_cats(key, id, cache = TRUE)
 }
 \arguments{
-\item{api_key}{character, API key.}
+\item{key}{character, API key.}
 
 \item{id}{integer, category ID.}
 
 \item{tidy}{logical, return a tidier result. See details.}
+
+\item{cache}{logical, cache result for duration of R session using memoization. See details.}
 }
 \value{
 a list for \code{eia_cats}; others functions return a tibble data frame.
@@ -29,14 +31,22 @@ Obtain EIA categories.
 Set \code{tidy = FALSE} to return only the initial result of \code{jsonlite::fromJSON}.
 By default, additional processing is done to condense some list items into data frames and all data frames are converted to tibble data frames.
 
+Set to \code{cache = FALSE} to force a new API call for updated data.
+Using \code{FALSE} always makes a new API call and returns the result from the server.
+\code{TRUE} uses memoization on a per R session basis, caching the result of the function call in memory for the duration of the R session.
+You can reset the entire cache by calling \code{eia_clear_cache}.
+
 \code{eia_child_cats} returns only the immediate child categories. \code{eia_parent_cats} returns all parents.
 }
 \examples{
 \dontrun{
-key <- readRDS("key.rds") # your stored API key
+key <- Sys.getenv("EIA_KEY") # your stored API key
 eia_cats(key)
 
 eia_child_cats(key, 389) # immedate children
 eia_parent_cats(key, 742) # all parents
 }
+}
+\seealso{
+\code{\link{eia_clear_cache}}
 }

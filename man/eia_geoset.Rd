@@ -4,11 +4,11 @@
 \alias{eia_geoset}
 \title{EIA geoset data}
 \usage{
-eia_geoset(api_key, id, region, start = NULL, end = NULL, n = NULL,
-  tidy = TRUE)
+eia_geoset(key, id, region, start = NULL, end = NULL, n = NULL,
+  tidy = TRUE, cache = TRUE)
 }
 \arguments{
-\item{api_key}{character, API key.}
+\item{key}{character, API key.}
 
 \item{id}{character, geoset series ID, may be a vector. See details.}
 
@@ -21,6 +21,8 @@ eia_geoset(api_key, id, region, start = NULL, end = NULL, n = NULL,
 \item{n}{integer, length of series to return ending at most recent value or at \code{end} date if also provided. Ignored if \code{start} is not \code{NULL}.}
 
 \item{tidy}{logical, return a tidier result. See details.}
+
+\item{cache}{logical, cache result for duration of R session using memoization. See details.}
 }
 \value{
 a tibble data frame
@@ -36,10 +38,15 @@ you may as well make separate requests since each requires a unique API call eit
 
 Set \code{tidy = FALSE} to return only the initial result of \code{jsonlite::fromJSON}.
 By default, additional processing is done to return a tibble data frame.
+
+Set to \code{cache = FALSE} to force a new API call for updated data.
+Using \code{FALSE} always makes a new API call and returns the result from the server.
+\code{TRUE} uses memoization on a per R session basis, caching the result of the function call in memory for the duration of the R session.
+You can reset the entire cache by calling \code{eia_clear_cache()}.
 }
 \examples{
 \dontrun{
-key <- readRDS("key.rds") # your stored API key
+key <- Sys.getenv("EIA_KEY") # your stored API key
 id <- paste0("ELEC.GEN.ALL-99.", c("A", "Q", "M"))
 region <- c("USA-CA", "USA-NY")
 
@@ -51,4 +58,7 @@ eia_geoset(key, id[3], region[2], end = 2016, n = 10)
 x <- eia_geoset(key, id, region[1], end = 2016, n = 10)
 x$data[[1]]
 }
+}
+\seealso{
+\code{\link{eia_clear_cache}}
 }

@@ -1,5 +1,6 @@
 context("series")
 
+options(eia_antidos = 0)
 key <- Sys.getenv("EIA_KEY")
 
 test_that("time series functions returns as expected", {

@@ -22,14 +22,14 @@ NULL
 #' @usage lhs \%>\% rhs
 NULL
 
-.eia_url <- function(api_key, id = NULL, endpoint = c("category", "series", "geoset")){
+.eia_url <- function(key, id = NULL, endpoint = c("category", "series", "geoset")){
   endpoint <- match.arg(endpoint)
   if(is.null(id)){
     id <- "?"
   } else {
     id <- paste0("?", endpoint, "_id=", paste0(id, collapse = ";"), "&")
   }
-  paste0("http://api.eia.gov/", endpoint, "/", id, "api_key=", api_key, "&out=json")
+  paste0("http://api.eia.gov/", endpoint, "/", id, "api_key=", key, "&out=json")
 }
 
 .eia_time_params <- function(start = NULL, end = NULL, n = NULL, n_default = 1){
@@ -49,4 +49,25 @@ NULL
   }
   if(is.null(n) & is.null(start)) n <- n_default
   list(start = start, end = end, n = n)
+}
+
+.eia_get <- function(x){
+  .antidos_before("eia")
+  x <- httr::GET(x)
+  .antidos_after("eia")
+  x
+}
+
+.antidos_before <- function(x, sec = getOption("eia_antidos", 1)){
+  wait <- 0
+  if(!is.null(eia_api_time[[x]])){
+    wait <- as.numeric(get(x, eia_api_time)) + sec - as.numeric(Sys.time())
+    if(wait > 0) Sys.sleep(wait) else wait <- 0
+  }
+  assign(x, Sys.time(), envir = eia_api_time)
+  wait
+}
+
+.antidos_after <- function(x){
+  assign(x, Sys.time(), envir = eia_api_time)
 }

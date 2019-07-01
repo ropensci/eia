@@ -5,19 +5,26 @@
 #' Set \code{tidy = FALSE} to return only the initial result of \code{jsonlite::fromJSON}.
 #' By default, additional processing is done to return a tibble data frame.
 #'
-#' @param api_key character, API key.
+#' Set to \code{cache = FALSE} to force a new API call for updated data.
+#' Using \code{FALSE} always makes a new API call and returns the result from the server.
+#' \code{TRUE} uses memoization on a per R session basis, caching the result of the function call in memory for the duration of the R session.
+#' You can reset the entire cache by calling \code{eia_clear_cache()}.
+#'
+#' @param key character, API key.
 #' @param id character, series ID, may be a vector.
 #' @param start start date. Providing only a start date will return up to the maximum 100 results if available.
 #' @param end end date. Providing only an end date will a single result for that date.
 #' @param n integer, length of series to return ending at most recent value or at \code{end} date if also provided. Ignored if \code{start} is not \code{NULL}.
 #' @param tidy logical, return a tidier result. See details.
+#' @param cache logical, cache result for duration of R session using memoization. See details.
 #'
 #' @return a tibble data frame
 #' @export
+#' @seealso \code{\link{eia_clear_cache}}
 #'
 #' @examples
 #' \dontrun{
-#' key <- readRDS("key.rds") # your stored API key
+#' key <- Sys.getenv("EIA_KEY") # your stored API key
 #' id <- paste0("ELEC.CONS_TOT_BTU.COW-AK-1.", c("A", "Q", "M"))
 #'
 #' x1 <- eia_series(key, id[1], start = 2016)
@@ -31,8 +38,14 @@
 #' x <- eia_series(key, id, end = 2016, n = 10)
 #' x$data[[1]]
 #' }
-eia_series <- function(api_key, id, start = NULL, end = NULL, n = NULL, tidy = TRUE){
-  x <- .eia_series_url(api_key, id, start, end, n) %>% httr::GET() %>%
+eia_series <- function(key, id, start = NULL, end = NULL, n = NULL,
+                       tidy = TRUE, cache = TRUE){
+  if(cache) .eia_series_memoized(key, id, start, end, n, tidy) else
+    .eia_series(key, id, start, end, n, tidy)
+}
+
+.eia_series <- function(key, id, start = NULL, end = NULL, n = NULL, tidy = TRUE){
+  x <- .eia_series_url(key, id, start, end, n) %>% httr::GET() %>%
     httr::content(as = "text", encoding = "UTF-8") %>%
     jsonlite::fromJSON()
   if(!tidy) return(x)
@@ -52,6 +65,8 @@ eia_series <- function(api_key, id, start = NULL, end = NULL, n = NULL, tidy = T
   tibble::as_tibble(x)
 }
 
+.eia_series_memoized <- memoise::memoise(.eia_series)
+
 .eia_date <- function(d, date_format){
   if(date_format == "Q"){
     x <- strsplit(d$date, "[Qq]")
@@ -69,9 +84,9 @@ eia_series <- function(api_key, id, start = NULL, end = NULL, n = NULL, tidy = T
   d
 }
 
-.eia_series_url <- function(api_key, id, start = NULL, end = NULL, n = NULL){
+.eia_series_url <- function(key, id, start = NULL, end = NULL, n = NULL){
   params <- .eia_time_params(start, end, n, n_default = 1)
-  url <- .eia_url(api_key, id, "series")
+  url <- .eia_url(key, id, "series")
   if(!is.null(params$start)) url <- paste0(url, "&start=", params$start)
   if(!is.null(params$end)) url <- paste0(url, "&end=", params$end)
   if(!is.null(params$n)) url <- paste0(url, "&num=", params$n)

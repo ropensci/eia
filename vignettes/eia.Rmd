@@ -12,6 +12,8 @@ knitr::opts_chunk$set(
   collapse = TRUE, comment = "#>", out.width = "100%",
   message = FALSE, warning = FALSE, error = FALSE
 )
+library(eia)
+options(eia_antidos = 0)
 ```
 
 This vignette provides a brief overview to the most important functions in `eia`. Other vignettes go into greater depth on specific topics and API endpoints.

@@ -4,11 +4,11 @@
 \alias{eia_series}
 \title{EIA data series}
 \usage{
-eia_series(api_key, id, start = NULL, end = NULL, n = NULL,
-  tidy = TRUE)
+eia_series(key, id, start = NULL, end = NULL, n = NULL,
+  tidy = TRUE, cache = TRUE)
 }
 \arguments{
-\item{api_key}{character, API key.}
+\item{key}{character, API key.}
 
 \item{id}{character, series ID, may be a vector.}
 
@@ -19,6 +19,8 @@ eia_series(api_key, id, start = NULL, end = NULL, n = NULL,
 \item{n}{integer, length of series to return ending at most recent value or at \code{end} date if also provided. Ignored if \code{start} is not \code{NULL}.}
 
 \item{tidy}{logical, return a tidier result. See details.}
+
+\item{cache}{logical, cache result for duration of R session using memoization. See details.}
 }
 \value{
 a tibble data frame
@@ -29,10 +31,15 @@ Obtain EIA data series.
 \details{
 Set \code{tidy = FALSE} to return only the initial result of \code{jsonlite::fromJSON}.
 By default, additional processing is done to return a tibble data frame.
+
+Set to \code{cache = FALSE} to force a new API call for updated data.
+Using \code{FALSE} always makes a new API call and returns the result from the server.
+\code{TRUE} uses memoization on a per R session basis, caching the result of the function call in memory for the duration of the R session.
+You can reset the entire cache by calling \code{eia_clear_cache()}.
 }
 \examples{
 \dontrun{
-key <- readRDS("key.rds") # your stored API key
+key <- Sys.getenv("EIA_KEY") # your stored API key
 id <- paste0("ELEC.CONS_TOT_BTU.COW-AK-1.", c("A", "Q", "M"))
 
 x1 <- eia_series(key, id[1], start = 2016)
@@ -46,4 +53,7 @@ x3$data[[1]]
 x <- eia_series(key, id, end = 2016, n = 10)
 x$data[[1]]
 }
+}
+\seealso{
+\code{\link{eia_clear_cache}}
 }

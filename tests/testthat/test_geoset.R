@@ -1,5 +1,6 @@
 context("geoset")
 
+options(eia_antidos = 0)
 key <- Sys.getenv("EIA_KEY")
 
 test_that("geoset functions returns as expected", {
