@@ -108,12 +108,10 @@
 
     
     
-<div id="top-level-categories" class="section level2">
-<h2 class="hasAnchor">
-<a href="#top-level-categories" class="anchor"></a>Top level categories</h2>
+<section id="top-level-categories" class="level2"><h2>Top level categories</h2>
 <p>It is helpful to be aware of various categories of data that are available. Each category has a unique ID number that is required to access associated data. The first call below does not include an ID. The result is a list of two data frames. The first is metadata associated with that position in the category hierarchy. The second is the child category information.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eia)</a>
-<a class="sourceLine" id="cb1-2" title="2">key &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.getenv">Sys.getenv</a></span>(<span class="st">"eia_api_key"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2">key &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.getenv">Sys.getenv</a></span>(<span class="st">"EIA_KEY"</span>)</a></code></pre></div>
 <p>Here is the top-level category information:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(key)</a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="co">#&gt; $category</span></a>
@@ -140,10 +138,7 @@
 <a class="sourceLine" id="cb2-23" title="23"><span class="co">#&gt; 12     2251604 CO2 Emissions                      </span></a>
 <a class="sourceLine" id="cb2-24" title="24"><span class="co">#&gt; 13     2631064 International Energy Outlook       </span></a>
 <a class="sourceLine" id="cb2-25" title="25"><span class="co">#&gt; 14     2889994 U.S. Nuclear Outages</span></a></code></pre></div>
-</div>
-<div id="child-categories" class="section level2">
-<h2 class="hasAnchor">
-<a href="#child-categories" class="anchor"></a>Child categories</h2>
+</section><section id="child-categories" class="level2"><h2>Child categories</h2>
 <p>The child category IDs can be used to query results from that category.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(key, <span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="co">#&gt; $category</span></a>
@@ -184,10 +179,7 @@
 <a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; 2         743 Petroleum liquids</span></a>
 <a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; 3         744 Petroleum coke   </span></a>
 <a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; 4         745 Natural gas</span></a></code></pre></div>
-</div>
-<div id="parent-categories" class="section level2">
-<h2 class="hasAnchor">
-<a href="#parent-categories" class="anchor"></a>Parent categories</h2>
+</section><section id="parent-categories" class="level2"><h2>Parent categories</h2>
 <p>View all parent categories for a given child category:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/eia_cats.html">eia_parent_cats</a></span>(key, <span class="dv">742</span>)</a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="co">#&gt; # A tibble: 6 x 4</span></a>
@@ -199,8 +191,8 @@
 <a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt; 4 372         By sector               ""    32                </span></a>
 <a class="sourceLine" id="cb5-9" title="9"><span class="co">#&gt; 5 389         Electric utility        ""    372               </span></a>
 <a class="sourceLine" id="cb5-10" title="10"><span class="co">#&gt; 6 742         Coal                    ""    389</span></a></code></pre></div>
+</section>
 </div>
-  </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
         <div id="tocnav">
