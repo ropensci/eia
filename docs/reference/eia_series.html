@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eia</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -105,6 +105,9 @@
     </li>
     <li>
       <a href="../articles/geosets.html">Geosets</a>
+    </li>
+    <li>
+      <a href="../articles/api.html">API details</a>
     </li>
   </ul>
 </li>
@@ -146,14 +149,14 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>eia_series</span>(<span class='no'>api_key</span>, <span class='no'>id</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tidy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>eia_series</span>(<span class='no'>key</span>, <span class='no'>id</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>tidy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>api_key</th>
+      <th>key</th>
       <td><p>character, API key.</p></td>
     </tr>
     <tr>
@@ -176,6 +179,10 @@
       <th>tidy</th>
       <td><p>logical, return a tidier result. See details.</p></td>
     </tr>
+    <tr>
+      <th>cache</th>
+      <td><p>logical, cache result for duration of R session using memoization. See details.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -186,11 +193,19 @@
 
     <p>Set <code>tidy = FALSE</code> to return only the initial result of <code><a href='https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON'>jsonlite::fromJSON</a></code>.
 By default, additional processing is done to return a tibble data frame.</p>
+<p>Set to <code>cache = FALSE</code> to force a new API call for updated data.
+Using <code>FALSE</code> always makes a new API call and returns the result from the server.
+<code>TRUE</code> uses memoization on a per R session basis, caching the result of the function call in memory for the duration of the R session.
+You can reset the entire cache by calling <code><a href='eia_clear_cache.html'>eia_clear_cache()</a></code>.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='eia_clear_cache.html'>eia_clear_cache</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>key</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/readRDS'>readRDS</a></span>(<span class='st'>"key.rds"</span>) <span class='co'># your stored API key</span>
+<span class='no'>key</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.getenv'>Sys.getenv</a></span>(<span class='st'>"EIA_KEY"</span>) <span class='co'># your stored API key</span>
 <span class='no'>id</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"ELEC.CONS_TOT_BTU.COW-AK-1."</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"Q"</span>, <span class='st'>"M"</span>))
 
 <span class='no'>x1</span> <span class='kw'>&lt;-</span> <span class='fu'>eia_series</span>(<span class='no'>key</span>, <span class='no'>id</span>[<span class='fl'>1</span>], <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>2016</span>)
@@ -213,6 +228,8 @@ By default, additional processing is done to return a tibble data frame.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

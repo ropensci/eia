@@ -2,6 +2,7 @@ pandoc: '2.6'
 pkgdown: 1.3.0
 pkgdown_sha: ~
 articles:
+  api: api.html
   categories: categories.html
   eia: eia.html
   geoset: geoset.html

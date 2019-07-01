@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">eia</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -71,6 +71,9 @@
     </li>
     <li>
       <a href="articles/geosets.html">Geosets</a>
+    </li>
+    <li>
+      <a href="articles/api.html">API details</a>
     </li>
   </ul>
 </li>
@@ -104,18 +107,25 @@
     
     
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<section id="eia" class="level1"><div class="page-header"><h1>eia <img src="reference/figures/logo.png" style="margin-left:10px;margin-bottom:5px;" width="120" align="right">
+<div id="eia" class="section level1">
+<div class="page-header"><h1 class="hasAnchor">
+<a href="#eia" class="anchor"></a>eia <img src="reference/figures/logo.png" style="margin-left:10px;margin-bottom:5px;" width="120" align="right">
 </h1></div>
 <p><strong>Author:</strong> <a href="https://leonawicz.github.io/blog/">Matthew Leonawicz</a> <a href="https://orcid.org/0000-0001-9452-2771" target="orcid.widget"> <image class="orcid" src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" height="16"></image></a> <br><strong>License:</strong> <a href="https://opensource.org/licenses/MIT">MIT</a><br></p>
 <p><a href="https://ci.appveyor.com/project/leonawicz/eia"><img src="https://ci.appveyor.com/api/projects/status/github/leonawicz/eia?branch=master&amp;svg=true" alt="AppVeyor build status"></a> <a href="https://travis-ci.org/leonawicz/eia"><img src="https://travis-ci.org/leonawicz/eia.svg?branch=master" alt="Travis build status"></a> <a href="https://codecov.io/gh/leonawicz/eia?branch=master"><img src="https://codecov.io/gh/leonawicz/eia/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></p>
 <p>The <code>eia</code> package provides API access to data from the US <a href="https://www.eia.gov/">Energy Information Administration</a> (EIA).</p>
-<section id="installation" class="level2"><h2>Installation</h2>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the released version of <code>eia</code> from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"eia"</span>)</a></code></pre></div>
 <p>You can install the development version of <code>eia</code> from GitHub with:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># install.packages("remotes")</span></a>
 <a class="sourceLine" id="cb2-2" title="2">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"leonawicz/eia"</span>)</a></code></pre></div>
-</section><section id="example" class="level2"><h2>Example</h2>
+</div>
+<div id="example" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example" class="anchor"></a>Example</h2>
 <p>Load a time series of total electricity consumption:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eia)</a>
 <a class="sourceLine" id="cb3-2" title="2">key &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.getenv">Sys.getenv</a></span>(<span class="st">"EIA_KEY"</span>)</a>
@@ -143,8 +153,9 @@
 <a class="sourceLine" id="cb3-24" title="24"><span class="co">#&gt;  9  2010  2.61</span></a>
 <a class="sourceLine" id="cb3-25" title="25"><span class="co">#&gt; 10  2009  2.88</span></a></code></pre></div>
 <p>See the package vignettes for more details and examples.</p>
-</section></section>
 </div>
+</div>
+  </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <div class="links">
