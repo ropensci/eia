@@ -1,6 +1,6 @@
 context("geoset")
 
-key <- Sys.getenv("eia_api_key")
+key <- Sys.getenv("EIA_KEY")
 
 test_that("geoset functions returns as expected", {
   if(key == "") skip("API key not available.")

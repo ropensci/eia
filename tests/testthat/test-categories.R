@@ -1,6 +1,6 @@
 context("categories")
 
-key <- Sys.getenv("eia_api_key")
+key <- Sys.getenv("EIA_KEY")
 
 test_that("category functions returns as expected", {
   message(getwd())

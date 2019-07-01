@@ -20,7 +20,7 @@ It is helpful to be aware of various categories of data that are available. Each
 
 ```{r cats0}
 library(eia)
-key <- Sys.getenv("eia_api_key")
+key <- Sys.getenv("EIA_KEY")
 ```
 
 Here is the top-level category information:

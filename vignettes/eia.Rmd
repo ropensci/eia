@@ -26,7 +26,7 @@ Remember to store your API key somewhere secure. Do not commit it to a repositor
 
 ```{r cats0}
 library(eia)
-key <- Sys.getenv("eia_api_key")
+key <- Sys.getenv("EIA_KEY")
 ```
 
 Here is the top-level category information:

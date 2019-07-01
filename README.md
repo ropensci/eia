@@ -40,7 +40,7 @@ Load a time series of total electricity consumption:
 
 ``` r
 library(eia)
-key <- Sys.getenv("eia_api_key")
+key <- Sys.getenv("EIA_KEY")
 id <- "ELEC.CONS_TOT_BTU.COW-AK-1.A"
 (d <- eia_series(key, id, n = 10))
 #> # A tibble: 1 x 13
