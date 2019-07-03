@@ -21,12 +21,14 @@ Imports:
     dplyr,
     purrr,
     tidyr,
-    memoise
+    memoise,
+    lubridate
 Suggests: 
     testthat,
     knitr,
     rmarkdown,
-    covr
+    covr,
+    lintr
 VignetteBuilder: knitr
 Language: en-US
 RoxygenNote: 6.1.1

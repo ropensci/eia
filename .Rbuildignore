@@ -13,3 +13,4 @@
 ^codecov\.yml$
 ^vignettes/key\.rds$
 ^README\.html$
+^\.lintr$
