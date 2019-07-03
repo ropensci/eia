@@ -23,14 +23,15 @@ eia_series(key, id, start = NULL, end = NULL, n = NULL,
 \item{cache}{logical, cache result for duration of R session using memoization. See details.}
 }
 \value{
-a tibble data frame
+a tibble data frame (or a list, or character, depending on \code{tidy} value)
 }
 \description{
 Obtain EIA data series.
 }
 \details{
-Set \code{tidy = FALSE} to return only the initial result of \code{jsonlite::fromJSON}.
 By default, additional processing is done to return a tibble data frame.
+Set \code{tidy = FALSE} to return only the initial list result of \code{jsonlite::fromJSON}.
+Set \code{tidy = NA} to return the original JSON as a character string.
 
 Set to \code{cache = FALSE} to force a new API call for updated data.
 Using \code{FALSE} always makes a new API call and returns the result from the server.

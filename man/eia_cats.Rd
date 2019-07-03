@@ -22,14 +22,15 @@ eia_parent_cats(key, id, cache = TRUE)
 \item{cache}{logical, cache result for duration of R session using memoization. See details.}
 }
 \value{
-a list for \code{eia_cats}; others functions return a tibble data frame.
+for \code{eia_cats}, a list of tibble data frames (or a less processed list, or character, depending on \code{tidy} value); others functions return a tibble data frame.
 }
 \description{
 Obtain EIA categories.
 }
 \details{
-Set \code{tidy = FALSE} to return only the initial result of \code{jsonlite::fromJSON}.
-By default, additional processing is done to condense some list items into data frames and all data frames are converted to tibble data frames.
+By default, additional processing is done to return a list containing tibble data frames.
+Set \code{tidy = FALSE} to return only the initial list result of \code{jsonlite::fromJSON}.
+Set \code{tidy = NA} to return the original JSON as a character string.
 
 Set to \code{cache = FALSE} to force a new API call for updated data.
 Using \code{FALSE} always makes a new API call and returns the result from the server.
@@ -37,6 +38,7 @@ Using \code{FALSE} always makes a new API call and returns the result from the s
 You can reset the entire cache by calling \code{eia_clear_cache}.
 
 \code{eia_child_cats} returns only the immediate child categories. \code{eia_parent_cats} returns all parents.
+These are wrappers around \code{eia_cats} and always return a tibble data frame.
 }
 \examples{
 \dontrun{

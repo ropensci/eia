@@ -48,14 +48,16 @@ eia_geoset <- function(key, id, region, start = NULL, end = NULL, n = NULL,
     .eia_geoset(key, id, region, start, end, n, tidy)
 }
 
-.eia_geoset <- function(key, id, region, start = NULL, end = NULL, n = NULL, tidy = TRUE){
+.eia_geoset <- function(key, id, region, start = NULL, end = NULL,
+                        n = NULL, tidy = TRUE){
   f <- if(tidy) purrr::map_dfr else purrr::map
   f(id, ~.eia_geoset_by_id(key, .x, region, start, end, n, tidy))
 }
 
 .eia_geoset_memoized <- memoise::memoise(.eia_geoset)
 
-.eia_geoset_by_id <- function(key, id, region, start = NULL, end = NULL, n = NULL, tidy = TRUE){
+.eia_geoset_by_id <- function(key, id, region, start = NULL,
+                              end = NULL, n = NULL, tidy = TRUE){
   x <- .eia_geo_url(key, id, region, start, end, n) %>% httr::GET() %>%
     httr::content(as = "text", encoding = "UTF-8") %>%
     jsonlite::fromJSON()
@@ -71,7 +73,8 @@ eia_geoset <- function(key, id, region, start = NULL, end = NULL, n = NULL,
   f2 <- function(s){
     if(is.null(s$unitsshort)) s <- s[-which(names(s) == "unitsshort")]
     if(is.null(s$latlon)) s$latlon <- NA_character_
-    s$data <- list(tibble::as_tibble(s$data, .name_repair = f) %>% .eia_date(x$geoset$f))
+    s$data <- list(tibble::as_tibble(s$data, .name_repair = f) %>%
+                     .parse_series_eiadate(x$geoset$f))
     s$data[[1]]$value <- as.numeric(s$data[[1]]$value)
     s$data[[1]] <- dplyr::select(s$data[[1]], c(2:ncol(s$data[[1]]), 1))
     idx <- which(names(s) != "data")

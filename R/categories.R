@@ -2,8 +2,9 @@
 #'
 #' Obtain EIA categories.
 #'
-#' Set \code{tidy = FALSE} to return only the initial result of \code{jsonlite::fromJSON}.
-#' By default, additional processing is done to condense some list items into data frames and all data frames are converted to tibble data frames.
+#' By default, additional processing is done to return a list containing tibble data frames.
+#' Set \code{tidy = FALSE} to return only the initial list result of \code{jsonlite::fromJSON}.
+#' Set \code{tidy = NA} to return the original JSON as a character string.
 #'
 #' Set to \code{cache = FALSE} to force a new API call for updated data.
 #' Using \code{FALSE} always makes a new API call and returns the result from the server.
@@ -11,13 +12,14 @@
 #' You can reset the entire cache by calling \code{eia_clear_cache}.
 #'
 #' \code{eia_child_cats} returns only the immediate child categories. \code{eia_parent_cats} returns all parents.
+#' These are wrappers around \code{eia_cats} and always return a tibble data frame.
 #'
 #' @param key character, API key.
 #' @param id integer, category ID.
 #' @param tidy logical, return a tidier result. See details.
 #' @param cache logical, cache result for duration of R session using memoization. See details.
 #'
-#' @return a list for \code{eia_cats}; others functions return a tibble data frame.
+#' @return for \code{eia_cats}, a list of tibble data frames (or a less processed list, or character, depending on \code{tidy} value); others functions return a tibble data frame.
 #' @export
 #' @seealso \code{\link{eia_clear_cache}}
 #'
@@ -36,8 +38,9 @@ eia_cats <- function(key, id = NULL, tidy = TRUE, cache = TRUE){
 
 .eia_cats <- function(key, id = NULL, tidy = TRUE){
   x <- .eia_cat_url(key, id) %>% .eia_get() %>%
-    httr::content(as = "text", encoding = "UTF-8") %>%
-    jsonlite::fromJSON()
+    httr::content(as = "text", encoding = "UTF-8")
+  if(is.na(tidy)) return(x)
+  x <- jsonlite::fromJSON(x)
   if(!tidy) return(x)
 
   x <- x$category

@@ -2,8 +2,9 @@
 #'
 #' Obtain EIA data series.
 #'
-#' Set \code{tidy = FALSE} to return only the initial result of \code{jsonlite::fromJSON}.
 #' By default, additional processing is done to return a tibble data frame.
+#' Set \code{tidy = FALSE} to return only the initial list result of \code{jsonlite::fromJSON}.
+#' Set \code{tidy = NA} to return the original JSON as a character string.
 #'
 #' Set to \code{cache = FALSE} to force a new API call for updated data.
 #' Using \code{FALSE} always makes a new API call and returns the result from the server.
@@ -18,7 +19,7 @@
 #' @param tidy logical, return a tidier result. See details.
 #' @param cache logical, cache result for duration of R session using memoization. See details.
 #'
-#' @return a tibble data frame
+#' @return a tibble data frame (or a list, or character, depending on \code{tidy} value)
 #' @export
 #' @seealso \code{\link{eia_clear_cache}}
 #'
@@ -44,10 +45,12 @@ eia_series <- function(key, id, start = NULL, end = NULL, n = NULL,
     .eia_series(key, id, start, end, n, tidy)
 }
 
-.eia_series <- function(key, id, start = NULL, end = NULL, n = NULL, tidy = TRUE){
+.eia_series <- function(key, id, start = NULL, end = NULL,
+                        n = NULL, tidy = TRUE){
   x <- .eia_series_url(key, id, start, end, n) %>% httr::GET() %>%
-    httr::content(as = "text", encoding = "UTF-8") %>%
-    jsonlite::fromJSON()
+    httr::content(as = "text", encoding = "UTF-8")
+  if(is.na(tidy)) return(x)
+  x <- jsonlite::fromJSON(x)
   if(!tidy) return(x)
 
   x <- x$series
@@ -57,7 +60,7 @@ eia_series <- function(key, id, start = NULL, end = NULL, n = NULL,
   f <- function(name) c("date", "value")
   f2 <- function(i){
     x <- tibble::as_tibble(x$data[[i]], .name_repair = f) %>%
-      .eia_date(x$f[i])
+      .parse_series_eiadate(x$f[i])
     x$value <- as.numeric(x$value)
     dplyr::select(x, c(2:ncol(x), 1))
   }
@@ -67,7 +70,8 @@ eia_series <- function(key, id, start = NULL, end = NULL, n = NULL,
 
 .eia_series_memoized <- memoise::memoise(.eia_series)
 
-.eia_date <- function(d, date_format){
+.parse_series_eiadate <- function(d, date_format){
+  new_date <- eiadate_to_date(d$date)
   if(date_format == "Q"){
     x <- strsplit(d$date, "[Qq]")
     d$year <- as.integer(sapply(x, "[", 1))
@@ -80,15 +84,86 @@ eia_series <- function(key, id, start = NULL, end = NULL, n = NULL,
   } else {
     stop("Unknown date format.", call. = FALSE)
   }
-  d$date <- NULL
+  d$date <- new_date
   d
 }
 
 .eia_series_url <- function(key, id, start = NULL, end = NULL, n = NULL){
-  params <- .eia_time_params(start, end, n, n_default = 1)
+  params <- .eia_time_params(start, end, n)
   url <- .eia_url(key, id, "series")
   if(!is.null(params$start)) url <- paste0(url, "&start=", params$start)
   if(!is.null(params$end)) url <- paste0(url, "&end=", params$end)
   if(!is.null(params$n)) url <- paste0(url, "&num=", params$n)
   url
+}
+
+#' EIA series metadata
+#'
+#' Make a small request to obtain a data frame containing metadata.
+#'
+#' Dates are provided in \code{eia_series_dates} for the convenience of working with the EIA date string format;
+#' for example: maintaining order, generating sequences, computing intervals,
+#' and other operations that work well with dates but would be difficult using arbitrary strings.
+#' Keep in mind that of course these are not real dates, in the sense that you cannot map a year to a specific date.
+#'
+#' @param key character, API key.
+#' @param id character, series ID, may be a vector.
+#' @param cache logical, cache result for duration of R session using memoization.
+#'
+#' @return a tibble data frame
+#' @export
+#' @name eia_series_metadata
+#'
+#' @examples
+#' \dontrun{
+#' key <- Sys.getenv("EIA_KEY") # your stored API key
+#' id <- paste0("ELEC.CONS_TOT_BTU.COW-AK-1.", c("A", "Q", "M"))
+#'
+#' eia_series_metadata(key, id)
+#' eia_series_updated(key, id)
+#' eia_series_dates(key, id)
+#' eia_series_range(key, id)
+#' }
+eia_series_metadata <- function(key, id, cache = TRUE){
+  x <- if(cache) .eia_series_memoized(key, id, n = 1) else
+    .eia_series(key, id, n = 1)
+  dplyr::select(x, -c("data"))
+}
+
+#' @export
+#' @name eia_series_metadata
+eia_series_updated <- function(key, id, cache = TRUE){
+  x <- eia_series_metadata(key, id, cache)
+  dplyr::select(x, c("series_id", "updated"))
+}
+
+#' @export
+#' @name eia_series_metadata
+eia_series_dates <- function(key, id, cache = TRUE){
+  x <- if(cache) .eia_series_memoized(key, id, n = 1) else
+    .eia_series(key, id, n = 1)
+  x <- split(x, 1:nrow(x))
+  f <- function(x){
+    date_format <- eiadate_format(x$start)
+    dates <- eiadate_to_date_seq(x$start, x$end)
+    tibble::tibble(series_id = x$series_id, date = dates,
+                   eiadate = date_to_eiadate(dates, date_format),
+                   date_format = date_format)
+  }
+  purrr::map_dfr(x, f)
+}
+
+#' @export
+#' @name eia_series_metadata
+eia_series_range <- function(key, id, cache = TRUE){
+  x <- eia_series_dates(key, id, cache)
+  x <- split(x, factor(x$series_id, levels = unique(x$series_id)))
+  f <- function(x){
+    n <- nrow(x)
+    tibble::tibble(series_id = x$series_id[1], start_date = min(x$date),
+                   end_date = max(x$date),
+                   start = x$eiadate[1], end = x$eiadate[n],
+                   date_format = x$date_format[1], n = n[1])
+  }
+  purrr::map_dfr(x, f)
 }
