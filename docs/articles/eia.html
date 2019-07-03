@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Introduction to eia • eia</title>
+<title>Package overview: eia • eia</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Introduction to eia">
+<meta property="og:title" content="Package overview: eia">
 <meta property="og:description" content="">
 <meta property="og:image" content="http://leonawicz.github.io/eia/logo.png">
 <meta name="twitter:card" content="summary">
@@ -101,7 +101,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Introduction to eia</h1>
+      <h1>Package overview: eia</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/leonawicz/eia/blob/master/vignettes/eia.Rmd"><code>vignettes/eia.Rmd</code></a></small>
@@ -181,7 +181,39 @@
 <div id="eia-time-series-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#eia-time-series-data" class="anchor"></a>EIA time series data</h2>
-<p>Add later…</p>
+<p>Time series data is obtained by series ID. Most columns contain metadata. The <code>data</code> column contains the time series data.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">id &lt;-<span class="st"> "ELEC.CONS_TOT_BTU.COW-AK-1.A"</span></a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3">(x1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_series.html">eia_series</a></span>(key, id, <span class="dt">n =</span> <span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt; # A tibble: 1 x 13</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt;   series_id name  units f     description copyright source iso3166</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;  </span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; 1 ELEC.CON~ Tota~ mill~ A     "Summation~ None      EIA, ~ USA-AK </span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; # ... with 5 more variables: geography &lt;chr&gt;, start &lt;chr&gt;, end &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co">#&gt; #   updated &lt;chr&gt;, data &lt;list&gt;</span></a>
+<a class="sourceLine" id="cb4-10" title="10"></a>
+<a class="sourceLine" id="cb4-11" title="11">x1<span class="op">$</span>data[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt; # A tibble: 10 x 3</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt;    value  year date      </span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt;    &lt;dbl&gt; &lt;int&gt; &lt;date&gt;    </span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt;  1  7.35  2018 2018-01-01</span></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt;  2  5.95  2017 2017-01-01</span></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="co">#&gt;  3  6.21  2016 2016-01-01</span></a>
+<a class="sourceLine" id="cb4-18" title="18"><span class="co">#&gt;  4  7.58  2015 2015-01-01</span></a>
+<a class="sourceLine" id="cb4-19" title="19"><span class="co">#&gt;  5  6.53  2014 2014-01-01</span></a>
+<a class="sourceLine" id="cb4-20" title="20"><span class="co">#&gt;  6  2.59  2013 2013-01-01</span></a>
+<a class="sourceLine" id="cb4-21" title="21"><span class="co">#&gt;  7  2.92  2012 2012-01-01</span></a>
+<a class="sourceLine" id="cb4-22" title="22"><span class="co">#&gt;  8  2.42  2011 2011-01-01</span></a>
+<a class="sourceLine" id="cb4-23" title="23"><span class="co">#&gt;  9  2.61  2010 2010-01-01</span></a>
+<a class="sourceLine" id="cb4-24" title="24"><span class="co">#&gt; 10  2.88  2009 2009-01-01</span></a></code></pre></div>
+<p>You can provide arguments like the following:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/eia_series.html">eia_series</a></span>(key, id, <span class="dt">n =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="../reference/eia_series.html">eia_series</a></span>(key, id, <span class="dt">end =</span> <span class="dv">2016</span>, <span class="dt">n =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="kw"><a href="../reference/eia_series.html">eia_series</a></span>(key, id, <span class="dt">start =</span> <span class="dv">2000</span>, <span class="dt">end =</span> <span class="dv">2016</span>)</a></code></pre></div>
+<p>As with <code>eia_cats</code>, the output format does not need to be tidy:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/eia_series.html">eia_series</a></span>(key, id, <span class="dt">n =</span> <span class="dv">5</span>, <span class="dt">tidy =</span> <span class="ot">FALSE</span>) <span class="co"># results of jsonlite::fromJSON</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="kw"><a href="../reference/eia_series.html">eia_series</a></span>(key, id, <span class="dt">n =</span> <span class="dv">5</span>, <span class="dt">tidy =</span> <span class="ot">NA</span>) <span class="co"># origina JSON as character string</span></a></code></pre></div>
+<p>This allows you to use the returned results with existing code you may have that requires data in one of these less processed structures.</p>
 </div>
 <div id="eia-geosets" class="section level2">
 <h2 class="hasAnchor">

@@ -187,12 +187,13 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a tibble data frame</p>
+    <p>a tibble data frame (or a list, or character, depending on <code>tidy</code> value)</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Set <code>tidy = FALSE</code> to return only the initial result of <code><a href='https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON'>jsonlite::fromJSON</a></code>.
-By default, additional processing is done to return a tibble data frame.</p>
+    <p>By default, additional processing is done to return a tibble data frame.
+Set <code>tidy = FALSE</code> to return only the initial list result of <code><a href='https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON'>jsonlite::fromJSON</a></code>.
+Set <code>tidy = NA</code> to return the original JSON as a character string.</p>
 <p>Set to <code>cache = FALSE</code> to force a new API call for updated data.
 Using <code>FALSE</code> always makes a new API call and returns the result from the server.
 <code>TRUE</code> uses memoization on a per R session basis, caching the result of the function call in memory for the duration of the R session.

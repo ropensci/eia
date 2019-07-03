@@ -178,17 +178,19 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a list for <code>eia_cats</code>; others functions return a tibble data frame.</p>
+    <p>for <code>eia_cats</code>, a list of tibble data frames (or a less processed list, or character, depending on <code>tidy</code> value); others functions return a tibble data frame.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Set <code>tidy = FALSE</code> to return only the initial result of <code><a href='https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON'>jsonlite::fromJSON</a></code>.
-By default, additional processing is done to condense some list items into data frames and all data frames are converted to tibble data frames.</p>
+    <p>By default, additional processing is done to return a list containing tibble data frames.
+Set <code>tidy = FALSE</code> to return only the initial list result of <code><a href='https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON'>jsonlite::fromJSON</a></code>.
+Set <code>tidy = NA</code> to return the original JSON as a character string.</p>
 <p>Set to <code>cache = FALSE</code> to force a new API call for updated data.
 Using <code>FALSE</code> always makes a new API call and returns the result from the server.
 <code>TRUE</code> uses memoization on a per R session basis, caching the result of the function call in memory for the duration of the R session.
 You can reset the entire cache by calling <code>eia_clear_cache</code>.</p>
-<p><code>eia_child_cats</code> returns only the immediate child categories. <code>eia_parent_cats</code> returns all parents.</p>
+<p><code>eia_child_cats</code> returns only the immediate child categories. <code>eia_parent_cats</code> returns all parents.
+These are wrappers around <code>eia_cats</code> and always return a tibble data frame.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
