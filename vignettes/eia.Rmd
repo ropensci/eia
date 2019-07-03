@@ -1,8 +1,8 @@
 ---
-title: "Introduction to eia"
+title: "Package overview: eia"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to eia}
+  %\VignetteIndexEntry{Package overview: eia}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -45,7 +45,32 @@ eia_cats(key, 0)
 
 ## EIA time series data
 
-Add later...
+Time series data is obtained by series ID. Most columns contain metadata. The `data` column contains the time series data.
+
+```{r series1}
+id <- "ELEC.CONS_TOT_BTU.COW-AK-1.A"
+
+(x1 <- eia_series(key, id, n = 10))
+
+x1$data[[1]]
+```
+
+You can provide arguments like the following:
+
+```{r series2, eval = FALSE}
+eia_series(key, id, n = 10)
+eia_series(key, id, end = 2016, n = 5)
+eia_series(key, id, start = 2000, end = 2016)
+```
+
+As with `eia_cats`, the output format does not need to be tidy:
+
+```{r series3, eval = FALSE}
+eia_series(key, id, n = 5, tidy = FALSE) # results of jsonlite::fromJSON
+eia_series(key, id, n = 5, tidy = NA) # origina JSON as character string
+```
+
+This allows you to use the returned results with existing code you may have that requires data in one of these less processed structures.
 
 ## EIA geosets
 

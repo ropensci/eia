@@ -16,9 +16,185 @@ library(eia)
 options(eia_antidos = 0)
 ```
 
-Add later...
+## Finding the series ID
 
-```{r cats0}
+Like category information, time series data is obtained based on its ID. A complete example includes finding the ID for the series if you do not already know it. Look for total electricity consumption:
+
+```{r cat1}
 library(eia)
 key <- Sys.getenv("EIA_KEY")
+
+eia_cats(key)
+```
+
+Electricity has category ID 0. Take a closer look there:
+
+```{r cat2}
+eia_cats(key, 0)
+```
+
+There are two categories referring to total consumption. Take category ID 32 as an example and step deeper into the category hierarchy.
+
+```{r cat3}
+eia_cats(key, 32)
+```
+
+At this point you have a choice between total consumption by sector or fuel type. Select by sector.
+
+```{r cat4}
+eia_cats(key, 372)
+```
+
+Then total electrical power:
+
+```{r cat5}
+eia_cats(key, 388)
+```
+
+And finally coal:
+
+```{r cat6}
+(x <- eia_cats(key, 738))
+```
+
+## Available child series
+
+At this point you have reached a terminal node of the category tree. Instead of another table of child category IDs and names in the result, there is a `childseries` table.
+
+This table contains:
+
+*    time series IDs
+*    names that describe the nested position of the data in the overall category hierarchy
+*    time format
+*    units
+*    the time stamp of the most recent data update
+
+Each row in this table represents a unique time series dataset; in this case for different states and in annual, quarterly and monthly time steps. TO obtain the time series data, make a request using `eia_series` and provide a series ID.
+
+## Time formats
+
+To see how the different time formats are parsed, take the first three IDs for Alaska. Request only the three most recent results for each series.
+
+```{r series1}
+id <- x$childseries$series_id[1:3]
+
+x1 <- eia_series(key, id[1], n = 3)
+x2 <- eia_series(key, id[2], n = 3)
+x3 <- eia_series(key, id[3], n = 3)
+```
+
+The format of each result is the same. Inspect the first one. It is a data frame with one row. All but the final column, `data`, give metadata about the series. `data` is a list column (in this case of length one) that can be extracted directly or unnested using `tidyr::unnest`.
+
+```{r series2}
+library(dplyr)
+library(tidyr)
+x1
+
+x1$data[[1]]
+
+select(x1, series_id, data) %>% unnest()
+```
+
+Results are similarly structured for the other series, but the columns containing date information differ.
+
+```{r series3}
+x1$data[[1]]
+x2$data[[1]]
+x3$data[[1]]
+```
+
+## Multiple series
+
+The EIA API allows multiple series to be requested in a single API call. You should do this whenever possible to reduce the number of requests you make. To request the same data as above, just provide the `id` vector. Other arguments like `n` are not vectorized.
+
+```{r series4}
+x <- eia_series(key, id, n = 3)
+x
+```
+
+There are now three rows in the table containing the same data as before. The `data` list column also contains the same structures as before.
+
+```{r series5}
+x$data
+```
+
+These can be unnested and filled in with `NA` as needed.
+
+```{r series6}
+select(x, series_id, data) %>% unnest()
+```
+
+## Time period and number of results
+
+Here are some things to keep in mind about `eia_series` arguments:
+
+*    The function only makes one API call, combining multiple series IDs if provided.
+*    If there are fewer results than you request, everything available is returned.
+*    Results are from the most recent; using only `n` will return data from the most recent time point.
+*    You can use `start` and `end` instead of `n`
+*    `n` is ignored if you use both `start` and `end`.
+*    If you use only one of `start` or `end`, but do not provide `n`, you will receive everything forward or backward from that point, up to the maximum number of results allowed by the API.
+*    Depending on the nature of the request, you may have to construct more than one call.
+
+
+```{r series7, eval = FALSE}
+eia_series(key, id, n = 10)
+eia_series(key, id, end = 2016, n = 5)
+eia_series(key, id, start = 2000, end = 2016)
+```
+
+## Output format
+
+The default is to return tidy data in a tibble data frame. You can set `tidy = FALSE` to return the list returned by `jsonlite::fromJSON` without any further processing.
+
+```{r series8}
+eia_series(key, id, n = 3, tidy = FALSE)
+```
+
+You can also return the raw JSON data in a character string if you need to process this directly with other code.
+
+```{r series9}
+cat(eia_series(key, id, n = 3, tidy = NA))
+```
+
+This allows you to use the returned results with existing code you may have that requires data in one of these less processed structures.
+
+## Helpers functions
+
+### Time series metadata
+
+There are some functions available that make small API calls and return only metadata associated with a time series dataset.
+
+```{r series10}
+eia_series_metadata(key, id)
+eia_series_updated(key, id)
+eia_series_dates(key, id)
+eia_series_range(key, id)
+```
+
+Like `eia_seires`, these functions accept an `id` vector. They always return a tibble data frame.
+
+### EIA date strings
+
+EIA date strings used to specify start and end dates for time series requests are character strings that are not in any standard date formats. There are several functions that assist with moving between these strings and standard dates.
+
+You can convert EIA date strings to dates:
+
+```{r series11}
+eiadate_to_date(c("201803", "201804"))
+```
+
+or dates to EIA format; here are examples using annual, quarterly and monthly time formats:
+
+```{r series12}
+date_to_eiadate("2018-05-14", "A")
+date_to_eiadate("2018-05-14", "Q")
+date_to_eiadate("2018-05-14", "M")
+```
+
+It is also easy to create a date sequence from two EIA time stamps. The format is parsed from the first value (they are intended to always be consistent).
+
+```{r series13}
+(x <- eiadate_to_date_seq("2018Q1", "2018Q4"))
+date_to_eiadate(x)
 ```

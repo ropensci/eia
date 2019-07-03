@@ -52,3 +52,12 @@ View all parent categories for a given child category:
 ```{r cats5}
 eia_parent_cats(key, 742)
 ```
+
+## Output format
+
+The default is to return tidy data in a tibble data frame. For `eia_cats` you can set `tidy = FALSE` to return the list returned by `jsonlite::fromJSON` without any further processing or `tidy = NA` to return the raw JSON data as a character string.
+
+```{r cats6}
+eia_cats(key, tidy = FALSE)
+cat(eia_cats(key, tidy = NA))
+```
