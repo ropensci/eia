@@ -4,7 +4,10 @@
 * Added anti-DOS measures, which can be adjusted using `options()`.
 * Added more documentation.
 * Added helper functions for clearing cached results.
-* Minor updates to functions, documentation and unit test scripts.
+* Added helper functions for working with EIA date strings.
+* Added helper functions for time series metadata.
+* Added unit tests.
+* Minor updates to functions, documentation.
 
 # eia 0.1.0
 

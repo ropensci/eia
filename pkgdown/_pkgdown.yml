@@ -15,9 +15,11 @@ reference:
   contents:
   - eia_cats
   - eia_series
+  - eia_series_metadata
   - eia_geoset
 - title: Other functions
   contents:
+  - eiadate
   - eia_clear_cache
   - "%>%"
 
