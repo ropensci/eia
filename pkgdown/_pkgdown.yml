@@ -37,7 +37,7 @@ navbar:
         - text: "Time series"
           href: "articles/series.html"
         - text: "Geosets"
-          href: "articles/geosets.html"
+          href: "articles/geoset.html"
         - text: "API details"
           href: "articles/api.html"
     - text: "Reference"

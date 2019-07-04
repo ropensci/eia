@@ -68,7 +68,7 @@
       <a href="../articles/series.html">Time series</a>
     </li>
     <li>
-      <a href="../articles/geosets.html">Geosets</a>
+      <a href="../articles/geoset.html">Geosets</a>
     </li>
     <li>
       <a href="../articles/api.html">API details</a>
@@ -287,41 +287,41 @@
 <a class="sourceLine" id="cb8-10" title="10"></a>
 <a class="sourceLine" id="cb8-11" title="11">x1<span class="op">$</span>data[[<span class="dv">1</span>]]</a>
 <a class="sourceLine" id="cb8-12" title="12"><span class="co">#&gt; # A tibble: 3 x 3</span></a>
-<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt;   value  year date      </span></a>
-<a class="sourceLine" id="cb8-14" title="14"><span class="co">#&gt;   &lt;dbl&gt; &lt;int&gt; &lt;date&gt;    </span></a>
-<a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt; 1 10.5   2018 2018-01-01</span></a>
-<a class="sourceLine" id="cb8-16" title="16"><span class="co">#&gt; 2  9.21  2017 2017-01-01</span></a>
-<a class="sourceLine" id="cb8-17" title="17"><span class="co">#&gt; 3  9.64  2016 2016-01-01</span></a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt;   value date        year</span></a>
+<a class="sourceLine" id="cb8-14" title="14"><span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt; 1 10.5  2018-01-01  2018</span></a>
+<a class="sourceLine" id="cb8-16" title="16"><span class="co">#&gt; 2  9.21 2017-01-01  2017</span></a>
+<a class="sourceLine" id="cb8-17" title="17"><span class="co">#&gt; 3  9.64 2016-01-01  2016</span></a>
 <a class="sourceLine" id="cb8-18" title="18"></a>
 <a class="sourceLine" id="cb8-19" title="19"><span class="kw">select</span>(x1, series_id, data) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>()</a>
 <a class="sourceLine" id="cb8-20" title="20"><span class="co">#&gt; # A tibble: 3 x 4</span></a>
-<a class="sourceLine" id="cb8-21" title="21"><span class="co">#&gt;   series_id                     value  year date      </span></a>
-<a class="sourceLine" id="cb8-22" title="22"><span class="co">#&gt;   &lt;chr&gt;                         &lt;dbl&gt; &lt;int&gt; &lt;date&gt;    </span></a>
-<a class="sourceLine" id="cb8-23" title="23"><span class="co">#&gt; 1 ELEC.CONS_TOT_BTU.COW-AK-98.A 10.5   2018 2018-01-01</span></a>
-<a class="sourceLine" id="cb8-24" title="24"><span class="co">#&gt; 2 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.21  2017 2017-01-01</span></a>
-<a class="sourceLine" id="cb8-25" title="25"><span class="co">#&gt; 3 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.64  2016 2016-01-01</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-21" title="21"><span class="co">#&gt;   series_id                     value date        year</span></a>
+<a class="sourceLine" id="cb8-22" title="22"><span class="co">#&gt;   &lt;chr&gt;                         &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb8-23" title="23"><span class="co">#&gt; 1 ELEC.CONS_TOT_BTU.COW-AK-98.A 10.5  2018-01-01  2018</span></a>
+<a class="sourceLine" id="cb8-24" title="24"><span class="co">#&gt; 2 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.21 2017-01-01  2017</span></a>
+<a class="sourceLine" id="cb8-25" title="25"><span class="co">#&gt; 3 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.64 2016-01-01  2016</span></a></code></pre></div>
 <p>Results are similarly structured for the other series, but the columns containing date information differ.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">x1<span class="op">$</span>data[[<span class="dv">1</span>]]</a>
 <a class="sourceLine" id="cb9-2" title="2"><span class="co">#&gt; # A tibble: 3 x 3</span></a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="co">#&gt;   value  year date      </span></a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="co">#&gt;   &lt;dbl&gt; &lt;int&gt; &lt;date&gt;    </span></a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="co">#&gt; 1 10.5   2018 2018-01-01</span></a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="co">#&gt; 2  9.21  2017 2017-01-01</span></a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="co">#&gt; 3  9.64  2016 2016-01-01</span></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="co">#&gt;   value date        year</span></a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="co">#&gt; 1 10.5  2018-01-01  2018</span></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="co">#&gt; 2  9.21 2017-01-01  2017</span></a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="co">#&gt; 3  9.64 2016-01-01  2016</span></a>
 <a class="sourceLine" id="cb9-8" title="8">x2<span class="op">$</span>data[[<span class="dv">1</span>]]</a>
 <a class="sourceLine" id="cb9-9" title="9"><span class="co">#&gt; # A tibble: 3 x 4</span></a>
-<a class="sourceLine" id="cb9-10" title="10"><span class="co">#&gt;    value  year month date      </span></a>
-<a class="sourceLine" id="cb9-11" title="11"><span class="co">#&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;date&gt;    </span></a>
-<a class="sourceLine" id="cb9-12" title="12"><span class="co">#&gt; 1 NA      2019     4 2019-04-01</span></a>
-<a class="sourceLine" id="cb9-13" title="13"><span class="co">#&gt; 2 NA      2019     3 2019-03-01</span></a>
-<a class="sourceLine" id="cb9-14" title="14"><span class="co">#&gt; 3  0.918  2019     2 2019-02-01</span></a>
+<a class="sourceLine" id="cb9-10" title="10"><span class="co">#&gt;    value date        year month</span></a>
+<a class="sourceLine" id="cb9-11" title="11"><span class="co">#&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;int&gt; &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb9-12" title="12"><span class="co">#&gt; 1 NA     2019-04-01  2019     4</span></a>
+<a class="sourceLine" id="cb9-13" title="13"><span class="co">#&gt; 2 NA     2019-03-01  2019     3</span></a>
+<a class="sourceLine" id="cb9-14" title="14"><span class="co">#&gt; 3  0.918 2019-02-01  2019     2</span></a>
 <a class="sourceLine" id="cb9-15" title="15">x3<span class="op">$</span>data[[<span class="dv">1</span>]]</a>
 <a class="sourceLine" id="cb9-16" title="16"><span class="co">#&gt; # A tibble: 3 x 4</span></a>
-<a class="sourceLine" id="cb9-17" title="17"><span class="co">#&gt;   value  year   qtr date      </span></a>
-<a class="sourceLine" id="cb9-18" title="18"><span class="co">#&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;date&gt;    </span></a>
-<a class="sourceLine" id="cb9-19" title="19"><span class="co">#&gt; 1 NA     2019     1 2019-01-01</span></a>
-<a class="sourceLine" id="cb9-20" title="20"><span class="co">#&gt; 2 NA     2018     4 2018-10-01</span></a>
-<a class="sourceLine" id="cb9-21" title="21"><span class="co">#&gt; 3  2.80  2018     3 2018-07-01</span></a></code></pre></div>
+<a class="sourceLine" id="cb9-17" title="17"><span class="co">#&gt;   value date        year   qtr</span></a>
+<a class="sourceLine" id="cb9-18" title="18"><span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;     &lt;int&gt; &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb9-19" title="19"><span class="co">#&gt; 1 NA    2019-01-01  2019     1</span></a>
+<a class="sourceLine" id="cb9-20" title="20"><span class="co">#&gt; 2 NA    2018-10-01  2018     4</span></a>
+<a class="sourceLine" id="cb9-21" title="21"><span class="co">#&gt; 3  2.80 2018-07-01  2018     3</span></a></code></pre></div>
 </div>
 <div id="multiple-series" class="section level2">
 <h2 class="hasAnchor">
@@ -341,41 +341,41 @@
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">x<span class="op">$</span>data</a>
 <a class="sourceLine" id="cb11-2" title="2"><span class="co">#&gt; [[1]]</span></a>
 <a class="sourceLine" id="cb11-3" title="3"><span class="co">#&gt; # A tibble: 3 x 3</span></a>
-<a class="sourceLine" id="cb11-4" title="4"><span class="co">#&gt;   value  year date      </span></a>
-<a class="sourceLine" id="cb11-5" title="5"><span class="co">#&gt;   &lt;dbl&gt; &lt;int&gt; &lt;date&gt;    </span></a>
-<a class="sourceLine" id="cb11-6" title="6"><span class="co">#&gt; 1 10.5   2018 2018-01-01</span></a>
-<a class="sourceLine" id="cb11-7" title="7"><span class="co">#&gt; 2  9.21  2017 2017-01-01</span></a>
-<a class="sourceLine" id="cb11-8" title="8"><span class="co">#&gt; 3  9.64  2016 2016-01-01</span></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="co">#&gt;   value date        year</span></a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb11-6" title="6"><span class="co">#&gt; 1 10.5  2018-01-01  2018</span></a>
+<a class="sourceLine" id="cb11-7" title="7"><span class="co">#&gt; 2  9.21 2017-01-01  2017</span></a>
+<a class="sourceLine" id="cb11-8" title="8"><span class="co">#&gt; 3  9.64 2016-01-01  2016</span></a>
 <a class="sourceLine" id="cb11-9" title="9"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb11-10" title="10"><span class="co">#&gt; [[2]]</span></a>
 <a class="sourceLine" id="cb11-11" title="11"><span class="co">#&gt; # A tibble: 3 x 4</span></a>
-<a class="sourceLine" id="cb11-12" title="12"><span class="co">#&gt;    value  year month date      </span></a>
-<a class="sourceLine" id="cb11-13" title="13"><span class="co">#&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;date&gt;    </span></a>
-<a class="sourceLine" id="cb11-14" title="14"><span class="co">#&gt; 1 NA      2019     4 2019-04-01</span></a>
-<a class="sourceLine" id="cb11-15" title="15"><span class="co">#&gt; 2 NA      2019     3 2019-03-01</span></a>
-<a class="sourceLine" id="cb11-16" title="16"><span class="co">#&gt; 3  0.918  2019     2 2019-02-01</span></a>
+<a class="sourceLine" id="cb11-12" title="12"><span class="co">#&gt;    value date        year month</span></a>
+<a class="sourceLine" id="cb11-13" title="13"><span class="co">#&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;int&gt; &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb11-14" title="14"><span class="co">#&gt; 1 NA     2019-04-01  2019     4</span></a>
+<a class="sourceLine" id="cb11-15" title="15"><span class="co">#&gt; 2 NA     2019-03-01  2019     3</span></a>
+<a class="sourceLine" id="cb11-16" title="16"><span class="co">#&gt; 3  0.918 2019-02-01  2019     2</span></a>
 <a class="sourceLine" id="cb11-17" title="17"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb11-18" title="18"><span class="co">#&gt; [[3]]</span></a>
 <a class="sourceLine" id="cb11-19" title="19"><span class="co">#&gt; # A tibble: 3 x 4</span></a>
-<a class="sourceLine" id="cb11-20" title="20"><span class="co">#&gt;   value  year   qtr date      </span></a>
-<a class="sourceLine" id="cb11-21" title="21"><span class="co">#&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;date&gt;    </span></a>
-<a class="sourceLine" id="cb11-22" title="22"><span class="co">#&gt; 1 NA     2019     1 2019-01-01</span></a>
-<a class="sourceLine" id="cb11-23" title="23"><span class="co">#&gt; 2 NA     2018     4 2018-10-01</span></a>
-<a class="sourceLine" id="cb11-24" title="24"><span class="co">#&gt; 3  2.80  2018     3 2018-07-01</span></a></code></pre></div>
+<a class="sourceLine" id="cb11-20" title="20"><span class="co">#&gt;   value date        year   qtr</span></a>
+<a class="sourceLine" id="cb11-21" title="21"><span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;     &lt;int&gt; &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb11-22" title="22"><span class="co">#&gt; 1 NA    2019-01-01  2019     1</span></a>
+<a class="sourceLine" id="cb11-23" title="23"><span class="co">#&gt; 2 NA    2018-10-01  2018     4</span></a>
+<a class="sourceLine" id="cb11-24" title="24"><span class="co">#&gt; 3  2.80 2018-07-01  2018     3</span></a></code></pre></div>
 <p>These can be unnested and filled in with <code>NA</code> as needed.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">select</span>(x, series_id, data) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>()</a>
 <a class="sourceLine" id="cb12-2" title="2"><span class="co">#&gt; # A tibble: 9 x 6</span></a>
-<a class="sourceLine" id="cb12-3" title="3"><span class="co">#&gt;   series_id                      value  year date       month   qtr</span></a>
-<a class="sourceLine" id="cb12-4" title="4"><span class="co">#&gt;   &lt;chr&gt;                          &lt;dbl&gt; &lt;int&gt; &lt;date&gt;     &lt;int&gt; &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb12-5" title="5"><span class="co">#&gt; 1 ELEC.CONS_TOT_BTU.COW-AK-98.A 10.5    2018 2018-01-01    NA    NA</span></a>
-<a class="sourceLine" id="cb12-6" title="6"><span class="co">#&gt; 2 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.21   2017 2017-01-01    NA    NA</span></a>
-<a class="sourceLine" id="cb12-7" title="7"><span class="co">#&gt; 3 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.64   2016 2016-01-01    NA    NA</span></a>
-<a class="sourceLine" id="cb12-8" title="8"><span class="co">#&gt; 4 ELEC.CONS_TOT_BTU.COW-AK-98.M NA      2019 2019-04-01     4    NA</span></a>
-<a class="sourceLine" id="cb12-9" title="9"><span class="co">#&gt; 5 ELEC.CONS_TOT_BTU.COW-AK-98.M NA      2019 2019-03-01     3    NA</span></a>
-<a class="sourceLine" id="cb12-10" title="10"><span class="co">#&gt; 6 ELEC.CONS_TOT_BTU.COW-AK-98.M  0.918  2019 2019-02-01     2    NA</span></a>
-<a class="sourceLine" id="cb12-11" title="11"><span class="co">#&gt; 7 ELEC.CONS_TOT_BTU.COW-AK-98.Q NA      2019 2019-01-01    NA     1</span></a>
-<a class="sourceLine" id="cb12-12" title="12"><span class="co">#&gt; 8 ELEC.CONS_TOT_BTU.COW-AK-98.Q NA      2018 2018-10-01    NA     4</span></a>
-<a class="sourceLine" id="cb12-13" title="13"><span class="co">#&gt; 9 ELEC.CONS_TOT_BTU.COW-AK-98.Q  2.80   2018 2018-07-01    NA     3</span></a></code></pre></div>
+<a class="sourceLine" id="cb12-3" title="3"><span class="co">#&gt;   series_id                      value date        year month   qtr</span></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="co">#&gt;   &lt;chr&gt;                          &lt;dbl&gt; &lt;date&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="co">#&gt; 1 ELEC.CONS_TOT_BTU.COW-AK-98.A 10.5   2018-01-01  2018    NA    NA</span></a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="co">#&gt; 2 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.21  2017-01-01  2017    NA    NA</span></a>
+<a class="sourceLine" id="cb12-7" title="7"><span class="co">#&gt; 3 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.64  2016-01-01  2016    NA    NA</span></a>
+<a class="sourceLine" id="cb12-8" title="8"><span class="co">#&gt; 4 ELEC.CONS_TOT_BTU.COW-AK-98.M NA     2019-04-01  2019     4    NA</span></a>
+<a class="sourceLine" id="cb12-9" title="9"><span class="co">#&gt; 5 ELEC.CONS_TOT_BTU.COW-AK-98.M NA     2019-03-01  2019     3    NA</span></a>
+<a class="sourceLine" id="cb12-10" title="10"><span class="co">#&gt; 6 ELEC.CONS_TOT_BTU.COW-AK-98.M  0.918 2019-02-01  2019     2    NA</span></a>
+<a class="sourceLine" id="cb12-11" title="11"><span class="co">#&gt; 7 ELEC.CONS_TOT_BTU.COW-AK-98.Q NA     2019-01-01  2019    NA     1</span></a>
+<a class="sourceLine" id="cb12-12" title="12"><span class="co">#&gt; 8 ELEC.CONS_TOT_BTU.COW-AK-98.Q NA     2018-10-01  2018    NA     4</span></a>
+<a class="sourceLine" id="cb12-13" title="13"><span class="co">#&gt; 9 ELEC.CONS_TOT_BTU.COW-AK-98.Q  2.80  2018-07-01  2018    NA     3</span></a></code></pre></div>
 </div>
 <div id="time-period-and-number-of-results" class="section level2">
 <h2 class="hasAnchor">

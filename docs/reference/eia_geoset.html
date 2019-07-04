@@ -104,7 +104,7 @@
       <a href="../articles/series.html">Time series</a>
     </li>
     <li>
-      <a href="../articles/geosets.html">Geosets</a>
+      <a href="../articles/geoset.html">Geosets</a>
     </li>
     <li>
       <a href="../articles/api.html">API details</a>
@@ -191,7 +191,7 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a tibble data frame</p>
+    <p>a tibble data frame (or a list, or character, depending on <code>tidy</code> value)</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -199,8 +199,9 @@
 The geoset API calls allow multiple regions, but expect a single series ID. This function will one API call per series ID.
 There is an expectation of similarly formatted series that can be row bound. If the IDs are for differently structured data that cannot be tidily row bound,
 you may as well make separate requests since each requires a unique API call either way.</p>
-<p>Set <code>tidy = FALSE</code> to return only the initial result of <code><a href='https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON'>jsonlite::fromJSON</a></code>.
-By default, additional processing is done to return a tibble data frame.</p>
+<p>By default, additional processing is done to return a tibble data frame.
+Set <code>tidy = FALSE</code> to return only the initial list result of <code><a href='https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON'>jsonlite::fromJSON</a></code>.
+Set <code>tidy = NA</code> to return the original JSON as a character string.</p>
 <p>Set to <code>cache = FALSE</code> to force a new API call for updated data.
 Using <code>FALSE</code> always makes a new API call and returns the result from the server.
 <code>TRUE</code> uses memoization on a per R session basis, caching the result of the function call in memory for the duration of the R session.
@@ -218,11 +219,16 @@ You can reset the entire cache by calling <code><a href='eia_clear_cache.html'>e
 <span class='no'>region</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"USA-CA"</span>, <span class='st'>"USA-NY"</span>)
 
 <span class='fu'>eia_geoset</span>(<span class='no'>key</span>, <span class='no'>id</span>[<span class='fl'>1</span>], <span class='no'>region</span>[<span class='fl'>1</span>], <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>2016</span>)
-<span class='fu'>eia_geoset</span>(<span class='no'>key</span>, <span class='no'>id</span>[<span class='fl'>2</span>], <span class='no'>region</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='fu'>eia_geoset</span>(<span class='no'>key</span>, <span class='no'>id</span>[<span class='fl'>3</span>], <span class='no'>region</span>[<span class='fl'>2</span>], <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+<span class='fu'>eia_geoset</span>(<span class='no'>key</span>, <span class='no'>id</span>[<span class='fl'>2</span>], <span class='no'>region</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+<span class='fu'>eia_geoset</span>(<span class='no'>key</span>, <span class='no'>id</span>[<span class='fl'>3</span>], <span class='no'>region</span>[<span class='fl'>2</span>], <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)
 
 <span class='co'># multiple series counted as a single API call</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>eia_geoset</span>(<span class='no'>key</span>, <span class='no'>id</span>, <span class='no'>region</span>[<span class='fl'>1</span>], <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>eia_geoset</span>(<span class='no'>key</span>, <span class='no'>id</span>, <span class='no'>region</span>[<span class='fl'>1</span>], <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+<span class='no'>x</span>$<span class='no'>data</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+
+<span class='co'># Use direct US state abbreviations or names;</span>
+<span class='co'># Use US Census region and division names.</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>eia_geoset</span>(<span class='no'>key</span>, <span class='no'>id</span>[<span class='fl'>2</span>], <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"AK"</span>, <span class='st'>"New England"</span>), <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='no'>x</span>$<span class='no'>data</span><span class='kw'>[[</span><span class='fl'>1</span>]]
 <span class='co'># }</span></pre>
   </div>
