@@ -41,17 +41,17 @@ You can reset the entire cache by calling \code{eia_clear_cache()}.
 \examples{
 \dontrun{
 key <- Sys.getenv("EIA_KEY") # your stored API key
-id <- paste0("ELEC.CONS_TOT_BTU.COW-AK-1.", c("A", "Q", "M"))
+id <- paste0("ELEC.GEN.ALL-AK-99.", c("A", "Q", "M"))
 
 x1 <- eia_series(key, id[1], start = 2016)
-x2 <- eia_series(key, id[2], n = 10)
-x3 <- eia_series(key, id[3], end = 2016, n = 10)
+x2 <- eia_series(key, id[2], n = 5)
+x3 <- eia_series(key, id[3], end = 2016, n = 5)
 x1$data[[1]]
 x2$data[[1]]
 x3$data[[1]]
 
 # multiple series counted as a single API call
-x <- eia_series(key, id, end = 2016, n = 10)
+x <- eia_series(key, id, end = 2016, n = 5)
 x$data[[1]]
 }
 }

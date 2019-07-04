@@ -7,8 +7,9 @@
 #' There is an expectation of similarly formatted series that can be row bound. If the IDs are for differently structured data that cannot be tidily row bound,
 #' you may as well make separate requests since each requires a unique API call either way.
 #'
-#' Set \code{tidy = FALSE} to return only the initial result of \code{jsonlite::fromJSON}.
 #' By default, additional processing is done to return a tibble data frame.
+#' Set \code{tidy = FALSE} to return only the initial list result of \code{jsonlite::fromJSON}.
+#' Set \code{tidy = NA} to return the original JSON as a character string.
 #'
 #' Set to \code{cache = FALSE} to force a new API call for updated data.
 #' Using \code{FALSE} always makes a new API call and returns the result from the server.
@@ -24,7 +25,7 @@
 #' @param tidy logical, return a tidier result. See details.
 #' @param cache logical, cache result for duration of R session using memoization. See details.
 #'
-#' @return a tibble data frame
+#' @return a tibble data frame (or a list, or character, depending on \code{tidy} value)
 #' @export
 #' @seealso \code{\link{eia_clear_cache}}
 #'
@@ -35,23 +36,33 @@
 #' region <- c("USA-CA", "USA-NY")
 #'
 #' eia_geoset(key, id[1], region[1], start = 2016)
-#' eia_geoset(key, id[2], region, n = 10)
-#' eia_geoset(key, id[3], region[2], end = 2016, n = 10)
+#' eia_geoset(key, id[2], region, n = 5)
+#' eia_geoset(key, id[3], region[2], end = 2016, n = 5)
 #'
 #' # multiple series counted as a single API call
-#' x <- eia_geoset(key, id, region[1], end = 2016, n = 10)
+#' x <- eia_geoset(key, id, region[1], end = 2016, n = 5)
+#' x$data[[1]]
+#'
+#' # Use direct US state abbreviations or names;
+#' # Use US Census region and division names.
+#' x <- eia_geoset(key, id[2], c("AK", "New England"), end = 2016, n = 1)
 #' x$data[[1]]
 #' }
 eia_geoset <- function(key, id, region, start = NULL, end = NULL, n = NULL,
                        tidy = TRUE, cache = TRUE){
+  region <- .to_state_abb(region)
   if(cache) .eia_geoset_memoized(key, id, region, start, end, n, tidy) else
     .eia_geoset(key, id, region, start, end, n, tidy)
 }
 
 .eia_geoset <- function(key, id, region, start = NULL, end = NULL,
                         n = NULL, tidy = TRUE){
-  f <- if(tidy) purrr::map_dfr else purrr::map
-  f(id, ~.eia_geoset_by_id(key, .x, region, start, end, n, tidy))
+  f <- if(is.na(tidy) || !tidy) purrr::map else purrr::map_dfr
+  x <- f(id, ~.eia_geoset_by_id(key, .x, region, start, end, n, tidy))
+  if(!is.data.frame(x)){
+    if(is.character(x[[1]])) x <- unlist(x)
+  }
+  x
 }
 
 .eia_geoset_memoized <- memoise::memoise(.eia_geoset)
@@ -59,8 +70,9 @@ eia_geoset <- function(key, id, region, start = NULL, end = NULL, n = NULL,
 .eia_geoset_by_id <- function(key, id, region, start = NULL,
                               end = NULL, n = NULL, tidy = TRUE){
   x <- .eia_geo_url(key, id, region, start, end, n) %>% httr::GET() %>%
-    httr::content(as = "text", encoding = "UTF-8") %>%
-    jsonlite::fromJSON()
+    httr::content(as = "text", encoding = "UTF-8")
+  if(is.na(tidy)) return(x)
+  x <- jsonlite::fromJSON(x)
   if(!tidy) return(x)
 
   x <- x$geoset
@@ -76,13 +88,12 @@ eia_geoset <- function(key, id, region, start = NULL, end = NULL, n = NULL,
     s$data <- list(tibble::as_tibble(s$data, .name_repair = f) %>%
                      .parse_series_eiadate(x$geoset$f))
     s$data[[1]]$value <- as.numeric(s$data[[1]]$value)
-    s$data[[1]] <- dplyr::select(s$data[[1]], c(2:ncol(s$data[[1]]), 1))
     idx <- which(names(s) != "data")
     d <- tibble::as_tibble(s[idx])
     d$data <- s$data
     d
   }
-  x$series <- purrr::map_dfr(x$series, f2) %>% tidyr::unnest()
+  x$series <- purrr::map_dfr(x$series, f2)
   x$geoset <- dplyr::slice(x$geoset, rep(1, nrow(x$series)))
   dplyr::bind_cols(x$geoset, x$series)
 }
@@ -97,4 +108,14 @@ eia_geoset <- function(key, id, region, start = NULL, end = NULL, n = NULL,
   url
 }
 
-.replace_null <- function(x) if(is.null(x)) NA_character_
+.to_state_abb <- function(x){
+  f <- function(x){
+    if(x %in% datasets::state.abb) return(paste0("USA-", x))
+    y <- unique(c(
+      datasets::state.abb[x == datasets::state.name],
+      datasets::state.abb[x == datasets::state.division],
+      datasets::state.abb[x == datasets::state.region]))
+    if(length(y)) paste0("USA-", y) else x
+  }
+  unique(unlist(lapply(x, f)))
+}

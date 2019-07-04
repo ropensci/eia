@@ -25,6 +25,9 @@ test_that("time series functions returns as expected", {
   expect_equal(names(x), c("request", "series"))
   expect_is(x$series, "data.frame")
   expect_equal(nrow(x$series), 3)
+
+  x <- eia_series(key, id, end = 2016, n = 10, tidy = NA)
+  expect_is(x, "character")
 })
 
 test_that("time series metadata helpers return as expected", {

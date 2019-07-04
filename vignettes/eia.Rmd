@@ -48,9 +48,9 @@ eia_cats(key, 0)
 Time series data is obtained by series ID. Most columns contain metadata. The `data` column contains the time series data.
 
 ```{r series1}
-id <- "ELEC.CONS_TOT_BTU.COW-AK-1.A"
+id <- "ELEC.GEN.ALL-99.A"
 
-(x1 <- eia_series(key, id, n = 10))
+(x1 <- eia_series(key, id, n = 5))
 
 x1$data[[1]]
 ```
@@ -58,7 +58,7 @@ x1$data[[1]]
 You can provide arguments like the following:
 
 ```{r series2, eval = FALSE}
-eia_series(key, id, n = 10)
+eia_series(key, id, n = 5)
 eia_series(key, id, end = 2016, n = 5)
 eia_series(key, id, start = 2000, end = 2016)
 ```
@@ -74,4 +74,34 @@ This allows you to use the returned results with existing code you may have that
 
 ## EIA geosets
 
-Add later...
+Geosets are metadata structures organizing time series datasets that can be mapped. Arguments to `eia_geoset` are the same as `eia_series` with the addition of `region`. Like `id`, `region` can be a vector. Most of the details are the same as before. 
+
+In the example below using total electricity generation, get the last two data points for each of and two US states. `dplyr` and `tidyr` are used here to clean up the result a bit for purposes of display.
+
+```{r geoset1}
+id <- c("ELEC.GEN.ALL-99.A")
+region <- c("USA-CA", "USA-NY")
+(x <- eia_geoset(key, id, region, n = 2))
+
+library(dplyr)
+library(tidyr)
+select(x, region, data) %>% unnest()
+```
+
+Another convenience of `eia_geoset` is the ability to provide regions in the following forms:
+
+* 2-character US state abbreviations
+* State names
+* US Census region names
+* US census division names
+
+These shortcuts make it easier to construct an API call involving several states:
+
+```{r geoset2}
+region <- c("AK", "New England")
+(x <- eia_geoset(key, id, region, n = 2))
+
+select(x, region, data) %>% unnest()
+```
+
+Even more convenient is that these names are available in R. See the `state.*` functions.

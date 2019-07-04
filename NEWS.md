@@ -2,10 +2,11 @@
 
 * Added optional memoization to API functions, adding a new `cache` argument.
 * Added anti-DOS measures, which can be adjusted using `options()`.
-* Added more documentation.
+* Added more vignettes and documentation.
 * Added helper functions for clearing cached results.
 * Added helper functions for working with EIA date strings.
 * Added helper functions for time series metadata.
+* More output formats and consistency between functions.
 * Added unit tests.
 * Minor updates to functions, documentation.
 

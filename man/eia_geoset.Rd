@@ -25,7 +25,7 @@ eia_geoset(key, id, region, start = NULL, end = NULL, n = NULL,
 \item{cache}{logical, cache result for duration of R session using memoization. See details.}
 }
 \value{
-a tibble data frame
+a tibble data frame (or a list, or character, depending on \code{tidy} value)
 }
 \description{
 Obtain EIA geoset data.
@@ -36,8 +36,9 @@ The geoset API calls allow multiple regions, but expect a single series ID. This
 There is an expectation of similarly formatted series that can be row bound. If the IDs are for differently structured data that cannot be tidily row bound,
 you may as well make separate requests since each requires a unique API call either way.
 
-Set \code{tidy = FALSE} to return only the initial result of \code{jsonlite::fromJSON}.
 By default, additional processing is done to return a tibble data frame.
+Set \code{tidy = FALSE} to return only the initial list result of \code{jsonlite::fromJSON}.
+Set \code{tidy = NA} to return the original JSON as a character string.
 
 Set to \code{cache = FALSE} to force a new API call for updated data.
 Using \code{FALSE} always makes a new API call and returns the result from the server.
@@ -51,11 +52,16 @@ id <- paste0("ELEC.GEN.ALL-99.", c("A", "Q", "M"))
 region <- c("USA-CA", "USA-NY")
 
 eia_geoset(key, id[1], region[1], start = 2016)
-eia_geoset(key, id[2], region, n = 10)
-eia_geoset(key, id[3], region[2], end = 2016, n = 10)
+eia_geoset(key, id[2], region, n = 5)
+eia_geoset(key, id[3], region[2], end = 2016, n = 5)
 
 # multiple series counted as a single API call
-x <- eia_geoset(key, id, region[1], end = 2016, n = 10)
+x <- eia_geoset(key, id, region[1], end = 2016, n = 5)
+x$data[[1]]
+
+# Use direct US state abbreviations or names;
+# Use US Census region and division names.
+x <- eia_geoset(key, id[2], c("AK", "New England"), end = 2016, n = 1)
 x$data[[1]]
 }
 }

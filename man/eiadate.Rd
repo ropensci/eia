@@ -9,24 +9,28 @@
 \usage{
 eiadate_to_date(x)
 
-date_to_eiadate(x, date_format = c("A", "Q", "M"))
+date_to_eiadate(x, date_format = c("A", "Q", "M", "W", "D"))
 
-eiadate_to_date_seq(start, end)
+eiadate_to_date_seq(start, end, weekly = FALSE)
 }
 \arguments{
-\item{x}{character, EIA date string; character or date object for for regular dates. Dates should be in year-month-day order.}
+\item{x}{character, EIA date string; character or date object for for regular dates. Dates should be in \code{yyyy-mm-dd} format.}
 
-\item{date_format}{EIA date format: "A", "Q", "M". These stand for annual, quarterly, monthly.}
+\item{date_format}{EIA date format: "A", "Q", "M", "W", "D". These stand for annual, quarterly, monthly, weekly, daily.}
 
 \item{start}{start EIA date or date.}
 
 \item{end}{end EIA date or date.}
+
+\item{weekly}{logical. See details.}
 }
 \description{
 Helper functions for manipulating and converting between regular year-month-day date strings and EIA date string notation.
 }
 \details{
 There is no reason to mix EIA date formats in this context. Functions that take EIA date strings expect a consistent format.
+Also, EIA date formats are parsed automatically from the dates themselves.
+However, daily and weekly use the same format. Too avoid ambiguity in \code{eia_date_seq}, daily is assumed; set \code{weekly = TRUE} to treat as weekly.
 }
 \examples{
 eiadate_to_date(c("201803", "201804"))

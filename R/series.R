@@ -26,17 +26,17 @@
 #' @examples
 #' \dontrun{
 #' key <- Sys.getenv("EIA_KEY") # your stored API key
-#' id <- paste0("ELEC.CONS_TOT_BTU.COW-AK-1.", c("A", "Q", "M"))
+#' id <- paste0("ELEC.GEN.ALL-AK-99.", c("A", "Q", "M"))
 #'
 #' x1 <- eia_series(key, id[1], start = 2016)
-#' x2 <- eia_series(key, id[2], n = 10)
-#' x3 <- eia_series(key, id[3], end = 2016, n = 10)
+#' x2 <- eia_series(key, id[2], n = 5)
+#' x3 <- eia_series(key, id[3], end = 2016, n = 5)
 #' x1$data[[1]]
 #' x2$data[[1]]
 #' x3$data[[1]]
 #'
 #' # multiple series counted as a single API call
-#' x <- eia_series(key, id, end = 2016, n = 10)
+#' x <- eia_series(key, id, end = 2016, n = 5)
 #' x$data[[1]]
 #' }
 eia_series <- function(key, id, start = NULL, end = NULL, n = NULL,
@@ -62,7 +62,7 @@ eia_series <- function(key, id, start = NULL, end = NULL, n = NULL,
     x <- tibble::as_tibble(x$data[[i]], .name_repair = f) %>%
       .parse_series_eiadate(x$f[i])
     x$value <- as.numeric(x$value)
-    dplyr::select(x, c(2:ncol(x), 1))
+    x
   }
   x$data <- lapply(1:nrow(x), f2)
   tibble::as_tibble(x)
@@ -71,20 +71,23 @@ eia_series <- function(key, id, start = NULL, end = NULL, n = NULL,
 .eia_series_memoized <- memoise::memoise(.eia_series)
 
 .parse_series_eiadate <- function(d, date_format){
-  new_date <- eiadate_to_date(d$date)
-  if(date_format == "Q"){
-    x <- strsplit(d$date, "[Qq]")
+  d <- dplyr::rename(d, date0 = "date")
+  d$date <- eiadate_to_date(d$date0)
+  if(date_format == "A"){
+    d$year <- as.integer(d$date0)
+  } else if(date_format == "Q"){
+    x <- strsplit(d$date0, "Q")
     d$year <- as.integer(sapply(x, "[", 1))
     d$qtr <- as.integer(sapply(x, "[", 2))
-  } else if(date_format == "M"){
-    d$year <- as.integer(substr(d$date, 1, 4))
-    d$month <- as.integer(substr(d$date, 5, 6))
-  } else if(date_format == "A"){
-    d$year <- as.integer(d$date)
+  } else if(date_format %in% c("M", "W", "D")){
+    d$year <- as.integer(substr(d$date0, 1, 4))
+    d$month <- as.integer(substr(d$date0, 5, 6))
+  } else if(date_format %in% c("W", "D")){
+    d$week <- as.integer(lubridate::isoweek(d$date))
   } else {
     stop("Unknown date format.", call. = FALSE)
   }
-  d$date <- new_date
+  d$date0 <- NULL
   d
 }
 

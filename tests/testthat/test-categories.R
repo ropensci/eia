@@ -10,6 +10,8 @@ test_that("category functions returns as expected", {
   x <- eia_cats(key, tidy = FALSE)
   expect_is(x, "list")
   expect_equal(names(x), c("request", "category"))
+  x <- eia_cats(key, tidy = NA)
+  expect_is(x, "character")
 
   x <- eia_cats(key)
   expect_is(x, "list")

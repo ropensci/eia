@@ -2,6 +2,7 @@ context("geoset")
 
 options(eia_antidos = 0)
 key <- Sys.getenv("EIA_KEY")
+library(tidyr)
 
 test_that("geoset functions returns as expected", {
   if(key == "") skip("API key not available.")
@@ -15,15 +16,20 @@ test_that("geoset functions returns as expected", {
   expect_is(x1, "tbl_df")
   expect_is(x2, "tbl_df")
   expect_is(x3, "tbl_df")
-  expect_equal(nrow(x2), 20)
-  expect_equal(nrow(x3), 10)
+  expect_equal(nrow(x2), 2)
+  expect_equal(nrow(x3), 1)
+  expect_equal(nrow(unnest(x2)), 20)
+  expect_equal(nrow(unnest(x3)), 10)
 
   x <- eia_geoset(key, id, region, end = 2016, n = 10)
   expect_is(x, "tbl_df")
-  expect_equal(nrow(x), 60)
+  expect_equal(nrow(unnest(x)), 60)
 
   x <- eia_geoset(key, id, region, end = 2016, n = 10, tidy = FALSE)
   expect_is(x, "list")
   expect_equal(length(x), 3)
   expect_is(x[[1]], "list")
+
+  x <- eia_geoset(key, id, region, end = 2016, n = 10, tidy = NA)
+  expect_is(x, "character")
 })
