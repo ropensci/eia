@@ -79,11 +79,12 @@ eia_series <- function(id, start = NULL, end = NULL, n = NULL,
     x <- strsplit(d$date0, "Q")
     d$year <- as.integer(sapply(x, "[", 1))
     d$qtr <- as.integer(sapply(x, "[", 2))
-  } else if(date_format %in% c("M", "W", "D")){
+  } else if(date_format %in% c("M", "W", "D", "H")){
     d$year <- as.integer(substr(d$date0, 1, 4))
     d$month <- as.integer(substr(d$date0, 5, 6))
-  } else if(date_format %in% c("W", "D")){
-    d$week <- as.integer(lubridate::isoweek(d$date))
+    if(date_format != "M"){
+      d$week <- as.integer(lubridate::isoweek(d$date))
+    }
   } else {
     stop("Unknown date format.", call. = FALSE)
   }

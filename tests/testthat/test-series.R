@@ -32,6 +32,13 @@ test_that("time series queries returns as expected", {
 
   x <- eia_series(id, end = 2016, n = 10, tidy = NA)
   expect_is(x, "character")
+
+  id <- "EBA.YAD-ALL.NG.H"
+  x <- eia_series(id, n = 10)
+  expect_is(x, "tbl_df")
+  expect_equal(nrow(x), 1)
+  expect_equal(dim(x$data[[1]]), c(10, 5))
+  expect_equal(names(x$data[[1]]), c("value", "date", "year", "month", "week"))
 })
 
 test_that("time series metadata helpers return as expected", {

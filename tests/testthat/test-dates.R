@@ -29,6 +29,13 @@ test_that("date helpers return as expected", {
   expect_equal(date_to_eiadate(x, "M"),
                c("201801", "201804", "201807", "201810"))
 
+  hours <- c("20190102T16Z", "20190102T20Z")
+  x <- eiadate_to_date(hours)
+  expect_equal(as.character(x),
+               c("2019-01-02 16:00:00", "2019-01-02 20:00:00"))
+  x2 <- date_to_eiadate(x, "H")
+  expect_identical(hours, x2)
+
   expect_warning(date_to_eiadate(1), "All formats failed to parse. No formats found.")
   expect_error(eiadate_to_date(1), "Not an EIA format date string.")
 })

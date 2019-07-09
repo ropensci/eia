@@ -9,14 +9,14 @@
 \usage{
 eiadate_to_date(x)
 
-date_to_eiadate(x, date_format = c("A", "Q", "M", "W", "D"))
+date_to_eiadate(x, date_format = c("A", "Q", "M", "W", "D", "H"))
 
 eiadate_to_date_seq(start, end, weekly = FALSE)
 }
 \arguments{
-\item{x}{character, EIA date string; character or date object for for regular dates. Dates should be in \code{yyyy-mm-dd} format.}
+\item{x}{character, EIA date string; character or date object for regular dates. See details.}
 
-\item{date_format}{EIA date format: "A", "Q", "M", "W", "D". These stand for annual, quarterly, monthly, weekly, daily.}
+\item{date_format}{EIA date format: "A", "Q", "M", "W", "D", "H". These stand for annual, quarterly, monthly, weekly, daily, hourly.}
 
 \item{start}{start EIA date or date.}
 
@@ -31,6 +31,9 @@ Helper functions for manipulating and converting between regular year-month-day 
 There is no reason to mix EIA date formats in this context. Functions that take EIA date strings expect a consistent format.
 Also, EIA date formats are parsed automatically from the dates themselves.
 However, daily and weekly use the same format. Too avoid ambiguity in \code{eia_date_seq}, daily is assumed; set \code{weekly = TRUE} to treat as weekly.
+
+When providing a real date or date string, such as to \code{date_to_eiadate}, dates should be in \code{yyyy-mm-dd} format,
+or at least any format that can be parsed by \code{lubridate::ymd} or \code{lubridate::ymd_hms} for dates and hourly date times, respectively.
 }
 \examples{
 eiadate_to_date(c("201803", "201804"))
@@ -41,4 +44,7 @@ date_to_eiadate("2018-05-14", "M")
 
 (x <- eiadate_to_date_seq("2018Q1", "2018Q4"))
 date_to_eiadate(x)
+
+(x <- eiadate_to_date("20190102T16Z"))
+date_to_eiadate(x, "H")
 }
