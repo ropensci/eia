@@ -4,8 +4,8 @@
 \alias{eia_geoset}
 \title{EIA geoset data}
 \usage{
-eia_geoset(key, id, region, start = NULL, end = NULL, n = NULL,
-  tidy = TRUE, cache = TRUE)
+eia_geoset(key, id, region, relation = NULL, start = NULL,
+  end = NULL, n = NULL, tidy = TRUE, cache = TRUE)
 }
 \arguments{
 \item{key}{character, API key.}
@@ -13,6 +13,8 @@ eia_geoset(key, id, region, start = NULL, end = NULL, n = NULL,
 \item{id}{character, geoset series ID, may be a vector. See details.}
 
 \item{region}{character, region ID, may be a vector. Data available for the intersection of \code{id} and \code{region} is returned.}
+
+\item{relation}{logical, make a geoset relation query instead of a geoset query. The series \code{id} is the same but is queried differently.}
 
 \item{start}{start date. Providing only a start date will return up to the maximum 100 results if available.}
 
@@ -32,8 +34,10 @@ Obtain EIA geoset data.
 }
 \details{
 \code{id} may be a vector. This should only be done with \code{tidy = TRUE} if the tidied results can be properly row bound.
-The geoset API calls allow multiple regions, but expect a single series ID. This function will one API call per series ID.
-There is an expectation of similarly formatted series that can be row bound. If the IDs are for differently structured data that cannot be tidily row bound,
+The geoset API calls allow multiple regions, but the API expects a single series ID.
+This function allows multiple series, but must make one API call per series ID.
+There is an expectation of similarly formatted series that can be row bound.
+If the IDs are for differently structured data that cannot be tidily row bound,
 you may as well make separate requests since each requires a unique API call either way.
 
 By default, additional processing is done to return a tibble data frame.

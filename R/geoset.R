@@ -3,8 +3,10 @@
 #' Obtain EIA geoset data.
 #'
 #' \code{id} may be a vector. This should only be done with \code{tidy = TRUE} if the tidied results can be properly row bound.
-#' The geoset API calls allow multiple regions, but expect a single series ID. This function will one API call per series ID.
-#' There is an expectation of similarly formatted series that can be row bound. If the IDs are for differently structured data that cannot be tidily row bound,
+#' The geoset API calls allow multiple regions, but the API expects a single series ID.
+#' This function allows multiple series, but must make one API call per series ID.
+#' There is an expectation of similarly formatted series that can be row bound.
+#' If the IDs are for differently structured data that cannot be tidily row bound,
 #' you may as well make separate requests since each requires a unique API call either way.
 #'
 #' By default, additional processing is done to return a tibble data frame.
@@ -22,6 +24,7 @@
 #' @param start start date. Providing only a start date will return up to the maximum 100 results if available.
 #' @param end end date. Providing only an end date will a single result for that date.
 #' @param n integer, length of series to return ending at most recent value or at \code{end} date if also provided. Ignored if \code{start} is not \code{NULL}.
+#' @param relation logical, make a geoset relation query instead of a geoset query. The series \code{id} is the same but is queried differently.
 #' @param tidy logical, return a tidier result. See details.
 #' @param cache logical, cache result for duration of R session using memoization. See details.
 #'
@@ -48,17 +51,19 @@
 #' x <- eia_geoset(key, id[2], c("AK", "New England"), end = 2016, n = 1)
 #' x$data[[1]]
 #' }
-eia_geoset <- function(key, id, region, start = NULL, end = NULL, n = NULL,
+eia_geoset <- function(key, id, region, relation = NULL, start = NULL, end = NULL, n = NULL,
                        tidy = TRUE, cache = TRUE){
   region <- .to_state_abb(region)
-  if(cache) .eia_geoset_memoized(key, id, region, start, end, n, tidy) else
-    .eia_geoset(key, id, region, start, end, n, tidy)
+  if(cache){
+    .eia_geoset_memoized(key, id, region, relation, start, end, n, tidy)
+  } else {
+    .eia_geoset(key, id, region, relation, start, end, n, tidy)
+  }
 }
 
-.eia_geoset <- function(key, id, region, start = NULL, end = NULL,
-                        n = NULL, tidy = TRUE){
+.eia_geoset <- function(key, id, region, relation, start, end, n, tidy){
   f <- if(is.na(tidy) || !tidy) purrr::map else purrr::map_dfr
-  x <- f(id, ~.eia_geoset_by_id(key, .x, region, start, end, n, tidy))
+  x <- f(id, ~.eia_geoset_by_id(key, .x, region, relation, start, end, n, tidy))
   if(!is.data.frame(x)){
     if(is.character(x[[1]])) x <- unlist(x)
   }
@@ -67,10 +72,8 @@ eia_geoset <- function(key, id, region, start = NULL, end = NULL, n = NULL,
 
 .eia_geoset_memoized <- memoise::memoise(.eia_geoset)
 
-.eia_geoset_by_id <- function(key, id, region, start = NULL,
-                              end = NULL, n = NULL, tidy = TRUE){
-  x <- .eia_geo_url(key, id, region, start, end, n) %>% httr::GET() %>%
-    httr::content(as = "text", encoding = "UTF-8")
+.eia_geoset_by_id <- function(key, id, region, relation, start, end, n, tidy){
+  x <- .eia_geo_url(key, id, region, relation, start, end, n) %>% .eia_get()
   if(is.na(tidy)) return(x)
   x <- jsonlite::fromJSON(x)
   if(!tidy) return(x)
@@ -98,10 +101,11 @@ eia_geoset <- function(key, id, region, start = NULL, end = NULL, n = NULL,
   dplyr::bind_cols(x$geoset, x$series)
 }
 
-.eia_geo_url <- function(key, id, region, start = NULL, end = NULL, n = NULL){
-  params <- .eia_time_params(start, end, n, n_default = 1)
-  url <- .eia_url(key, id, "geoset")
+.eia_geo_url <- function(key, id, region, relation, start, end, n){
+  params <- .eia_time_params(start, end, n)
+  url <- .eia_url(key, id, if(is.null(relation)) "geoset" else "relation")
   url <- paste0(url, "&regions=", paste0(region, collapse = ";"))
+  if(!is.null(relation)) url <- paste0(url, "&relation_id=", relation)
   if(!is.null(params$start)) url <- paste0(url, "&start=", params$start)
   if(!is.null(params$end)) url <- paste0(url, "&end=", params$end)
   if(!is.null(params$n)) url <- paste0(url, "&num=", params$n)
