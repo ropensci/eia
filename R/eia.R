@@ -23,26 +23,26 @@ NULL
 NULL
 
 .eia_url <- function(key, id = NULL,
-                     endpoint = c("category", "series", "geoset")){
+                     endpoint = c("category", "series", "geoset", "relation"),
+                     relation = FALSE){
   endpoint <- match.arg(endpoint)
   if(is.null(id)){
     id <- "?"
   } else {
-    id <- paste0("?", endpoint, "_id=", paste0(id, collapse = ";"), "&")
+    epid <- if(endpoint == "relation") "geoset" else endpoint
+    id <- paste0("?", epid, "_id=", paste0(id, collapse = ";"), "&")
   }
   paste0("http://api.eia.gov/", endpoint, "/", id, "api_key=", key, "&out=json")
 }
 
-.eia_time_params <- function(start = NULL, end = NULL, n = NULL, n_default = 1){
+.eia_time_params <- function(start = NULL, end = NULL, n = NULL){
   if(!is.null(start)) n <- NULL
   if(is.null(start) & is.null(end)){
-    if(is.null(n)) n <- n_default
     return(list(start = start, end = end, n = n))
   }
   if(!is.null(start) & !is.null(end)){
     return(list(start = start, end = end, n = NULL))
   }
-  if(is.null(n) & is.null(start)) n <- n_default
   list(start = start, end = end, n = n)
 }
 
@@ -50,7 +50,8 @@ NULL
   .antidos_before("eia")
   x <- httr::GET(x)
   .antidos_after("eia")
-  x
+  if(x$status_code == "404") stop("Page not found", call. = FALSE)
+  httr::content(x, as = "text", encoding = "UTF-8")
 }
 
 .antidos_before <- function(x, sec = getOption("eia_antidos", 1)){

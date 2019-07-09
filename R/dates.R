@@ -67,8 +67,7 @@ is_eiadate <- function(x){
     grepl("^\\d\\d\\d\\d\\d\\d\\d\\d$", x)
 }
 
-eiadate_format <- function(x, weekly = FALSE, override = NULL){
-  if(!is.null(override)) return(override)
+eiadate_format <- function(x, weekly = FALSE){
   if(any(!is_eiadate(x))) stop("Not an EIA format date string.", call. = FALSE)
   if(grepl("^\\d\\d\\d\\d\\d\\d\\d\\d$", x[1])){
     if(weekly) "W" else "D"
@@ -78,7 +77,5 @@ eiadate_format <- function(x, weekly = FALSE, override = NULL){
     "A"
   } else if(grepl("Q", x[1])){
     "Q"
-  } else {
-    stop("Unknown date format.", call. = FALSE)
   }
 }
