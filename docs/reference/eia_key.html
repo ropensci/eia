@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EIA categories — eia_cats • eia</title>
+<title>Set and get API key — eia_key • eia</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="EIA categories — eia_cats" />
+<meta property="og:title" content="Set and get API key — eia_key" />
 
-<meta property="og:description" content="Obtain EIA categories." />
+<meta property="og:description" content="Set and get API key" />
 
 <meta property="og:image" content="http://leonawicz.github.io/eia/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -138,22 +138,20 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>EIA categories</h1>
-    <small class="dont-index">Source: <a href='https://github.com/leonawicz/eia/blob/master/R/categories.R'><code>R/categories.R</code></a></small>
-    <div class="hidden name"><code>eia_cats.Rd</code></div>
+    <h1>Set and get API key</h1>
+    <small class="dont-index">Source: <a href='https://github.com/leonawicz/eia/blob/master/R/key.R'><code>R/key.R</code></a></small>
+    <div class="hidden name"><code>eia_key.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Obtain EIA categories.</p>
+    <p>Set and get API key</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>eia_cats</span>(<span class='no'>key</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tidy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='fu'>eia_set_key</span>(<span class='no'>key</span>, <span class='kw'>store</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"env"</span>, <span class='st'>"options"</span>, <span class='st'>"sysenv"</span>))
 
-<span class='fu'>eia_child_cats</span>(<span class='no'>key</span>, <span class='no'>id</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='fu'>eia_parent_cats</span>(<span class='no'>key</span>, <span class='no'>id</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>eia_get_key</span>(<span class='kw'>store</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"env"</span>, <span class='st'>"options"</span>, <span class='st'>"sysenv"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -163,48 +161,43 @@
       <td><p>character, API key.</p></td>
     </tr>
     <tr>
-      <th>id</th>
-      <td><p>integer, category ID. If <code>NULL</code>, the API root category.</p></td>
-    </tr>
-    <tr>
-      <th>tidy</th>
-      <td><p>logical, return a tidier result. See details.</p></td>
-    </tr>
-    <tr>
-      <th>cache</th>
-      <td><p>logical, cache result for duration of R session using memoization. See details.</p></td>
+      <th>store</th>
+      <td><p>character, method for storing API key. See details.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>for <code>eia_cats</code>, a list of tibble data frames (or a less processed list, or character, depending on <code>tidy</code> value); others functions return a tibble data frame.</p>
+    <p><code>eia_get_key</code> returns the key string or an error. <code>eia_set_key</code> returns a success message or an error.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>By default, additional processing is done to return a list containing tibble data frames.
-Set <code>tidy = FALSE</code> to return only the initial list result of <code><a href='https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON'>jsonlite::fromJSON</a></code>.
-Set <code>tidy = NA</code> to return the original JSON as a character string.</p>
-<p>Set to <code>cache = FALSE</code> to force a new API call for updated data.
-Using <code>FALSE</code> always makes a new API call and returns the result from the server.
-<code>TRUE</code> uses memoization on a per R session basis, caching the result of the function call in memory for the duration of the R session.
-You can reset the entire cache by calling <code>eia_clear_cache</code>.</p>
-<p><code>eia_child_cats</code> returns only the immediate child categories. <code>eia_parent_cats</code> returns all parents.
-These are wrappers around <code>eia_cats</code> and always return a tibble data frame.</p>
+    <p>Setter and getter helpers allow you to store your EIA API key in one of three ways.
+Their use is optional. You can always pass the API key string to the <code>key</code> argument of any package function that requires it,
+but you do not have to.</p>
+<p>By default the <code>key</code> argument for these functions is <code>key = eia_get_key()</code>.
+If your key has been stored in a manner that can be retrieved,
+then you can call all the package API functions without having to provide the <code>key</code> argument repeatedly.</p>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="key-storage-methods"><a class="anchor" href="#key-storage-methods"></a>Key storage methods</h2>
 
-    <div class='dont-index'><p><code><a href='eia_clear_cache.html'>eia_clear_cache</a></code></p></div>
+    
+    <p>If you have already set your key globally somewhere using <code>eia_set_key</code>, <code>eia_get_key</code> will retrieve it.
+You can add the <code>EIA_KEY = "yourkey"</code> key-value pair to <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>options()</a></code> or as a system environment variable yourself and <code>eia_get_key</code>
+will pick it up as long as you use the name <code>EIA_KEY</code>. For convenience you can do this in your R session with <code>eia_set_key</code>.
+It gives you three options for how to store the key. The default is to use the <code>eia</code> package environment that is created when the package is loaded.</p>
+    
+    <h2 class="hasAnchor" id="precedence"><a class="anchor" href="#precedence"></a>Precedence</h2>
+
+    
+    <p>Choose one method when setting a key. When getting the key, the three locations are checked in the order:
+package environment, <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>options()</a></code>, then the system environment. To override the order, specify the method explicitly and the check will only occur there.
+This also makes it possible to override a system level key by working with one stored in the package environment or <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>options()</a></code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>key</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.getenv'>Sys.getenv</a></span>(<span class='st'>"EIA_KEY"</span>) <span class='co'># your stored API key</span>
-<span class='fu'>eia_cats</span>(<span class='no'>key</span>)
-
-<span class='fu'>eia_child_cats</span>(<span class='no'>key</span>, <span class='fl'>389</span>) <span class='co'># immedate children</span>
-<span class='fu'>eia_parent_cats</span>(<span class='no'>key</span>, <span class='fl'>742</span>) <span class='co'># all parents</span>
-<span class='co'># }</span></pre>
+    <pre class="examples"><div class='input'><span class='fu'>eia_set_key</span>(<span class='st'>"fake"</span>)</div><div class='output co'>#&gt; <span class='message'>Key stored successfully in package environment.</span></div><div class='input'><span class='fu'>eia_get_key</span>()</div><div class='output co'>#&gt; [1] "fake"</div><div class='input'># eia_get_key("options") returns an error if not set
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -215,7 +208,9 @@ These are wrappers around <code>eia_cats</code> and always return a tibble data 
 
       <li><a href="#details">Details</a></li>
 
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#key-storage-methods">Key storage methods</a></li>
+
+      <li><a href="#precedence">Precedence</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

@@ -151,7 +151,7 @@
 
     <pre class="usage"><span class='fu'>eia_series_metadata</span>(<span class='no'>key</span>, <span class='no'>id</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'>eia_series_updated</span>(<span class='no'>key</span>, <span class='no'>id</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>eia_series_updates</span>(<span class='no'>key</span>, <span class='no'>id</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>eia_series_dates</span>(<span class='no'>key</span>, <span class='no'>id</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
@@ -184,6 +184,15 @@
 for example: maintaining order, generating sequences, computing intervals,
 and other operations that work well with dates but would be difficult using arbitrary strings.
 Keep in mind that of course these are not real dates, in the sense that you cannot map a year to a specific date.</p>
+<p><code>eia_series_updates</code> returns a data frame of most recent series update times for <code>id</code>.
+Like the other metadata helpers, this does require an API call to the series to obtain the relevant metadata.
+This can be useful if you are only interested in these update times for a specific set of series IDs.
+If you need to know the most recent update stamps for a large set of series, you should use <code><a href='eia_updates.html'>eia_updates</a></code>
+instead, which makes an API call specifically to the EIA <code>updates</code> endpoint for specific EIA categories by category ID.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='eia_updates.html'>eia_updates</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -192,7 +201,7 @@ Keep in mind that of course these are not real dates, in the sense that you cann
 <span class='no'>id</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"ELEC.CONS_TOT_BTU.COW-AK-1."</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"Q"</span>, <span class='st'>"M"</span>))
 
 <span class='fu'>eia_series_metadata</span>(<span class='no'>key</span>, <span class='no'>id</span>)
-<span class='fu'>eia_series_updated</span>(<span class='no'>key</span>, <span class='no'>id</span>)
+<span class='fu'>eia_series_updates</span>(<span class='no'>key</span>, <span class='no'>id</span>)
 <span class='fu'>eia_series_dates</span>(<span class='no'>key</span>, <span class='no'>id</span>)
 <span class='fu'>eia_series_range</span>(<span class='no'>key</span>, <span class='no'>id</span>)
 <span class='co'># }</span></pre>
@@ -205,6 +214,8 @@ Keep in mind that of course these are not real dates, in the sense that you cann
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

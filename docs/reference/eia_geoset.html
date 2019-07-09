@@ -149,8 +149,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>eia_geoset</span>(<span class='no'>key</span>, <span class='no'>id</span>, <span class='no'>region</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>tidy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>eia_geoset</span>(<span class='no'>key</span>, <span class='no'>id</span>, <span class='no'>region</span>, <span class='kw'>relation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tidy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,6 +166,10 @@
     <tr>
       <th>region</th>
       <td><p>character, region ID, may be a vector. Data available for the intersection of <code>id</code> and <code>region</code> is returned.</p></td>
+    </tr>
+    <tr>
+      <th>relation</th>
+      <td><p>logical, make a geoset relation query instead of a geoset query. The series <code>id</code> is the same but is queried differently.</p></td>
     </tr>
     <tr>
       <th>start</th>
@@ -196,8 +200,10 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>id</code> may be a vector. This should only be done with <code>tidy = TRUE</code> if the tidied results can be properly row bound.
-The geoset API calls allow multiple regions, but expect a single series ID. This function will one API call per series ID.
-There is an expectation of similarly formatted series that can be row bound. If the IDs are for differently structured data that cannot be tidily row bound,
+The geoset API calls allow multiple regions, but the API expects a single series ID.
+This function allows multiple series, but must make one API call per series ID.
+There is an expectation of similarly formatted series that can be row bound.
+If the IDs are for differently structured data that cannot be tidily row bound,
 you may as well make separate requests since each requires a unique API call either way.</p>
 <p>By default, additional processing is done to return a tibble data frame.
 Set <code>tidy = FALSE</code> to return only the initial list result of <code><a href='https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON'>jsonlite::fromJSON</a></code>.

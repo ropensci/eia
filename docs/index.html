@@ -114,44 +114,43 @@
 <p><strong>Author:</strong> <a href="https://leonawicz.github.io/blog/">Matthew Leonawicz</a> <a href="https://orcid.org/0000-0001-9452-2771" target="orcid.widget"> <image class="orcid" src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" height="16"></image></a> <br><strong>License:</strong> <a href="https://opensource.org/licenses/MIT">MIT</a><br></p>
 <p><a href="https://ci.appveyor.com/project/leonawicz/eia"><img src="https://ci.appveyor.com/api/projects/status/github/leonawicz/eia?branch=master&amp;svg=true" alt="AppVeyor build status"></a> <a href="https://travis-ci.org/leonawicz/eia"><img src="https://travis-ci.org/leonawicz/eia.svg?branch=master" alt="Travis build status"></a> <a href="https://codecov.io/gh/leonawicz/eia?branch=master"><img src="https://codecov.io/gh/leonawicz/eia/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></p>
 <p>The <code>eia</code> package provides API access to data from the US <a href="https://www.eia.gov/">Energy Information Administration</a> (EIA).</p>
+<p>Pulling data from the US Energy Information Administration (EIA) API requires a registered API key. A key can be obtained at no cost <a href="https://www.eia.gov/opendata/register.php">here</a>. A valid email and agreement to the API Terms of Service is required to obtain a key.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the released version of <code>eia</code> from <a href="https://CRAN.R-project.org">CRAN</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"eia"</span>)</a></code></pre></div>
 <p>You can install the development version of <code>eia</code> from GitHub with:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># install.packages("remotes")</span></a>
-<a class="sourceLine" id="cb2-2" title="2">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"leonawicz/eia"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># install.packages("remotes")</span></a>
+<a class="sourceLine" id="cb1-2" title="2">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"leonawicz/eia"</span>)</a></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<p>Load a time series of total electricity consumption:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eia)</a>
-<a class="sourceLine" id="cb3-2" title="2">key &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.getenv">Sys.getenv</a></span>(<span class="st">"EIA_KEY"</span>)</a>
-<a class="sourceLine" id="cb3-3" title="3">id &lt;-<span class="st"> "ELEC.CONS_TOT_BTU.COW-AK-1.A"</span></a>
-<a class="sourceLine" id="cb3-4" title="4">(d &lt;-<span class="st"> </span><span class="kw"><a href="reference/eia_series.html">eia_series</a></span>(key, id, <span class="dt">n =</span> <span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co">#&gt; # A tibble: 1 x 13</span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt;   series_id name  units f     description copyright source iso3166</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;  </span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="co">#&gt; 1 ELEC.CON~ Tota~ mill~ A     "Summation~ None      EIA, ~ USA-AK </span></a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="co">#&gt; # ... with 5 more variables: geography &lt;chr&gt;, start &lt;chr&gt;, end &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="co">#&gt; #   updated &lt;chr&gt;, data &lt;list&gt;</span></a>
-<a class="sourceLine" id="cb3-11" title="11"></a>
-<a class="sourceLine" id="cb3-12" title="12">d<span class="op">$</span>data[[<span class="dv">1</span>]]</a>
-<a class="sourceLine" id="cb3-13" title="13"><span class="co">#&gt; # A tibble: 10 x 3</span></a>
-<a class="sourceLine" id="cb3-14" title="14"><span class="co">#&gt;    value date        year</span></a>
-<a class="sourceLine" id="cb3-15" title="15"><span class="co">#&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb3-16" title="16"><span class="co">#&gt;  1  7.35 2018-01-01  2018</span></a>
-<a class="sourceLine" id="cb3-17" title="17"><span class="co">#&gt;  2  5.95 2017-01-01  2017</span></a>
-<a class="sourceLine" id="cb3-18" title="18"><span class="co">#&gt;  3  6.21 2016-01-01  2016</span></a>
-<a class="sourceLine" id="cb3-19" title="19"><span class="co">#&gt;  4  7.58 2015-01-01  2015</span></a>
-<a class="sourceLine" id="cb3-20" title="20"><span class="co">#&gt;  5  6.53 2014-01-01  2014</span></a>
-<a class="sourceLine" id="cb3-21" title="21"><span class="co">#&gt;  6  2.59 2013-01-01  2013</span></a>
-<a class="sourceLine" id="cb3-22" title="22"><span class="co">#&gt;  7  2.92 2012-01-01  2012</span></a>
-<a class="sourceLine" id="cb3-23" title="23"><span class="co">#&gt;  8  2.42 2011-01-01  2011</span></a>
-<a class="sourceLine" id="cb3-24" title="24"><span class="co">#&gt;  9  2.61 2010-01-01  2010</span></a>
-<a class="sourceLine" id="cb3-25" title="25"><span class="co">#&gt; 10  2.88 2009-01-01  2009</span></a></code></pre></div>
+<p>Load a time series of net electricity generation:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eia)</a>
+<a class="sourceLine" id="cb2-2" title="2">key &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.getenv">Sys.getenv</a></span>(<span class="st">"EIA_KEY"</span>)</a>
+<a class="sourceLine" id="cb2-3" title="3">id &lt;-<span class="st"> "ELEC.GEN.ALL-AK-99.A"</span></a>
+<a class="sourceLine" id="cb2-4" title="4">(d &lt;-<span class="st"> </span><span class="kw"><a href="reference/eia_series.html">eia_series</a></span>(key, id, <span class="dt">n =</span> <span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="co">#&gt; # A tibble: 1 x 13</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="co">#&gt;   series_id name  units f     description copyright source iso3166</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;  </span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="co">#&gt; 1 ELEC.GEN~ Net ~ thou~ A     "Summation~ None      EIA, ~ USA-AK </span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="co">#&gt; # ... with 5 more variables: geography &lt;chr&gt;, start &lt;chr&gt;, end &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="co">#&gt; #   updated &lt;chr&gt;, data &lt;list&gt;</span></a>
+<a class="sourceLine" id="cb2-11" title="11"></a>
+<a class="sourceLine" id="cb2-12" title="12">d<span class="op">$</span>data[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="co">#&gt; # A tibble: 10 x 3</span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="co">#&gt;    value date        year</span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="co">#&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb2-16" title="16"><span class="co">#&gt;  1 6515. 2018-01-01  2018</span></a>
+<a class="sourceLine" id="cb2-17" title="17"><span class="co">#&gt;  2 6497. 2017-01-01  2017</span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="co">#&gt;  3 6335. 2016-01-01  2016</span></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="co">#&gt;  4 6285. 2015-01-01  2015</span></a>
+<a class="sourceLine" id="cb2-20" title="20"><span class="co">#&gt;  5 6043. 2014-01-01  2014</span></a>
+<a class="sourceLine" id="cb2-21" title="21"><span class="co">#&gt;  6 6497. 2013-01-01  2013</span></a>
+<a class="sourceLine" id="cb2-22" title="22"><span class="co">#&gt;  7 6946. 2012-01-01  2012</span></a>
+<a class="sourceLine" id="cb2-23" title="23"><span class="co">#&gt;  8 6871. 2011-01-01  2011</span></a>
+<a class="sourceLine" id="cb2-24" title="24"><span class="co">#&gt;  9 6760. 2010-01-01  2010</span></a>
+<a class="sourceLine" id="cb2-25" title="25"><span class="co">#&gt; 10 6702. 2009-01-01  2009</span></a></code></pre></div>
 <p>See the package vignettes for more details and examples.</p>
 </div>
 </div>

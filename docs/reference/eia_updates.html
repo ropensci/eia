@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>EIA categories — eia_cats • eia</title>
+<title>EIA data updates — eia_updates • eia</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -39,9 +39,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="EIA categories — eia_cats" />
+<meta property="og:title" content="EIA data updates — eia_updates" />
 
-<meta property="og:description" content="Obtain EIA categories." />
+<meta property="og:description" content="Obtain information on EIA data series updates for a given category to avoid having to make requests for data that have not been updated since your last request." />
 
 <meta property="og:image" content="http://leonawicz.github.io/eia/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -138,72 +138,75 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>EIA categories</h1>
+    <h1>EIA data updates</h1>
     <small class="dont-index">Source: <a href='https://github.com/leonawicz/eia/blob/master/R/categories.R'><code>R/categories.R</code></a></small>
-    <div class="hidden name"><code>eia_cats.Rd</code></div>
+    <div class="hidden name"><code>eia_updates.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Obtain EIA categories.</p>
+    <p>Obtain information on EIA data series updates for a given category to avoid having to make requests for data that have not been updated since your last request.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>eia_cats</span>(<span class='no'>key</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tidy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='fu'>eia_child_cats</span>(<span class='no'>key</span>, <span class='no'>id</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='fu'>eia_parent_cats</span>(<span class='no'>key</span>, <span class='no'>id</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>eia_updates</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>50</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>tidy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>key</th>
-      <td><p>character, API key.</p></td>
+      <th>id</th>
+      <td><p>integer, category ID, may be a vector. If <code>NULL</code>, the API root category.</p></td>
     </tr>
     <tr>
-      <th>id</th>
-      <td><p>integer, category ID. If <code>NULL</code>, the API root category.</p></td>
+      <th>deep</th>
+      <td><p>logical, if <code>TRUE</code>, return information on all child series. If <code>FALSE</code> (default), return only for the category <code>id</code>.</p></td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td><p>integer, maximum number of rows of series to return. Defaults to 50; maximum permitted by the API is 10,000.</p></td>
+    </tr>
+    <tr>
+      <th>start</th>
+      <td><p>integer, row to start from, defaults to 1.</p></td>
     </tr>
     <tr>
       <th>tidy</th>
       <td><p>logical, return a tidier result. See details.</p></td>
     </tr>
     <tr>
-      <th>cache</th>
-      <td><p>logical, cache result for duration of R session using memoization. See details.</p></td>
+      <th>key</th>
+      <td><p>API key: character if set explicitly in function call; by default a globally set key is retrieved by <code>eia_get_key</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>for <code>eia_cats</code>, a list of tibble data frames (or a less processed list, or character, depending on <code>tidy</code> value); others functions return a tibble data frame.</p>
+    <p>a tibble data frame (or a list, or character, depending on <code>tidy</code> value)</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>By default, additional processing is done to return a list containing tibble data frames.
+    <p>This function returns paginated results of the most recent update dates for data series.
+<code>n</code> and <code>start</code> help with stepping through chunks.</p>
+<p>If you need to know the most recent update stamps for a large set of series, you should use this function,
+which makes an API call specifically to the EIA <code>updates</code> endpoint for specific EIA categories by category ID.
+If you are only interested in update times for a specific set of series IDs,
+you can use <code><a href='eia_series_metadata.html'>eia_series_updates</a></code>.
+Note that while this function accepts a vector of IDs for <code>id</code>, it must make one API call per ID.</p>
+<p>By default, additional processing is done to return a tibble data frame.
 Set <code>tidy = FALSE</code> to return only the initial list result of <code><a href='https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON'>jsonlite::fromJSON</a></code>.
 Set <code>tidy = NA</code> to return the original JSON as a character string.</p>
-<p>Set to <code>cache = FALSE</code> to force a new API call for updated data.
-Using <code>FALSE</code> always makes a new API call and returns the result from the server.
-<code>TRUE</code> uses memoization on a per R session basis, caching the result of the function call in memory for the duration of the R session.
-You can reset the entire cache by calling <code>eia_clear_cache</code>.</p>
-<p><code>eia_child_cats</code> returns only the immediate child categories. <code>eia_parent_cats</code> returns all parents.
-These are wrappers around <code>eia_cats</code> and always return a tibble data frame.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='eia_clear_cache.html'>eia_clear_cache</a></code></p></div>
+    <div class='dont-index'><p><code><a href='eia_series_metadata.html'>eia_series_updates</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>key</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.getenv'>Sys.getenv</a></span>(<span class='st'>"EIA_KEY"</span>) <span class='co'># your stored API key</span>
-<span class='fu'>eia_cats</span>(<span class='no'>key</span>)
-
-<span class='fu'>eia_child_cats</span>(<span class='no'>key</span>, <span class='fl'>389</span>) <span class='co'># immedate children</span>
-<span class='fu'>eia_parent_cats</span>(<span class='no'>key</span>, <span class='fl'>742</span>) <span class='co'># all parents</span>
+<span class='co'># use eia_set_key() to store stored API key</span>
+<span class='fu'>eia_updates</span>(<span class='fl'>742</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

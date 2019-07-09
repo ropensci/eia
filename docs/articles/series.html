@@ -459,7 +459,7 @@
 <a class="sourceLine" id="cb16-7" title="7"><span class="co">#&gt; 3 ELEC.CON~ Tota~ mill~ Q     "Summation~ None      EIA, ~ USA-AK </span></a>
 <a class="sourceLine" id="cb16-8" title="8"><span class="co">#&gt; # ... with 4 more variables: geography &lt;chr&gt;, start &lt;chr&gt;, end &lt;chr&gt;,</span></a>
 <a class="sourceLine" id="cb16-9" title="9"><span class="co">#&gt; #   updated &lt;chr&gt;</span></a>
-<a class="sourceLine" id="cb16-10" title="10"><span class="kw"><a href="../reference/eia_series_metadata.html">eia_series_updated</a></span>(key, id)</a>
+<a class="sourceLine" id="cb16-10" title="10"><span class="kw"><a href="../reference/eia_series_metadata.html">eia_series_updates</a></span>(key, id)</a>
 <a class="sourceLine" id="cb16-11" title="11"><span class="co">#&gt; # A tibble: 3 x 2</span></a>
 <a class="sourceLine" id="cb16-12" title="12"><span class="co">#&gt;   series_id                     updated                 </span></a>
 <a class="sourceLine" id="cb16-13" title="13"><span class="co">#&gt;   &lt;chr&gt;                         &lt;chr&gt;                   </span></a>
@@ -511,6 +511,37 @@
 <a class="sourceLine" id="cb19-4" title="4"><span class="co">#&gt; [1] "2018" "2018" "2018" "2018"</span></a></code></pre></div>
 </div>
 </div>
+<div id="checking-for-data-updates" class="section level2">
+<h2 class="hasAnchor">
+<a href="#checking-for-data-updates" class="anchor"></a>Checking for data updates</h2>
+<p>It is good practice to minimize the number of API calls you make wherever possible. One way to do this is to not request data that has not changed since you last requested it. You can make an API call to the EIA <code>updates</code> endpoint to check update times on data series. If any series have not been updated since you last obtained the data, then you know you do not need to request the data again.</p>
+<p>The <code>eia_series_updates</code> function shown above is handy for checking the most recent data update times of a specific set of series IDs. However, it must make one or more API calls to do so. For general checks on a potentially large number of series without having to query them all, you should use <code>eia_updates</code>. This function takes a category ID and can return the last update times for all series under that category.</p>
+<p>If a category level has no series directly associated with it, an empty data frame is returned.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw"><a href="../reference/eia_updates.html">eia_updates</a></span>(<span class="dv">389</span>)</a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="co">#&gt; # A tibble: 0 x 2</span></a>
+<a class="sourceLine" id="cb20-3" title="3"><span class="co">#&gt; # ... with 2 variables: series_id &lt;chr&gt;, updated &lt;chr&gt;</span></a></code></pre></div>
+<p>If a category has series available, paginated results are returned in a data frame. You can use <code>n</code> and <code>start</code> (together, unlike for general data requests with <code>eia_series</code>) to indicate how many rows to return and where to start. This helps you to cycle through pages of results. By default, <code>n = 50</code> and <code>start = 1</code>. The EIA API <code>updates</code> endpoint allows a maximum of <code>n = 10000</code>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw"><a href="../reference/eia_updates.html">eia_updates</a></span>(<span class="dv">742</span>, <span class="dt">n =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb21-2" title="2"><span class="co">#&gt; # A tibble: 5 x 2</span></a>
+<a class="sourceLine" id="cb21-3" title="3"><span class="co">#&gt;   series_id                    updated                 </span></a>
+<a class="sourceLine" id="cb21-4" title="4"><span class="co">#&gt;   &lt;chr&gt;                        &lt;chr&gt;                   </span></a>
+<a class="sourceLine" id="cb21-5" title="5"><span class="co">#&gt; 1 ELEC.CONS_TOT_BTU.COW-AK-1.A 2019-06-25T20:15:57-0400</span></a>
+<a class="sourceLine" id="cb21-6" title="6"><span class="co">#&gt; 2 ELEC.CONS_TOT_BTU.COW-AK-1.M 2019-06-25T20:15:57-0400</span></a>
+<a class="sourceLine" id="cb21-7" title="7"><span class="co">#&gt; 3 ELEC.CONS_TOT_BTU.COW-AK-1.Q 2019-06-25T20:15:57-0400</span></a>
+<a class="sourceLine" id="cb21-8" title="8"><span class="co">#&gt; 4 ELEC.CONS_TOT_BTU.COW-AL-1.A 2019-06-25T20:15:57-0400</span></a>
+<a class="sourceLine" id="cb21-9" title="9"><span class="co">#&gt; 5 ELEC.CONS_TOT_BTU.COW-AL-1.M 2019-06-25T20:15:57-0400</span></a></code></pre></div>
+<p>Set <code>deep = TRUE</code> to obtain series associated with child categories. Category 389 above did not have series, but some of the child categories do.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw"><a href="../reference/eia_updates.html">eia_updates</a></span>(<span class="dv">389</span>, <span class="dt">n =</span> <span class="dv">5</span>, <span class="dt">deep =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb22-2" title="2"><span class="co">#&gt; # A tibble: 5 x 2</span></a>
+<a class="sourceLine" id="cb22-3" title="3"><span class="co">#&gt;   series_id                    updated                 </span></a>
+<a class="sourceLine" id="cb22-4" title="4"><span class="co">#&gt;   &lt;chr&gt;                        &lt;chr&gt;                   </span></a>
+<a class="sourceLine" id="cb22-5" title="5"><span class="co">#&gt; 1 ELEC.CONS_TOT_BTU.COW-AK-1.A 2019-06-25T20:15:57-0400</span></a>
+<a class="sourceLine" id="cb22-6" title="6"><span class="co">#&gt; 2 ELEC.CONS_TOT_BTU.COW-AK-1.M 2019-06-25T20:15:57-0400</span></a>
+<a class="sourceLine" id="cb22-7" title="7"><span class="co">#&gt; 3 ELEC.CONS_TOT_BTU.COW-AK-1.Q 2019-06-25T20:15:57-0400</span></a>
+<a class="sourceLine" id="cb22-8" title="8"><span class="co">#&gt; 4 ELEC.CONS_TOT_BTU.COW-AL-1.A 2019-06-25T20:15:57-0400</span></a>
+<a class="sourceLine" id="cb22-9" title="9"><span class="co">#&gt; 5 ELEC.CONS_TOT_BTU.COW-AL-1.M 2019-06-25T20:15:57-0400</span></a></code></pre></div>
+<p>The above example works to show this while using <code>n = 5</code> because there were no results for the top parent category. if there had been, it would likely be necessary to request more results in order to see that child series were included.</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -525,6 +556,7 @@
       <li><a href="#time-period-and-number-of-results">Time period and number of results</a></li>
       <li><a href="#output-format">Output format</a></li>
       <li><a href="#helpers-functions">Helpers functions</a></li>
+      <li><a href="#checking-for-data-updates">Checking for data updates</a></li>
       </ul>
 </div>
       </div>

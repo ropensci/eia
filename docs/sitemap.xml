@@ -19,10 +19,16 @@
     <loc>http://leonawicz.github.io/eia/reference/eia_geoset.html</loc>
   </url>
   <url>
+    <loc>http://leonawicz.github.io/eia/reference/eia_key.html</loc>
+  </url>
+  <url>
     <loc>http://leonawicz.github.io/eia/reference/eia_series.html</loc>
   </url>
   <url>
     <loc>http://leonawicz.github.io/eia/reference/eia_series_metadata.html</loc>
+  </url>
+  <url>
+    <loc>http://leonawicz.github.io/eia/reference/eia_updates.html</loc>
   </url>
   <url>
     <loc>http://leonawicz.github.io/eia/reference/pipe.html</loc>
