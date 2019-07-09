@@ -2,4 +2,4 @@
   options(eia_antidos = 1)
 }
 
-eia_api_time <- new.env()
+.session_eia_env <- new.env()

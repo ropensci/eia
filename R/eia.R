@@ -56,14 +56,14 @@ NULL
 
 .antidos_before <- function(x, sec = getOption("eia_antidos", 1)){
   wait <- 0
-  if(!is.null(eia_api_time[[x]])){
-    wait <- as.numeric(get(x, eia_api_time)) + sec - as.numeric(Sys.time())
+  if(!is.null(.session_eia_env[[x]])){
+    wait <- as.numeric(get(x, .session_eia_env)) + sec - as.numeric(Sys.time())
     if(wait > 0) Sys.sleep(wait) else wait <- 0
   }
-  assign(x, Sys.time(), envir = eia_api_time)
+  assign(x, Sys.time(), envir = .session_eia_env)
   wait
 }
 
 .antidos_after <- function(x){
-  assign(x, Sys.time(), envir = eia_api_time)
+  assign(x, Sys.time(), envir = .session_eia_env)
 }
