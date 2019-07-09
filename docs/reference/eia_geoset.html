@@ -74,7 +74,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eia</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -149,16 +149,12 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>eia_geoset</span>(<span class='no'>key</span>, <span class='no'>id</span>, <span class='no'>region</span>, <span class='kw'>relation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tidy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>eia_geoset</span>(<span class='no'>id</span>, <span class='no'>region</span>, <span class='kw'>relation</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>n</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tidy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>key</th>
-      <td><p>character, API key.</p></td>
-    </tr>
     <tr>
       <th>id</th>
       <td><p>character, geoset series ID, may be a vector. See details.</p></td>
@@ -191,6 +187,10 @@
       <th>cache</th>
       <td><p>logical, cache result for duration of R session using memoization. See details.</p></td>
     </tr>
+    <tr>
+      <th>key</th>
+      <td><p>API key: character if set explicitly; not needed if key is set globally. See <code><a href='eia_key.html'>eia_set_key</a></code>.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -220,22 +220,22 @@ You can reset the entire cache by calling <code><a href='eia_clear_cache.html'>e
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>key</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.getenv'>Sys.getenv</a></span>(<span class='st'>"EIA_KEY"</span>) <span class='co'># your stored API key</span>
+<span class='co'># use eia_set_key() to store stored API key</span>
 <span class='no'>id</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"ELEC.GEN.ALL-99."</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"Q"</span>, <span class='st'>"M"</span>))
 <span class='no'>region</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"USA-CA"</span>, <span class='st'>"USA-NY"</span>)
 
-<span class='fu'>eia_geoset</span>(<span class='no'>key</span>, <span class='no'>id</span>[<span class='fl'>1</span>], <span class='no'>region</span>[<span class='fl'>1</span>], <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>2016</span>)
-<span class='fu'>eia_geoset</span>(<span class='no'>key</span>, <span class='no'>id</span>[<span class='fl'>2</span>], <span class='no'>region</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)
-<span class='fu'>eia_geoset</span>(<span class='no'>key</span>, <span class='no'>id</span>[<span class='fl'>3</span>], <span class='no'>region</span>[<span class='fl'>2</span>], <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+<span class='fu'>eia_geoset</span>(<span class='no'>id</span>[<span class='fl'>1</span>], <span class='no'>region</span>[<span class='fl'>1</span>], <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>2016</span>)
+<span class='fu'>eia_geoset</span>(<span class='no'>id</span>[<span class='fl'>2</span>], <span class='no'>region</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+<span class='fu'>eia_geoset</span>(<span class='no'>id</span>[<span class='fl'>3</span>], <span class='no'>region</span>[<span class='fl'>2</span>], <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)
 
 <span class='co'># multiple series counted as a single API call</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>eia_geoset</span>(<span class='no'>key</span>, <span class='no'>id</span>, <span class='no'>region</span>[<span class='fl'>1</span>], <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)
-<span class='no'>x</span>$<span class='no'>data</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>eia_geoset</span>(<span class='no'>id</span>, <span class='no'>region</span>[<span class='fl'>1</span>], <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='no'>x</span>[, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"region"</span>, <span class='st'>"data"</span>)]
 
 <span class='co'># Use direct US state abbreviations or names;</span>
 <span class='co'># Use US Census region and division names.</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>eia_geoset</span>(<span class='no'>key</span>, <span class='no'>id</span>[<span class='fl'>2</span>], <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"AK"</span>, <span class='st'>"New England"</span>), <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='no'>x</span>$<span class='no'>data</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>eia_geoset</span>(<span class='no'>id</span>[<span class='fl'>2</span>], <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"AK"</span>, <span class='st'>"New England"</span>), <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='no'>x</span>[, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"region"</span>, <span class='st'>"data"</span>)]
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eia</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -111,27 +111,63 @@
 
     
     
-<p>The EIA API can of course impose its own limitations on usage by a given API key. However, <code>eia</code> also helps out by limiting the potential for making unnecessary API calls. It does this in two ways, both of which allow optional configuration:</p>
+<div id="api-key" class="section level2">
+<h2 class="hasAnchor">
+<a href="#api-key" class="anchor"></a>API key</h2>
+<div id="register-a-key-with-eia" class="section level3">
+<h3 class="hasAnchor">
+<a href="#register-a-key-with-eia" class="anchor"></a>Register a key with EIA</h3>
+<p>Obtaining an API key is easy and free.</p>
+<p>Pulling data from the US Energy Information Administration (EIA) API requires a registered API key. A key can be obtained at no cost <a href="https://www.eia.gov/opendata/register.php">here</a>. A valid email and agreement to the API Terms of Service is required to obtain a key.</p>
+<p>It is important to store your API key somewhere secure. Do not commit it to a repository or otherwise share it. For example, you could store it in your <code>.Renviron</code> file.</p>
+</div>
+<div id="key-storage-and-retrieval" class="section level3">
+<h3 class="hasAnchor">
+<a href="#key-storage-and-retrieval" class="anchor"></a>Key storage and retrieval</h3>
+<p>You can always provide the <code>key</code> argument to every API function call, but you do not have to. There are getter and setter helpers available to make using <code>eia</code> functions a more seamless experience.</p>
+<p><code>eia_set_key</code> gives you the option of storing your key in any of three places via the <code>store</code> argument:</p>
 <ul>
-<li>caching API results using session-based memoization</li>
+<li>
+<code>store = "env"</code>: the package environment that is created when the package is loaded (default method)</li>
+<li>
+<code>store = "options"</code>: in the global <code>options</code>
+</li>
+<li>
+<code>store = "sysenv"</code>: as a system environment variable via <code>Sys.setenv</code>.</li>
+</ul>
+<p>The last two options require the name-value pair to be named <code>EIA_KEY = "yourkey"</code>. These three options also are the order of precedence if you do not specify the <code>store</code> argument.</p>
+<p>This setup also allows you to store a key that will override another key. This is because <code>eia_get_key</code> checks these three storage methods in this order and stops as soon as it finds a key. If you need it to check a specific location, you can specify <code>store</code>.</p>
+<p>As an example, if the key already exists in the system environment and you plan to pass <code>key</code> to functions explicitly, you could start as follows:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eia)</a>
+<a class="sourceLine" id="cb1-2" title="2">key &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.getenv">Sys.getenv</a></span>(<span class="st">"EIA_KEY"</span>) </a></code></pre></div>
+<p>If you need to set it:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># eia_set_key("yourkey")</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="co"># eia_get_key() # retrieve it</span></a></code></pre></div>
+<p>API functions in <code>eia</code> use <code><a href="../reference/eia_key.html">eia_get_key()</a></code> with no arguments as the default value of their <code>key</code> argument, checking in the order shown above for an existing key. This way you do not need to repeatedly provide it. See the package documentation for more details on key options.</p>
+<p>In this and subsequent vignettes, you will not see a key being set because it is already an environment variable. You will also not see it used explicitly by any functions because the default behavior is to look up the key in the environment.</p>
+</div>
+</div>
+<div id="api-requests" class="section level2">
+<h2 class="hasAnchor">
+<a href="#api-requests" class="anchor"></a>API requests</h2>
+<p>The EIA API can of course impose its own rate-limiting and other limitations on usage by a given API key. If you use the API improperly or otherwise violate any Terms of Service, the EIA may withdraw your API access. However, the <code>eia</code> package also helps prevent accidental overuse by having default settings that limit the potential for making unnecessary API calls. It does this in two ways, both of which allow optional configuration:</p>
+<ul>
+<li>caching API results tin memory using session-based memoization</li>
 <li>minimum delay between API calls</li>
 </ul>
 <p>By default the <code>eia</code> package prevents you from accidentally making too many requests too quickly, but it also offers sensible flexibility.</p>
-<div id="memoization" class="section level2">
-<h2 class="hasAnchor">
-<a href="#memoization" class="anchor"></a>Memoization</h2>
+<div id="memoization" class="section level3">
+<h3 class="hasAnchor">
+<a href="#memoization" class="anchor"></a>Memoization</h3>
 <p>All functions in <code>eia</code> that make API calls use memoization by default. They will not make the same API call twice in one R session. A call is made once and the result is cached. Calling the same function with the identical arguments again will only returned the cached result.</p>
 <p>This approach limits the potential for accidentally using the EIA API more than necessary. This is fine for most uses cases. However, if you use your API key to access data that is updated very often, or you have a long-running R process such as a Shiny app on a server that may need to periodically update the data associated with a specific API call, you can set <code>cache = FALSE</code>.</p>
 <p>Run this example of the same request made with and without memoization. You will notice the cached result by the immediate return.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eia)</a>
-<a class="sourceLine" id="cb1-2" title="2">key &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.getenv">Sys.getenv</a></span>(<span class="st">"EIA_KEY"</span>)</a>
-<a class="sourceLine" id="cb1-3" title="3"></a>
-<a class="sourceLine" id="cb1-4" title="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(key)) <span class="co"># API call; cache result</span></a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(key)) <span class="co"># read from cache</span></a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(key, <span class="dt">cache =</span> <span class="ot">FALSE</span>)) <span class="co"># API call</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>()) <span class="co"># API call; cache result</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>()) <span class="co"># read from cache</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(<span class="dt">cache =</span> <span class="ot">FALSE</span>)) <span class="co"># API call</span></a></code></pre></div>
 <p>Results are cached in memory for the duration of the R session, but you can clear the cache at any time:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/eia_clear_cache.html">eia_clear_cache</a></span>()</a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(key))</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/eia_clear_cache.html">eia_clear_cache</a></span>()</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>())</a></code></pre></div>
 <p>This allows you to update the cached result. You can reset the cache for only specific endpoints using the following functions:</p>
 <ul>
 <li><code>eia_clear_cats</code></li>
@@ -139,32 +175,33 @@
 <li><code>eia_clear_geoset</code></li>
 </ul>
 </div>
-<div id="anti-dos-measures" class="section level2">
-<h2 class="hasAnchor">
-<a href="#anti-dos-measures" class="anchor"></a>Anti-DOS measures</h2>
+<div id="anti-dos-measures" class="section level3">
+<h3 class="hasAnchor">
+<a href="#anti-dos-measures" class="anchor"></a>Anti-DOS measures</h3>
 <p>Regardless of rate overall limiting imposed by the EIA API, the <code>eia</code> package sets a minimum wait time of one second between successive API calls. In most cases this is an irrelevant safeguard. Most <code>eia</code> functions make a single API call and requests for data often take a full second anyway once you factor in the subsequent data manipulation in R.</p>
 <p>However, there are cases where you might want to make multiple calls back to back programmatically and perhaps you are initially unsure how many requests will be made or how quickly these requests may execute. The default minimum wait between API calls is a precaution that helps you be a good neighbor.</p>
 <p>You can turn this off with <code>options</code> if not needed; for example, a case where you know that your API calls will be small in number and you have no reason to be concerned about exceeding the request limits associated with your API key. The default requires you to make an active decision about how to use the API with your own key and API limits in mind.</p>
 <p>A call to <code>eia_parent_cats</code> is a good example. This function is recursive, but say you know the number of calls is going to be small; it is overkill to impose the additional wait. Note that in order to show this example, it is necessary to turn off memoization to avoid returned a cached result.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_cats.html">eia_parent_cats</a></span>(key, <span class="dv">742</span>, <span class="dt">cache =</span> <span class="ot">FALSE</span>))</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="co">#&gt;    user  system elapsed </span></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt;    0.38    0.10    5.92</span></a>
-<a class="sourceLine" id="cb3-4" title="4"></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">eia_antidos =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_cats.html">eia_parent_cats</a></span>(key, <span class="dv">742</span>, <span class="dt">cache =</span> <span class="ot">FALSE</span>))</a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="co">#&gt;    user  system elapsed </span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="co">#&gt;    0.05    0.00    0.87</span></a>
-<a class="sourceLine" id="cb3-9" title="9"></a>
-<a class="sourceLine" id="cb3-10" title="10">x</a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="co">#&gt; # A tibble: 6 x 4</span></a>
-<a class="sourceLine" id="cb3-12" title="12"><span class="co">#&gt;   category_id name                    notes parent_category_id</span></a>
-<a class="sourceLine" id="cb3-13" title="13"><span class="co">#&gt;   &lt;chr&gt;       &lt;chr&gt;                   &lt;chr&gt; &lt;chr&gt;             </span></a>
-<a class="sourceLine" id="cb3-14" title="14"><span class="co">#&gt; 1 371         EIA Data Sets           ""    &lt;NA&gt;              </span></a>
-<a class="sourceLine" id="cb3-15" title="15"><span class="co">#&gt; 2 0           Electricity             ""    371               </span></a>
-<a class="sourceLine" id="cb3-16" title="16"><span class="co">#&gt; 3 32          Total consumption (Btu) ""    0                 </span></a>
-<a class="sourceLine" id="cb3-17" title="17"><span class="co">#&gt; 4 372         By sector               ""    32                </span></a>
-<a class="sourceLine" id="cb3-18" title="18"><span class="co">#&gt; 5 389         Electric utility        ""    372               </span></a>
-<a class="sourceLine" id="cb3-19" title="19"><span class="co">#&gt; 6 742         Coal                    ""    389</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_cats.html">eia_parent_cats</a></span>(<span class="dv">742</span>, <span class="dt">cache =</span> <span class="ot">FALSE</span>))</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="co">#&gt;    user  system elapsed </span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt;    0.49    0.08    6.13</span></a>
+<a class="sourceLine" id="cb5-4" title="4"></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">eia_antidos =</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_cats.html">eia_parent_cats</a></span>(<span class="dv">742</span>, <span class="dt">cache =</span> <span class="ot">FALSE</span>))</a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="co">#&gt;    user  system elapsed </span></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt;    0.08    0.00    0.75</span></a>
+<a class="sourceLine" id="cb5-9" title="9"></a>
+<a class="sourceLine" id="cb5-10" title="10">x</a>
+<a class="sourceLine" id="cb5-11" title="11"><span class="co">#&gt; # A tibble: 6 x 4</span></a>
+<a class="sourceLine" id="cb5-12" title="12"><span class="co">#&gt;   category_id name                    notes parent_category_id</span></a>
+<a class="sourceLine" id="cb5-13" title="13"><span class="co">#&gt;   &lt;chr&gt;       &lt;chr&gt;                   &lt;chr&gt; &lt;chr&gt;             </span></a>
+<a class="sourceLine" id="cb5-14" title="14"><span class="co">#&gt; 1 371         EIA Data Sets           ""    &lt;NA&gt;              </span></a>
+<a class="sourceLine" id="cb5-15" title="15"><span class="co">#&gt; 2 0           Electricity             ""    371               </span></a>
+<a class="sourceLine" id="cb5-16" title="16"><span class="co">#&gt; 3 32          Total consumption (Btu) ""    0                 </span></a>
+<a class="sourceLine" id="cb5-17" title="17"><span class="co">#&gt; 4 372         By sector               ""    32                </span></a>
+<a class="sourceLine" id="cb5-18" title="18"><span class="co">#&gt; 5 389         Electric utility        ""    372               </span></a>
+<a class="sourceLine" id="cb5-19" title="19"><span class="co">#&gt; 6 742         Coal                    ""    389</span></a></code></pre></div>
+</div>
 </div>
   </div>
 
@@ -173,8 +210,8 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#memoization">Memoization</a></li>
-      <li><a href="#anti-dos-measures">Anti-DOS measures</a></li>
+<li><a href="#api-key">API key</a></li>
+      <li><a href="#api-requests">API requests</a></li>
       </ul>
 </div>
       </div>

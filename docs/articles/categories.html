@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eia</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -116,9 +116,9 @@
 <a href="#top-level-categories" class="anchor"></a>Top level categories</h2>
 <p>It is helpful to be aware of various categories of data that are available. Each category has a unique ID number that is required to access associated data. The first call below does not include an ID. The result is a list of two data frames. The first is metadata associated with that position in the category hierarchy. The second is the child category information.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eia)</a>
-<a class="sourceLine" id="cb1-2" title="2">key &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.getenv">Sys.getenv</a></span>(<span class="st">"EIA_KEY"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2"><span class="co"># eia_set_key("yourkey") # set your API key</span></a></code></pre></div>
 <p>Here is the top-level category information:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(key)</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>()</a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="co">#&gt; $category</span></a>
 <a class="sourceLine" id="cb2-3" title="3"><span class="co">#&gt; # A tibble: 1 x 3</span></a>
 <a class="sourceLine" id="cb2-4" title="4"><span class="co">#&gt;   category_id name          notes</span></a>
@@ -148,7 +148,7 @@
 <h2 class="hasAnchor">
 <a href="#child-categories" class="anchor"></a>Child categories</h2>
 <p>The child category IDs can be used to query results from that category.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(key, <span class="dv">0</span>)</a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(<span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="co">#&gt; $category</span></a>
 <a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt; # A tibble: 1 x 4</span></a>
 <a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt;   category_id parent_category_id name        notes</span></a>
@@ -179,7 +179,7 @@
 <a class="sourceLine" id="cb3-29" title="29"><span class="co">#&gt; 18       41143 Quality of fossil fuels in electricity generation : ash con~</span></a>
 <a class="sourceLine" id="cb3-30" title="30"><span class="co">#&gt; 19     1718389 Number of customer accounts</span></a></code></pre></div>
 <p>View the immediate child categories for a given parent category:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/eia_cats.html">eia_child_cats</a></span>(key, <span class="dv">389</span>)</a>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/eia_cats.html">eia_child_cats</a></span>(<span class="dv">389</span>)</a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt; # A tibble: 4 x 2</span></a>
 <a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt;   category_id name             </span></a>
 <a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt;         &lt;int&gt; &lt;chr&gt;            </span></a>
@@ -192,7 +192,7 @@
 <h2 class="hasAnchor">
 <a href="#parent-categories" class="anchor"></a>Parent categories</h2>
 <p>View all parent categories for a given child category:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/eia_cats.html">eia_parent_cats</a></span>(key, <span class="dv">742</span>)</a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/eia_cats.html">eia_parent_cats</a></span>(<span class="dv">742</span>)</a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="co">#&gt; # A tibble: 6 x 4</span></a>
 <a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt;   category_id name                    notes parent_category_id</span></a>
 <a class="sourceLine" id="cb5-4" title="4"><span class="co">#&gt;   &lt;chr&gt;       &lt;chr&gt;                   &lt;chr&gt; &lt;chr&gt;             </span></a>
@@ -207,7 +207,7 @@
 <h2 class="hasAnchor">
 <a href="#output-format" class="anchor"></a>Output format</h2>
 <p>The default is to return tidy data in a tibble data frame. For <code>eia_cats</code> you can set <code>tidy = FALSE</code> to return the list returned by <code><a href="https://www.rdocumentation.org/packages/jsonlite/topics/fromJSON">jsonlite::fromJSON</a></code> without any further processing or <code>tidy = NA</code> to return the raw JSON data as a character string.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(key, <span class="dt">tidy =</span> <span class="ot">FALSE</span>)</a>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(<span class="dt">tidy =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb6-2" title="2"><span class="co">#&gt; $request</span></a>
 <a class="sourceLine" id="cb6-3" title="3"><span class="co">#&gt; $request$category_id</span></a>
 <a class="sourceLine" id="cb6-4" title="4"><span class="co">#&gt; [1] 371</span></a>
@@ -248,7 +248,7 @@
 <a class="sourceLine" id="cb6-39" title="39"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb6-40" title="40"><span class="co">#&gt; $category$childseries</span></a>
 <a class="sourceLine" id="cb6-41" title="41"><span class="co">#&gt; list()</span></a>
-<a class="sourceLine" id="cb6-42" title="42"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cat">cat</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(key, <span class="dt">tidy =</span> <span class="ot">NA</span>))</a>
+<a class="sourceLine" id="cb6-42" title="42"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cat">cat</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(<span class="dt">tidy =</span> <span class="ot">NA</span>))</a>
 <a class="sourceLine" id="cb6-43" title="43"><span class="co">#&gt; {"request":{"category_id":371,"command":"category"},"category":{"category_id":"371","parent_category_id":null,"name":"EIA Data Sets","notes":"","childcategories":[{"category_id":0,"name":"Electricity"},{"category_id":40203,"name":"State Energy Data System (SEDS)"},{"category_id":711224,"name":"Total Energy"},{"category_id":714755,"name":"Petroleum"},{"category_id":714804,"name":"Natural Gas"},{"category_id":717234,"name":"Coal"},{"category_id":829714,"name":"Short-Term Energy Outlook"},{"category_id":964164,"name":"Annual Energy Outlook"},{"category_id":1292190,"name":"Crude Oil Imports"},{"category_id":2123635,"name":"U.S. Electric System Operating Data"},{"category_id":2134384,"name":"International Energy Data"},{"category_id":2251604,"name":"CO2 Emissions"},{"category_id":2631064,"name":"International Energy Outlook"},{"category_id":2889994,"name":"U.S. Nuclear Outages"}],"childseries":[]}}</span></a></code></pre></div>
 </div>
   </div>

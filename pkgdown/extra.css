@@ -10,3 +10,49 @@ td p {
 body, p, h1, h2, h3, h4, h5, h6{
   font-family: Helvetica, Arial, sans-serif;
 }
+
+.navbar-default {
+  background-color: #6faef5;
+  border-color: #6faef5;
+}
+
+.navbar-default .navbar-link, .navbar-default .navbar-nav > li > a{
+  background-color: #6faef5;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover{
+  background-color: #5f9ee5;
+  color: #ffffff;
+}
+
+.navbar-default .navbar-link, .navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-link, .navbar-default .navbar-nav > li > a:hover{
+  background-color: #6faef5;
+  color: #eeeeee;
+}
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover{
+  background-color: #5f9ee5;
+  color: #ffffff;
+}
+
+.navbar-brand .navbar-link{
+  background-color: #6faef5;
+  color: #ffffff;
+}
+
+.navbar-brand .navbar-link:hover{
+  background-color: #6faef5;
+  color: #eeeeee;
+}
+
+.navbar-brand .label-default{
+  background-color: #ffffff;
+  color: #6faef5;
+}
+
+.navbar-brand .label-default{
+  background-color: #ffffff;
+  color: #6faef5;
+}

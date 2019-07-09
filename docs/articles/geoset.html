@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eia</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -117,17 +117,15 @@
 <p>Geosets are metadata structures relating series together. Requesting series using the <code>geoset</code> API endpoint is much the same as requesting series data using the <code>series</code> endpoint. Instead of <code>eia_series</code>, use <code>eia_geoset</code>.</p>
 <p>The main difference is that you must provide a geoset ID to <code>id</code> and a <code>region</code> argument. Both may be vectors of multiple series and regions. The function returns the combination of time series datasets and regions that exist. The API will not return all geographic entities associated with a geoset. You are required to specify which region(s) you want and they must be associated with the given geoset ID.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eia)</a>
-<a class="sourceLine" id="cb1-2" title="2">key &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.getenv">Sys.getenv</a></span>(<span class="st">"EIA_KEY"</span>)</a>
-<a class="sourceLine" id="cb1-3" title="3"></a>
-<a class="sourceLine" id="cb1-4" title="4">id &lt;-<span class="st"> "ELEC.GEN.ALL-99.A"</span></a>
-<a class="sourceLine" id="cb1-5" title="5">region &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"USA-CA"</span>, <span class="st">"USA-NY"</span>)</a>
-<a class="sourceLine" id="cb1-6" title="6"></a>
-<a class="sourceLine" id="cb1-7" title="7">(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_geoset.html">eia_geoset</a></span>(key, id[<span class="dv">1</span>], region[<span class="dv">1</span>], <span class="dt">n =</span> <span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb1-8" title="8"><span class="co">#&gt; # A tibble: 1 x 11</span></a>
-<a class="sourceLine" id="cb1-9" title="9"><span class="co">#&gt;   geoset_id setname f     units series_id name  region latlon start end  </span></a>
-<a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;</span></a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; 1 ELEC.GEN~ Net ge~ A     thou~ ELEC.GEN~ Net ~ USA-CA &lt;NA&gt;   2001  2018 </span></a>
-<a class="sourceLine" id="cb1-12" title="12"><span class="co">#&gt; # ... with 1 more variable: data &lt;list&gt;</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2"><span class="co"># eia_set_key("yourkey") # set your API key</span></a>
+<a class="sourceLine" id="cb1-3" title="3">id &lt;-<span class="st"> "ELEC.GEN.ALL-99.A"</span></a>
+<a class="sourceLine" id="cb1-4" title="4">region &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"USA-CA"</span>, <span class="st">"USA-NY"</span>)</a>
+<a class="sourceLine" id="cb1-5" title="5">(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_geoset.html">eia_geoset</a></span>(id[<span class="dv">1</span>], region[<span class="dv">1</span>], <span class="dt">n =</span> <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="co">#&gt; # A tibble: 1 x 11</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="co">#&gt;   geoset_id setname f     units series_id name  region latlon start end  </span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;</span></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="co">#&gt; 1 ELEC.GEN~ Net ge~ A     thou~ ELEC.GEN~ Net ~ USA-CA &lt;NA&gt;   2001  2018 </span></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt; # ... with 1 more variable: data &lt;list&gt;</span></a></code></pre></div>
 </div>
 <div id="groups-of-regions" class="section level2">
 <h2 class="hasAnchor">
@@ -150,7 +148,7 @@
 <a class="sourceLine" id="cb2-14" title="14"><span class="co">#&gt; 10 GA        Georgia     South        South Atlantic    </span></a>
 <a class="sourceLine" id="cb2-15" title="15"><span class="co">#&gt; # ... with 40 more rows</span></a></code></pre></div>
 <p>Provide the associated label and <code>eia_geoset</code> recognizes subsets of US states. Even this can be a vector. In the example below, <code>region</code> consists of Alaska plus the states belonging to the New England census division.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_geoset.html">eia_geoset</a></span>(key, id, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"AK"</span>, <span class="st">"New England"</span>), <span class="dt">n =</span> <span class="dv">1</span>))</a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_geoset.html">eia_geoset</a></span>(id, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"AK"</span>, <span class="st">"New England"</span>), <span class="dt">n =</span> <span class="dv">1</span>))</a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="co">#&gt; # A tibble: 7 x 11</span></a>
 <a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt;   geoset_id setname f     units series_id name  region latlon start end  </span></a>
 <a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;</span></a>
