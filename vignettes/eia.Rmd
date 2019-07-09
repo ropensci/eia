@@ -1,8 +1,8 @@
 ---
-title: "Package overview: eia"
+title: "Package overview"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Package overview: eia}
+  %\VignetteIndexEntry{Package overview}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -20,7 +20,7 @@ This vignette provides a brief overview to the most important functions in `eia`
 
 ## EIA categories
 
-Pulling data from the US Energy Information Administration (EIA) API requires a registered API key. A key can be obtained at no cost [here](https://www.eia.gov/opendata/register.php).A valid email and agreement to the API Terms of Service is required to obtain a key.
+Pulling data from the US Energy Information Administration (EIA) API requires a registered API key. A key can be obtained at no cost [here](https://www.eia.gov/opendata/register.php). A valid email and agreement to the API Terms of Service is required to obtain a key.
 
 Once you have your API key, it is helpful to be aware of various categories of data that are available. Each category has a unique ID number that is required to access associated data. The first call below does not include an ID. The result is a list of two data frames. The first is metadata associated with that position in the category hierarchy. The second is the child category information.
 
@@ -58,9 +58,10 @@ x1$data[[1]]
 You can provide arguments like the following:
 
 ```{r series2, eval = FALSE}
-eia_series(key, id, n = 5)
-eia_series(key, id, end = 2016, n = 5)
-eia_series(key, id, start = 2000, end = 2016)
+eia_series(key, id) # max results
+eia_series(key, id, n = 5) # most recent five
+eia_series(key, id, end = 2016, n = 5) # ending in 2016
+eia_series(key, id, start = 2000, end = 2016) # specific period
 ```
 
 As with `eia_cats`, the output format does not need to be tidy:

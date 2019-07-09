@@ -22,13 +22,9 @@ knitr::opts_chunk$set(
 
 The `eia` package provides API access to data from the US [Energy Information Administration](https://www.eia.gov/) (EIA).
 
+Pulling data from the US Energy Information Administration (EIA) API requires a registered API key. A key can be obtained at no cost [here](https://www.eia.gov/opendata/register.php). A valid email and agreement to the API Terms of Service is required to obtain a key.
+
 ## Installation
-
-You can install the released version of `eia` from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("eia")
-```
 
 You can install the development version of `eia` from GitHub with:
 
@@ -39,12 +35,12 @@ remotes::install_github("leonawicz/eia")
 
 ## Example
 
-Load a time series of total electricity consumption:
+Load a time series of net electricity generation:
 
 ```{r example}
 library(eia)
 key <- Sys.getenv("EIA_KEY")
-id <- "ELEC.CONS_TOT_BTU.COW-AK-1.A"
+id <- "ELEC.GEN.ALL-AK-99.A"
 (d <- eia_series(key, id, n = 10))
 
 d$data[[1]]

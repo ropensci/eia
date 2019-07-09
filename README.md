@@ -18,14 +18,12 @@ coverage](https://codecov.io/gh/leonawicz/eia/branch/master/graph/badge.svg)](ht
 The `eia` package provides API access to data from the US [Energy
 Information Administration](https://www.eia.gov/) (EIA).
 
+Pulling data from the US Energy Information Administration (EIA) API
+requires a registered API key. A key can be obtained at no cost
+[here](https://www.eia.gov/opendata/register.php). A valid email and
+agreement to the API Terms of Service is required to obtain a key.
+
 ## Installation
-
-You can install the released version of `eia` from
-[CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("eia")
-```
 
 You can install the development version of `eia` from GitHub with:
 
@@ -36,34 +34,34 @@ remotes::install_github("leonawicz/eia")
 
 ## Example
 
-Load a time series of total electricity consumption:
+Load a time series of net electricity generation:
 
 ``` r
 library(eia)
 key <- Sys.getenv("EIA_KEY")
-id <- "ELEC.CONS_TOT_BTU.COW-AK-1.A"
+id <- "ELEC.GEN.ALL-AK-99.A"
 (d <- eia_series(key, id, n = 10))
 #> # A tibble: 1 x 13
 #>   series_id name  units f     description copyright source iso3166
 #>   <chr>     <chr> <chr> <chr> <chr>       <chr>     <chr>  <chr>  
-#> 1 ELEC.CON~ Tota~ mill~ A     "Summation~ None      EIA, ~ USA-AK 
+#> 1 ELEC.GEN~ Net ~ thou~ A     "Summation~ None      EIA, ~ USA-AK 
 #> # ... with 5 more variables: geography <chr>, start <chr>, end <chr>,
 #> #   updated <chr>, data <list>
 
 d$data[[1]]
-#> # A tibble: 10 x 2
-#>     year value
-#>    <int> <dbl>
-#>  1  2018  7.35
-#>  2  2017  5.95
-#>  3  2016  6.21
-#>  4  2015  7.58
-#>  5  2014  6.53
-#>  6  2013  2.59
-#>  7  2012  2.92
-#>  8  2011  2.42
-#>  9  2010  2.61
-#> 10  2009  2.88
+#> # A tibble: 10 x 3
+#>    value date        year
+#>    <dbl> <date>     <int>
+#>  1 6515. 2018-01-01  2018
+#>  2 6497. 2017-01-01  2017
+#>  3 6335. 2016-01-01  2016
+#>  4 6285. 2015-01-01  2015
+#>  5 6043. 2014-01-01  2014
+#>  6 6497. 2013-01-01  2013
+#>  7 6946. 2012-01-01  2012
+#>  8 6871. 2011-01-01  2011
+#>  9 6760. 2010-01-01  2010
+#> 10 6702. 2009-01-01  2009
 ```
 
 See the package vignettes for more details and examples.
