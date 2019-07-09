@@ -13,10 +13,12 @@ reference:
   - eia
 - title: API functions
   contents:
+  - eia_key
   - eia_cats
   - eia_series
   - eia_series_metadata
   - eia_geoset
+  - eia_updates
 - title: Other functions
   contents:
   - eiadate

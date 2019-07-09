@@ -12,13 +12,46 @@ knitr::opts_chunk$set(
   collapse = TRUE, comment = "#>", out.width = "100%",
   message = FALSE, warning = FALSE, error = FALSE
 )
+library(tibble)
 library(eia)
 options(eia_antidos = 0)
 ```
 
-Add later...
+## Time series by region
 
-```{r cats0}
+Geosets are metadata structures relating series together. Requesting series using the `geoset` API endpoint is much the same as requesting series data using the `series` endpoint. Instead of `eia_series`, use `eia_geoset`.
+
+The main difference is that you must provide a geoset ID to `id` and a `region` argument. Both may be vectors of multiple series and regions. The function returns the combination of time series datasets and regions that exist. The API will not return all geographic entities associated with a geoset. You are required to specify which region(s) you want and they must be associated with the given geoset ID.
+
+```{r geoset}
 library(eia)
 key <- Sys.getenv("EIA_KEY")
+
+id <- "ELEC.GEN.ALL-99.A"
+region <- c("USA-CA", "USA-NY")
+
+(x <- eia_geoset(key, id[1], region[1], n = 3))
 ```
+
+## Groups of regions
+
+If you want data for all fifty states for example, you can set `region = "USA"`; you do not need to make a vector of all fifty state IDs. However, if you want certain region subsets, there are other options besides making a vector of these values. For example, the `eia_geoset` accepts shorthand descriptions of specific, popular subsets of states; so popular in fact that their labels ship with R itself in the `datasts` package.
+
+You can provide simple state abbreviations (without the `USA-` prefix), state names, and more to the point, US Census regions and divisions. These are two hierarchical sets of US states.
+
+```{r census}
+tibble(state.abb, state.name, state.region, state.division)
+```
+
+Provide the associated label and `eia_geoset` recognizes subsets of US states. Even this can be a vector. In the example below, `region` consists of Alaska plus the states belonging to the New England census division.
+
+```{r geoset2}
+(x <- eia_geoset(key, id, c("AK", "New England"), n = 1))
+x$data[[1]]
+```
+
+## Relations
+
+There is also a `relation` argument that accepts an optional relation ID. If one is provided, `eia_geoset` will switch to the API `relation` endpoint. A relation is another metadata structure that applies to geosets and relates summary statistics associated with geoset IDs to their composite statistics. This makes it easier to obtain variables that facet the data, e.g., by sector or fuel type.
+
+Unfortunately, the relation endpoint does not seem to return any data from the  API even when using the examples in the API documentation from the EIA website.

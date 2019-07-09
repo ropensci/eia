@@ -167,7 +167,7 @@ There are some functions available that make small API calls and return only met
 
 ```{r series10}
 eia_series_metadata(key, id)
-eia_series_updated(key, id)
+eia_series_updates(key, id)
 eia_series_dates(key, id)
 eia_series_range(key, id)
 ```
@@ -198,3 +198,29 @@ It is also easy to create a date sequence from two EIA time stamps. The format i
 (x <- eiadate_to_date_seq("2018Q1", "2018Q4"))
 date_to_eiadate(x)
 ```
+
+## Checking for data updates
+
+It is good practice to minimize the number of API calls you make wherever possible. One way to do this is to not request data that has not changed since you last requested it. You can make an API call to the EIA `updates` endpoint to check update times on data series. If any series have not been updated since you last obtained the data, then you know you do not need to request the data again.
+
+The `eia_series_updates` function shown above is handy for checking the most recent data update times of a specific set of series IDs. However, it must make one or more API calls to do so. For general checks on a potentially large number of series without having to query them all, you should use `eia_updates`. This function takes a category ID and can return the last update times for all series under that category.
+
+If a category level has no series directly associated with it, an empty data frame is returned.
+
+```{r updates}
+eia_updates(389)
+```
+
+If a category has series available, paginated results are returned in a data frame. You can use `n` and `start` (together, unlike for general data requests with `eia_series`) to indicate how many rows to return and where to start. This helps you to cycle through pages of results. By default, `n = 50` and `start = 1`. The EIA API `updates` endpoint allows a maximum of `n = 10000`.
+ 
+```{r updates2}
+eia_updates(742, n = 5)
+```
+
+Set `deep = TRUE` to obtain series associated with child categories. Category 389 above did not have series, but some of the child categories do.
+
+```{r updates3}
+eia_updates(389, n = 5, deep = TRUE)
+```
+
+The above example works to show this while using `n = 5` because there were no results for the top parent category. if there had been, it would likely be necessary to request more results in order to see that child series were included.

@@ -48,7 +48,7 @@ eia_cats(key, 0)
 Time series data is obtained by series ID. Most columns contain metadata. The `data` column contains the time series data.
 
 ```{r series1}
-id <- "ELEC.GEN.ALL-99.A"
+id <- "ELEC.GEN.ALL-AK-99.A"
 
 (x1 <- eia_series(key, id, n = 5))
 
