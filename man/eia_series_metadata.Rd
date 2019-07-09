@@ -2,14 +2,14 @@
 % Please edit documentation in R/series.R
 \name{eia_series_metadata}
 \alias{eia_series_metadata}
-\alias{eia_series_updated}
+\alias{eia_series_updates}
 \alias{eia_series_dates}
 \alias{eia_series_range}
 \title{EIA series metadata}
 \usage{
 eia_series_metadata(key, id, cache = TRUE)
 
-eia_series_updated(key, id, cache = TRUE)
+eia_series_updates(key, id, cache = TRUE)
 
 eia_series_dates(key, id, cache = TRUE)
 
@@ -33,6 +33,12 @@ Dates are provided in \code{eia_series_dates} for the convenience of working wit
 for example: maintaining order, generating sequences, computing intervals,
 and other operations that work well with dates but would be difficult using arbitrary strings.
 Keep in mind that of course these are not real dates, in the sense that you cannot map a year to a specific date.
+
+\code{eia_series_updates} returns a data frame of most recent series update times for \code{id}.
+Like the other metadata helpers, this does require an API call to the series to obtain the relevant metadata.
+This can be useful if you are only interested in these update times for a specific set of series IDs.
+If you need to know the most recent update stamps for a large set of series, you should use \code{\link{eia_updates}}
+instead, which makes an API call specifically to the EIA \code{updates} endpoint for specific EIA categories by category ID.
 }
 \examples{
 \dontrun{
@@ -40,8 +46,11 @@ key <- Sys.getenv("EIA_KEY") # your stored API key
 id <- paste0("ELEC.CONS_TOT_BTU.COW-AK-1.", c("A", "Q", "M"))
 
 eia_series_metadata(key, id)
-eia_series_updated(key, id)
+eia_series_updates(key, id)
 eia_series_dates(key, id)
 eia_series_range(key, id)
 }
+}
+\seealso{
+\code{\link{eia_updates}}
 }

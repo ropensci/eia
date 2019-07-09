@@ -47,8 +47,7 @@ eia_series <- function(key, id, start = NULL, end = NULL, n = NULL,
 
 .eia_series <- function(key, id, start = NULL, end = NULL,
                         n = NULL, tidy = TRUE){
-  x <- .eia_series_url(key, id, start, end, n) %>% httr::GET() %>%
-    httr::content(as = "text", encoding = "UTF-8")
+  x <- .eia_series_url(key, id, start, end, n) %>% .eia_get()
   if(is.na(tidy)) return(x)
   x <- jsonlite::fromJSON(x)
   if(!tidy) return(x)
@@ -109,6 +108,12 @@ eia_series <- function(key, id, start = NULL, end = NULL, n = NULL,
 #' and other operations that work well with dates but would be difficult using arbitrary strings.
 #' Keep in mind that of course these are not real dates, in the sense that you cannot map a year to a specific date.
 #'
+#' \code{eia_series_updates} returns a data frame of most recent series update times for \code{id}.
+#' Like the other metadata helpers, this does require an API call to the series to obtain the relevant metadata.
+#' This can be useful if you are only interested in these update times for a specific set of series IDs.
+#' If you need to know the most recent update stamps for a large set of series, you should use \code{\link{eia_updates}}
+#' instead, which makes an API call specifically to the EIA \code{updates} endpoint for specific EIA categories by category ID.
+#'
 #' @param key character, API key.
 #' @param id character, series ID, may be a vector.
 #' @param cache logical, cache result for duration of R session using memoization.
@@ -116,6 +121,7 @@ eia_series <- function(key, id, start = NULL, end = NULL, n = NULL,
 #' @return a tibble data frame
 #' @export
 #' @name eia_series_metadata
+#' @seealso \code{\link{eia_updates}}
 #'
 #' @examples
 #' \dontrun{
@@ -123,7 +129,7 @@ eia_series <- function(key, id, start = NULL, end = NULL, n = NULL,
 #' id <- paste0("ELEC.CONS_TOT_BTU.COW-AK-1.", c("A", "Q", "M"))
 #'
 #' eia_series_metadata(key, id)
-#' eia_series_updated(key, id)
+#' eia_series_updates(key, id)
 #' eia_series_dates(key, id)
 #' eia_series_range(key, id)
 #' }
@@ -135,7 +141,7 @@ eia_series_metadata <- function(key, id, cache = TRUE){
 
 #' @export
 #' @name eia_series_metadata
-eia_series_updated <- function(key, id, cache = TRUE){
+eia_series_updates <- function(key, id, cache = TRUE){
   x <- eia_series_metadata(key, id, cache)
   dplyr::select(x, c("series_id", "updated"))
 }
