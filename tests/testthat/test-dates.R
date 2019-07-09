@@ -28,4 +28,7 @@ test_that("date helpers return as expected", {
   expect_equal(date_to_eiadate(x, "Q"), paste0("2018Q", 1:4))
   expect_equal(date_to_eiadate(x, "M"),
                c("201801", "201804", "201807", "201810"))
+
+  expect_warning(date_to_eiadate(1), "All formats failed to parse. No formats found.")
+  expect_error(eiadate_to_date(1), "Not an EIA format date string.")
 })
