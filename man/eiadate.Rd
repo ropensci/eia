@@ -43,8 +43,10 @@ date_to_eiadate("2018-05-14", "Q")
 date_to_eiadate("2018-05-14", "M")
 
 (x <- eiadate_to_date_seq("2018Q1", "2018Q4"))
-date_to_eiadate(x)
+date_to_eiadate(x, "Q")
 
 (x <- eiadate_to_date("20190102T16Z"))
+date_to_eiadate(x, "H")
+(x <- eiadate_to_date_seq("20190102T16Z", "20190102T19Z"))
 date_to_eiadate(x, "H")
 }
