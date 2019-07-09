@@ -4,12 +4,10 @@
 \alias{eia_updates}
 \title{EIA data updates}
 \usage{
-eia_updates(key, id = NULL, deep = FALSE, n = 50, start = 1,
-  tidy = TRUE)
+eia_updates(id = NULL, deep = FALSE, n = 50, start = 1,
+  tidy = TRUE, key = eia_get_key())
 }
 \arguments{
-\item{key}{character, API key.}
-
 \item{id}{integer, category ID, may be a vector. If \code{NULL}, the API root category.}
 
 \item{deep}{logical, if \code{TRUE}, return information on all child series. If \code{FALSE} (default), return only for the category \code{id}.}
@@ -19,6 +17,8 @@ eia_updates(key, id = NULL, deep = FALSE, n = 50, start = 1,
 \item{start}{integer, row to start from, defaults to 1.}
 
 \item{tidy}{logical, return a tidier result. See details.}
+
+\item{key}{API key: character if set explicitly in function call; by default a globally set key is retrieved by \code{eia_get_key}.}
 }
 \value{
 a tibble data frame (or a list, or character, depending on \code{tidy} value)
@@ -42,8 +42,8 @@ Set \code{tidy = NA} to return the original JSON as a character string.
 }
 \examples{
 \dontrun{
-key <- Sys.getenv("EIA_KEY") # your stored API key
-eia_updates(key, 742, n = 5)
+# use eia_set_key() to store stored API key
+eia_updates(742, n = 5)
 }
 }
 \seealso{

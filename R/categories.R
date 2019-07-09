@@ -90,12 +90,12 @@ eia_parent_cats <- function(key, id, cache = TRUE){
 #' Set \code{tidy = FALSE} to return only the initial list result of \code{jsonlite::fromJSON}.
 #' Set \code{tidy = NA} to return the original JSON as a character string.
 #'
-#' @param key character, API key.
 #' @param id integer, category ID, may be a vector. If \code{NULL}, the API root category.
 #' @param deep logical, if \code{TRUE}, return information on all child series. If \code{FALSE} (default), return only for the category \code{id}.
 #' @param n integer, maximum number of rows of series to return. Defaults to 50; maximum permitted by the API is 10,000.
 #' @param start integer, row to start from, defaults to 1.
 #' @param tidy logical, return a tidier result. See details.
+#' @param key API key: character if set explicitly in function call; by default a globally set key is retrieved by \code{eia_get_key}.
 #'
 #' @return a tibble data frame (or a list, or character, depending on \code{tidy} value)
 #' @export
@@ -103,12 +103,12 @@ eia_parent_cats <- function(key, id, cache = TRUE){
 #'
 #' @examples
 #' \dontrun{
-#' key <- Sys.getenv("EIA_KEY") # your stored API key
-#' eia_updates(key, 742, n = 5)
+#' # use eia_set_key() to store stored API key
+#' eia_updates(742, n = 5)
 #' }
-eia_updates <- function(key, id = NULL, deep = FALSE, n = 50, start = 1, tidy = TRUE){
+eia_updates <- function(id = NULL, deep = FALSE, n = 50, start = 1, tidy = TRUE, key = eia_get_key()){
   f <- if(is.na(tidy) || !tidy) purrr::map else purrr::map_dfr
-  x <- f(if(is.null(id)) -1 else id, ~.eia_updates(key, .x, deep, n, start, tidy))
+  x <- f(if(is.null(id)) -1 else id, ~.eia_updates(.x, deep, n, start, tidy, key))
   if(!is.data.frame(x)){
     if(is.character(x[[1]])) x <- unlist(x)
   } else if(nrow(x) == 0){
@@ -119,7 +119,7 @@ eia_updates <- function(key, id = NULL, deep = FALSE, n = 50, start = 1, tidy = 
   x
 }
 
-.eia_updates <- function(key, id, deep, n, start, tidy){
+.eia_updates <- function(id, deep, n, start, tidy, key){
   if(id == -1){
     id <- "?"
   } else {
