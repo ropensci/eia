@@ -165,7 +165,7 @@
     </tr>
     <tr>
       <th>relation</th>
-      <td><p>logical, make a geoset relation query instead of a geoset query. The series <code>id</code> is the same but is queried differently.</p></td>
+      <td><p>logical, make a geoset relation query instead of a geoset query. The series <code>id</code> is the same but is queried differently. Currently not supported, see details.</p></td>
     </tr>
     <tr>
       <th>start</th>
@@ -212,6 +212,7 @@ Set <code>tidy = NA</code> to return the original JSON as a character string.</p
 Using <code>FALSE</code> always makes a new API call and returns the result from the server.
 <code>TRUE</code> uses memoization on a per R session basis, caching the result of the function call in memory for the duration of the R session.
 You can reset the entire cache by calling <code><a href='eia_clear_cache.html'>eia_clear_cache()</a></code>.</p>
+<p>The EIA <code>relation</code> API endpoint is officially supported according to the online EIA API documentation, but that endpoint does not appear to function at the time of current package release.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

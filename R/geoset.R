@@ -18,12 +18,14 @@
 #' \code{TRUE} uses memoization on a per R session basis, caching the result of the function call in memory for the duration of the R session.
 #' You can reset the entire cache by calling \code{eia_clear_cache()}.
 #'
+#' The EIA \code{relation} API endpoint is officially supported according to the online EIA API documentation, but that endpoint does not appear to function at the time of current package release.
+#'
 #' @param id character, geoset series ID, may be a vector. See details.
 #' @param region character, region ID, may be a vector. Data available for the intersection of \code{id} and \code{region} is returned.
+#' @param relation logical, make a geoset relation query instead of a geoset query. The series \code{id} is the same but is queried differently. Currently not supported, see details.
 #' @param start start date. Providing only a start date will return up to the maximum 100 results if available.
 #' @param end end date. Providing only an end date will a single result for that date.
 #' @param n integer, length of series to return ending at most recent value or at \code{end} date if also provided. Ignored if \code{start} is not \code{NULL}.
-#' @param relation logical, make a geoset relation query instead of a geoset query. The series \code{id} is the same but is queried differently.
 #' @param tidy logical, return a tidier result. See details.
 #' @param cache logical, cache result for duration of R session using memoization. See details.
 #' @param key API key: character if set explicitly; not needed if key is set globally. See \code{\link{eia_set_key}}.

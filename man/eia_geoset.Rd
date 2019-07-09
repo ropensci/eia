@@ -12,7 +12,7 @@ eia_geoset(id, region, relation = NULL, start = NULL, end = NULL,
 
 \item{region}{character, region ID, may be a vector. Data available for the intersection of \code{id} and \code{region} is returned.}
 
-\item{relation}{logical, make a geoset relation query instead of a geoset query. The series \code{id} is the same but is queried differently.}
+\item{relation}{logical, make a geoset relation query instead of a geoset query. The series \code{id} is the same but is queried differently. Currently not supported, see details.}
 
 \item{start}{start date. Providing only a start date will return up to the maximum 100 results if available.}
 
@@ -48,6 +48,8 @@ Set to \code{cache = FALSE} to force a new API call for updated data.
 Using \code{FALSE} always makes a new API call and returns the result from the server.
 \code{TRUE} uses memoization on a per R session basis, caching the result of the function call in memory for the duration of the R session.
 You can reset the entire cache by calling \code{eia_clear_cache()}.
+
+The EIA \code{relation} API endpoint is officially supported according to the online EIA API documentation, but that endpoint does not appear to function at the time of current package release.
 }
 \examples{
 \dontrun{
