@@ -7,20 +7,20 @@
 \alias{eia_series_range}
 \title{EIA series metadata}
 \usage{
-eia_series_metadata(key, id, cache = TRUE)
+eia_series_metadata(id, cache = TRUE, key = eia_get_key())
 
-eia_series_updates(key, id, cache = TRUE)
+eia_series_updates(id, cache = TRUE, key = eia_get_key())
 
-eia_series_dates(key, id, cache = TRUE)
+eia_series_dates(id, cache = TRUE, key = eia_get_key())
 
-eia_series_range(key, id, cache = TRUE)
+eia_series_range(id, cache = TRUE, key = eia_get_key())
 }
 \arguments{
-\item{key}{character, API key.}
-
 \item{id}{character, series ID, may be a vector.}
 
 \item{cache}{logical, cache result for duration of R session using memoization.}
+
+\item{key}{API key: character if set explicitly; not needed if key is set globally. See \code{\link{eia_set_key}}.}
 }
 \value{
 a tibble data frame
@@ -42,13 +42,13 @@ instead, which makes an API call specifically to the EIA \code{updates} endpoint
 }
 \examples{
 \dontrun{
-key <- Sys.getenv("EIA_KEY") # your stored API key
+# use eia_set_key() to store stored API key
 id <- paste0("ELEC.CONS_TOT_BTU.COW-AK-1.", c("A", "Q", "M"))
 
-eia_series_metadata(key, id)
-eia_series_updates(key, id)
-eia_series_dates(key, id)
-eia_series_range(key, id)
+eia_series_metadata(id)
+eia_series_updates(id)
+eia_series_dates(id)
+eia_series_range(id)
 }
 }
 \seealso{

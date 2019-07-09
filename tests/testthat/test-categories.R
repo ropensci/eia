@@ -1,31 +1,34 @@
 context("categories")
 
 options(eia_antidos = 0)
-key <- Sys.getenv("EIA_KEY")
+suppressWarnings(key <- eia_get_key())
 
 test_that("category functions returns as expected", {
-  message(getwd())
-  if(key == "") skip("API key not available.")
+  if(is.null(key)) skip("API key not available.")
 
-  x <- eia_cats(key, tidy = FALSE)
+  x <- eia_cats(tidy = FALSE, key = key)
   expect_is(x, "list")
   expect_equal(names(x), c("request", "category"))
-  x <- eia_cats(key, tidy = NA)
+
+  x2 <- eia_cats(tidy = FALSE)
+  expect_identical(x, x2)
+
+  x <- eia_cats(tidy = NA)
   expect_is(x, "character")
 
-  x <- eia_cats(key)
+  x <- eia_cats()
   expect_is(x, "list")
   expect_equal(names(x), c("category", "childcategories"))
 
-  x <- eia_child_cats(key, 389)
+  x <- eia_child_cats(389)
   expect_is(x, "tbl_df")
-  x <- eia_child_cats(key, 742)
+  x <- eia_child_cats(742)
   expect_is(x, "NULL")
 
-  x <- eia_parent_cats(key, 742)
+  x <- eia_parent_cats(742)
   expect_is(x, "tbl_df")
   expect_equal(dim(x), c(6, 4))
-  x <- eia_parent_cats(key, 371)
+  x <- eia_parent_cats(371)
   expect_is(x, "tbl_df")
   expect_equal(dim(x), c(1, 3))
 })

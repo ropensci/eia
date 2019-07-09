@@ -34,13 +34,23 @@ remotes::install_github("leonawicz/eia")
 
 ## Example
 
-Load a time series of net electricity generation:
+To begin, store your API key. You can place it somewhere like your
+`.Renviron` file. You can set it with `eia_set_key`. You can always pass
+it explicitly to the `key` argument of a function.
 
 ``` r
 library(eia)
-key <- Sys.getenv("EIA_KEY")
+
+# not run
+eia_set_key("yourkey") # see help file for details/options
+```
+
+Once you have a `key` to use explicitly , or have set it somewhere
+globally, load a time series of net electricity generation:
+
+``` r
 id <- "ELEC.GEN.ALL-AK-99.A"
-(d <- eia_series(key, id, n = 10))
+(d <- eia_series(id, n = 10))
 #> # A tibble: 1 x 13
 #>   series_id name  units f     description copyright source iso3166
 #>   <chr>     <chr> <chr> <chr> <chr>       <chr>     <chr>  <chr>  

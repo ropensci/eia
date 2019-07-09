@@ -1,6 +1,6 @@
 Package: eia
 Title: US Energy Information Administration API
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: c(
     person("Matthew", "Leonawicz", email = "matt_leonawicz@esource.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9452-2771")),
     person(given = "E Source", role = c("cph", "fnd"))

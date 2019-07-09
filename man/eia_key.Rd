@@ -16,7 +16,7 @@ eia_get_key(store = c("env", "options", "sysenv"))
 \item{store}{character, method for storing API key. See details.}
 }
 \value{
-\code{eia_get_key} returns the key string or an error. \code{eia_set_key} returns a success message or an error.
+\code{eia_get_key} returns the key string or \code{NULL} with a warning. \code{eia_set_key} returns a success message or an error.
 }
 \description{
 Set and get API key

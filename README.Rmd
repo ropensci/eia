@@ -9,6 +9,7 @@ knitr::opts_chunk$set(
   collapse = TRUE, comment = "#>", fig.path = "man/figures/README-", out.width = "100%",
   message = FALSE, warning = FALSE, error = FALSE
 )
+library(eia)
 ```
 # eia <img src="man/figures/logo.png" style="margin-left:10px;margin-bottom:5px;" width="120" align="right">
 **Author:** [Matthew Leonawicz](https://leonawicz.github.io/blog/) <a href="https://orcid.org/0000-0001-9452-2771" target="orcid.widget">
@@ -35,13 +36,20 @@ remotes::install_github("leonawicz/eia")
 
 ## Example
 
-Load a time series of net electricity generation:
+To begin, store your API key. You can place it somewhere like your `.Renviron` file. You can set it with `eia_set_key`. You can always pass it explicitly to the `key` argument of a function.
+
+```{r example1, eval=FALSE}
+library(eia)
+
+# not run
+eia_set_key("yourkey") # see help file for details/options
+```
+
+Once you have a `key` to use explicitly , or have set it somewhere globally, load a time series of net electricity generation:
 
 ```{r example}
-library(eia)
-key <- Sys.getenv("EIA_KEY")
 id <- "ELEC.GEN.ALL-AK-99.A"
-(d <- eia_series(key, id, n = 10))
+(d <- eia_series(id, n = 10))
 
 d$data[[1]]
 ```

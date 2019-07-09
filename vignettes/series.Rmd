@@ -22,39 +22,38 @@ Like category information, time series data is obtained based on its ID. A compl
 
 ```{r cat1}
 library(eia)
-key <- Sys.getenv("EIA_KEY")
-
-eia_cats(key)
+# eia_set_key("yourkey") # set your API key
+eia_cats()
 ```
 
 Electricity has category ID 0. Take a closer look there:
 
 ```{r cat2}
-eia_cats(key, 0)
+eia_cats(0)
 ```
 
 There are two categories referring to total consumption. Take category ID 32 as an example and step deeper into the category hierarchy.
 
 ```{r cat3}
-eia_cats(key, 32)
+eia_cats(32)
 ```
 
 At this point you have a choice between total consumption by sector or fuel type. Select by sector.
 
 ```{r cat4}
-eia_cats(key, 372)
+eia_cats(372)
 ```
 
 Then total electrical power:
 
 ```{r cat5}
-eia_cats(key, 388)
+eia_cats(388)
 ```
 
 And finally coal:
 
 ```{r cat6}
-(x <- eia_cats(key, 738))
+(x <- eia_cats(738))
 ```
 
 ## Available child series
@@ -77,10 +76,9 @@ To see how the different time formats are parsed, take the first three IDs for A
 
 ```{r series1}
 id <- x$childseries$series_id[1:3]
-
-x1 <- eia_series(key, id[1], n = 3)
-x2 <- eia_series(key, id[2], n = 3)
-x3 <- eia_series(key, id[3], n = 3)
+x1 <- eia_series(id[1], n = 3)
+x2 <- eia_series(id[2], n = 3)
+x3 <- eia_series(id[3], n = 3)
 ```
 
 The format of each result is the same. Inspect the first one. It is a data frame with one row. All but the final column, `data`, give metadata about the series. `data` is a list column (in this case of length one) that can be extracted directly or unnested using `tidyr::unnest`.
@@ -108,7 +106,7 @@ x3$data[[1]]
 The EIA API allows multiple series to be requested in a single API call. You should do this whenever possible to reduce the number of requests you make. To request the same data as above, just provide the `id` vector. Other arguments like `n` are not vectorized.
 
 ```{r series4}
-x <- eia_series(key, id, n = 3)
+x <- eia_series(id, n = 3)
 x
 ```
 
@@ -128,19 +126,17 @@ select(x, series_id, data) %>% unnest()
 
 Here are some things to keep in mind about `eia_series` arguments:
 
-*    The function only makes one API call, combining multiple series IDs if provided.
-*    If there are fewer results than you request, everything available is returned.
-*    Results are from the most recent; using only `n` will return data from the most recent time point.
-*    You can use `start` and `end` instead of `n`
-*    `n` is ignored if you use both `start` and `end`.
-*    If you use only one of `start` or `end`, but do not provide `n`, you will receive everything forward or backward from that point, up to the maximum number of results allowed by the API.
-*    Depending on the nature of the request, you may have to construct more than one call.
-
+* The function only makes one API call, combining multiple series IDs if provided.
+* If there are fewer results than you request, everything available is returned.
+* Results are from the most recent unless using `start` alone.
+* If you provide `start` and `end`, `n` is ignored.
+* If you do not provide a closed period or `n`, you will receive all relevant data available, subject to any API limits.
+* Depending on the nature of the request, you may have to construct more than one call.
 
 ```{r series7, eval = FALSE}
-eia_series(key, id, n = 10)
-eia_series(key, id, end = 2016, n = 5)
-eia_series(key, id, start = 2000, end = 2016)
+eia_series(id, n = 10)
+eia_series(id, end = 2016, n = 5)
+eia_series(id, start = 2000, end = 2016)
 ```
 
 ## Output format
@@ -148,13 +144,13 @@ eia_series(key, id, start = 2000, end = 2016)
 The default is to return tidy data in a tibble data frame. You can set `tidy = FALSE` to return the list returned by `jsonlite::fromJSON` without any further processing.
 
 ```{r series8}
-eia_series(key, id, n = 3, tidy = FALSE)
+eia_series(id, n = 3, tidy = FALSE)
 ```
 
 You can also return the raw JSON data in a character string if you need to process this directly with other code.
 
 ```{r series9}
-cat(eia_series(key, id, n = 3, tidy = NA))
+cat(eia_series(id, n = 3, tidy = NA))
 ```
 
 This allows you to use the returned results with existing code you may have that requires data in one of these less processed structures.
@@ -166,10 +162,10 @@ This allows you to use the returned results with existing code you may have that
 There are some functions available that make small API calls and return only metadata associated with a time series dataset.
 
 ```{r series10}
-eia_series_metadata(key, id)
-eia_series_updates(key, id)
-eia_series_dates(key, id)
-eia_series_range(key, id)
+eia_series_metadata(id)
+eia_series_updates(id)
+eia_series_dates(id)
+eia_series_range(id)
 ```
 
 Like `eia_seires`, these functions accept an `id` vector. They always return a tibble data frame.

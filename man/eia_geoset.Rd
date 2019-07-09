@@ -4,12 +4,10 @@
 \alias{eia_geoset}
 \title{EIA geoset data}
 \usage{
-eia_geoset(key, id, region, relation = NULL, start = NULL,
-  end = NULL, n = NULL, tidy = TRUE, cache = TRUE)
+eia_geoset(id, region, relation = NULL, start = NULL, end = NULL,
+  n = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key())
 }
 \arguments{
-\item{key}{character, API key.}
-
 \item{id}{character, geoset series ID, may be a vector. See details.}
 
 \item{region}{character, region ID, may be a vector. Data available for the intersection of \code{id} and \code{region} is returned.}
@@ -25,6 +23,8 @@ eia_geoset(key, id, region, relation = NULL, start = NULL,
 \item{tidy}{logical, return a tidier result. See details.}
 
 \item{cache}{logical, cache result for duration of R session using memoization. See details.}
+
+\item{key}{API key: character if set explicitly; not needed if key is set globally. See \code{\link{eia_set_key}}.}
 }
 \value{
 a tibble data frame (or a list, or character, depending on \code{tidy} value)
@@ -51,22 +51,22 @@ You can reset the entire cache by calling \code{eia_clear_cache()}.
 }
 \examples{
 \dontrun{
-key <- Sys.getenv("EIA_KEY") # your stored API key
+# use eia_set_key() to store stored API key
 id <- paste0("ELEC.GEN.ALL-99.", c("A", "Q", "M"))
 region <- c("USA-CA", "USA-NY")
 
-eia_geoset(key, id[1], region[1], start = 2016)
-eia_geoset(key, id[2], region, n = 5)
-eia_geoset(key, id[3], region[2], end = 2016, n = 5)
+eia_geoset(id[1], region[1], start = 2016)
+eia_geoset(id[2], region, n = 5)
+eia_geoset(id[3], region[2], end = 2016, n = 5)
 
 # multiple series counted as a single API call
-x <- eia_geoset(key, id, region[1], end = 2016, n = 5)
-x$data[[1]]
+x <- eia_geoset(id, region[1], end = 2016, n = 2)
+x[, c("region", "data")]
 
 # Use direct US state abbreviations or names;
 # Use US Census region and division names.
-x <- eia_geoset(key, id[2], c("AK", "New England"), end = 2016, n = 1)
-x$data[[1]]
+x <- eia_geoset(id[2], c("AK", "New England"), end = 2016, n = 1)
+x[, c("region", "data")]
 }
 }
 \seealso{

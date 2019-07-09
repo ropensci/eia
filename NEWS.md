@@ -1,7 +1,8 @@
-# eia 0.2.0
-
+# eia 0.3.0
 * Added convenient key store methods with getter and setter helpers, optionally making it easy to avoid having to provide the key in every function call.
 * Moved `key` argument from first to last among relevant function arguments and updated all examples accordingly.
+
+# eia 0.2.0
 * Added optional memoization to API functions, adding a new `cache` argument.
 * Added anti-DOS measures, which can be adjusted using `options()`.
 * Added more vignettes and documentation.

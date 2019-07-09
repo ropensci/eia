@@ -14,30 +14,30 @@
 #' \code{eia_child_cats} returns only the immediate child categories. \code{eia_parent_cats} returns all parents.
 #' These are wrappers around \code{eia_cats} and always return a tibble data frame.
 #'
-#' @param key character, API key.
 #' @param id integer, category ID. If \code{NULL}, the API root category.
 #' @param tidy logical, return a tidier result. See details.
 #' @param cache logical, cache result for duration of R session using memoization. See details.
+#' @param key API key: character if set explicitly; not needed if key is set globally. See \code{\link{eia_set_key}}.
 #'
 #' @return for \code{eia_cats}, a list of tibble data frames (or a less processed list, or character, depending on \code{tidy} value); others functions return a tibble data frame.
 #' @export
-#' @seealso \code{\link{eia_clear_cache}}
 #'
 #' @examples
 #' \dontrun{
-#' key <- Sys.getenv("EIA_KEY") # your stored API key
-#' eia_cats(key)
+#' # use eia_set_key() to store stored API key
+#' eia_cats()
 #'
-#' eia_child_cats(key, 389) # immedate children
-#' eia_parent_cats(key, 742) # all parents
+#' eia_child_cats(389) # immedate children
+#' eia_parent_cats(742) # all parents
 #' }
-eia_cats <- function(key, id = NULL, tidy = TRUE, cache = TRUE){
-  if(cache) .eia_cats_memoized(key, id, tidy) else
-    .eia_cats(key, id, tidy)
+eia_cats <- function(id = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
+  .key_check(key)
+  if(cache) .eia_cats_memoized(id, tidy, key) else
+    .eia_cats(id, tidy, key)
 }
 
-.eia_cats <- function(key, id = NULL, tidy = TRUE){
-  x <- .eia_cat_url(key, id) %>% .eia_get()
+.eia_cats <- function(id, tidy, key){
+  x <- .eia_cat_url(id, key) %>% .eia_get()
   if(is.na(tidy)) return(x)
   x <- jsonlite::fromJSON(x)
   if(!tidy) return(x)
@@ -55,15 +55,17 @@ eia_cats <- function(key, id = NULL, tidy = TRUE, cache = TRUE){
 
 #' @export
 #' @rdname eia_cats
-eia_child_cats <- function(key, id, cache = TRUE){
-  eia_cats(key, id, cache = cache)$childcategories
+eia_child_cats <- function(id, cache = TRUE, key = eia_get_key()){
+  .key_check(key)
+  eia_cats(id, cache = cache, key = key)$childcategories
 }
 
 #' @export
 #' @rdname eia_cats
-eia_parent_cats <- function(key, id, cache = TRUE){
+eia_parent_cats <- function(id, cache = TRUE, key = eia_get_key()){
+  .key_check(key)
   f <- function(key, id, d = NULL){
-    x <- eia_cats(key, id, cache = cache)$category
+    x <- eia_cats(id, cache = cache, key = key)$category
     done <- !"parent_category_id" %in% names(x)
     d <- dplyr::bind_rows(x, d)
     if(done) d else Recall(key, x$parent_category_id, d)
@@ -71,7 +73,7 @@ eia_parent_cats <- function(key, id, cache = TRUE){
   f(key, id)
 }
 
-.eia_cat_url <- function(key, id = NULL) .eia_url(key, id, "category")
+.eia_cat_url <- function(id, key) .eia_url(key, id, "category")
 
 #' EIA data updates
 #'
@@ -95,7 +97,7 @@ eia_parent_cats <- function(key, id, cache = TRUE){
 #' @param n integer, maximum number of rows of series to return. Defaults to 50; maximum permitted by the API is 10,000.
 #' @param start integer, row to start from, defaults to 1.
 #' @param tidy logical, return a tidier result. See details.
-#' @param key API key: character if set explicitly in function call; by default a globally set key is retrieved by \code{eia_get_key}.
+#' @param key API key: character if set explicitly; not needed if key is set globally. See \code{\link{eia_set_key}}.
 #'
 #' @return a tibble data frame (or a list, or character, depending on \code{tidy} value)
 #' @export
@@ -107,6 +109,7 @@ eia_parent_cats <- function(key, id, cache = TRUE){
 #' eia_updates(742, n = 5)
 #' }
 eia_updates <- function(id = NULL, deep = FALSE, n = 50, start = 1, tidy = TRUE, key = eia_get_key()){
+  .key_check(key)
   f <- if(is.na(tidy) || !tidy) purrr::map else purrr::map_dfr
   x <- f(if(is.null(id)) -1 else id, ~.eia_updates(.x, deep, n, start, tidy, key))
   if(!is.data.frame(x)){

@@ -6,20 +6,20 @@
 \alias{eia_parent_cats}
 \title{EIA categories}
 \usage{
-eia_cats(key, id = NULL, tidy = TRUE, cache = TRUE)
+eia_cats(id = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key())
 
-eia_child_cats(key, id, cache = TRUE)
+eia_child_cats(id, cache = TRUE, key = eia_get_key())
 
-eia_parent_cats(key, id, cache = TRUE)
+eia_parent_cats(id, cache = TRUE, key = eia_get_key())
 }
 \arguments{
-\item{key}{character, API key.}
-
 \item{id}{integer, category ID. If \code{NULL}, the API root category.}
 
 \item{tidy}{logical, return a tidier result. See details.}
 
 \item{cache}{logical, cache result for duration of R session using memoization. See details.}
+
+\item{key}{API key: character if set explicitly; not needed if key is set globally. See \code{\link{eia_set_key}}.}
 }
 \value{
 for \code{eia_cats}, a list of tibble data frames (or a less processed list, or character, depending on \code{tidy} value); others functions return a tibble data frame.
@@ -42,13 +42,10 @@ These are wrappers around \code{eia_cats} and always return a tibble data frame.
 }
 \examples{
 \dontrun{
-key <- Sys.getenv("EIA_KEY") # your stored API key
-eia_cats(key)
+# use eia_set_key() to store stored API key
+eia_cats()
 
-eia_child_cats(key, 389) # immedate children
-eia_parent_cats(key, 742) # all parents
+eia_child_cats(389) # immedate children
+eia_parent_cats(742) # all parents
 }
-}
-\seealso{
-\code{\link{eia_clear_cache}}
 }

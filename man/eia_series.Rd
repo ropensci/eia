@@ -4,12 +4,10 @@
 \alias{eia_series}
 \title{EIA data series}
 \usage{
-eia_series(key, id, start = NULL, end = NULL, n = NULL,
-  tidy = TRUE, cache = TRUE)
+eia_series(id, start = NULL, end = NULL, n = NULL, tidy = TRUE,
+  cache = TRUE, key = eia_get_key())
 }
 \arguments{
-\item{key}{character, API key.}
-
 \item{id}{character, series ID, may be a vector.}
 
 \item{start}{start date. Providing only a start date will return up to the maximum 100 results if available.}
@@ -21,6 +19,8 @@ eia_series(key, id, start = NULL, end = NULL, n = NULL,
 \item{tidy}{logical, return a tidier result. See details.}
 
 \item{cache}{logical, cache result for duration of R session using memoization. See details.}
+
+\item{key}{API key: character if set explicitly; not needed if key is set globally. See \code{\link{eia_set_key}}.}
 }
 \value{
 a tibble data frame (or a list, or character, depending on \code{tidy} value)
@@ -40,19 +40,19 @@ You can reset the entire cache by calling \code{eia_clear_cache()}.
 }
 \examples{
 \dontrun{
-key <- Sys.getenv("EIA_KEY") # your stored API key
+# use eia_set_key() to store stored API key
 id <- paste0("ELEC.GEN.ALL-AK-99.", c("A", "Q", "M"))
 
-x1 <- eia_series(key, id[1], start = 2016)
-x2 <- eia_series(key, id[2], n = 5)
-x3 <- eia_series(key, id[3], end = 2016, n = 5)
+x1 <- eia_series(id[1], start = 2016)
+x2 <- eia_series(id[2], n = 5)
+x3 <- eia_series(id[3], end = 2016, n = 5)
 x1$data[[1]]
 x2$data[[1]]
 x3$data[[1]]
 
 # multiple series counted as a single API call
-x <- eia_series(key, id, end = 2016, n = 5)
-x$data[[1]]
+x <- eia_series(id, end = 2016, n = 2)
+x$data
 }
 }
 \seealso{

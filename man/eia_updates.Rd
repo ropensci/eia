@@ -18,7 +18,7 @@ eia_updates(id = NULL, deep = FALSE, n = 50, start = 1,
 
 \item{tidy}{logical, return a tidier result. See details.}
 
-\item{key}{API key: character if set explicitly in function call; by default a globally set key is retrieved by \code{eia_get_key}.}
+\item{key}{API key: character if set explicitly; not needed if key is set globally. See \code{\link{eia_set_key}}.}
 }
 \value{
 a tibble data frame (or a list, or character, depending on \code{tidy} value)

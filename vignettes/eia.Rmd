@@ -43,7 +43,8 @@ The last two options require the name-value pair to be named `EIA_KEY = "yourkey
 This setup also allows you to store a key that will override another key. This is because `eia_get_key` checks these three storage methods in this order and stops as soon as it finds a key. If you need it to check a specific location, you can specify `store`.
 
 As an example, if the key already exists in the system environment and you plan to pass `key` to functions explicitly, you could start as follows:
-```{r key1}
+
+```{r key1, eval=FALSE}
 library(eia)
 key <- Sys.getenv("EIA_KEY") 
 ```
@@ -65,21 +66,16 @@ Once you have your EIA registered API key and have it in place for your R sessio
 
 It is helpful to be aware of various categories of data that are available. Each category has a unique ID number that is required to access associated data. The first call below does not include an ID. The result is a list of two data frames. The first is metadata associated with that position in the category hierarchy. The second is the child category information.
 
-```{r cats0}
-library(eia)
-key <- Sys.getenv("EIA_KEY")
-```
-
 Here is the top-level category information:
 
 ```{r cats1}
-eia_cats(key)
+eia_cats()
 ```
 
 The child category IDs can be used to query results from that category.
 
 ```{r cats2}
-eia_cats(key, 0)
+eia_cats(0)
 ```
 
 ## EIA time series data
@@ -88,8 +84,7 @@ Time series data is obtained by series ID. Most columns contain metadata. The `d
 
 ```{r series1}
 id <- "ELEC.GEN.ALL-AK-99.A"
-
-(x1 <- eia_series(key, id, n = 5))
+(x1 <- eia_series(id, n = 5))
 
 x1$data[[1]]
 ```
@@ -97,17 +92,17 @@ x1$data[[1]]
 You can provide arguments like the following:
 
 ```{r series2, eval = FALSE}
-eia_series(key, id) # max results
-eia_series(key, id, n = 5) # most recent five
-eia_series(key, id, end = 2016, n = 5) # ending in 2016
-eia_series(key, id, start = 2000, end = 2016) # specific period
+eia_series(id) # max results
+eia_series(id, n = 5) # most recent five
+eia_series(id, end = 2016, n = 5) # ending in 2016
+eia_series(id, start = 2000, end = 2016) # specific period
 ```
 
 As with `eia_cats`, the output format does not need to be tidy:
 
 ```{r series3, eval = FALSE}
-eia_series(key, id, n = 5, tidy = FALSE) # results of jsonlite::fromJSON
-eia_series(key, id, n = 5, tidy = NA) # origina JSON as character string
+eia_series(id, n = 5, tidy = FALSE) # results of jsonlite::fromJSON
+eia_series(id, n = 5, tidy = NA) # origina JSON as character string
 ```
 
 This allows you to use the returned results with existing code you may have that requires data in one of these less processed structures.
@@ -121,7 +116,7 @@ In the example below using total electricity generation, get the last two data p
 ```{r geoset1}
 id <- c("ELEC.GEN.ALL-99.A")
 region <- c("USA-CA", "USA-NY")
-(x <- eia_geoset(key, id, region, n = 2))
+(x <- eia_geoset(id, region, n = 2))
 
 library(dplyr)
 library(tidyr)
@@ -139,9 +134,9 @@ These shortcuts make it easier to construct an API call involving several states
 
 ```{r geoset2}
 region <- c("AK", "New England")
-(x <- eia_geoset(key, id, region, n = 2))
+(x <- eia_geoset(id, region, n = 2))
 
 select(x, region, data) %>% unnest()
 ```
 
-Even more convenient is that these names are available in R. See the `state.*` functions.
+Even more convenient is that these names are available in R. See the `datasets::state.*` functions and the geoset vignette.

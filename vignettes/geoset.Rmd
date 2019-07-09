@@ -25,12 +25,10 @@ The main difference is that you must provide a geoset ID to `id` and a `region` 
 
 ```{r geoset}
 library(eia)
-key <- Sys.getenv("EIA_KEY")
-
+# eia_set_key("yourkey") # set your API key
 id <- "ELEC.GEN.ALL-99.A"
 region <- c("USA-CA", "USA-NY")
-
-(x <- eia_geoset(key, id[1], region[1], n = 3))
+(x <- eia_geoset(id[1], region[1], n = 3))
 ```
 
 ## Groups of regions
@@ -46,7 +44,7 @@ tibble(state.abb, state.name, state.region, state.division)
 Provide the associated label and `eia_geoset` recognizes subsets of US states. Even this can be a vector. In the example below, `region` consists of Alaska plus the states belonging to the New England census division.
 
 ```{r geoset2}
-(x <- eia_geoset(key, id, c("AK", "New England"), n = 1))
+(x <- eia_geoset(id, c("AK", "New England"), n = 1))
 x$data[[1]]
 ```
 

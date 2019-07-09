@@ -23,7 +23,7 @@
 #' @param key character, API key.
 #' @param store character, method for storing API key. See details.
 #'
-#' @return \code{eia_get_key} returns the key string or an error. \code{eia_set_key} returns a success message or an error.
+#' @return \code{eia_get_key} returns the key string or \code{NULL} with a warning. \code{eia_set_key} returns a success message or an error.
 #' @export
 #' @name eia_key
 #'
@@ -33,7 +33,7 @@
 #' # eia_get_key("options") returns an error if not set
 eia_set_key <- function(key, store = c("env", "options", "sysenv")){
   store <- match.arg(store)
-  err <- "Key not stored."
+  err <- "Failed to set key."
   if(store == "env"){
     .session_eia_env$key <- key
     if(.session_eia_env$key == key){
@@ -75,5 +75,6 @@ eia_get_key <- function(store = c("env", "options", "sysenv")){
     key <- Sys.getenv("EIA_KEY")
     if(!is.null(key)) return(key)
   }
-  stop("EIA API key not found in package environment, global options, or system enivronment variables.", call. = FALSE)
+  warning("EIA API key not found in package environment, global options, or system enivronment variables.", call. = FALSE)
+  key
 }

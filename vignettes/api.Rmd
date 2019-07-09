@@ -17,14 +17,58 @@ options(eia_antidos = 0)
 key <- Sys.getenv("EIA_KEY")
 ```
 
-The EIA API can of course impose its own limitations on usage by a given API key. However, `eia` also helps out by limiting the potential for making unnecessary API calls. It does this in two ways, both of which allow optional configuration:
+## API key
 
-*   caching API results using session-based memoization
+### Register a key with EIA
+
+Obtaining an API key is easy and free. 
+
+Pulling data from the US Energy Information Administration (EIA) API requires a registered API key. A key can be obtained at no cost [here](https://www.eia.gov/opendata/register.php). A valid email and agreement to the API Terms of Service is required to obtain a key.
+
+It is important to store your API key somewhere secure. Do not commit it to a repository or otherwise share it. For example, you could store it in your `.Renviron` file.
+
+### Key storage and retrieval
+
+You can always provide the `key` argument to every API function call, but you do not have to. There are getter and setter helpers available to make using `eia` functions a more seamless experience.
+
+`eia_set_key` gives you the option of storing your key in any of three places via the `store` argument:
+
+* `store = "env"`: the package environment that is created when the package is loaded (default method)
+* `store = "options"`: in the global `options`
+* `store = "sysenv"`: as a system environment variable via `Sys.setenv`.
+
+The last two options require the name-value pair to be named `EIA_KEY = "yourkey"`. These three options also are the order of precedence if you do not specify the `store` argument.
+
+This setup also allows you to store a key that will override another key. This is because `eia_get_key` checks these three storage methods in this order and stops as soon as it finds a key. If you need it to check a specific location, you can specify `store`.
+
+As an example, if the key already exists in the system environment and you plan to pass `key` to functions explicitly, you could start as follows:
+
+```{r key1, eval=FALSE}
+library(eia)
+key <- Sys.getenv("EIA_KEY") 
+```
+
+If you need to set it:
+
+```{r key2}
+# eia_set_key("yourkey")
+# eia_get_key() # retrieve it
+```
+
+API functions in `eia` use `eia_get_key()` with no arguments as the default value of their `key` argument, checking in the order shown above for an existing key. This way you do not need to repeatedly provide it. See the package documentation for more details on key options.
+
+In this and subsequent vignettes, you will not see a key being set because it is already an environment variable. You will also not see it used explicitly by any functions because the default behavior is to look up the key in the environment.
+
+## API requests
+
+The EIA API can of course impose its own rate-limiting and other limitations on usage by a given API key. If you use the API improperly or otherwise violate any Terms of Service, the EIA may withdraw your API access. However, the `eia` package also helps prevent accidental overuse by having default settings that limit the potential for making unnecessary API calls. It does this in two ways, both of which allow optional configuration:
+
+*   caching API results tin memory using session-based memoization
 *   minimum delay between API calls
 
 By default the `eia` package prevents you from accidentally making too many requests too quickly, but it also offers sensible flexibility.
 
-## Memoization
+### Memoization
 
 All functions in `eia` that make API calls use memoization by default. They will not make the same API call twice in one R session. A call is made once and the result is cached. Calling the same function with the identical arguments again will only returned the cached result. 
 
@@ -33,19 +77,16 @@ This approach limits the potential for accidentally using the EIA API more than 
 Run this example of the same request made with and without memoization. You will notice the cached result by the immediate return.
 
 ```{r memo1, eval=FALSE}
-library(eia)
-key <- Sys.getenv("EIA_KEY")
-
-system.time(eia_cats(key)) # API call; cache result
-system.time(eia_cats(key)) # read from cache
-system.time(eia_cats(key, cache = FALSE)) # API call
+system.time(eia_cats()) # API call; cache result
+system.time(eia_cats()) # read from cache
+system.time(eia_cats(cache = FALSE)) # API call
 ```
 
 Results are cached in memory for the duration of the R session, but you can clear the cache at any time:
 
 ```{r memo2, eval=FALSE}
 eia_clear_cache()
-system.time(eia_cats(key))
+system.time(eia_cats())
 ```
 
 This allows you to update the cached result. You can reset the cache for only specific endpoints using the following functions:
@@ -54,7 +95,7 @@ This allows you to update the cached result. You can reset the cache for only sp
 *    `eia_clear_series`
 *    `eia_clear_geoset`
 
-## Anti-DOS measures
+### Anti-DOS measures
 
 Regardless of rate overall limiting imposed by the EIA API, the `eia` package sets a minimum wait time of one second between successive API calls. In most cases this is an irrelevant safeguard. Most `eia` functions make a single API call and requests for data often take a full second anyway once you factor in the subsequent data manipulation in R.
 
@@ -69,10 +110,10 @@ options(eia_antidos = 1)
 ```
 
 ```{r antidos2}
-system.time(x <- eia_parent_cats(key, 742, cache = FALSE))
+system.time(x <- eia_parent_cats(742, cache = FALSE))
 
 options(eia_antidos = 0)
-system.time(x <- eia_parent_cats(key, 742, cache = FALSE))
+system.time(x <- eia_parent_cats(742, cache = FALSE))
 
 x
 ```

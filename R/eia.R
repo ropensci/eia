@@ -67,3 +67,7 @@ NULL
 .antidos_after <- function(x){
   assign(x, Sys.time(), envir = .session_eia_env)
 }
+
+.key_check <- function(key){
+  if(is.null(key)) stop("Key is missing.", call. = FALSE)
+}

@@ -18,7 +18,6 @@
 #' \code{TRUE} uses memoization on a per R session basis, caching the result of the function call in memory for the duration of the R session.
 #' You can reset the entire cache by calling \code{eia_clear_cache()}.
 #'
-#' @param key character, API key.
 #' @param id character, geoset series ID, may be a vector. See details.
 #' @param region character, region ID, may be a vector. Data available for the intersection of \code{id} and \code{region} is returned.
 #' @param start start date. Providing only a start date will return up to the maximum 100 results if available.
@@ -27,6 +26,7 @@
 #' @param relation logical, make a geoset relation query instead of a geoset query. The series \code{id} is the same but is queried differently.
 #' @param tidy logical, return a tidier result. See details.
 #' @param cache logical, cache result for duration of R session using memoization. See details.
+#' @param key API key: character if set explicitly; not needed if key is set globally. See \code{\link{eia_set_key}}.
 #'
 #' @return a tibble data frame (or a list, or character, depending on \code{tidy} value)
 #' @export
@@ -34,36 +34,37 @@
 #'
 #' @examples
 #' \dontrun{
-#' key <- Sys.getenv("EIA_KEY") # your stored API key
+#' # use eia_set_key() to store stored API key
 #' id <- paste0("ELEC.GEN.ALL-99.", c("A", "Q", "M"))
 #' region <- c("USA-CA", "USA-NY")
 #'
-#' eia_geoset(key, id[1], region[1], start = 2016)
-#' eia_geoset(key, id[2], region, n = 5)
-#' eia_geoset(key, id[3], region[2], end = 2016, n = 5)
+#' eia_geoset(id[1], region[1], start = 2016)
+#' eia_geoset(id[2], region, n = 5)
+#' eia_geoset(id[3], region[2], end = 2016, n = 5)
 #'
 #' # multiple series counted as a single API call
-#' x <- eia_geoset(key, id, region[1], end = 2016, n = 5)
-#' x$data[[1]]
+#' x <- eia_geoset(id, region[1], end = 2016, n = 2)
+#' x[, c("region", "data")]
 #'
 #' # Use direct US state abbreviations or names;
 #' # Use US Census region and division names.
-#' x <- eia_geoset(key, id[2], c("AK", "New England"), end = 2016, n = 1)
-#' x$data[[1]]
+#' x <- eia_geoset(id[2], c("AK", "New England"), end = 2016, n = 1)
+#' x[, c("region", "data")]
 #' }
-eia_geoset <- function(key, id, region, relation = NULL, start = NULL, end = NULL, n = NULL,
-                       tidy = TRUE, cache = TRUE){
+eia_geoset <- function(id, region, relation = NULL, start = NULL, end = NULL, n = NULL,
+                       tidy = TRUE, cache = TRUE, key = eia_get_key()){
+  .key_check(key)
   region <- .to_state_abb(region)
   if(cache){
-    .eia_geoset_memoized(key, id, region, relation, start, end, n, tidy)
+    .eia_geoset_memoized(id, region, relation, start, end, n, tidy, key)
   } else {
-    .eia_geoset(key, id, region, relation, start, end, n, tidy)
+    .eia_geoset(id, region, relation, start, end, n, tidy, key)
   }
 }
 
-.eia_geoset <- function(key, id, region, relation, start, end, n, tidy){
+.eia_geoset <- function(id, region, relation, start, end, n, tidy, key){
   f <- if(is.na(tidy) || !tidy) purrr::map else purrr::map_dfr
-  x <- f(id, ~.eia_geoset_by_id(key, .x, region, relation, start, end, n, tidy))
+  x <- f(id, ~.eia_geoset_by_id(.x, region, relation, start, end, n, tidy, key))
   if(!is.data.frame(x)){
     if(is.character(x[[1]])) x <- unlist(x)
   }
@@ -72,8 +73,8 @@ eia_geoset <- function(key, id, region, relation = NULL, start = NULL, end = NUL
 
 .eia_geoset_memoized <- memoise::memoise(.eia_geoset)
 
-.eia_geoset_by_id <- function(key, id, region, relation, start, end, n, tidy){
-  x <- .eia_geo_url(key, id, region, relation, start, end, n) %>% .eia_get()
+.eia_geoset_by_id <- function(id, region, relation, start, end, n, tidy, key){
+  x <- .eia_geo_url(id, region, relation, start, end, n, key) %>% .eia_get()
   if(is.na(tidy)) return(x)
   x <- jsonlite::fromJSON(x)
   if(!tidy) return(x)
@@ -101,7 +102,7 @@ eia_geoset <- function(key, id, region, relation = NULL, start = NULL, end = NUL
   dplyr::bind_cols(x$geoset, x$series)
 }
 
-.eia_geo_url <- function(key, id, region, relation, start, end, n){
+.eia_geo_url <- function(id, region, relation, start, end, n, key){
   params <- .eia_time_params(start, end, n)
   url <- .eia_url(key, id, if(is.null(relation)) "geoset" else "relation")
   url <- paste0(url, "&regions=", paste0(region, collapse = ";"))
