@@ -15,7 +15,7 @@ eia_parent_cats(key, id, cache = TRUE)
 \arguments{
 \item{key}{character, API key.}
 
-\item{id}{integer, category ID.}
+\item{id}{integer, category ID. If \code{NULL}, the API root category.}
 
 \item{tidy}{logical, return a tidier result. See details.}
 

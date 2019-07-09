@@ -15,7 +15,7 @@
 #' These are wrappers around \code{eia_cats} and always return a tibble data frame.
 #'
 #' @param key character, API key.
-#' @param id integer, category ID.
+#' @param id integer, category ID. If \code{NULL}, the API root category.
 #' @param tidy logical, return a tidier result. See details.
 #' @param cache logical, cache result for duration of R session using memoization. See details.
 #'
@@ -37,8 +37,7 @@ eia_cats <- function(key, id = NULL, tidy = TRUE, cache = TRUE){
 }
 
 .eia_cats <- function(key, id = NULL, tidy = TRUE){
-  x <- .eia_cat_url(key, id) %>% .eia_get() %>%
-    httr::content(as = "text", encoding = "UTF-8")
+  x <- .eia_cat_url(key, id) %>% .eia_get()
   if(is.na(tidy)) return(x)
   x <- jsonlite::fromJSON(x)
   if(!tidy) return(x)
@@ -57,14 +56,12 @@ eia_cats <- function(key, id = NULL, tidy = TRUE, cache = TRUE){
 #' @export
 #' @rdname eia_cats
 eia_child_cats <- function(key, id, cache = TRUE){
-  if(!is.numeric(id)) stop("`id` must be a number.", call. = FALSE)
   eia_cats(key, id, cache = cache)$childcategories
 }
 
 #' @export
 #' @rdname eia_cats
 eia_parent_cats <- function(key, id, cache = TRUE){
-  if(!is.numeric(id)) stop("`id` must be a number.", call. = FALSE)
   f <- function(key, id, d = NULL){
     x <- eia_cats(key, id, cache = cache)$category
     done <- !"parent_category_id" %in% names(x)
@@ -75,3 +72,66 @@ eia_parent_cats <- function(key, id, cache = TRUE){
 }
 
 .eia_cat_url <- function(key, id = NULL) .eia_url(key, id, "category")
+
+#' EIA data updates
+#'
+#' Obtain information on EIA data series updates for a given category to avoid having to make requests for data that have not been updated since your last request.
+#'
+#' This function returns paginated results of the most recent update dates for data series.
+#' \code{n} and \code{start} help with stepping through chunks.
+#'
+#' If you need to know the most recent update stamps for a large set of series, you should use this function,
+#' which makes an API call specifically to the EIA \code{updates} endpoint for specific EIA categories by category ID.
+#' If you are only interested in update times for a specific set of series IDs,
+#' you can use \code{\link{eia_series_updates}}.
+#' Note that while this function accepts a vector of IDs for \code{id}, it must make one API call per ID.
+#'
+#' By default, additional processing is done to return a tibble data frame.
+#' Set \code{tidy = FALSE} to return only the initial list result of \code{jsonlite::fromJSON}.
+#' Set \code{tidy = NA} to return the original JSON as a character string.
+#'
+#' @param key character, API key.
+#' @param id integer, category ID, may be a vector. If \code{NULL}, the API root category.
+#' @param deep logical, if \code{TRUE}, return information on all child series. If \code{FALSE} (default), return only for the category \code{id}.
+#' @param n integer, maximum number of rows of series to return. Defaults to 50; maximum permitted by the API is 10,000.
+#' @param start integer, row to start from, defaults to 1.
+#' @param tidy logical, return a tidier result. See details.
+#'
+#' @return a tibble data frame (or a list, or character, depending on \code{tidy} value)
+#' @export
+#' @seealso \code{\link{eia_series_updates}}
+#'
+#' @examples
+#' \dontrun{
+#' key <- Sys.getenv("EIA_KEY") # your stored API key
+#' eia_updates(key, 742, n = 5)
+#' }
+eia_updates <- function(key, id = NULL, deep = FALSE, n = 50, start = 1, tidy = TRUE){
+  f <- if(is.na(tidy) || !tidy) purrr::map else purrr::map_dfr
+  x <- f(if(is.null(id)) -1 else id, ~.eia_updates(key, .x, deep, n, start, tidy))
+  if(!is.data.frame(x)){
+    if(is.character(x[[1]])) x <- unlist(x)
+  } else if(nrow(x) == 0){
+    x <- tibble(series_id = character(), updated = character())
+  } else if(length(id) > 1){
+    x <- dplyr::distinct_at(x, c("series_id", "updated"))
+  }
+  x
+}
+
+.eia_updates <- function(key, id, deep, n, start, tidy){
+  if(id == -1){
+    id <- "?"
+  } else {
+    id <- paste0("?category_id=", id, "&")
+  }
+  url <- paste0("http://api.eia.gov/updates/", id, "api_key=", key,
+                "&deep=", tolower(as.character(deep)),
+                "&rows=", n, "&firstrow=", start - 1, "&out=json")
+  x <- .eia_get(url)
+  if(is.na(tidy)) return(x)
+  x <- jsonlite::fromJSON(x)
+  if(!tidy) return(x)
+  x <- x$updates
+  if(is.data.frame(x)) tibble::as_tibble(x) else tibble::tibble()
+}
