@@ -34,6 +34,8 @@ test_that("category functions returns as expected", {
 })
 
 test_that("series updates by category return as expected", {
+  if(is.null(key)) skip("API key not available.")
+
   x1 <- eia_updates()
   x2 <- eia_updates(tidy = FALSE)
   x3 <- eia_updates(tidy = NA)
