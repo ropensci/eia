@@ -14,3 +14,8 @@
 ^vignettes/key\.rds$
 ^README\.html$
 ^\.lintr$
+^api\.Rmd$
+^categories\.Rmd$
+^eia\.Rmd$
+^geoset\.Rmd$
+^series\.Rmd$
