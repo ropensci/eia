@@ -5,9 +5,7 @@
 #' @name eia
 NULL
 
-## usethis namespace: start
 #' @importFrom tibble tibble
-## usethis namespace: end
 NULL
 
 #' Pipe operator
@@ -48,7 +46,7 @@ NULL
 
 .eia_get <- function(x){
   .antidos_before("eia")
-  x <- httr::GET(x)
+  x <- httr::GET(x, .session_eia_env$ua)
   .antidos_after("eia")
   if(x$status_code == "404") stop("Page not found", call. = FALSE)
   httr::content(x, as = "text", encoding = "UTF-8")
