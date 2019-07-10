@@ -8,10 +8,15 @@
 <image class="orcid" src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" height="16"></a>
 <br/> **License:** [MIT](https://opensource.org/licenses/MIT)<br/>
 
-[![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/leonawicz/eia?branch=master&svg=true)](https://ci.appveyor.com/project/leonawicz/eia)
+[![CRAN
+status](http://www.r-pkg.org/badges/version/eia)](https://cran.r-project.org/package=eia)
+[![CRAN
+downloads](http://cranlogs.r-pkg.org/badges/grand-total/eia)](https://cran.r-project.org/package=eia)
+[![Rdoc](http://www.rdocumentation.org/badges/version/eia)](http://www.rdocumentation.org/packages/eia)
 [![Travis build
 status](https://travis-ci.org/leonawicz/eia.svg?branch=master)](https://travis-ci.org/leonawicz/eia)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/leonawicz/eia?branch=master&svg=true)](https://ci.appveyor.com/project/leonawicz/eia)
 [![Codecov test
 coverage](https://codecov.io/gh/leonawicz/eia/branch/master/graph/badge.svg)](https://codecov.io/gh/leonawicz/eia?branch=master)
 
