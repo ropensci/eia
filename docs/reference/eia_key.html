@@ -194,6 +194,15 @@ It gives you three options for how to store the key. The default is to use the <
 package environment, <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>options()</a></code>, then the system environment. To override the order, specify the method explicitly and the check will only occur there.
 This also makes it possible to override a system level key by working with one stored in the package environment or <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>options()</a></code>.</p>
     
+    <h2 class="hasAnchor" id="persistence"><a class="anchor" href="#persistence"></a>Persistence</h2>
+
+    
+    <p>Note that none of these three storage methods, including <code>"sysenv"</code> are persistent; they stored key is lost when the R session is terminated.
+A key that is stored outside of R as a system environment variable is retrievable with <code>eia_get_key</code>,
+just like those set in an R session with <code>eia_set_key</code> and <code>store = "sysenv"</code>.
+However, if you truly want the key to persist as an environment variable when R terminates, you must manually add it somewhere like <code>.Renviron</code>;
+<code>Sys.setenv</code> in R cannot achieve this.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>eia_set_key</span>(<span class='st'>"fake"</span>)</div><div class='output co'>#&gt; <span class='message'>Key stored successfully in package environment.</span></div><div class='input'><span class='fu'>eia_get_key</span>()</div><div class='output co'>#&gt; [1] "fake"</div><div class='input'># eia_get_key("options") returns an error if not set
@@ -211,6 +220,8 @@ This also makes it possible to override a system level key by working with one s
       <li><a href="#key-storage-methods">Key storage methods</a></li>
 
       <li><a href="#precedence">Precedence</a></li>
+
+      <li><a href="#persistence">Persistence</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

@@ -32,33 +32,24 @@ It is important to store your API key somewhere secure. Do not commit it to a re
 
 You can always provide the `key` argument to every API function call, but you do not have to. There are getter and setter helpers available to make using `eia` functions a more seamless experience.
 
-`eia_set_key` gives you the option of storing your key in any of three places via the `store` argument:
-
-* `store = "env"`: the package environment that is created when the package is loaded (default method)
-* `store = "options"`: in the global `options`
-* `store = "sysenv"`: as a system environment variable via `Sys.setenv`.
-
-The last two options require the name-value pair to be named `EIA_KEY = "yourkey"`. These three options also are the order of precedence if you do not specify the `store` argument.
-
-This setup also allows you to store a key that will override another key. This is because `eia_get_key` checks these three storage methods in this order and stops as soon as it finds a key. If you need it to check a specific location, you can specify `store`.
-
-As an example, if the key already exists in the system environment and you plan to pass `key` to functions explicitly, you could start as follows:
+`eia_set_key` gives you the option of storing your key for the duration of your R session:
 
 ```{r key1, eval=FALSE}
 library(eia)
-key <- Sys.getenv("EIA_KEY") 
-```
-
-If you need to set it:
-
-```{r key2}
 # eia_set_key("yourkey")
 # eia_get_key() # retrieve it
 ```
 
-API functions in `eia` use `eia_get_key()` with no arguments as the default value of their `key` argument, checking in the order shown above for an existing key. This way you do not need to repeatedly provide it. See the package documentation for more details on key options.
+If the key already exists in the system environment and you plan to pass `key` to functions explicitly, you could start as follows:
 
-In this and subsequent vignettes, you will not see a key being set because it is already an environment variable. You will also not see it used explicitly by any functions because the default behavior is to look up the key in the environment.
+```{r key2, eval=FALSE}
+key <- Sys.getenv("EIA_KEY")
+
+# or:
+key <- eia_get_key()
+```
+
+See the vignette on API details for more information about all the options you have for key storage.
 
 ## EIA categories
 

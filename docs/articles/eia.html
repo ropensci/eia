@@ -126,26 +126,16 @@
 <h3 class="hasAnchor">
 <a href="#key-storage-and-retrieval" class="anchor"></a>Key storage and retrieval</h3>
 <p>You can always provide the <code>key</code> argument to every API function call, but you do not have to. There are getter and setter helpers available to make using <code>eia</code> functions a more seamless experience.</p>
-<p><code>eia_set_key</code> gives you the option of storing your key in any of three places via the <code>store</code> argument:</p>
-<ul>
-<li>
-<code>store = "env"</code>: the package environment that is created when the package is loaded (default method)</li>
-<li>
-<code>store = "options"</code>: in the global <code>options</code>
-</li>
-<li>
-<code>store = "sysenv"</code>: as a system environment variable via <code>Sys.setenv</code>.</li>
-</ul>
-<p>The last two options require the name-value pair to be named <code>EIA_KEY = "yourkey"</code>. These three options also are the order of precedence if you do not specify the <code>store</code> argument.</p>
-<p>This setup also allows you to store a key that will override another key. This is because <code>eia_get_key</code> checks these three storage methods in this order and stops as soon as it finds a key. If you need it to check a specific location, you can specify <code>store</code>.</p>
-<p>As an example, if the key already exists in the system environment and you plan to pass <code>key</code> to functions explicitly, you could start as follows:</p>
+<p><code>eia_set_key</code> gives you the option of storing your key for the duration of your R session:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eia)</a>
-<a class="sourceLine" id="cb1-2" title="2">key &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.getenv">Sys.getenv</a></span>(<span class="st">"EIA_KEY"</span>) </a></code></pre></div>
-<p>If you need to set it:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># eia_set_key("yourkey")</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="co"># eia_get_key() # retrieve it</span></a></code></pre></div>
-<p>API functions in <code>eia</code> use <code><a href="../reference/eia_key.html">eia_get_key()</a></code> with no arguments as the default value of their <code>key</code> argument, checking in the order shown above for an existing key. This way you do not need to repeatedly provide it. See the package documentation for more details on key options.</p>
-<p>In this and subsequent vignettes, you will not see a key being set because it is already an environment variable. You will also not see it used explicitly by any functions because the default behavior is to look up the key in the environment.</p>
+<a class="sourceLine" id="cb1-2" title="2"><span class="co"># eia_set_key("yourkey")</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="co"># eia_get_key() # retrieve it</span></a></code></pre></div>
+<p>If the key already exists in the system environment and you plan to pass <code>key</code> to functions explicitly, you could start as follows:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">key &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.getenv">Sys.getenv</a></span>(<span class="st">"EIA_KEY"</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="co"># or:</span></a>
+<a class="sourceLine" id="cb2-4" title="4">key &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_key.html">eia_get_key</a></span>()</a></code></pre></div>
+<p>See the vignette on API details for more information about all the options you have for key storage.</p>
 </div>
 </div>
 <div id="eia-categories" class="section level2">

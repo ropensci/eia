@@ -74,4 +74,8 @@ d$data[[1]]
 #> 10 6702. 2009-01-01  2009
 ```
 
-See the package vignettes for more details and examples.
+## References
+
+See the collection of vignette tutorials and examples as well as
+complete package documentation available at the `eia` package
+[website](https://leonawicz.github.io/eia/).

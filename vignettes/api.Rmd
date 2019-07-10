@@ -46,6 +46,9 @@ As an example, if the key already exists in the system environment and you plan 
 ```{r key1, eval=FALSE}
 library(eia)
 key <- Sys.getenv("EIA_KEY") 
+
+# or:
+key <- eia_get_key()
 ```
 
 If you need to set it:
@@ -55,7 +58,9 @@ If you need to set it:
 # eia_get_key() # retrieve it
 ```
 
-API functions in `eia` use `eia_get_key()` with no arguments as the default value of their `key` argument, checking in the order shown above for an existing key. This way you do not need to repeatedly provide it. See the package documentation for more details on key options.
+API functions in `eia` use `eia_get_key()` with no arguments as the default value of their `key` argument, checking in the order shown above for an existing key. This way you do not need to repeatedly provide it.
+
+Note that despite the name and behavior, storing an environment variable with `Sys.setenv` (and thus `eia_set_key(key, store = "sysenv")`) is not persistent; the key is lost when the R session terminates, just as it is with the other two session-based options. If you want a persistent key, you must manually add your key somewhere like `.Renviron`. In that cases, you never need `eia_set_key` and `eia_get_key` will retrieve the `EIA_KEY` environment variable. See the package documentation for more details on key options.
 
 In this and subsequent vignettes, you will not see a key being set because it is already an environment variable. You will also not see it used explicitly by any functions because the default behavior is to look up the key in the environment.
 

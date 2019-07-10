@@ -20,6 +20,13 @@
 #' package environment, \code{options()}, then the system environment. To override the order, specify the method explicitly and the check will only occur there.
 #' This also makes it possible to override a system level key by working with one stored in the package environment or \code{options()}.
 #'
+#' @section Persistence:
+#' Note that none of these three storage methods, including \code{"sysenv"} are persistent; they stored key is lost when the R session is terminated.
+#' A key that is stored outside of R as a system environment variable is retrievable with \code{eia_get_key},
+#' just like those set in an R session with \code{eia_set_key} and \code{store = "sysenv"}.
+#' However, if you truly want the key to persist as an environment variable when R terminates, you must manually add it somewhere like \code{.Renviron};
+#' \code{Sys.setenv} in R cannot achieve this.
+#'
 #' @param key character, API key.
 #' @param store character, method for storing API key. See details.
 #'
@@ -51,7 +58,7 @@ eia_set_key <- function(key, store = c("env", "options", "sysenv")){
   } else {
     Sys.setenv(EIA_KEY = key)
     if(Sys.getenv("EIA_KEY") == key){
-      message("Key stored successfully in package environment.")
+      message("Key stored successfully in system environment.")
     } else {
       stop(err, call. = FALSE)
     }
@@ -73,8 +80,8 @@ eia_get_key <- function(store = c("env", "options", "sysenv")){
   }
   if("sysenv" %in% store){
     key <- Sys.getenv("EIA_KEY")
-    if(!is.null(key)) return(key)
+    if(!is.null(key) || key == "") return(key)
   }
   warning("EIA API key not found in package environment, global options, or system enivronment variables.", call. = FALSE)
-  key
+  NULL
 }

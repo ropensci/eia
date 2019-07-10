@@ -55,18 +55,5 @@ test_that("geoset queries return as expected", {
 test_that("geoset relation queries returns as expected", {
   if(is.null(key)) skip("API key not available.")
 
-  # id <- "ELEC.GEN.ALL-99.A"
-  # region <- "USA-CA"
-  # id2 <- "ELEC.GEN.ALL-99.M|SEC,FUEL"
-  #
-  # x1 <- eia_geoset(key, id, region, id2, start = 2016)
-  # x2 <- eia_geoset(key, id, region, id2, n = 10)
-  # x3 <- eia_geoset(key, id, region, id2, end = 2016, n = 10)
-  # expect_is(x1, "tbl_df")
-  # expect_is(x2, "tbl_df")
-  # expect_is(x3, "tbl_df")
-  # expect_equal(nrow(x2), 2)
-  # expect_equal(nrow(x3), 1)
-  # expect_equal(nrow(unnest(x2)), 20)
-  # expect_equal(nrow(unnest(x3)), 10)
+  # This API endpoint does not seem to function
 })
