@@ -13,6 +13,7 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/leonawicz/eia
 BugReports: https://github.com/leonawicz/eia/issues
+Date: 2019-07-10
 Imports: 
     tibble,
     magrittr,
@@ -20,7 +21,6 @@ Imports:
     jsonlite,
     dplyr,
     purrr,
-    tidyr,
     memoise,
     lubridate
 Suggests: 
@@ -28,7 +28,8 @@ Suggests:
     knitr,
     rmarkdown,
     covr,
-    lintr
+    lintr,
+    tidyr
 VignetteBuilder: knitr
 Language: en-US
 RoxygenNote: 6.1.1

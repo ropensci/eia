@@ -2,7 +2,7 @@ context("geoset")
 
 options(eia_antidos = 0)
 suppressWarnings(key <- eia_get_key())
-library(tidyr)
+library(dplyr)
 
 test_that("geoset queries return as expected", {
   if(is.null(key)) skip("API key not available.")
@@ -21,18 +21,18 @@ test_that("geoset queries return as expected", {
   expect_is(x3, "tbl_df")
   expect_equal(nrow(x2), 2)
   expect_equal(nrow(x3), 1)
-  expect_equal(nrow(unnest(x2)), 20)
-  expect_equal(nrow(unnest(x3)), 10)
+  expect_equal(nrow(bind_rows(x2$data)), 20)
+  expect_equal(nrow(bind_rows(x3$data)), 10)
   expect_identical(x2, eia_geoset(id[2], region, n = 10, cache = FALSE))
 
   x <- eia_geoset(id[1], region[1])
   expect_is(x, "tbl_df")
   expect_equal(nrow(x), 1)
-  expect_true(nrow(unnest(x)) >= 18)
+  expect_true(nrow(bind_rows(x$data)) >= 18)
 
   x <- eia_geoset(id, region, end = 2016, n = 10)
   expect_is(x, "tbl_df")
-  expect_equal(nrow(unnest(x)), 60)
+  expect_equal(nrow(bind_rows(x$data)), 60)
 
   x <- eia_geoset(id, region, end = 2016, n = 10, tidy = FALSE)
   expect_is(x, "list")
@@ -47,7 +47,7 @@ test_that("geoset queries return as expected", {
   expect_is(x, "tbl_df")
   expect_equal(nrow(x), 21)
   expect_equal(length(unique(x$region)), 7)
-  x <- unnest(x)
+  x <- bind_rows(x$data)
   expect_equal(nrow(x), 42)
   expect_true(all(c("value", "date", "year", "qtr", "month") %in% names(x)))
 })
