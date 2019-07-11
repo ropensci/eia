@@ -79,8 +79,9 @@ eia_geoset <- function(id, region, relation = NULL, start = NULL, end = NULL, n 
   x <- .eia_geo_url(id, region, relation, start, end, n, key) %>% .eia_get()
   if(is.na(tidy)) return(x)
   x <- jsonlite::fromJSON(x)
+  if(!is.null(relation) && length(x) == 1 && names(x) == "request")
+    message("API `relation` endpoint did not return any data.")
   if(!tidy) return(x)
-
   x <- x$geoset
   empty <- which(sapply(x, length) == 0)
   if(length(empty)) x <- x[-empty]

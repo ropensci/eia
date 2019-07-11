@@ -12,6 +12,8 @@ test_that("category functions returns as expected", {
 
   x2 <- eia_cats(tidy = FALSE)
   expect_identical(x, x2)
+  x2 <- eia_cats(tidy = FALSE, cache = FALSE)
+  expect_identical(x, x2)
 
   x <- eia_cats(tidy = NA)
   expect_is(x, "character")
@@ -51,6 +53,7 @@ test_that("series updates by category return as expected", {
   expect_equal(dim(x1), c(5, 2))
   expect_equal(dim(x2), c(5, 2))
   expect_equal(dim(x3), c(50, 2))
+  expect_identical(x2, eia_updates(c(389, 742), n = 5, TRUE))
 
   x1 <- eia_updates(389, n = 1000)
   x2 <- eia_updates(389, n = 1000, deep = TRUE)

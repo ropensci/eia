@@ -51,20 +51,24 @@ eia_series <- function(id, start = NULL, end = NULL, n = NULL,
   x <- .eia_series_url(id, start, end, n, key) %>% .eia_get()
   if(is.na(tidy)) return(x)
   x <- jsonlite::fromJSON(x)
+  if("error" %in% names(x$data))
+    stop(paste("API error:", x$data$error[1]), call. = FALSE)
   if(!tidy) return(x)
-
   x <- x$series
-  x <- x[sapply(x$data, function(i) length(i) > 0), ]
-  if(is.null(x) || nrow(x) == 0) return()
-
-  f <- function(name) c("date", "value")
-  f2 <- function(i){
-    x <- tibble::as_tibble(x$data[[i]], .name_repair = f) %>%
+  idx <- sapply(x$data, function(i) length(i) > 0)
+  if(any(idx)) x <- x[idx, ]
+  f <- function(i){
+    .f <- function(name) c("date", "value")
+    if(!length(x$data[[i]])){
+      warning(paste0("No data returned for id: ", id[i], "."), call. = FALSE)
+      return()
+    }
+    x <- tibble::as_tibble(x$data[[i]], .name_repair = .f) %>%
       .parse_series_eiadate(x$f[i])
     x$value <- as.numeric(x$value)
     x
   }
-  x$data <- lapply(1:nrow(x), f2)
+  x$data <- lapply(1:nrow(x), f)
   tibble::as_tibble(x)
 }
 
@@ -79,14 +83,12 @@ eia_series <- function(id, start = NULL, end = NULL, n = NULL,
     x <- strsplit(d$date0, "Q")
     d$year <- as.integer(sapply(x, "[", 1))
     d$qtr <- as.integer(sapply(x, "[", 2))
-  } else if(date_format %in% c("M", "W", "D", "H")){
+  } else {
     d$year <- as.integer(substr(d$date0, 1, 4))
     d$month <- as.integer(substr(d$date0, 5, 6))
     if(date_format != "M"){
       d$week <- as.integer(lubridate::isoweek(d$date))
     }
-  } else {
-    stop("Unknown date format.", call. = FALSE)
   }
   d$date0 <- NULL
   d

@@ -6,7 +6,19 @@ suppressWarnings(key <- eia_get_key())
 test_that("time series queries returns as expected", {
   if(is.null(key)) skip("API key not available.")
 
+  err <- "API error: invalid series_id. For key registration, documentation, and examples see https://www.eia.gov/developer/"
+  expect_error(eia_series("a"), err)
+
   id <- paste0("ELEC.CONS_TOT_BTU.COW-AK-1.", c("A", "Q", "M"))
+
+  wrn <- paste("No data returned for id:", id, collapse = "|")
+  expect_warning(x <- eia_series(id, end = 1800), wrn, all = TRUE)
+
+  expect_is(x, "tbl_df")
+  expect_equal(nrow(x), 3)
+  expect_equal(length(x$data), 3)
+  expect_true(all(sapply(x$data, is.null)))
+
   x1 <- eia_series(id[1], start = 2016, key = key)
   x1b <- eia_series(id[1], start = 2016)
   expect_identical(x1, x1b)
@@ -19,6 +31,26 @@ test_that("time series queries returns as expected", {
   expect_equal(ncol(x2$data[[1]]), 4)
   expect_equal(ncol(x3$data[[1]]), 4)
   expect_identical(x1, eia_series(id[1], start = 2016, cache = FALSE))
+
+  x1 <- eia_series(id[1], start = 2016, end = 2017)
+  x2 <- eia_series(id[1], end = "2017", n = 2)
+  expect_identical(x1, x2)
+
+  x1 <- eia_series(id[2], start = 2016, end = 2017)
+  x2 <- eia_series(id[2], start = 2016, end = "2017Q4")
+  x3 <- eia_series(id[2], start = "2016Q1", end = "2017Q4")
+  x4 <- eia_series(id[2], end = "2017Q4", n = 8)
+  expect_identical(x1, x2)
+  expect_identical(x1, x3)
+  expect_identical(x1, x4)
+
+  x1 <- eia_series(id[3], start = 2016, end = 2016)
+  x2 <- eia_series(id[3], start = 2016, end = 201612)
+  x3 <- eia_series(id[3], start = "201601", end = "201612")
+  x4 <- eia_series(id[3], end = "201612", n = 12)
+  expect_identical(x1, x2)
+  expect_identical(x1, x3)
+  expect_identical(x1, x4)
 
   x <- eia_series(id, end = 2016, n = 10)
   expect_equal(nrow(x), 3)
