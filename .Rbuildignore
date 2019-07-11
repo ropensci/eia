@@ -19,3 +19,4 @@
 ^vignettes/eia\.Rmd$
 ^vignettes/geoset\.Rmd$
 ^vignettes/series\.Rmd$
+^codemeta\.json$
