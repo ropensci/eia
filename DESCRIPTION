@@ -16,7 +16,7 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/leonawicz/eia
 BugReports: https://github.com/leonawicz/eia/issues
-Date: 2019-07-10
+Date: 2019-07-11
 Imports: 
     tibble,
     magrittr,
