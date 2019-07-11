@@ -3,11 +3,8 @@
 language: R
 cache: packages
 
-env:
-  global:
-    - BIOC_USE_DEVEL="FALSE"  ## Use the current release version
-    - R_BUILD_ARGS="--no-build-vignettes --no-manual"
-    - R_CHECK_ARGS="--no-build-vignettes --no-manual"
+r_build_args: --no-build-vignettes --no-manual
+r_check_args: --no-build-vignettes --no-manual
 
 after_success:
   - Rscript -e 'covr::codecov()'
