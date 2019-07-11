@@ -1,5 +1,8 @@
 {
-  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "eia",
   "description": "Provides API access to data from the US Energy Information Administration (EIA) <https://www.eia.gov/>. Use of the API requires a free API key obtainable at <https://www.eia.gov/opendata/register.php>.\n    The package includes functions for accessing and searching EIA data categories, downloading time series datasets, and EIA geoset data. \n    Datasets returned by these functions are provided in a tidy format, or alternatively in a relatively unprocessed list based on the original JSON data.",
@@ -220,7 +223,15 @@
   ],
   "releaseNotes": "https://github.com/leonawicz/eia/blob/master/NEWS.md",
   "readme": "https://github.com/leonawicz/eia/blob/master/README.md",
-  "fileSize": "25.188KB",
-  "contIntegration": ["https://travis-ci.org/leonawicz/eia", "https://ci.appveyor.com/project/leonawicz/eia", "https://codecov.io/gh/leonawicz/eia?branch=master"],
-  "keywords": ["eia-api", "r", "package"]
+  "fileSize": "25.189KB",
+  "contIntegration": [
+    "https://travis-ci.org/leonawicz/eia",
+    "https://ci.appveyor.com/project/leonawicz/eia",
+    "https://codecov.io/gh/leonawicz/eia?branch=master"
+  ],
+  "keywords": [
+    "eia-api",
+    "r",
+    "package"
+  ]
 }
