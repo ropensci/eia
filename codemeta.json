@@ -5,7 +5,7 @@
   ],
   "@type": "SoftwareSourceCode",
   "identifier": "eia",
-  "description": "Provides API access to data from the US Energy Information Administration (EIA) <https://www.eia.gov/>. Use of the API requires a free API key obtainable at <https://www.eia.gov/opendata/register.php>.\n    The package includes functions for accessing and searching EIA data categories, downloading time series datasets, and EIA geoset data. \n    Datasets returned by these functions are provided in a tidy format, or alternatively in a relatively unprocessed list based on the original JSON data.",
+  "description": "Provides API access to data from the US Energy Information Administration (EIA) <https://www.eia.gov/>. \n    Use of the API requires a free API key obtainable at <https://www.eia.gov/opendata/register.php>.\n    The package includes functions for searching EIA data categories and importing time series and geoset time series datasets. \n    Datasets returned by these functions are provided in a tidy format or alternatively in more raw form. \n    It also offers helper functions for working with EIA date strings and time formats and for inspecting different summaries of series metadata.\n    The package also provides control over API key storage and caching of API request results.",
   "name": "eia: US Energy Information Administration API",
   "codeRepository": "https://github.com/leonawicz/eia",
   "issueTracker": "https://github.com/leonawicz/eia/issues",
@@ -223,7 +223,7 @@
   ],
   "releaseNotes": "https://github.com/leonawicz/eia/blob/master/NEWS.md",
   "readme": "https://github.com/leonawicz/eia/blob/master/README.md",
-  "fileSize": "25.189KB",
+  "fileSize": "25.413KB",
   "contIntegration": [
     "https://travis-ci.org/leonawicz/eia",
     "https://ci.appveyor.com/project/leonawicz/eia",

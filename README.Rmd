@@ -28,6 +28,8 @@ The `eia` package provides API access to data from the US [Energy Information Ad
 
 Pulling data from the US Energy Information Administration (EIA) API requires a registered API key. A key can be obtained at no cost [here](https://www.eia.gov/opendata/register.php). A valid email and agreement to the API Terms of Service is required to obtain a key.
 
+`eia` includes functions for searching EIA data categories and importing time series and geoset time series datasets. Datasets returned by these functions are provided in a tidy format or alternatively in more raw form. It also offers helper functions for working with EIA date strings and time formats and for inspecting different summaries of series metadata. The package also provides control over API key storage and caching of API request results.
+
 ## Installation
 
 You can install the development version of `eia` from GitHub with:
