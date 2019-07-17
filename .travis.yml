@@ -3,9 +3,15 @@
 language: R
 cache: packages
 
+matrix:
+  include:
+   - r: release
+     after_success:
+       - Rscript -e 'covr::codecov(function_exclusions = "\\.onLoad$", line_exclusions = list("R/eia.R" = c(51, 59, 70), "R/key.R" = c(49, 56, 59:61, 63)))'
+   - r: devel
+   - r: oldrel
+
 env:
   global:
     secure: "GHMWYn47S7TbKNpiU2IyZWPuU9KVG6Z1VIXTSknKe5sb1GTEoFBkiQH5mkCEY9d7RjSDZzkPMPkO9446SeY8m5uSQEgpaubJn2PH3uu7XGNtlTQxZxUZK2+oJCj0n0CddULllFxR2ylrmd0j1v66IXjl31G9DRL/BQvoy7f/7Qo68nXiLhpyzO4RFoS10/ZltlzheSzxWYGYpWCgomIPv6Vz1IrjEFfT7ZpJlA96MqoLkw3n/Sd1ziyOJ+MVf2bRkxb/LW2FiT7B5Z67cY0YHX+VJ/o41Ko6ESD0fbNzO3LT5Vx5Guq6tW79Mn1YygHPpsq1u5WWByI6Z2JURboi2/zd2Sif2qB1ZXCohMPRDDqOkNpMaVUmV7D5aHT/hYAmolH4tYaN8v0UQXg9N/A7Vy7dG3Z1wm+hxNEvXR0o34PclLUKPz6CmzqZeQDGg1uWQKgGFd97Sqf73M2+wU/TVgVIMfiyyd93RxEwhPERkEA2hq4jj7d4ckLyZrKjSkK8WSErRI6qwXmOyaRcQ50gWkbAAoO9jiIoZUNQ8HuxNo5RppviqNDwT8sbprcTrxNKQWFN19EEASbHVwD4zSC6hJJJHHqjgU0M5dbY0O0BPHfbm4dghuXLojZM/Huo6ek/TT/RourmSzfq/G1eBRTa/MvprBn5W/eLso2xW6GEczk="
 
-after_success:
-  - Rscript -e 'covr::codecov(function_exclusions = "\\.onLoad$", line_exclusions = list("R/eia.R" = c(51, 59, 70), "R/key.R" = c(49, 56, 59:61, 63)))'
