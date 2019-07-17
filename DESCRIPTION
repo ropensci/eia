@@ -1,15 +1,15 @@
 Package: eia
-Title: US Energy Information Administration API
-Version: 0.3.0
+Title: API wrapper for 'US Energy Information Administration' Open Data
+Version: 0.3.1
 Authors@R: c(
     person("Matthew", "Leonawicz", email = "matt_leonawicz@esource.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9452-2771")),
     person(given = "E Source", role = c("cph", "fnd"))
     )
-Description: Provides API access to data from the US Energy Information Administration (EIA) <https://www.eia.gov/>. 
+Description: Provides API access to data from the 'US Energy Information Administration' ('EIA') <https://www.eia.gov/>. 
     Use of the API requires a free API key obtainable at <https://www.eia.gov/opendata/register.php>.
-    The package includes functions for searching EIA data categories and importing time series and geoset time series datasets. 
+    The package includes functions for searching 'EIA' data categories and importing time series and geoset time series datasets. 
     Datasets returned by these functions are provided in a tidy format or alternatively in more raw form. 
-    It also offers helper functions for working with EIA date strings and time formats and for inspecting different summaries of series metadata.
+    It also offers helper functions for working with 'EIA' date strings and time formats and for inspecting different summaries of series metadata.
     The package also provides control over API key storage and caching of API request results.
 License: MIT + file LICENSE
 Encoding: UTF-8
