@@ -1,6 +1,6 @@
 Package: eia
-Title: API wrapper for 'US Energy Information Administration' Open Data
-Version: 0.3.1
+Title: API Wrapper for 'US Energy Information Administration' Open Data
+Version: 0.3.2
 Authors@R: c(
     person("Matthew", "Leonawicz", email = "matt_leonawicz@esource.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9452-2771")),
     person(given = "E Source", role = c("cph", "fnd"))

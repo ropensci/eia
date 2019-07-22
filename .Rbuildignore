@@ -20,3 +20,4 @@
 ^vignettes/geoset\.Rmd$
 ^vignettes/series\.Rmd$
 ^codemeta\.json$
+^CRAN-RELEASE$

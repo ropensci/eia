@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eia</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
       </span>
     </div>
 
@@ -188,12 +188,12 @@
 <p>A call to <code>eia_parent_cats</code> is a good example. This function is recursive, but say you know the number of calls is going to be small; it is overkill to impose the additional wait. Note that in order to show this example, it is necessary to turn off memoization to avoid returned a cached result.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_cats.html">eia_parent_cats</a></span>(<span class="dv">742</span>, <span class="dt">cache =</span> <span class="ot">FALSE</span>))</a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="co">#&gt;    user  system elapsed </span></a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt;    0.24    0.05    6.11</span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt;    0.15    0.09    6.47</span></a>
 <a class="sourceLine" id="cb5-4" title="4"></a>
 <a class="sourceLine" id="cb5-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">eia_antidos =</span> <span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb5-6" title="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_cats.html">eia_parent_cats</a></span>(<span class="dv">742</span>, <span class="dt">cache =</span> <span class="ot">FALSE</span>))</a>
 <a class="sourceLine" id="cb5-7" title="7"><span class="co">#&gt;    user  system elapsed </span></a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt;    0.05    0.00    0.74</span></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt;    0.04    0.00    0.58</span></a>
 <a class="sourceLine" id="cb5-9" title="9"></a>
 <a class="sourceLine" id="cb5-10" title="10">x</a>
 <a class="sourceLine" id="cb5-11" title="11"><span class="co">#&gt; # A tibble: 6 x 4</span></a>

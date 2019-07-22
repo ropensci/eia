@@ -1,3 +1,7 @@
+# eia 0.3.2
+
+* Updated formatting for CRAN.
+
 # eia 0.3.1
 
 * Updated package metadata and improved Travis testing suite configuration.
