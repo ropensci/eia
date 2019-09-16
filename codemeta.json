@@ -10,7 +10,7 @@
   "codeRepository": "https://github.com/leonawicz/eia",
   "issueTracker": "https://github.com/leonawicz/eia/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -223,7 +223,7 @@
   ],
   "releaseNotes": "https://github.com/leonawicz/eia/blob/master/NEWS.md",
   "readme": "https://github.com/leonawicz/eia/blob/master/README.md",
-  "fileSize": "26.186KB",
+  "fileSize": "27.013KB",
   "contIntegration": [
     "https://travis-ci.org/leonawicz/eia",
     "https://ci.appveyor.com/project/leonawicz/eia",
@@ -234,6 +234,18 @@
     "r",
     "package",
     "r-package",
-    "energy-data"
-  ]
+    "energy-data",
+    "energy-information-administration",
+    "open-data",
+    "eia",
+    "cran"
+  ],
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
+  "developmentStatus": "http://www.repostatus.org/#active",
+  "relatedLink": "https://CRAN.R-project.org/package=eia"
 }

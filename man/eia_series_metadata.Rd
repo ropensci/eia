@@ -5,6 +5,7 @@
 \alias{eia_series_updates}
 \alias{eia_series_dates}
 \alias{eia_series_range}
+\alias{eia_series_cats}
 \title{EIA series metadata}
 \usage{
 eia_series_metadata(id, cache = TRUE, key = eia_get_key())
@@ -14,6 +15,8 @@ eia_series_updates(id, cache = TRUE, key = eia_get_key())
 eia_series_dates(id, cache = TRUE, key = eia_get_key())
 
 eia_series_range(id, cache = TRUE, key = eia_get_key())
+
+eia_series_cats(id, tidy = TRUE, cache = TRUE, key = eia_get_key())
 }
 \arguments{
 \item{id}{character, series ID, may be a vector.}
@@ -21,6 +24,8 @@ eia_series_range(id, cache = TRUE, key = eia_get_key())
 \item{cache}{logical, cache result for duration of R session using memoization.}
 
 \item{key}{API key: character if set explicitly; not needed if key is set globally. See \code{\link{eia_set_key}}.}
+
+\item{tidy}{logical, return a tidier result. See details.}
 }
 \value{
 a tibble data frame
@@ -39,6 +44,12 @@ Like the other metadata helpers, this does require an API call to the series to 
 This can be useful if you are only interested in these update times for a specific set of series IDs.
 If you need to know the most recent update stamps for a large set of series, you should use \code{\link{eia_updates}}
 instead, which makes an API call specifically to the EIA \code{updates} endpoint for specific EIA categories by category ID.
+
+\code{eia_series_cats} differs from the other functions in that it makes an API call directly to the \code{series categories} endpoint.
+Like other functions that return endpoint-specific output, it accepts the \code{tidy} argument for control over output structure.
+By default, additional processing is done to return a list containing tibble data frames.
+Set \code{tidy = FALSE} to return only the initial list result of \code{jsonlite::fromJSON}.
+Set \code{tidy = NA} to return the original JSON as a character string.
 }
 \examples{
 \dontrun{
@@ -49,6 +60,7 @@ eia_series_metadata(id)
 eia_series_updates(id)
 eia_series_dates(id)
 eia_series_range(id)
+eia_series_cats(id)
 }
 }
 \seealso{

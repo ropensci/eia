@@ -118,7 +118,14 @@ eia_series <- function(id, start = NULL, end = NULL, n = NULL,
 #' If you need to know the most recent update stamps for a large set of series, you should use \code{\link{eia_updates}}
 #' instead, which makes an API call specifically to the EIA \code{updates} endpoint for specific EIA categories by category ID.
 #'
+#' \code{eia_series_cats} differs from the other functions in that it makes an API call directly to the \code{series categories} endpoint.
+#' Like other functions that return endpoint-specific output, it accepts the \code{tidy} argument for control over output structure.
+#' By default, additional processing is done to return a list containing tibble data frames.
+#' Set \code{tidy = FALSE} to return only the initial list result of \code{jsonlite::fromJSON}.
+#' Set \code{tidy = NA} to return the original JSON as a character string.
+#'
 #' @param id character, series ID, may be a vector.
+#' @param tidy logical, return a tidier result. See details.
 #' @param cache logical, cache result for duration of R session using memoization.
 #' @param key API key: character if set explicitly; not needed if key is set globally. See \code{\link{eia_set_key}}.
 #'
@@ -136,6 +143,7 @@ eia_series <- function(id, start = NULL, end = NULL, n = NULL,
 #' eia_series_updates(id)
 #' eia_series_dates(id)
 #' eia_series_range(id)
+#' eia_series_cats(id)
 #' }
 eia_series_metadata <- function(id, cache = TRUE, key = eia_get_key()){
   .key_check(key)
@@ -181,4 +189,38 @@ eia_series_range <- function(id, cache = TRUE, key = eia_get_key()){
                    date_format = x$date_format[1], n = n[1])
   }
   purrr::map_dfr(x, f)
+}
+
+#' @export
+#' @name eia_series_metadata
+eia_series_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
+  .key_check(key)
+  if(cache) .eia_series_cats_memoized(id, tidy, key) else
+    .eia_series_cats(id, tidy, key)
+}
+
+.eia_series_cats <- function(id, tidy = TRUE, key){
+  x <- .eia_series_cats_url(id, key) %>% .eia_get()
+  if(is.na(tidy)) return(x)
+  x <- jsonlite::fromJSON(x)
+  if("error" %in% names(x$data))
+    stop(paste("API error:", x$data$error[1]), call. = FALSE)
+  if(!tidy) return(x)
+  x <- x$series_categories
+  idx <- sapply(x$categories, function(i) length(i) > 0)
+  if(any(idx)) x <- x[idx, ]
+  f <- function(i){
+    .f <- function(name) c("category_id", "name")
+    x <- tibble::as_tibble(x$categories[[i]], .name_repair = .f)
+    x$category_id <- as.integer(x$category_id)
+    dplyr::mutate(x, series_id = id[i]) %>% dplyr::select(c(3, 1, 2))
+  }
+  purrr::map_dfr(1:nrow(x), f)
+}
+
+.eia_series_cats_memoized <- memoise::memoise(.eia_series_cats)
+
+.eia_series_cats_url <- function(id, key){
+  .eia_url(key, id, "series/categories")
+
 }

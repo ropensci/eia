@@ -21,7 +21,7 @@
 #' This also makes it possible to override a system level key by working with one stored in the package environment or \code{options()}.
 #'
 #' @section Persistence:
-#' Note that none of these three storage methods, including \code{"sysenv"} are persistent; they stored key is lost when the R session is terminated.
+#' Note that none of these three storage methods, including \code{"sysenv"} are persistent; the stored key is lost when the R session is terminated.
 #' A key that is stored outside of R as a system environment variable is retrievable with \code{eia_get_key},
 #' just like those set in an R session with \code{eia_set_key} and \code{store = "sysenv"}.
 #' However, if you truly want the key to persist as an environment variable when R terminates, you must manually add it somewhere like \code{.Renviron};

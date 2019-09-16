@@ -166,9 +166,10 @@ eia_series_metadata(id)
 eia_series_updates(id)
 eia_series_dates(id)
 eia_series_range(id)
+eia_series_cats(id)
 ```
 
-Like `eia_seires`, these functions accept an `id` vector. They always return a tibble data frame.
+Like `eia_seires`, these functions accept an `id` vector. They always return a tibble data frame. `eia_series_cats` uses the `series categories` endpoint and accepts the `tidy` argument so that output from the endpoint may be a JSON string, list or the tibble data frame.
 
 ### EIA date strings
 

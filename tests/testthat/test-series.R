@@ -3,10 +3,11 @@ context("series")
 options(eia_antidos = 0)
 suppressWarnings(key <- eia_get_key())
 
+err <- "API error: invalid series_id. For key registration, documentation, and examples see https://www.eia.gov/developer/"
+
 test_that("time series queries returns as expected", {
   if(is.null(key)) skip("API key not available.")
 
-  err <- "API error: invalid series_id. For key registration, documentation, and examples see https://www.eia.gov/developer/"
   expect_error(eia_series("a"), err)
 
   id <- paste0("ELEC.CONS_TOT_BTU.COW-AK-1.", c("A", "Q", "M"))
@@ -87,4 +88,15 @@ test_that("time series metadata helpers return as expected", {
   expect_true(x$n[1] >= 18)
   expect_true(x$n[2] >= 72)
   expect_true(x$n[3] >= 220)
+
+  expect_error(eia_series_cats("a"), err)
+  x <- eia_series_cats(id, NA)
+  expect_is(x, "character")
+  x <- eia_series_cats(id, FALSE)
+  expect_is(x, "list")
+  expect_equal(nrow(x$series_categories), 3)
+  x <- eia_series_cats(id)
+  expect_equal(nrow(x), 6)
+  x <- eia_series_cats(id, cache = FALSE)
+  expect_equal(nrow(x), 6)
 })

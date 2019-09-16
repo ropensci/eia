@@ -3,6 +3,6 @@
 .RData
 .Ruserdata
 inst/doc
-data-raw/key.rds
+data-raw/search.R
 README.html
 docs/articles/eia-nokey.html

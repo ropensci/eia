@@ -108,7 +108,7 @@ However, there are cases where you might want to make multiple calls back to bac
 
 You can turn this off with `options` if not needed; for example, a case where you know that your API calls will be small in number and you have no reason to be concerned about exceeding the request limits associated with your API key. The default requires you to make an active decision about how to use the API with your own key and API limits in mind.
 
-A call to `eia_parent_cats` is a good example. This function is recursive, but say you know the number of calls is going to be small; it is overkill to impose the additional wait. Note that in order to show this example, it is necessary to turn off memoization to avoid returned a cached result.
+A call to `eia_parent_cats` is a good example. This function is recursive, but say you know the number of calls is going to be small; it is overkill to impose the additional wait. Note that in order to show this example, it is necessary to turn off memoization to avoid returning a cached result.
 
 ```{r antidos1, echo=FALSE}
 options(eia_antidos = 1)

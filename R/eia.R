@@ -21,13 +21,20 @@ NULL
 NULL
 
 .eia_url <- function(key, id = NULL,
-                     endpoint = c("category", "series", "geoset", "relation"),
+                     endpoint = c("category", "series", "series/categories",
+                                  "geoset", "relation"),
                      relation = FALSE){
   endpoint <- match.arg(endpoint)
   if(is.null(id)){
     id <- "?"
   } else {
-    epid <- if(endpoint == "relation") "geoset" else endpoint
+    if(endpoint == "relation"){
+      epid <- "geoset"
+    } else if(endpoint == "series/categories"){
+      epid <- "series"
+    } else {
+      epid <- endpoint
+    }
     id <- paste0("?", epid, "_id=", paste0(id, collapse = ";"), "&")
   }
   paste0("http://api.eia.gov/", endpoint, "/", id, "api_key=", key, "&out=json")

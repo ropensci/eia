@@ -15,21 +15,25 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -39,12 +43,12 @@
 
   <link href="../extra.css" rel="stylesheet">
   
+
 <meta property="og:title" content="Set and get API key — eia_key" />
-
 <meta property="og:description" content="Set and get API key" />
-
 <meta property="og:image" content="http://leonawicz.github.io/eia/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -56,6 +60,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -74,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eia</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
       </span>
     </div>
 
@@ -118,7 +123,6 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/leonawicz/eia">
@@ -133,6 +137,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -144,15 +149,13 @@
     </div>
 
     <div class="ref-description">
-    
     <p>Set and get API key</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>eia_set_key</span>(<span class='no'>key</span>, <span class='kw'>store</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"env"</span>, <span class='st'>"options"</span>, <span class='st'>"sysenv"</span>))
+    <pre class="usage"><span class='fu'>eia_set_key</span>(<span class='no'>key</span>, <span class='kw'>store</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"env"</span>, <span class='st'>"options"</span>, <span class='st'>"sysenv"</span>))
 
-<span class='fu'>eia_get_key</span>(<span class='kw'>store</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"env"</span>, <span class='st'>"options"</span>, <span class='st'>"sysenv"</span>))</pre>
-    
+<span class='fu'>eia_get_key</span>(<span class='kw'>store</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"env"</span>, <span class='st'>"options"</span>, <span class='st'>"sysenv"</span>))</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -165,11 +168,10 @@
       <td><p>character, method for storing API key. See details.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>eia_get_key</code> returns the key string or <code>NULL</code> with a warning. <code>eia_set_key</code> returns a success message or an error.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Setter and getter helpers allow you to store your EIA API key in one of three ways.
@@ -178,31 +180,30 @@ but you do not have to.</p>
 <p>By default the <code>key</code> argument for these functions is <code>key = eia_get_key()</code>.
 If your key has been stored in a manner that can be retrieved,
 then you can call all the package API functions without having to provide the <code>key</code> argument repeatedly.</p>
-    
     <h2 class="hasAnchor" id="key-storage-methods"><a class="anchor" href="#key-storage-methods"></a>Key storage methods</h2>
 
     
-    <p>If you have already set your key globally somewhere using <code>eia_set_key</code>, <code>eia_get_key</code> will retrieve it.
-You can add the <code>EIA_KEY = "yourkey"</code> key-value pair to <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>options()</a></code> or as a system environment variable yourself and <code>eia_get_key</code>
+
+<p>If you have already set your key globally somewhere using <code>eia_set_key</code>, <code>eia_get_key</code> will retrieve it.
+You can add the <code>EIA_KEY = "yourkey"</code> key-value pair to <code><a href='https://rdrr.io/r/base/options.html'>options()</a></code> or as a system environment variable yourself and <code>eia_get_key</code>
 will pick it up as long as you use the name <code>EIA_KEY</code>. For convenience you can do this in your R session with <code>eia_set_key</code>.
 It gives you three options for how to store the key. The default is to use the <code>eia</code> package environment that is created when the package is loaded.</p>
-    
     <h2 class="hasAnchor" id="precedence"><a class="anchor" href="#precedence"></a>Precedence</h2>
 
     
-    <p>Choose one method when setting a key. When getting the key, the three locations are checked in the order:
-package environment, <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>options()</a></code>, then the system environment. To override the order, specify the method explicitly and the check will only occur there.
-This also makes it possible to override a system level key by working with one stored in the package environment or <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>options()</a></code>.</p>
-    
+
+<p>Choose one method when setting a key. When getting the key, the three locations are checked in the order:
+package environment, <code><a href='https://rdrr.io/r/base/options.html'>options()</a></code>, then the system environment. To override the order, specify the method explicitly and the check will only occur there.
+This also makes it possible to override a system level key by working with one stored in the package environment or <code><a href='https://rdrr.io/r/base/options.html'>options()</a></code>.</p>
     <h2 class="hasAnchor" id="persistence"><a class="anchor" href="#persistence"></a>Persistence</h2>
 
     
-    <p>Note that none of these three storage methods, including <code>"sysenv"</code> are persistent; they stored key is lost when the R session is terminated.
+
+<p>Note that none of these three storage methods, including <code>"sysenv"</code> are persistent; the stored key is lost when the R session is terminated.
 A key that is stored outside of R as a system environment variable is retrievable with <code>eia_get_key</code>,
 just like those set in an R session with <code>eia_set_key</code> and <code>store = "sysenv"</code>.
 However, if you truly want the key to persist as an environment variable when R terminates, you must manually add it somewhere like <code>.Renviron</code>;
 <code>Sys.setenv</code> in R cannot achieve this.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>eia_set_key</span>(<span class='st'>"fake"</span>)</div><div class='output co'>#&gt; <span class='message'>Key stored successfully in package environment.</span></div><div class='input'><span class='fu'>eia_get_key</span>()</div><div class='output co'>#&gt; [1] "fake"</div><div class='input'># eia_get_key("options") returns an error if not set
@@ -212,22 +213,17 @@ However, if you truly want the key to persist as an environment variable when R 
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#key-storage-methods">Key storage methods</a></li>
-
       <li><a href="#precedence">Precedence</a></li>
-
       <li><a href="#persistence">Persistence</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -235,13 +231,16 @@ However, if you truly want the key to persist as an environment variable when R 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

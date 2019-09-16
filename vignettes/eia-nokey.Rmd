@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette provides a brief overview to the most important functions in `eia`. Other vignettes go into greater depth on specific topics and API endpoints.
+This vignette provides a brief overview of the most important functions in `eia`. Other vignettes go into greater depth on specific topics and API endpoints.
 
 *Note: This package version of the introduction vignette does not show the results of examples. Code is not executed because an API key is not present. See the full set of examples with code execution at the package [website](https://leonawicz.github.io/eia/)*
 

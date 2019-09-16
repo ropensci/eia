@@ -1,3 +1,8 @@
+# eia 0.3.3
+
+* Added a wrapper for the series category endpoint.
+* Updated documentation, vignette and unit tests.
+
 # eia 0.3.2
 
 * Updated formatting for CRAN.

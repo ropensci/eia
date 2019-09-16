@@ -13,8 +13,9 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="API details">
 <meta property="og:description" content="">
@@ -38,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eia</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
       </span>
     </div>
 
@@ -98,6 +99,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -138,8 +140,8 @@
 <p>The last two options require the name-value pair to be named <code>EIA_KEY = "yourkey"</code>. These three options also are the order of precedence if you do not specify the <code>store</code> argument.</p>
 <p>This setup also allows you to store a key that will override another key. This is because <code>eia_get_key</code> checks these three storage methods in this order and stops as soon as it finds a key. If you need it to check a specific location, you can specify <code>store</code>.</p>
 <p>As an example, if the key already exists in the system environment and you plan to pass <code>key</code> to functions explicitly, you could start as follows:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(eia)</a>
-<a class="sourceLine" id="cb1-2" title="2">key &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Sys.getenv">Sys.getenv</a></span>(<span class="st">"EIA_KEY"</span>) </a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(eia)</a>
+<a class="sourceLine" id="cb1-2" title="2">key &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv</a></span>(<span class="st">"EIA_KEY"</span>) </a>
 <a class="sourceLine" id="cb1-3" title="3"></a>
 <a class="sourceLine" id="cb1-4" title="4"><span class="co"># or:</span></a>
 <a class="sourceLine" id="cb1-5" title="5">key &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_key.html">eia_get_key</a></span>()</a></code></pre></div>
@@ -166,12 +168,12 @@
 <p>All functions in <code>eia</code> that make API calls use memoization by default. They will not make the same API call twice in one R session. A call is made once and the result is cached. Calling the same function with the identical arguments again will only returned the cached result.</p>
 <p>This approach limits the potential for accidentally using the EIA API more than necessary. This is fine for most uses cases. However, if you use your API key to access data that is updated very often, or you have a long-running R process such as a Shiny app on a server that may need to periodically update the data associated with a specific API call, you can set <code>cache = FALSE</code>.</p>
 <p>Run this example of the same request made with and without memoization. You will notice the cached result by the immediate return.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>()) <span class="co"># API call; cache result</span></a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>()) <span class="co"># read from cache</span></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(<span class="dt">cache =</span> <span class="ot">FALSE</span>)) <span class="co"># API call</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>()) <span class="co"># API call; cache result</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>()) <span class="co"># read from cache</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(<span class="dt">cache =</span> <span class="ot">FALSE</span>)) <span class="co"># API call</span></a></code></pre></div>
 <p>Results are cached in memory for the duration of the R session, but you can clear the cache at any time:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/eia_clear_cache.html">eia_clear_cache</a></span>()</a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>())</a></code></pre></div>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>())</a></code></pre></div>
 <p>This allows you to update the cached result. You can reset the cache for only specific endpoints using the following functions:</p>
 <ul>
 <li><code>eia_clear_cats</code></li>
@@ -185,15 +187,15 @@
 <p>Regardless of rate overall limiting imposed by the EIA API, the <code>eia</code> package sets a minimum wait time of one second between successive API calls. In most cases this is an irrelevant safeguard. Most <code>eia</code> functions make a single API call and requests for data often take a full second anyway once you factor in the subsequent data manipulation in R.</p>
 <p>However, there are cases where you might want to make multiple calls back to back programmatically and perhaps you are initially unsure how many requests will be made or how quickly these requests may execute. The default minimum wait between API calls is a precaution that helps you be a good neighbor.</p>
 <p>You can turn this off with <code>options</code> if not needed; for example, a case where you know that your API calls will be small in number and you have no reason to be concerned about exceeding the request limits associated with your API key. The default requires you to make an active decision about how to use the API with your own key and API limits in mind.</p>
-<p>A call to <code>eia_parent_cats</code> is a good example. This function is recursive, but say you know the number of calls is going to be small; it is overkill to impose the additional wait. Note that in order to show this example, it is necessary to turn off memoization to avoid returned a cached result.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_cats.html">eia_parent_cats</a></span>(<span class="dv">742</span>, <span class="dt">cache =</span> <span class="ot">FALSE</span>))</a>
+<p>A call to <code>eia_parent_cats</code> is a good example. This function is recursive, but say you know the number of calls is going to be small; it is overkill to impose the additional wait. Note that in order to show this example, it is necessary to turn off memoization to avoid returning a cached result.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_cats.html">eia_parent_cats</a></span>(<span class="dv">742</span>, <span class="dt">cache =</span> <span class="ot">FALSE</span>))</a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="co">#&gt;    user  system elapsed </span></a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt;    0.15    0.09    6.47</span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt;    0.39    0.09    6.02</span></a>
 <a class="sourceLine" id="cb5-4" title="4"></a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/options">options</a></span>(<span class="dt">eia_antidos =</span> <span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb5-6" title="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.time">system.time</a></span>(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_cats.html">eia_parent_cats</a></span>(<span class="dv">742</span>, <span class="dt">cache =</span> <span class="ot">FALSE</span>))</a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="kw"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="dt">eia_antidos =</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="kw"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_cats.html">eia_parent_cats</a></span>(<span class="dv">742</span>, <span class="dt">cache =</span> <span class="ot">FALSE</span>))</a>
 <a class="sourceLine" id="cb5-7" title="7"><span class="co">#&gt;    user  system elapsed </span></a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt;    0.04    0.00    0.58</span></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt;    0.08    0.00    0.82</span></a>
 <a class="sourceLine" id="cb5-9" title="9"></a>
 <a class="sourceLine" id="cb5-10" title="10">x</a>
 <a class="sourceLine" id="cb5-11" title="11"><span class="co">#&gt; # A tibble: 6 x 4</span></a>
@@ -210,6 +212,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -223,17 +226,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by <a href="http://leonawicz.github.io/">Matthew Leonawicz</a>, <a href="https://www.esource.com/"><img src="https://raw.githubusercontent.com/leonawicz/leonawicz.github.io/master/assets/img/esource_logo.png" height="24"></a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

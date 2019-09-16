@@ -8,17 +8,22 @@
 <image class="orcid" src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" height="16"></a>
 <br/> **License:** [MIT](https://opensource.org/licenses/MIT)<br/>
 
-[![CRAN
-status](http://www.r-pkg.org/badges/version/eia)](https://cran.r-project.org/package=eia)
-[![CRAN
-downloads](http://cranlogs.r-pkg.org/badges/grand-total/eia)](https://cran.r-project.org/package=eia)
-[![Rdoc](http://www.rdocumentation.org/badges/version/eia)](http://www.rdocumentation.org/packages/eia)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![Travis build
 status](https://travis-ci.org/leonawicz/eia.svg?branch=master)](https://travis-ci.org/leonawicz/eia)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/leonawicz/eia?branch=master&svg=true)](https://ci.appveyor.com/project/leonawicz/eia)
 [![Codecov test
 coverage](https://codecov.io/gh/leonawicz/eia/branch/master/graph/badge.svg)](https://codecov.io/gh/leonawicz/eia?branch=master)
+
+[![CRAN
+status](http://www.r-pkg.org/badges/version/eia)](https://cran.r-project.org/package=eia)
+[![CRAN RStudio mirror
+downloads](http://cranlogs.r-pkg.org/badges/eia)](https://cran.r-project.org/package=eia)
+[![Github
+Stars](https://img.shields.io/github/stars/leonawicz/eia.svg?style=social&label=Github)](https://github.com/leonawicz/eia)
 
 The `eia` package provides API access to data from the US [Energy
 Information Administration](https://www.eia.gov/) (EIA).
@@ -28,13 +33,13 @@ requires a registered API key. A key can be obtained at no cost
 [here](https://www.eia.gov/opendata/register.php). A valid email and
 agreement to the API Terms of Service is required to obtain a key.
 
-`eia` includes functions for searching EIA data categories and importing
-time series and geoset time series datasets. Datasets returned by these
-functions are provided in a tidy format or alternatively in more raw
-form. It also offers helper functions for working with EIA date strings
-and time formats and for inspecting different summaries of series
-metadata. The package also provides control over API key storage and
-caching of API request results.
+`eia` includes functions for searching EIA API data categories and
+importing time series and geoset time series datasets. Datasets returned
+by these functions are provided in a tidy format or alternatively in
+more raw form. It also offers helper functions for working with EIA API
+date strings and time formats and for inspecting different summaries of
+series metadata. The package also provides control over API key storage
+and caching of API request results.
 
 ## Installation
 
@@ -58,7 +63,7 @@ library(eia)
 eia_set_key("yourkey") # see help file for details/options
 ```
 
-Once you have a `key` to use explicitly , or have set it somewhere
+Once you have a `key` to use explicitly, or have set it somewhere
 globally, load a time series of net electricity generation:
 
 ``` r
@@ -92,3 +97,9 @@ d$data[[1]]
 See the collection of vignette tutorials and examples as well as
 complete package documentation available at the `eia` package
 [website](https://leonawicz.github.io/eia/).
+
+-----
+
+Please note that this project is released with a [Contributor Code of
+Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree
+to abide by its terms.
