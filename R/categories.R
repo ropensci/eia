@@ -43,9 +43,9 @@ eia_cats <- function(id = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   if(!tidy) return(x)
 
   x <- x$category
-  empty <- which(sapply(x, length) == 0)
+  empty <- which(vapply(x, length, integer(1)) == 0)
   if(length(empty)) x <- x[-empty]
-  not_df <- which(sapply(x, is.data.frame) == FALSE)
+  not_df <- which(vapply(x, is.data.frame, logical(1)) == FALSE)
   if(length(not_df))
     x <- c(list(category = tibble::as_tibble(x[not_df])), x[-not_df])
   purrr::modify_if(x, is.data.frame, tibble::as_tibble)
@@ -108,10 +108,12 @@ eia_parent_cats <- function(id, cache = TRUE, key = eia_get_key()){
 #' # use eia_set_key() to store stored API key
 #' eia_updates(742, n = 5)
 #' }
-eia_updates <- function(id = NULL, deep = FALSE, n = 50, start = 1, tidy = TRUE, key = eia_get_key()){
+eia_updates <- function(id = NULL, deep = FALSE, n = 50, start = 1,
+                        tidy = TRUE, key = eia_get_key()){
   .key_check(key)
   f <- if(is.na(tidy) || !tidy) purrr::map else purrr::map_dfr
-  x <- f(if(is.null(id)) -1 else id, ~.eia_updates(.x, deep, n, start, tidy, key))
+  x <- f(if(is.null(id)) -1 else id,
+         ~.eia_updates(.x, deep, n, start, tidy, key))
   if(!is.data.frame(x)){
     if(is.character(x[[1]])) x <- unlist(x)
   } else if(nrow(x) == 0){

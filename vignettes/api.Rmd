@@ -68,7 +68,7 @@ In this and subsequent vignettes, you will not see a key being set because it is
 
 The EIA API can of course impose its own rate-limiting and other limitations on usage by a given API key. If you use the API improperly or otherwise violate any Terms of Service, the EIA may withdraw your API access. However, the `eia` package also helps prevent accidental overuse by having default settings that limit the potential for making unnecessary API calls. It does this in two ways, both of which allow optional configuration:
 
-*   caching API results tin memory using session-based memoization
+*   caching API results in memory using session-based memoization
 *   minimum delay between API calls
 
 By default the `eia` package prevents you from accidentally making too many requests too quickly, but it also offers sensible flexibility.
@@ -102,7 +102,7 @@ This allows you to update the cached result. You can reset the cache for only sp
 
 ### Anti-DOS measures
 
-Regardless of rate overall limiting imposed by the EIA API, the `eia` package sets a minimum wait time of one second between successive API calls. In most cases this is an irrelevant safeguard. Most `eia` functions make a single API call and requests for data often take a full second anyway once you factor in the subsequent data manipulation in R.
+Regardless of overall rate limiting imposed by the EIA API, the `eia` package sets a minimum wait time of one second between successive API calls. In most cases this is an irrelevant safeguard. Most `eia` functions make a single API call and requests for data often take a full second anyway once you factor in the subsequent data manipulation in R.
 
 However, there are cases where you might want to make multiple calls back to back programmatically and perhaps you are initially unsure how many requests will be made or how quickly these requests may execute. The default minimum wait between API calls is a precaution that helps you be a good neighbor.
 

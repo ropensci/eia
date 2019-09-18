@@ -36,6 +36,7 @@ test_that("date helpers return as expected", {
   x2 <- date_to_eiadate(x, "H")
   expect_identical(hours, x2)
 
-  expect_warning(date_to_eiadate(1), "All formats failed to parse. No formats found.")
+  expect_warning(date_to_eiadate(1),
+                 "All formats failed to parse. No formats found.")
   expect_error(eiadate_to_date(1), "Not an EIA format date string.")
 })

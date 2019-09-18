@@ -53,8 +53,9 @@
 #' x <- eia_geoset(id[2], c("AK", "New England"), end = 2016, n = 1)
 #' x[, c("region", "data")]
 #' }
-eia_geoset <- function(id, region, relation = NULL, start = NULL, end = NULL, n = NULL,
-                       tidy = TRUE, cache = TRUE, key = eia_get_key()){
+eia_geoset <- function(id, region, relation = NULL, start = NULL, end = NULL,
+                       n = NULL, tidy = TRUE, cache = TRUE,
+                       key = eia_get_key()){
   .key_check(key)
   region <- .to_state_abb(region)
   if(cache){
@@ -83,7 +84,7 @@ eia_geoset <- function(id, region, relation = NULL, start = NULL, end = NULL, n 
     message("API `relation` endpoint did not return any data.")
   if(!tidy) return(x)
   x <- x$geoset
-  empty <- which(sapply(x, length) == 0)
+  empty <- which(vapply(x, length, integer(1)) == 0)
   if(length(empty)) x <- x[-empty]
   idx <- which(names(x) != "series")
   x <- list(geoset = tibble::as_tibble(x[idx]), series = x$series)

@@ -55,7 +55,7 @@ eia_series <- function(id, start = NULL, end = NULL, n = NULL,
     stop(paste("API error:", x$data$error[1]), call. = FALSE)
   if(!tidy) return(x)
   x <- x$series
-  idx <- sapply(x$data, function(i) length(i) > 0)
+  idx <- vapply(x$data, function(i) length(i) > 0, logical(1))
   if(any(idx)) x <- x[idx, ]
   f <- function(i){
     .f <- function(name) c("date", "value")
@@ -68,7 +68,7 @@ eia_series <- function(id, start = NULL, end = NULL, n = NULL,
     x$value <- as.numeric(x$value)
     x
   }
-  x$data <- lapply(1:nrow(x), f)
+  x$data <- lapply(seq_len(nrow(x)), f)
   tibble::as_tibble(x)
 }
 
@@ -165,7 +165,7 @@ eia_series_dates <- function(id, cache = TRUE, key = eia_get_key()){
   .key_check(key)
   x <- if(cache) .eia_series_memoized(id, n = 1, key = key) else
     .eia_series(id, n = 1, key = key)
-  x <- split(x, 1:nrow(x))
+  x <- split(x, seq_len(nrow(x)))
   f <- function(x){
     date_format <- eiadate_format(x$start)
     dates <- eiadate_to_date_seq(x$start, x$end)
@@ -207,7 +207,7 @@ eia_series_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
     stop(paste("API error:", x$data$error[1]), call. = FALSE)
   if(!tidy) return(x)
   x <- x$series_categories
-  idx <- sapply(x$categories, function(i) length(i) > 0)
+  idx <- vapply(x$categories, function(i) length(i) > 0, logical(1))
   if(any(idx)) x <- x[idx, ]
   f <- function(i){
     .f <- function(name) c("category_id", "name")
@@ -215,7 +215,7 @@ eia_series_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
     x$category_id <- as.integer(x$category_id)
     dplyr::mutate(x, series_id = id[i]) %>% dplyr::select(c(3, 1, 2))
   }
-  purrr::map_dfr(1:nrow(x), f)
+  purrr::map_dfr(seq_len(nrow(x)), f)
 }
 
 .eia_series_cats_memoized <- memoise::memoise(.eia_series_cats)

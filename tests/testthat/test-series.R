@@ -3,7 +3,8 @@ context("series")
 options(eia_antidos = 0)
 suppressWarnings(key <- eia_get_key())
 
-err <- "API error: invalid series_id. For key registration, documentation, and examples see https://www.eia.gov/developer/"
+err <- paste("API error: invalid series_id. For key registration,",
+             "documentation, and examples see https://www.eia.gov/developer/")
 
 test_that("time series queries returns as expected", {
   if(is.null(key)) skip("API key not available.")
@@ -18,7 +19,7 @@ test_that("time series queries returns as expected", {
   expect_is(x, "tbl_df")
   expect_equal(nrow(x), 3)
   expect_equal(length(x$data), 3)
-  expect_true(all(sapply(x$data, is.null)))
+  expect_true(all(vapply(x$data, is.null, logical(1))))
 
   x1 <- eia_series(id[1], start = 2016, key = key)
   x1b <- eia_series(id[1], start = 2016)

@@ -69,7 +69,8 @@ eia_set_key <- function(key, store = c("env", "options", "sysenv")){
 #' @export
 #' @rdname eia_key
 eia_get_key <- function(store = c("env", "options", "sysenv")){
-  store <- if(missing(store)) c("env", "options", "sysenv") else match.arg(store)
+  store <- if(missing(store)) c("env", "options", "sysenv") else
+    match.arg(store)
   if("env" %in% store){
     key <- .session_eia_env$key
     if(!is.null(key)) return(key)
@@ -82,6 +83,8 @@ eia_get_key <- function(store = c("env", "options", "sysenv")){
     key <- Sys.getenv("EIA_KEY")
     if(!is.null(key) && key != "") return(key)
   }
-  warning("EIA API key not found in package environment, global options, or system enivronment variables.", call. = FALSE)
+  wrn <- paste("EIA API key not found in package environment,",
+               "global options, or system enivronment variables.")
+  warning(wrn, call. = FALSE)
   NULL
 }
