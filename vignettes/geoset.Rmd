@@ -28,7 +28,7 @@ library(eia)
 # eia_set_key("yourkey") # set your API key
 id <- "ELEC.GEN.ALL-99.A"
 region <- c("USA-CA", "USA-NY")
-(x <- eia_geoset(id[1], region[1], n = 3))
+(x <- eia_geoset(id, region[1], n = 3))
 ```
 
 ## Groups of regions
