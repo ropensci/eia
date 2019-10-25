@@ -10,7 +10,7 @@
   "codeRepository": "https://github.com/leonawicz/eia",
   "issueTracker": "https://github.com/leonawicz/eia/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -100,18 +100,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "lintr",
-      "name": "lintr",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=lintr"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "tidyr",
       "name": "tidyr",
       "provider": {
@@ -121,6 +109,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "ggplot2",
+      "name": "ggplot2",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=ggplot2"
     }
   ],
   "softwareRequirements": [
@@ -219,11 +219,23 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=lubridate"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "readxl",
+      "name": "readxl",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=readxl"
     }
   ],
   "releaseNotes": "https://github.com/leonawicz/eia/blob/master/NEWS.md",
   "readme": "https://github.com/leonawicz/eia/blob/master/README.md",
-  "fileSize": "27.02KB",
+  "fileSize": "37.473KB",
   "contIntegration": [
     "https://travis-ci.org/leonawicz/eia",
     "https://ci.appveyor.com/project/leonawicz/eia",
