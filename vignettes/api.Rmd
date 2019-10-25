@@ -51,7 +51,7 @@ key <- Sys.getenv("EIA_KEY")
 key <- eia_get_key()
 ```
 
-If you need to set it:
+If you need to set it, you can do so as follows.
 
 ```{r key2}
 # eia_set_key("yourkey")
@@ -87,14 +87,14 @@ system.time(eia_cats()) # read from cache
 system.time(eia_cats(cache = FALSE)) # API call
 ```
 
-Results are cached in memory for the duration of the R session, but you can clear the cache at any time:
+Results are cached in memory for the duration of the R session, but you can clear the cache at any time.
 
 ```{r memo2, eval=FALSE}
 eia_clear_cache()
 system.time(eia_cats())
 ```
 
-This allows you to update the cached result. You can reset the cache for only specific endpoints using the following functions:
+This allows you to update the cached result. You can reset the cache for only specific endpoints using the following functions.
 
 *    `eia_clear_cats`
 *    `eia_clear_series`

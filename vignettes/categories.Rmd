@@ -25,7 +25,7 @@ library(eia)
 # eia_set_key("yourkey") # set your API key
 ```
 
-Here is the top-level category information:
+Here is the top-level category information.
 
 ```{r cats1}
 eia_cats()
@@ -39,7 +39,7 @@ The child category IDs can be used to query results from that category.
 eia_cats(0)
 ```
 
-View the immediate child categories for a given parent category:
+View the immediate child categories for a given parent category.
 
 ```{r cats4}
 eia_child_cats(389)
@@ -47,7 +47,7 @@ eia_child_cats(389)
 
 ## Parent categories
 
-View all parent categories for a given child category:
+View all parent categories for a given child category.
 
 ```{r cats5}
 eia_parent_cats(742)

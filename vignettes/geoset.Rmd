@@ -12,7 +12,6 @@ knitr::opts_chunk$set(
   collapse = TRUE, comment = "#>", out.width = "100%",
   message = FALSE, warning = FALSE, error = FALSE
 )
-library(tibble)
 library(eia)
 options(eia_antidos = 0)
 ```
@@ -25,6 +24,10 @@ The main difference is that you must provide a geoset ID to `id` and a `region` 
 
 ```{r geoset}
 library(eia)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
 # eia_set_key("yourkey") # set your API key
 id <- "ELEC.GEN.ALL-99.A"
 region <- c("USA-CA", "USA-NY")
@@ -44,6 +47,7 @@ tibble(state.abb, state.name, state.region, state.division)
 Provide the associated label and `eia_geoset` recognizes subsets of US states. Even this can be a vector. In the example below, `region` consists of Alaska plus the states belonging to the New England census division.
 
 ```{r geoset2}
+
 (x <- eia_geoset(id, c("AK", "New England"), n = 1))
 x$data[[1]]
 
@@ -54,7 +58,7 @@ select(x, region, data) %>% unnest()
 unnest(x, cols = data) %>% 
   ggplot(aes(date, value, color = region)) +
   geom_line() + 
-  labs(y = d$units[1], title = "Net electricity generation, all fuels")
+  labs(y = x$units[1], title = "Net electricity generation, all fuels")
 ```
 
 ## Relations

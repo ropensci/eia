@@ -1,5 +1,6 @@
 # eia 0.3.4
 
+* Added initial report function.
 * Minor code improvements.
 * Minor documentation updates.
 

@@ -145,7 +145,7 @@
 <a class="sourceLine" id="cb1-3" title="3"></a>
 <a class="sourceLine" id="cb1-4" title="4"><span class="co"># or:</span></a>
 <a class="sourceLine" id="cb1-5" title="5">key &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_key.html">eia_get_key</a></span>()</a></code></pre></div>
-<p>If you need to set it:</p>
+<p>If you need to set it, you can do so as follows.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># eia_set_key("yourkey")</span></a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="co"># eia_get_key() # retrieve it</span></a></code></pre></div>
 <p>API functions in <code>eia</code> use <code><a href="../reference/eia_key.html">eia_get_key()</a></code> with no arguments as the default value of their <code>key</code> argument, checking in the order shown above for an existing key. This way you do not need to repeatedly provide it.</p>
@@ -171,10 +171,10 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>()) <span class="co"># API call; cache result</span></a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>()) <span class="co"># read from cache</span></a>
 <a class="sourceLine" id="cb3-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(<span class="dt">cache =</span> <span class="ot">FALSE</span>)) <span class="co"># API call</span></a></code></pre></div>
-<p>Results are cached in memory for the duration of the R session, but you can clear the cache at any time:</p>
+<p>Results are cached in memory for the duration of the R session, but you can clear the cache at any time.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/eia_clear_cache.html">eia_clear_cache</a></span>()</a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>())</a></code></pre></div>
-<p>This allows you to update the cached result. You can reset the cache for only specific endpoints using the following functions:</p>
+<p>This allows you to update the cached result. You can reset the cache for only specific endpoints using the following functions.</p>
 <ul>
 <li><code>eia_clear_cats</code></li>
 <li><code>eia_clear_series</code></li>
@@ -190,12 +190,12 @@
 <p>A call to <code>eia_parent_cats</code> is a good example. This function is recursive, but say you know the number of calls is going to be small; it is overkill to impose the additional wait. Note that in order to show this example, it is necessary to turn off memoization to avoid returning a cached result.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_cats.html">eia_parent_cats</a></span>(<span class="dv">742</span>, <span class="dt">cache =</span> <span class="ot">FALSE</span>))</a>
 <a class="sourceLine" id="cb5-2" title="2"><span class="co">#&gt;    user  system elapsed </span></a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt;    0.28    0.08    6.03</span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt;    0.38    0.03    6.06</span></a>
 <a class="sourceLine" id="cb5-4" title="4"></a>
 <a class="sourceLine" id="cb5-5" title="5"><span class="kw"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="dt">eia_antidos =</span> <span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb5-6" title="6"><span class="kw"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_cats.html">eia_parent_cats</a></span>(<span class="dv">742</span>, <span class="dt">cache =</span> <span class="ot">FALSE</span>))</a>
 <a class="sourceLine" id="cb5-7" title="7"><span class="co">#&gt;    user  system elapsed </span></a>
-<a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt;    0.06    0.00    0.59</span></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt;    0.07    0.00    0.74</span></a>
 <a class="sourceLine" id="cb5-9" title="9"></a>
 <a class="sourceLine" id="cb5-10" title="10">x</a>
 <a class="sourceLine" id="cb5-11" title="11"><span class="co">#&gt; # A tibble: 6 x 4</span></a>

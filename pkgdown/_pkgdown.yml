@@ -21,6 +21,7 @@ reference:
   - eia_updates
 - title: Other functions
   contents:
+  - eia_report
   - eiadate
   - eia_clear_cache
   - "%>%"

@@ -18,7 +18,7 @@ options(eia_antidos = 0)
 
 ## Finding the series ID
 
-Like category information, time series data is obtained based on its ID. A complete example includes finding the ID for the series if you do not already know it. Look for total electricity consumption:
+Like category information, time series data is obtained based on its ID. A complete example includes finding the ID for the series if you do not already know it. Chances are you may already know the series IDs you need after using the API explorer on the EIA website. Below, look for total electricity consumption.
 
 ```{r cat1}
 library(eia)
@@ -26,7 +26,7 @@ library(eia)
 eia_cats()
 ```
 
-Electricity has category ID 0. Take a closer look there:
+Electricity has category ID 0. Take a closer look there.
 
 ```{r cat2}
 eia_cats(0)
@@ -44,13 +44,13 @@ At this point you have a choice between total consumption by sector or fuel type
 eia_cats(372)
 ```
 
-Then total electrical power:
+Then total electrical power.
 
 ```{r cat5}
 eia_cats(388)
 ```
 
-And finally coal:
+And finally coal.
 
 ```{r cat6}
 (x <- eia_cats(738))
@@ -94,7 +94,7 @@ select(x1, series_id, data) %>% unnest()
 
 unnest(x1, cols = data) %>% 
   ggplot(aes(date, value)) + geom_col() + 
-  labs(y = d$units[1], title = "Total electricity consumption from coal sources, Alaska")
+  labs(y = x1$units[1], title = "Total electricity consumption from coal sources, Alaska")
 ```
 
 Results are similarly structured for the other series, but the columns containing date information differ.
@@ -128,7 +128,7 @@ select(x, series_id, data) %>% unnest()
 
 ## Time period and number of results
 
-Here are some things to keep in mind about `eia_series` arguments:
+Here are some things to keep in mind about `eia_series` arguments.
 
 * The function only makes one API call, combining multiple series IDs if provided.
 * If there are fewer results than you request, everything available is returned.
@@ -179,13 +179,13 @@ Like `eia_seires`, these functions accept an `id` vector. They always return a t
 
 EIA date strings used to specify start and end dates for time series requests are character strings that are not in any standard date formats. There are several functions that assist with moving between these strings and standard dates.
 
-You can convert EIA date strings to dates:
+You can convert EIA date strings to dates.
 
 ```{r series11}
 eiadate_to_date(c("201803", "201804"))
 ```
 
-or dates to EIA format; here are examples using annual, quarterly and monthly time formats:
+or dates to EIA format; here are examples using annual, quarterly and monthly time formats.
 
 ```{r series12}
 date_to_eiadate("2018-05-14", "A")

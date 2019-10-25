@@ -32,7 +32,7 @@ It is important to store your API key somewhere secure. Do not commit it to a re
 
 You can always provide the `key` argument to every API function call, but you do not have to. There are getter and setter helpers available to make using `eia` functions a more seamless experience.
 
-`eia_set_key` gives you the option of storing your key for the duration of your R session:
+`eia_set_key` gives you the option of storing your key for the duration of your R session.
 
 ```{r key1, eval=FALSE}
 library(eia)
@@ -40,7 +40,7 @@ library(eia)
 # eia_get_key() # retrieve it
 ```
 
-If the key already exists in the system environment and you plan to pass `key` to functions explicitly, you could start as follows:
+If the key already exists in the system environment and you plan to pass `key` to functions explicitly, you could start as follows.
 
 ```{r key2, eval=FALSE}
 key <- Sys.getenv("EIA_KEY")
@@ -57,7 +57,7 @@ Once you have your EIA registered API key and have it in place for your R sessio
 
 It is helpful to be aware of various categories of data that are available. Each category has a unique ID number that is required to access associated data. The first call below does not include an ID. The result is a list of two data frames. The first is metadata associated with that position in the category hierarchy. The second is the child category information.
 
-Here is the top-level category information:
+Here is the top-level category information.
 
 ```{r cats1}
 eia_cats()
@@ -85,7 +85,7 @@ x$data[[1]]
 
 select(x, units, data) %>% unnest(cols = data) %>% 
   ggplot(aes(date, value)) + geom_line() + 
-  labs(y = d$units[1], title = "Net electricity generation, Alaska, all fuels")
+  labs(y = x$units[1], title = "Net electricity generation, Alaska, all fuels")
 ```
 
 You can provide arguments like the following:
@@ -122,17 +122,17 @@ select(x, region, data) %>% unnest()
 unnest(x, cols = data) %>% 
   ggplot(aes(date, value, color = region)) +
   geom_line() + 
-  labs(y = d$units[1], title = "Net electricity generation, all fuels")
+  labs(y = x$units[1], title = "Net electricity generation, all fuels")
 ```
 
-Another convenience of `eia_geoset` is the ability to provide regions in the following forms:
+Another convenience of `eia_geoset` is the ability to provide regions in the following forms.
 
 * 2-character US state abbreviations
 * State names
 * US Census region names
 * US census division names
 
-These shortcuts make it easier to construct an API call involving several states:
+These shortcuts make it easier to construct an API call involving several states.
 
 ```{r geoset2}
 region <- c("AK", "New England")
@@ -146,7 +146,7 @@ select(x, region, data) %>% unnest()
 unnest(x, cols = data) %>% 
   ggplot(aes(date, value, color = region)) +
   geom_line() + 
-  labs(y = d$units[1], title = "Net electricity generation, all fuels")
+  labs(y = x$units[1], title = "Net electricity generation, all fuels")
 ```
 
 Even more convenient is that these names are available in R. See the `datasets::state.*` functions and the geoset vignette.

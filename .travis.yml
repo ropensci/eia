@@ -9,7 +9,11 @@ matrix:
      after_success:
        - Rscript -e 'covr::codecov(function_exclusions = "\\.onLoad$", line_exclusions = list("R/eia.R" = c(60, 68, 79), "R/key.R" = c(49, 56, 59:61, 63), "R/reports.R" = 42:44))'
    - r: devel
+     r_build_args: --no-build-vignettes
+     r_check_args: --ignore-vignettes --no-examples
    - r: oldrel
+     r_build_args: --no-build-vignettes
+     r_check_args: --ignore-vignettes --no-examples
 
 env:
   global:

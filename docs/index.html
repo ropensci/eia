@@ -120,42 +120,50 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the development version of <code>eia</code> from GitHub with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># install.packages("remotes")</span></a>
-<a class="sourceLine" id="cb1-2" title="2">remotes<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/remotes/man/install_github.html">install_github</a></span>(<span class="st">"leonawicz/eia"</span>)</a></code></pre></div>
+<p>Install the CRAN release of <code>eia</code> with</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"eia"</span>)</a></code></pre></div>
+<p>To install the development version from GitHub use</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># install.packages("remotes")</span></a>
+<a class="sourceLine" id="cb2-2" title="2">remotes<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/remotes/man/install_github.html">install_github</a></span>(<span class="st">"leonawicz/eia"</span>)</a></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
 <p>To begin, store your API key. You can place it somewhere like your <code>.Renviron</code> file. You can set it with <code>eia_set_key</code>. You can always pass it explicitly to the <code>key</code> argument of a function.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(eia)</a>
-<a class="sourceLine" id="cb2-2" title="2"></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="co"># not run</span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="kw"><a href="reference/eia_key.html">eia_set_key</a></span>(<span class="st">"yourkey"</span>) <span class="co"># see help file for details/options</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(eia)</a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co"># not run</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="kw"><a href="reference/eia_key.html">eia_set_key</a></span>(<span class="st">"yourkey"</span>) <span class="co"># see help file for details/options</span></a></code></pre></div>
 <p>Once you have a <code>key</code> to use explicitly, or have set it somewhere globally, load a time series of net electricity generation:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">id &lt;-<span class="st"> "ELEC.GEN.ALL-AK-99.A"</span></a>
-<a class="sourceLine" id="cb3-2" title="2">(d &lt;-<span class="st"> </span><span class="kw"><a href="reference/eia_series.html">eia_series</a></span>(id, <span class="dt">n =</span> <span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt; # A tibble: 1 x 13</span></a>
-<a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt;   series_id name  units f     description copyright source iso3166</span></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;  </span></a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt; 1 ELEC.GEN~ Net ~ thou~ A     "Summation~ None      EIA, ~ USA-AK </span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="co">#&gt; # ... with 5 more variables: geography &lt;chr&gt;, start &lt;chr&gt;, end &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="co">#&gt; #   updated &lt;chr&gt;, data &lt;list&gt;</span></a>
-<a class="sourceLine" id="cb3-9" title="9"></a>
-<a class="sourceLine" id="cb3-10" title="10">d<span class="op">$</span>data[[<span class="dv">1</span>]]</a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="co">#&gt; # A tibble: 10 x 3</span></a>
-<a class="sourceLine" id="cb3-12" title="12"><span class="co">#&gt;    value date        year</span></a>
-<a class="sourceLine" id="cb3-13" title="13"><span class="co">#&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb3-14" title="14"><span class="co">#&gt;  1 6515. 2018-01-01  2018</span></a>
-<a class="sourceLine" id="cb3-15" title="15"><span class="co">#&gt;  2 6497. 2017-01-01  2017</span></a>
-<a class="sourceLine" id="cb3-16" title="16"><span class="co">#&gt;  3 6335. 2016-01-01  2016</span></a>
-<a class="sourceLine" id="cb3-17" title="17"><span class="co">#&gt;  4 6285. 2015-01-01  2015</span></a>
-<a class="sourceLine" id="cb3-18" title="18"><span class="co">#&gt;  5 6043. 2014-01-01  2014</span></a>
-<a class="sourceLine" id="cb3-19" title="19"><span class="co">#&gt;  6 6497. 2013-01-01  2013</span></a>
-<a class="sourceLine" id="cb3-20" title="20"><span class="co">#&gt;  7 6946. 2012-01-01  2012</span></a>
-<a class="sourceLine" id="cb3-21" title="21"><span class="co">#&gt;  8 6871. 2011-01-01  2011</span></a>
-<a class="sourceLine" id="cb3-22" title="22"><span class="co">#&gt;  9 6760. 2010-01-01  2010</span></a>
-<a class="sourceLine" id="cb3-23" title="23"><span class="co">#&gt; 10 6702. 2009-01-01  2009</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">id &lt;-<span class="st"> "ELEC.GEN.ALL-AK-99.A"</span></a>
+<a class="sourceLine" id="cb4-2" title="2">(d &lt;-<span class="st"> </span><span class="kw"><a href="reference/eia_series.html">eia_series</a></span>(id, <span class="dt">n =</span> <span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt; # A tibble: 1 x 13</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt;   series_id name  units f     description copyright source iso3166</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;  </span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; 1 ELEC.GEN~ Net ~ thou~ A     "Summation~ None      EIA, ~ USA-AK </span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; # ... with 5 more variables: geography &lt;chr&gt;, start &lt;chr&gt;, end &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; #   updated &lt;chr&gt;, data &lt;list&gt;</span></a>
+<a class="sourceLine" id="cb4-9" title="9"></a>
+<a class="sourceLine" id="cb4-10" title="10">d<span class="op">$</span>data[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt; # A tibble: 10 x 3</span></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt;    value date        year</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt;  1 6247. 2018-01-01  2018</span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt;  2 6497. 2017-01-01  2017</span></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt;  3 6335. 2016-01-01  2016</span></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="co">#&gt;  4 6285. 2015-01-01  2015</span></a>
+<a class="sourceLine" id="cb4-18" title="18"><span class="co">#&gt;  5 6043. 2014-01-01  2014</span></a>
+<a class="sourceLine" id="cb4-19" title="19"><span class="co">#&gt;  6 6497. 2013-01-01  2013</span></a>
+<a class="sourceLine" id="cb4-20" title="20"><span class="co">#&gt;  7 6946. 2012-01-01  2012</span></a>
+<a class="sourceLine" id="cb4-21" title="21"><span class="co">#&gt;  8 6871. 2011-01-01  2011</span></a>
+<a class="sourceLine" id="cb4-22" title="22"><span class="co">#&gt;  9 6760. 2010-01-01  2010</span></a>
+<a class="sourceLine" id="cb4-23" title="23"><span class="co">#&gt; 10 6702. 2009-01-01  2009</span></a>
+<a class="sourceLine" id="cb4-24" title="24"></a>
+<a class="sourceLine" id="cb4-25" title="25"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
+<a class="sourceLine" id="cb4-26" title="26"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyr)</a>
+<a class="sourceLine" id="cb4-27" title="27"><span class="kw">unnest</span>(d, data) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(year, value)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-28" title="28"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">y =</span> d<span class="op">$</span>units, <span class="dt">title =</span> d<span class="op">$</span>name)</a></code></pre></div>
+<p><img src="reference/figures/README-example-1.png" width="100%"></p>
 </div>
 <div id="references" class="section level2">
 <h2 class="hasAnchor">
