@@ -34,7 +34,13 @@ Pulling data from the US Energy Information Administration (EIA) API requires a 
 
 ## Installation
 
-You can install the development version of `eia` from GitHub with:
+Install the CRAN release of `eia` with
+
+``` r
+install.packages("eia")
+```
+
+To install the development version from GitHub use
 
 ``` r
 # install.packages("remotes")
@@ -59,15 +65,16 @@ id <- "ELEC.GEN.ALL-AK-99.A"
 (d <- eia_series(id, n = 10))
 
 d$data[[1]]
+
+library(ggplot2)
+library(tidyr)
+unnest(d, data) %>% ggplot(aes(year, value)) +
+  geom_line() + labs(y = d$units, title = d$name)
 ```
 
-```{r is_md, echo=FALSE}
-is_md <- knitr::opts_knit$get("rmarkdown.pandoc.to") %in% c("markdown_github-ascii_identifiers", "gfm-ascii_identifiers")
-```
+## References
 
-```{r webdocs, echo=FALSE, results="asis", eval=is_md}
-cat('## References\n\nSee the collection of vignette tutorials and examples as well as complete package documentation available at the `eia` package [website](https://leonawicz.github.io/eia/).')
-```
+See the collection of vignette tutorials and examples as well as complete package documentation available at the `eia` package [website](https://leonawicz.github.io/eia/).
 
 ---
 

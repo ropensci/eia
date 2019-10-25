@@ -1,3 +1,5 @@
+globalVariables(".data")
+
 #' eia: EIA API wrapper
 #'
 #' This package provides API access to data from the US \href{https://www.eia.gov/}{Energy Information Administration} (EIA).
@@ -10,7 +12,7 @@ NULL
 
 #' Pipe operator
 #'
-#' See \code{magrittr::\link[magrittr]{\%>\%}} for details.
+#' See \code{magrittr} package for details.
 #'
 #' @name %>%
 #' @rdname pipe

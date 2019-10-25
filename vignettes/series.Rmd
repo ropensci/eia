@@ -86,11 +86,15 @@ The format of each result is the same. Inspect the first one. It is a data frame
 ```{r series2}
 library(dplyr)
 library(tidyr)
-x1
+library(ggplot2)
 
 x1$data[[1]]
 
 select(x1, series_id, data) %>% unnest()
+
+unnest(x1, cols = data) %>% 
+  ggplot(aes(date, value)) + geom_col() + 
+  labs(y = d$units[1], title = "Total electricity consumption from coal sources, Alaska")
 ```
 
 Results are similarly structured for the other series, but the columns containing date information differ.

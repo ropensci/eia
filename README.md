@@ -43,7 +43,13 @@ and caching of API request results.
 
 ## Installation
 
-You can install the development version of `eia` from GitHub with:
+Install the CRAN release of `eia` with
+
+``` r
+install.packages("eia")
+```
+
+To install the development version from GitHub use
 
 ``` r
 # install.packages("remotes")
@@ -80,7 +86,7 @@ d$data[[1]]
 #> # A tibble: 10 x 3
 #>    value date        year
 #>    <dbl> <date>     <int>
-#>  1 6515. 2018-01-01  2018
+#>  1 6247. 2018-01-01  2018
 #>  2 6497. 2017-01-01  2017
 #>  3 6335. 2016-01-01  2016
 #>  4 6285. 2015-01-01  2015
@@ -90,7 +96,14 @@ d$data[[1]]
 #>  8 6871. 2011-01-01  2011
 #>  9 6760. 2010-01-01  2010
 #> 10 6702. 2009-01-01  2009
+
+library(ggplot2)
+library(tidyr)
+unnest(d, data) %>% ggplot(aes(year, value)) +
+  geom_line() + labs(y = d$units, title = d$name)
 ```
+
+<img src="man/figures/README-example-1.png" width="100%" />
 
 ## References
 

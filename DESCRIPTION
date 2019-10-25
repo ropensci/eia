@@ -24,14 +24,15 @@ Imports:
     dplyr,
     purrr,
     memoise,
-    lubridate
+    lubridate,
+    readxl
 Suggests: 
     testthat,
     knitr,
     rmarkdown,
     covr,
-    lintr,
-    tidyr
+    tidyr,
+    ggplot2
 VignetteBuilder: knitr
 Language: en-US
 RoxygenNote: 6.1.1
