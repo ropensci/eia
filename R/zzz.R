@@ -3,4 +3,4 @@
 }
 
 .session_eia_env <- new.env()
-.session_eia_env$ua <- httr::user_agent("https://github.com/leonawicz/eia")
+.session_eia_env$ua <- httr::user_agent("https://github.com/ropensci/eia")

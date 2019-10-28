@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://leonawicz.github.io/eia/index.html</loc>
+    <loc>https://docs.ropensci.org/eia/index.html</loc>
   </url>
   <url>
-    <loc>http://leonawicz.github.io/eia/reference/eia.html</loc>
+    <loc>https://docs.ropensci.org/eia/reference/eia.html</loc>
   </url>
   <url>
-    <loc>http://leonawicz.github.io/eia/reference/eiadate.html</loc>
+    <loc>https://docs.ropensci.org/eia/reference/eiadate.html</loc>
   </url>
   <url>
-    <loc>http://leonawicz.github.io/eia/reference/eia_cats.html</loc>
+    <loc>https://docs.ropensci.org/eia/reference/eia_cats.html</loc>
   </url>
   <url>
-    <loc>http://leonawicz.github.io/eia/reference/eia_clear_cache.html</loc>
+    <loc>https://docs.ropensci.org/eia/reference/eia_clear_cache.html</loc>
   </url>
   <url>
-    <loc>http://leonawicz.github.io/eia/reference/eia_geoset.html</loc>
+    <loc>https://docs.ropensci.org/eia/reference/eia_geoset.html</loc>
   </url>
   <url>
-    <loc>http://leonawicz.github.io/eia/reference/eia_key.html</loc>
+    <loc>https://docs.ropensci.org/eia/reference/eia_key.html</loc>
   </url>
   <url>
-    <loc>http://leonawicz.github.io/eia/reference/eia_report.html</loc>
+    <loc>https://docs.ropensci.org/eia/reference/eia_report.html</loc>
   </url>
   <url>
-    <loc>http://leonawicz.github.io/eia/reference/eia_series.html</loc>
+    <loc>https://docs.ropensci.org/eia/reference/eia_series.html</loc>
   </url>
   <url>
-    <loc>http://leonawicz.github.io/eia/reference/eia_series_metadata.html</loc>
+    <loc>https://docs.ropensci.org/eia/reference/eia_series_metadata.html</loc>
   </url>
   <url>
-    <loc>http://leonawicz.github.io/eia/reference/eia_updates.html</loc>
+    <loc>https://docs.ropensci.org/eia/reference/eia_updates.html</loc>
   </url>
   <url>
-    <loc>http://leonawicz.github.io/eia/reference/pipe.html</loc>
+    <loc>https://docs.ropensci.org/eia/reference/pipe.html</loc>
   </url>
   <url>
-    <loc>http://leonawicz.github.io/eia/articles/api.html</loc>
+    <loc>https://docs.ropensci.org/eia/articles/api.html</loc>
   </url>
   <url>
-    <loc>http://leonawicz.github.io/eia/articles/categories.html</loc>
+    <loc>https://docs.ropensci.org/eia/articles/categories.html</loc>
   </url>
   <url>
-    <loc>http://leonawicz.github.io/eia/articles/eia-nokey.html</loc>
+    <loc>https://docs.ropensci.org/eia/articles/eia-nokey.html</loc>
   </url>
   <url>
-    <loc>http://leonawicz.github.io/eia/articles/eia.html</loc>
+    <loc>https://docs.ropensci.org/eia/articles/eia.html</loc>
   </url>
   <url>
-    <loc>http://leonawicz.github.io/eia/articles/geoset.html</loc>
+    <loc>https://docs.ropensci.org/eia/articles/geoset.html</loc>
   </url>
   <url>
-    <loc>http://leonawicz.github.io/eia/articles/series.html</loc>
+    <loc>https://docs.ropensci.org/eia/articles/series.html</loc>
   </url>
 </urlset>

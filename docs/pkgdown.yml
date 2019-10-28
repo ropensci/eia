@@ -1,4 +1,4 @@
-pandoc: '2.6'
+pandoc: 2.7.2
 pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
@@ -9,6 +9,6 @@ articles:
   geoset: geoset.html
   series: series.html
 urls:
-  reference: http://leonawicz.github.io/eia/reference
-  article: http://leonawicz.github.io/eia/articles
+  reference: https://docs.ropensci.org/eia/reference
+  article: https://docs.ropensci.org/eia/articles
 

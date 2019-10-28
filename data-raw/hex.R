@@ -1,7 +1,7 @@
 library(hexSticker)
 library(ggplot2)
 pkg <- basename(getwd())
-user <- "leonawicz"
+user <- "ropensci"
 account <- "github"
 
 url <- paste0(user, ".", account, ".io/", pkg)

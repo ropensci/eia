@@ -10,12 +10,13 @@ Description: Provides API access to data from the 'US Energy Information Adminis
     The package includes functions for searching 'EIA' data categories and importing time series and geoset time series datasets. 
     Datasets returned by these functions are provided in a tidy format or alternatively in more raw form. 
     It also offers helper functions for working with 'EIA' date strings and time formats and for inspecting different summaries of series metadata.
-    The package also provides control over API key storage and caching of API request results.
+    The package also provides control over API key storage and caching of API request results. 
+    This package has been peer-reviewed by rOpenSci (v. 0.3.4).
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-URL: https://github.com/leonawicz/eia
-BugReports: https://github.com/leonawicz/eia/issues
+URL: https://docs.ropensci.org/eia (website) https://github.com/ropensci/eia
+BugReports: https://github.com/ropensci/eia/issues
 Imports: 
     tibble,
     magrittr,
