@@ -234,8 +234,8 @@
     }
   ],
   "releaseNotes": "https://github.com/leonawicz/eia/blob/master/NEWS.md",
-  "readme": "https://github.com/leonawicz/eia/blob/master/README.md",
-  "fileSize": "37.403KB",
+  "readme": "https://github.com/ropensci/eia/blob/master/README.md",
+  "fileSize": "37.398KB",
   "contIntegration": [
     "https://travis-ci.org/leonawicz/eia",
     "https://ci.appveyor.com/project/leonawicz/eia",
@@ -259,5 +259,8 @@
     "url": "https://cran.r-project.org"
   },
   "developmentStatus": "http://www.repostatus.org/#active",
-  "relatedLink": ["https://CRAN.R-project.org/package=eia", "https://docs.ropensci.org/eia"]
+  "relatedLink": [
+    "https://CRAN.R-project.org/package=eia",
+    "https://docs.ropensci.org/eia"
+  ]
 }
