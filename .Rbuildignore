@@ -13,7 +13,7 @@
 ^codecov\.yml$
 ^README\.html$
 ^\.lintr$
-^vignettes/api\.Rmd$
+^vignettes/api\.Rmd.orig$
 ^vignettes/categories\.Rmd\.orig$
 ^vignettes/eia\.Rmd\.orig$
 ^vignettes/geoset\.Rmd\.orig$
