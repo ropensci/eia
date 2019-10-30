@@ -18,6 +18,7 @@ Status](https://ci.appveyor.com/api/projects/status/github/ropensci/eia?branch=m
 [![Codecov test
 coverage](https://codecov.io/gh/ropensci/eia/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/eia?branch=master)
 
+[![](https://badges.ropensci.org/342_status.svg)](https://github.com/ropensci/onboarding/issues/342)
 [![CRAN
 status](http://www.r-pkg.org/badges/version/eia)](https://cran.r-project.org/package=eia)
 [![CRAN RStudio mirror

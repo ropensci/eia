@@ -233,9 +233,9 @@
       "sameAs": "https://CRAN.R-project.org/package=readxl"
     }
   ],
-  "releaseNotes": "https://github.com/leonawicz/eia/blob/master/NEWS.md",
+  "releaseNotes": "https://github.com/ropensci/eia/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/eia/blob/master/README.md",
-  "fileSize": "37.398KB",
+  "fileSize": "37.937KB",
   "contIntegration": [
     "https://travis-ci.org/leonawicz/eia",
     "https://ci.appveyor.com/project/leonawicz/eia",
