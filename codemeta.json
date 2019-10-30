@@ -235,7 +235,7 @@
   ],
   "releaseNotes": "https://github.com/ropensci/eia/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/eia/blob/master/README.md",
-  "fileSize": "37.937KB",
+  "fileSize": "254.079KB",
   "contIntegration": [
     "https://travis-ci.org/leonawicz/eia",
     "https://ci.appveyor.com/project/leonawicz/eia",
@@ -262,5 +262,10 @@
   "relatedLink": [
     "https://CRAN.R-project.org/package=eia",
     "https://docs.ropensci.org/eia"
-  ]
+  ],
+  "review": {
+    "@type": "Review",
+    "url": "https://github.com/ropensci/onboarding/issues/342",
+    "provider": "http://ropensci.org"
+  }
 }

@@ -7,53 +7,172 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE, comment = "#>", out.width = "100%",
-  message = FALSE, warning = FALSE, error = FALSE
-)
-library(eia)
-options(eia_antidos = 0)
-```
+
 
 ## Finding the series ID
 
 Like category information, time series data is obtained based on its ID. A complete example includes finding the ID for the series if you do not already know it. Chances are you may already know the series IDs you need after using the API explorer on the EIA website. Below, look for total electricity consumption.
 
-```{r cat1}
+
+```r
 library(eia)
-# eia_set_key("yourkey") # set your API key
+# eia_set_key("yourkey") # set API key if not already set globally
 eia_cats()
+#> $category
+#> # A tibble: 1 x 3
+#>   category_id name          notes
+#>   <chr>       <chr>         <chr>
+#> 1 371         EIA Data Sets ""   
+#> 
+#> $childcategories
+#> # A tibble: 13 x 2
+#>    category_id name                               
+#>          <int> <chr>                              
+#>  1           0 Electricity                        
+#>  2       40203 State Energy Data System (SEDS)    
+#>  3      714755 Petroleum                          
+#>  4      714804 Natural Gas                        
+#>  5      711224 Total Energy                       
+#>  6      717234 Coal                               
+#>  7      829714 Short-Term Energy Outlook          
+#>  8     1292190 Crude Oil Imports                  
+#>  9     2123635 U.S. Electric System Operating Data
+#> 10     2134384 International Energy Data          
+#> 11     2251604 CO2 Emissions                      
+#> 12     2631064 International Energy Outlook       
+#> 13     2889994 U.S. Nuclear Outages
 ```
 
 Electricity has category ID 0. Take a closer look there.
 
-```{r cat2}
+
+```r
 eia_cats(0)
+#> $category
+#> # A tibble: 1 x 4
+#>   category_id parent_category_id name        notes
+#>   <chr>       <chr>              <chr>       <chr>
+#> 1 0           371                Electricity ""   
+#> 
+#> $childcategories
+#> # A tibble: 19 x 2
+#>    category_id name                                                        
+#>          <int> <chr>                                                       
+#>  1           1 Net generation                                              
+#>  2          35 Total consumption                                           
+#>  3          32 Total consumption (Btu)                                     
+#>  4          36 Consumption for electricity generation                      
+#>  5          33 Consumption for electricity generation (Btu)                
+#>  6          37 Consumption for useful thermal output                       
+#>  7          34 Consumption for useful thermal output (Btu)                 
+#>  8        1017 Plant level data                                            
+#>  9          38 Retail sales of electricity                                 
+#> 10          39 Revenue from retail sales of electricity                    
+#> 11          40 Average retail price of electricity                         
+#> 12     1718389 Number of customer accounts                                 
+#> 13       41137 Fossil-fuel stocks for electricity generation               
+#> 14       41138 Receipts of fossil fuels by electricity plants              
+#> 15       41139 Receipts of fossil fuels by electricity plants (Btu)        
+#> 16       41140 Average cost of fossil fuels for electricity generation     
+#> 17       41141 Average cost of fossil fuels for electricity generation (pe~
+#> 18       41142 Quality of fossil fuels in electricity generation : sulfur ~
+#> 19       41143 Quality of fossil fuels in electricity generation : ash con~
 ```
 
 There are two categories referring to total consumption. Take category ID 32 as an example and step deeper into the category hierarchy.
 
-```{r cat3}
+
+```r
 eia_cats(32)
+#> $category
+#> # A tibble: 1 x 4
+#>   category_id parent_category_id name                    notes
+#>   <chr>       <chr>              <chr>                   <chr>
+#> 1 32          0                  Total consumption (Btu) ""   
+#> 
+#> $childcategories
+#> # A tibble: 2 x 2
+#>   category_id name        
+#>         <int> <chr>       
+#> 1         373 By fuel type
+#> 2         372 By sector
 ```
 
 At this point you have a choice between total consumption by sector or fuel type. Select by sector.
 
-```{r cat4}
+
+```r
 eia_cats(372)
+#> $category
+#> # A tibble: 1 x 4
+#>   category_id parent_category_id name      notes
+#>   <chr>       <chr>              <chr>     <chr>
+#> 1 372         32                 By sector ""   
+#> 
+#> $childcategories
+#> # A tibble: 11 x 2
+#>    category_id name                               
+#>          <int> <chr>                              
+#>  1         388 Electric power (total)             
+#>  2         389 Electric utility                   
+#>  3         390 Independent power producers (total)
+#>  4         391 Electric utility non-cogen         
+#>  5         392 Electric utility cogen             
+#>  6         393 All commercial (total)             
+#>  7         394 Commercial non-cogen               
+#>  8         395 Commercial cogen                   
+#>  9         396 All industrial (total)             
+#> 10         397 Industrial non-cogen               
+#> 11         398 Industrial cogen
 ```
 
 Then total electrical power.
 
-```{r cat5}
+
+```r
 eia_cats(388)
+#> $category
+#> # A tibble: 1 x 4
+#>   category_id parent_category_id name                   notes
+#>   <chr>       <chr>              <chr>                  <chr>
+#> 1 388         372                Electric power (total) ""   
+#> 
+#> $childcategories
+#> # A tibble: 4 x 2
+#>   category_id name             
+#>         <int> <chr>            
+#> 1         738 Coal             
+#> 2         739 Petroleum liquids
+#> 3         740 Petroleum coke   
+#> 4         741 Natural gas
 ```
 
 And finally coal.
 
-```{r cat6}
+
+```r
 (x <- eia_cats(738))
+#> $category
+#> # A tibble: 1 x 4
+#>   category_id parent_category_id name  notes
+#>   <chr>       <chr>              <chr> <chr>
+#> 1 738         388                Coal  ""   
+#> 
+#> $childseries
+#> # A tibble: 174 x 5
+#>    series_id        name                         f     units    updated    
+#>    <chr>            <chr>                        <chr> <chr>    <chr>      
+#>  1 ELEC.CONS_TOT_B~ Total consumption (Btu) : c~ A     million~ 23-OCT-19 ~
+#>  2 ELEC.CONS_TOT_B~ Total consumption (Btu) : c~ M     million~ 23-OCT-19 ~
+#>  3 ELEC.CONS_TOT_B~ Total consumption (Btu) : c~ Q     million~ 23-OCT-19 ~
+#>  4 ELEC.CONS_TOT_B~ Total consumption (Btu) : c~ A     million~ 23-OCT-19 ~
+#>  5 ELEC.CONS_TOT_B~ Total consumption (Btu) : c~ M     million~ 23-OCT-19 ~
+#>  6 ELEC.CONS_TOT_B~ Total consumption (Btu) : c~ Q     million~ 23-OCT-19 ~
+#>  7 ELEC.CONS_TOT_B~ Total consumption (Btu) : c~ A     million~ 23-OCT-19 ~
+#>  8 ELEC.CONS_TOT_B~ Total consumption (Btu) : c~ M     million~ 23-OCT-19 ~
+#>  9 ELEC.CONS_TOT_B~ Total consumption (Btu) : c~ Q     million~ 23-OCT-19 ~
+#> 10 ELEC.CONS_TOT_B~ Total consumption (Btu) : c~ A     million~ 23-OCT-19 ~
+#> # ... with 164 more rows
 ```
 
 ## Available child series
@@ -74,7 +193,8 @@ Each row in this table represents a unique time series dataset; in this case for
 
 To see how the different time formats are parsed, take the first three IDs for Alaska. Request only the three most recent results for each series.
 
-```{r series1}
+
+```r
 id <- x$childseries$series_id[1:3]
 x1 <- eia_series(id[1], n = 3)
 x2 <- eia_series(id[2], n = 3)
@@ -83,47 +203,127 @@ x3 <- eia_series(id[3], n = 3)
 
 The format of each result is the same. Inspect the first one. It is a data frame with one row. All but the final column, `data`, give metadata about the series. `data` is a list column (in this case of length one) that can be extracted directly or unnested using `tidyr::unnest`.
 
-```{r series2}
+
+```r
 library(dplyr)
 library(tidyr)
 library(ggplot2)
 
 x1$data[[1]]
+#> # A tibble: 3 x 3
+#>   value date        year
+#>   <dbl> <date>     <int>
+#> 1 10.4  2018-01-01  2018
+#> 2  9.21 2017-01-01  2017
+#> 3  9.64 2016-01-01  2016
 
-select(x1, series_id, data) %>% unnest()
+select(x1, series_id, data) %>% unnest(cols = data)
+#> # A tibble: 3 x 4
+#>   series_id                     value date        year
+#>   <chr>                         <dbl> <date>     <int>
+#> 1 ELEC.CONS_TOT_BTU.COW-AK-98.A 10.4  2018-01-01  2018
+#> 2 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.21 2017-01-01  2017
+#> 3 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.64 2016-01-01  2016
 
-unnest(x1, cols = data) %>% 
-  ggplot(aes(date, value)) + geom_col() + 
+unnest(x1, cols = data) %>%
+  ggplot(aes(date, value)) + geom_col() +
   labs(y = x1$units[1], title = "Total electricity consumption from coal sources, Alaska")
 ```
 
+<img src="series-series2-1.png" title="plot of chunk series2" alt="plot of chunk series2" width="100%" />
+
 Results are similarly structured for the other series, but the columns containing date information differ.
 
-```{r series3}
+
+```r
 x1$data[[1]]
+#> # A tibble: 3 x 3
+#>   value date        year
+#>   <dbl> <date>     <int>
+#> 1 10.4  2018-01-01  2018
+#> 2  9.21 2017-01-01  2017
+#> 3  9.64 2016-01-01  2016
 x2$data[[1]]
+#> # A tibble: 3 x 4
+#>   value date        year month
+#>   <dbl> <date>     <int> <int>
+#> 1 0.854 2019-08-01  2019     8
+#> 2 0.848 2019-07-01  2019     7
+#> 3 0.805 2019-06-01  2019     6
 x3$data[[1]]
+#> # A tibble: 3 x 4
+#>   value date        year   qtr
+#>   <dbl> <date>     <int> <int>
+#> 1 NA    2019-04-01  2019     2
+#> 2 NA    2019-01-01  2019     1
+#> 3  3.16 2018-10-01  2018     4
 ```
 
 ## Multiple series
 
 The EIA API allows multiple series to be requested in a single API call. You should do this whenever possible to reduce the number of requests you make. To request the same data as above, just provide the `id` vector. Other arguments like `n` are not vectorized.
 
-```{r series4}
+
+```r
 x <- eia_series(id, n = 3)
 x
+#> # A tibble: 3 x 13
+#>   series_id name  units f     description copyright source iso3166
+#>   <chr>     <chr> <chr> <chr> <chr>       <chr>     <chr>  <chr>  
+#> 1 ELEC.CON~ Tota~ mill~ A     "Summation~ None      EIA, ~ USA-AK 
+#> 2 ELEC.CON~ Tota~ mill~ M     "Summation~ None      EIA, ~ USA-AK 
+#> 3 ELEC.CON~ Tota~ mill~ Q     "Summation~ None      EIA, ~ USA-AK 
+#> # ... with 5 more variables: geography <chr>, start <chr>, end <chr>,
+#> #   updated <chr>, data <list>
 ```
 
 There are now three rows in the table containing the same data as before. The `data` list column also contains the same structures as before.
 
-```{r series5}
+
+```r
 x$data
+#> [[1]]
+#> # A tibble: 3 x 3
+#>   value date        year
+#>   <dbl> <date>     <int>
+#> 1 10.4  2018-01-01  2018
+#> 2  9.21 2017-01-01  2017
+#> 3  9.64 2016-01-01  2016
+#> 
+#> [[2]]
+#> # A tibble: 3 x 4
+#>   value date        year month
+#>   <dbl> <date>     <int> <int>
+#> 1 0.854 2019-08-01  2019     8
+#> 2 0.848 2019-07-01  2019     7
+#> 3 0.805 2019-06-01  2019     6
+#> 
+#> [[3]]
+#> # A tibble: 3 x 4
+#>   value date        year   qtr
+#>   <dbl> <date>     <int> <int>
+#> 1 NA    2019-04-01  2019     2
+#> 2 NA    2019-01-01  2019     1
+#> 3  3.16 2018-10-01  2018     4
 ```
 
 These can be unnested and filled in with `NA` as needed.
 
-```{r series6}
-select(x, series_id, data) %>% unnest()
+
+```r
+select(x, series_id, data) %>% unnest(cols = data)
+#> # A tibble: 9 x 6
+#>   series_id                      value date        year month   qtr
+#>   <chr>                          <dbl> <date>     <int> <int> <int>
+#> 1 ELEC.CONS_TOT_BTU.COW-AK-98.A 10.4   2018-01-01  2018    NA    NA
+#> 2 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.21  2017-01-01  2017    NA    NA
+#> 3 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.64  2016-01-01  2016    NA    NA
+#> 4 ELEC.CONS_TOT_BTU.COW-AK-98.M  0.854 2019-08-01  2019     8    NA
+#> 5 ELEC.CONS_TOT_BTU.COW-AK-98.M  0.848 2019-07-01  2019     7    NA
+#> 6 ELEC.CONS_TOT_BTU.COW-AK-98.M  0.805 2019-06-01  2019     6    NA
+#> 7 ELEC.CONS_TOT_BTU.COW-AK-98.Q NA     2019-04-01  2019    NA     2
+#> 8 ELEC.CONS_TOT_BTU.COW-AK-98.Q NA     2019-01-01  2019    NA     1
+#> 9 ELEC.CONS_TOT_BTU.COW-AK-98.Q  3.16  2018-10-01  2018    NA     4
 ```
 
 ## Time period and number of results
@@ -137,7 +337,8 @@ Here are some things to keep in mind about `eia_series` arguments.
 * If you do not provide a closed period or `n`, you will receive all relevant data available, subject to any API limits.
 * Depending on the nature of the request, you may have to construct more than one call.
 
-```{r series7, eval = FALSE}
+
+```r
 eia_series(id, n = 10)
 eia_series(id, end = 2016, n = 5)
 eia_series(id, start = 2000, end = 2016)
@@ -147,14 +348,54 @@ eia_series(id, start = 2000, end = 2016)
 
 The default is to return tidy data in a tibble data frame. You can set `tidy = FALSE` to return the list returned by `jsonlite::fromJSON` without any further processing.
 
-```{r series8}
+
+```r
 eia_series(id, n = 3, tidy = FALSE)
+#> $request
+#> $request$command
+#> [1] "series"
+#> 
+#> $request$series_id
+#> [1] "ELEC.CONS_TOT_BTU.COW-AK-98.A;ELEC.CONS_TOT_BTU.COW-AK-98.M;ELEC.CONS_TOT_BTU.COW-AK-98.Q"
+#> 
+#> 
+#> $series
+#>                       series_id
+#> 1 ELEC.CONS_TOT_BTU.COW-AK-98.A
+#> 2 ELEC.CONS_TOT_BTU.COW-AK-98.M
+#> 3 ELEC.CONS_TOT_BTU.COW-AK-98.Q
+#>                                                                           name
+#> 1    Total consumption (Btu) : coal : Alaska : electric power (total) : annual
+#> 2   Total consumption (Btu) : coal : Alaska : electric power (total) : monthly
+#> 3 Total consumption (Btu) : coal : Alaska : electric power (total) : quarterly
+#>           units f
+#> 1 million MMBtu A
+#> 2 million MMBtu M
+#> 3 million MMBtu Q
+#>                                                                                                   description
+#> 1 Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power; 
+#> 2 Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power; 
+#> 3 Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power; 
+#>   copyright                                      source iso3166 geography
+#> 1      None EIA, U.S. Energy Information Administration  USA-AK    USA-AK
+#> 2      None EIA, U.S. Energy Information Administration  USA-AK    USA-AK
+#> 3      None EIA, U.S. Energy Information Administration  USA-AK    USA-AK
+#>    start    end                  updated
+#> 1   2001   2018 2019-10-23T18:58:10-0400
+#> 2 200101 201908 2019-10-23T18:58:10-0400
+#> 3 2001Q1 2019Q2 2019-10-23T18:58:10-0400
+#>                                                data
+#> 1      2018, 2017, 2016, 10.37727, 9.21412, 9.64353
+#> 2 201908, 201907, 201906, 0.85395, 0.84755, 0.80542
+#> 3           2019Q2, 2019Q1, 2018Q4, NA, NA, 3.16491
 ```
 
 You can also return the raw JSON data in a character string if you need to process this directly with other code.
 
-```{r series9}
+
+```r
 cat(eia_series(id, n = 3, tidy = NA))
+#> {"request":{"command":"series","series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.A;ELEC.CONS_TOT_BTU.COW-AK-98.M;ELEC.CONS_TOT_BTU.COW-AK-98.Q"},"series":[{"series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.A","name":"Total consumption (Btu) : coal : Alaska : electric power (total) : annual","units":"million MMBtu","f":"A","description":"Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power; ","copyright":"None","source":"EIA, U.S. Energy Information Administration","iso3166":"USA-AK","geography":"USA-AK","start":"2001","end":"2018","updated":"2019-10-23T18:58:10-0400","data":[["2018",10.37727],["2017",9.21412],["2016",9.64353]]},{"series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.M","name":"Total consumption (Btu) : coal : Alaska : electric power (total) : monthly","units":"million MMBtu","f":"M","description":"Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power; ","copyright":"None","source":"EIA, U.S. Energy Information Administration","iso3166":"USA-AK","geography":"USA-AK","start":"200101","end":"201908","updated":"2019-10-23T18:58:10-0400","data":[["201908",0.85395],["201907",0.84755],["201906",0.80542]]},{"series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.Q","name":"Total consumption (Btu) : coal : Alaska : electric power (total) : quarterly","units":"million MMBtu","f":"Q","description":"Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power; ","copyright":"None","source":"EIA, U.S. Energy Information Administration","iso3166":"USA-AK","geography":"USA-AK","start":"2001Q1","end":"2019Q2","updated":"2019-10-23T18:58:10-0400","data":[["2019Q2",null],["2019Q1",null],["2018Q4",3.16491]]}]}
 ```
 
 This allows you to use the returned results with existing code you may have that requires data in one of these less processed structures.
@@ -165,12 +406,56 @@ This allows you to use the returned results with existing code you may have that
 
 There are some functions available that make small API calls and return only metadata associated with a time series dataset.
 
-```{r series10}
+
+```r
 eia_series_metadata(id)
+#> # A tibble: 3 x 12
+#>   series_id name  units f     description copyright source iso3166
+#>   <chr>     <chr> <chr> <chr> <chr>       <chr>     <chr>  <chr>  
+#> 1 ELEC.CON~ Tota~ mill~ A     "Summation~ None      EIA, ~ USA-AK 
+#> 2 ELEC.CON~ Tota~ mill~ M     "Summation~ None      EIA, ~ USA-AK 
+#> 3 ELEC.CON~ Tota~ mill~ Q     "Summation~ None      EIA, ~ USA-AK 
+#> # ... with 4 more variables: geography <chr>, start <chr>, end <chr>,
+#> #   updated <chr>
 eia_series_updates(id)
+#> # A tibble: 3 x 2
+#>   series_id                     updated                 
+#>   <chr>                         <chr>                   
+#> 1 ELEC.CONS_TOT_BTU.COW-AK-98.A 2019-10-23T18:58:10-0400
+#> 2 ELEC.CONS_TOT_BTU.COW-AK-98.M 2019-10-23T18:58:10-0400
+#> 3 ELEC.CONS_TOT_BTU.COW-AK-98.Q 2019-10-23T18:58:10-0400
 eia_series_dates(id)
+#> # A tibble: 316 x 4
+#>    series_id                     date       eiadate date_format
+#>    <chr>                         <date>     <chr>   <chr>      
+#>  1 ELEC.CONS_TOT_BTU.COW-AK-98.A 2001-01-01 2001    A          
+#>  2 ELEC.CONS_TOT_BTU.COW-AK-98.A 2002-01-01 2002    A          
+#>  3 ELEC.CONS_TOT_BTU.COW-AK-98.A 2003-01-01 2003    A          
+#>  4 ELEC.CONS_TOT_BTU.COW-AK-98.A 2004-01-01 2004    A          
+#>  5 ELEC.CONS_TOT_BTU.COW-AK-98.A 2005-01-01 2005    A          
+#>  6 ELEC.CONS_TOT_BTU.COW-AK-98.A 2006-01-01 2006    A          
+#>  7 ELEC.CONS_TOT_BTU.COW-AK-98.A 2007-01-01 2007    A          
+#>  8 ELEC.CONS_TOT_BTU.COW-AK-98.A 2008-01-01 2008    A          
+#>  9 ELEC.CONS_TOT_BTU.COW-AK-98.A 2009-01-01 2009    A          
+#> 10 ELEC.CONS_TOT_BTU.COW-AK-98.A 2010-01-01 2010    A          
+#> # ... with 306 more rows
 eia_series_range(id)
+#> # A tibble: 3 x 7
+#>   series_id            start_date end_date   start  end   date_format     n
+#>   <chr>                <date>     <date>     <chr>  <chr> <chr>       <int>
+#> 1 ELEC.CONS_TOT_BTU.C~ 2001-01-01 2018-01-01 2001   2018  A              18
+#> 2 ELEC.CONS_TOT_BTU.C~ 2001-01-01 2019-08-01 200101 2019~ M             224
+#> 3 ELEC.CONS_TOT_BTU.C~ 2001-01-01 2019-04-01 2001Q1 2019~ Q              74
 eia_series_cats(id)
+#> # A tibble: 6 x 3
+#>   series_id                     category_id name                  
+#>   <chr>                               <int> <chr>                 
+#> 1 ELEC.CONS_TOT_BTU.COW-AK-98.A         474 Electric power (total)
+#> 2 ELEC.CONS_TOT_BTU.COW-AK-98.A         738 Coal                  
+#> 3 ELEC.CONS_TOT_BTU.COW-AK-98.M         474 Electric power (total)
+#> 4 ELEC.CONS_TOT_BTU.COW-AK-98.M         738 Coal                  
+#> 5 ELEC.CONS_TOT_BTU.COW-AK-98.Q         474 Electric power (total)
+#> 6 ELEC.CONS_TOT_BTU.COW-AK-98.Q         738 Coal
 ```
 
 Like `eia_seires`, these functions accept an `id` vector. They always return a tibble data frame. `eia_series_cats` uses the `series categories` endpoint and accepts the `tidy` argument so that output from the endpoint may be a JSON string, list or the tibble data frame.
@@ -181,23 +466,32 @@ EIA date strings used to specify start and end dates for time series requests ar
 
 You can convert EIA date strings to dates.
 
-```{r series11}
+
+```r
 eiadate_to_date(c("201803", "201804"))
+#> [1] "2018-03-01" "2018-04-01"
 ```
 
 or dates to EIA format; here are examples using annual, quarterly and monthly time formats.
 
-```{r series12}
+
+```r
 date_to_eiadate("2018-05-14", "A")
+#> [1] "2018"
 date_to_eiadate("2018-05-14", "Q")
+#> [1] "2018Q2"
 date_to_eiadate("2018-05-14", "M")
+#> [1] "201805"
 ```
 
 It is also easy to create a date sequence from two EIA time stamps. The format is parsed from the first value (they are intended to always be consistent).
 
-```{r series13}
+
+```r
 (x <- eiadate_to_date_seq("2018Q1", "2018Q4"))
+#> [1] "2018-01-01" "2018-04-01" "2018-07-01" "2018-10-01"
 date_to_eiadate(x)
+#> [1] "2018" "2018" "2018" "2018"
 ```
 
 ## Checking for data updates
@@ -208,20 +502,41 @@ The `eia_series_updates` function shown above is handy for checking the most rec
 
 If a category level has no series directly associated with it, an empty data frame is returned.
 
-```{r updates}
+
+```r
 eia_updates(389)
+#> # A tibble: 0 x 2
+#> # ... with 2 variables: series_id <chr>, updated <chr>
 ```
 
 If a category has series available, paginated results are returned in a data frame. You can use `n` and `start` (together, unlike for general data requests with `eia_series`) to indicate how many rows to return and where to start. This helps you to cycle through pages of results. By default, `n = 50` and `start = 1`. The EIA API `updates` endpoint allows a maximum of `n = 10000`.
- 
-```{r updates2}
+
+
+```r
 eia_updates(742, n = 5)
+#> # A tibble: 5 x 2
+#>   series_id                    updated                 
+#>   <chr>                        <chr>                   
+#> 1 ELEC.CONS_TOT_BTU.COW-AK-1.A 2019-10-23T18:58:10-0400
+#> 2 ELEC.CONS_TOT_BTU.COW-AK-1.M 2019-10-23T18:58:10-0400
+#> 3 ELEC.CONS_TOT_BTU.COW-AK-1.Q 2019-10-23T18:58:10-0400
+#> 4 ELEC.CONS_TOT_BTU.COW-AL-1.A 2019-10-23T18:58:10-0400
+#> 5 ELEC.CONS_TOT_BTU.COW-AL-1.M 2019-10-23T18:58:10-0400
 ```
 
 Set `deep = TRUE` to obtain series associated with child categories. Category 389 above did not have series, but some of the child categories do.
 
-```{r updates3}
+
+```r
 eia_updates(389, n = 5, deep = TRUE)
+#> # A tibble: 5 x 2
+#>   series_id                    updated                 
+#>   <chr>                        <chr>                   
+#> 1 ELEC.CONS_TOT_BTU.COW-AK-1.A 2019-10-23T18:58:10-0400
+#> 2 ELEC.CONS_TOT_BTU.COW-AK-1.M 2019-10-23T18:58:10-0400
+#> 3 ELEC.CONS_TOT_BTU.COW-AK-1.Q 2019-10-23T18:58:10-0400
+#> 4 ELEC.CONS_TOT_BTU.COW-AL-1.A 2019-10-23T18:58:10-0400
+#> 5 ELEC.CONS_TOT_BTU.COW-AL-1.M 2019-10-23T18:58:10-0400
 ```
 
 The above example works to show this while using `n = 5` because there were no results for the top parent category. if there had been, it would likely be necessary to request more results in order to see that child series were included.

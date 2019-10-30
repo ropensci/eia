@@ -14,9 +14,11 @@
 ^README\.html$
 ^\.lintr$
 ^vignettes/api\.Rmd$
-^vignettes/categories\.Rmd$
-^vignettes/eia\.Rmd$
-^vignettes/geoset\.Rmd$
-^vignettes/series\.Rmd$
+^vignettes/categories\.Rmd\.orig$
+^vignettes/eia\.Rmd\.orig$
+^vignettes/geoset\.Rmd\.orig$
+^vignettes/series\.Rmd\.orig$
 ^codemeta\.json$
 ^CRAN-RELEASE$
+^doc$
+^Meta$

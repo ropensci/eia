@@ -7,7 +7,15 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, comment = "#>", out.width = "100%",
+  message = FALSE, warning = FALSE, error = FALSE
+)
+library(eia)
+options(eia_antidos = 0)
+key <- Sys.getenv("EIA_KEY")
+```
 
 ## API key
 
@@ -35,8 +43,7 @@ This setup also allows you to store a key that will override another key. This i
 
 As an example, if the key already exists in the system environment and you plan to pass `key` to functions explicitly, you could start as follows:
 
-
-```r
+```{r key1, eval=FALSE}
 library(eia)
 key <- Sys.getenv("EIA_KEY") 
 
@@ -46,8 +53,7 @@ key <- eia_get_key()
 
 If you need to set it, you can do so as follows.
 
-
-```r
+```{r key2}
 # eia_set_key("yourkey")
 # eia_get_key() # retrieve it
 ```
@@ -75,8 +81,7 @@ This approach limits the potential for accidentally using the EIA API more than 
 
 Run this example of the same request made with and without memoization. You will notice the cached result by the immediate return.
 
-
-```r
+```{r memo1, eval=FALSE}
 system.time(eia_cats()) # API call; cache result
 system.time(eia_cats()) # read from cache
 system.time(eia_cats(cache = FALSE)) # API call
@@ -84,8 +89,7 @@ system.time(eia_cats(cache = FALSE)) # API call
 
 Results are cached in memory for the duration of the R session, but you can clear the cache at any time.
 
-
-```r
+```{r memo2, eval=FALSE}
 eia_clear_cache()
 system.time(eia_cats())
 ```
@@ -106,28 +110,16 @@ You can turn this off with `options` if not needed; for example, a case where yo
 
 A call to `eia_parent_cats` is a good example. This function is recursive, but say you know the number of calls is going to be small; it is overkill to impose the additional wait. Note that in order to show this example, it is necessary to turn off memoization to avoid returning a cached result.
 
+```{r antidos1, echo=FALSE}
+options(eia_antidos = 1)
+```
 
-
-
-```r
+```{r antidos2}
 system.time(x <- eia_parent_cats(742, cache = FALSE))
-#>    user  system elapsed 
-#>    0.04    0.00    6.05
 
 options(eia_antidos = 0)
 system.time(x <- eia_parent_cats(742, cache = FALSE))
-#>    user  system elapsed 
-#>    0.07    0.00    0.79
 
 x
-#> # A tibble: 6 x 4
-#>   category_id name                    notes parent_category_id
-#>   <chr>       <chr>                   <chr> <chr>             
-#> 1 371         EIA Data Sets           ""    <NA>              
-#> 2 0           Electricity             ""    371               
-#> 3 32          Total consumption (Btu) ""    0                 
-#> 4 372         By sector               ""    32                
-#> 5 389         Electric utility        ""    372               
-#> 6 742         Coal                    ""    389
 ```
 

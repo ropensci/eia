@@ -60,18 +60,18 @@ remotes::install_github("ropensci/eia")
 ## Example
 
 To begin, store your API key. You can place it somewhere like your
-`.Renviron` file. You can set it with `eia_set_key`. You can always pass
-it explicitly to the `key` argument of a function.
+`.Renviron` file and never have to do anything with the key when you use
+the package. You can set it with `eia_set_key` in your R session. You
+can always pass it explicitly to the `key` argument of a function.
 
 ``` r
 library(eia)
 
 # not run
-eia_set_key("yourkey") # see help file for details/options
+eia_set_key("yourkey") # set API key if not already set globally
 ```
 
-Once you have a `key` to use explicitly, or have set it somewhere
-globally, load a time series of net electricity generation:
+Load a time series of net electricity generation.
 
 ``` r
 id <- "ELEC.GEN.ALL-AK-99.A"
@@ -100,7 +100,7 @@ d$data[[1]]
 
 library(ggplot2)
 library(tidyr)
-unnest(d, data) %>% ggplot(aes(year, value)) +
+unnest(d, cols = data) %>% ggplot(aes(year, value)) +
   geom_line() + labs(y = d$units, title = d$name)
 ```
 

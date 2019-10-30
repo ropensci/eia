@@ -118,7 +118,7 @@
 <a href="#finding-the-series-id" class="anchor"></a>Finding the series ID</h2>
 <p>Like category information, time series data is obtained based on its ID. A complete example includes finding the ID for the series if you do not already know it. Chances are you may already know the series IDs you need after using the API explorer on the EIA website. Below, look for total electricity consumption.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(eia)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="co"># eia_set_key("yourkey") # set your API key</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="co"># eia_set_key("yourkey") # set API key if not already set globally</span></a>
 <a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>()</a>
 <a class="sourceLine" id="cb1-4" title="4"><span class="co">#&gt; $category</span></a>
 <a class="sourceLine" id="cb1-5" title="5"><span class="co">#&gt; # A tibble: 1 x 3</span></a>
@@ -127,7 +127,7 @@
 <a class="sourceLine" id="cb1-8" title="8"><span class="co">#&gt; 1 371         EIA Data Sets ""   </span></a>
 <a class="sourceLine" id="cb1-9" title="9"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb1-10" title="10"><span class="co">#&gt; $childcategories</span></a>
-<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; # A tibble: 12 x 2</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="co">#&gt; # A tibble: 13 x 2</span></a>
 <a class="sourceLine" id="cb1-12" title="12"><span class="co">#&gt;    category_id name                               </span></a>
 <a class="sourceLine" id="cb1-13" title="13"><span class="co">#&gt;          &lt;int&gt; &lt;chr&gt;                              </span></a>
 <a class="sourceLine" id="cb1-14" title="14"><span class="co">#&gt;  1           0 Electricity                        </span></a>
@@ -140,8 +140,9 @@
 <a class="sourceLine" id="cb1-21" title="21"><span class="co">#&gt;  8     1292190 Crude Oil Imports                  </span></a>
 <a class="sourceLine" id="cb1-22" title="22"><span class="co">#&gt;  9     2123635 U.S. Electric System Operating Data</span></a>
 <a class="sourceLine" id="cb1-23" title="23"><span class="co">#&gt; 10     2134384 International Energy Data          </span></a>
-<a class="sourceLine" id="cb1-24" title="24"><span class="co">#&gt; 11     2631064 International Energy Outlook       </span></a>
-<a class="sourceLine" id="cb1-25" title="25"><span class="co">#&gt; 12     2889994 U.S. Nuclear Outages</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-24" title="24"><span class="co">#&gt; 11     2251604 CO2 Emissions                      </span></a>
+<a class="sourceLine" id="cb1-25" title="25"><span class="co">#&gt; 12     2631064 International Energy Outlook       </span></a>
+<a class="sourceLine" id="cb1-26" title="26"><span class="co">#&gt; 13     2889994 U.S. Nuclear Outages</span></a></code></pre></div>
 <p>Electricity has category ID 0. Take a closer look there.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(<span class="dv">0</span>)</a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="co">#&gt; $category</span></a>
@@ -285,7 +286,7 @@
 <a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt; 2  9.21 2017-01-01  2017</span></a>
 <a class="sourceLine" id="cb8-11" title="11"><span class="co">#&gt; 3  9.64 2016-01-01  2016</span></a>
 <a class="sourceLine" id="cb8-12" title="12"></a>
-<a class="sourceLine" id="cb8-13" title="13"><span class="kw">select</span>(x1, series_id, data) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>()</a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="kw">select</span>(x1, series_id, data) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>(<span class="dt">cols =</span> data)</a>
 <a class="sourceLine" id="cb8-14" title="14"><span class="co">#&gt; # A tibble: 3 x 4</span></a>
 <a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt;   series_id                     value date        year</span></a>
 <a class="sourceLine" id="cb8-16" title="16"><span class="co">#&gt;   &lt;chr&gt;                         &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;</span></a>
@@ -293,10 +294,10 @@
 <a class="sourceLine" id="cb8-18" title="18"><span class="co">#&gt; 2 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.21 2017-01-01  2017</span></a>
 <a class="sourceLine" id="cb8-19" title="19"><span class="co">#&gt; 3 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.64 2016-01-01  2016</span></a>
 <a class="sourceLine" id="cb8-20" title="20"></a>
-<a class="sourceLine" id="cb8-21" title="21"><span class="kw">unnest</span>(x1, <span class="dt">cols =</span> data) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-22" title="22"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(date, value)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-21" title="21"><span class="kw">unnest</span>(x1, <span class="dt">cols =</span> data) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-22" title="22"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(date, value)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb8-23" title="23"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> x1<span class="op">$</span>units[<span class="dv">1</span>], <span class="dt">title =</span> <span class="st">"Total electricity consumption from coal sources, Alaska"</span>)</a></code></pre></div>
-<p><img src="series_files/figure-html/series2-1.png" width="100%"></p>
+<p><img src="series-series2-1.png" title="plot of chunk series2" alt="plot of chunk series2" width="100%"></p>
 <p>Results are similarly structured for the other series, but the columns containing date information differ.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">x1<span class="op">$</span>data[[<span class="dv">1</span>]]</a>
 <a class="sourceLine" id="cb9-2" title="2"><span class="co">#&gt; # A tibble: 3 x 3</span></a>
@@ -360,7 +361,7 @@
 <a class="sourceLine" id="cb11-23" title="23"><span class="co">#&gt; 2 NA    2019-01-01  2019     1</span></a>
 <a class="sourceLine" id="cb11-24" title="24"><span class="co">#&gt; 3  3.16 2018-10-01  2018     4</span></a></code></pre></div>
 <p>These can be unnested and filled in with <code>NA</code> as needed.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">select</span>(x, series_id, data) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>()</a>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">select</span>(x, series_id, data) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>(<span class="dt">cols =</span> data)</a>
 <a class="sourceLine" id="cb12-2" title="2"><span class="co">#&gt; # A tibble: 9 x 6</span></a>
 <a class="sourceLine" id="cb12-3" title="3"><span class="co">#&gt;   series_id                      value date        year month   qtr</span></a>
 <a class="sourceLine" id="cb12-4" title="4"><span class="co">#&gt;   &lt;chr&gt;                          &lt;dbl&gt; &lt;date&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;</span></a>

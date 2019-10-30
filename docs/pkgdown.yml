@@ -4,7 +4,6 @@ pkgdown_sha: ~
 articles:
   api: api.html
   categories: categories.html
-  eia-nokey: eia-nokey.html
   eia: eia.html
   geoset: geoset.html
   series: series.html

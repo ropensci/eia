@@ -118,7 +118,7 @@
 <a href="#top-level-categories" class="anchor"></a>Top level categories</h2>
 <p>It is helpful to be aware of various categories of data that are available. Each category has a unique ID number that is required to access associated data. The first call below does not include an ID. The result is a list of two data frames. The first is metadata associated with that position in the category hierarchy. The second is the child category information.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(eia)</a>
-<a class="sourceLine" id="cb1-2" title="2"><span class="co"># eia_set_key("yourkey") # set your API key</span></a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2"><span class="co"># eia_set_key("yourkey") # set API key if not already set globally</span></a></code></pre></div>
 <p>Here is the top-level category information.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>()</a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="co">#&gt; $category</span></a>
@@ -128,7 +128,7 @@
 <a class="sourceLine" id="cb2-6" title="6"><span class="co">#&gt; 1 371         EIA Data Sets ""   </span></a>
 <a class="sourceLine" id="cb2-7" title="7"><span class="co">#&gt; </span></a>
 <a class="sourceLine" id="cb2-8" title="8"><span class="co">#&gt; $childcategories</span></a>
-<a class="sourceLine" id="cb2-9" title="9"><span class="co">#&gt; # A tibble: 12 x 2</span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="co">#&gt; # A tibble: 13 x 2</span></a>
 <a class="sourceLine" id="cb2-10" title="10"><span class="co">#&gt;    category_id name                               </span></a>
 <a class="sourceLine" id="cb2-11" title="11"><span class="co">#&gt;          &lt;int&gt; &lt;chr&gt;                              </span></a>
 <a class="sourceLine" id="cb2-12" title="12"><span class="co">#&gt;  1           0 Electricity                        </span></a>
@@ -141,8 +141,9 @@
 <a class="sourceLine" id="cb2-19" title="19"><span class="co">#&gt;  8     1292190 Crude Oil Imports                  </span></a>
 <a class="sourceLine" id="cb2-20" title="20"><span class="co">#&gt;  9     2123635 U.S. Electric System Operating Data</span></a>
 <a class="sourceLine" id="cb2-21" title="21"><span class="co">#&gt; 10     2134384 International Energy Data          </span></a>
-<a class="sourceLine" id="cb2-22" title="22"><span class="co">#&gt; 11     2631064 International Energy Outlook       </span></a>
-<a class="sourceLine" id="cb2-23" title="23"><span class="co">#&gt; 12     2889994 U.S. Nuclear Outages</span></a></code></pre></div>
+<a class="sourceLine" id="cb2-22" title="22"><span class="co">#&gt; 11     2251604 CO2 Emissions                      </span></a>
+<a class="sourceLine" id="cb2-23" title="23"><span class="co">#&gt; 12     2631064 International Energy Outlook       </span></a>
+<a class="sourceLine" id="cb2-24" title="24"><span class="co">#&gt; 13     2889994 U.S. Nuclear Outages</span></a></code></pre></div>
 </div>
 <div id="child-categories" class="section level2">
 <h2 class="hasAnchor">
@@ -241,13 +242,14 @@
 <a class="sourceLine" id="cb6-32" title="32"><span class="co">#&gt; 8      1292190                   Crude Oil Imports</span></a>
 <a class="sourceLine" id="cb6-33" title="33"><span class="co">#&gt; 9      2123635 U.S. Electric System Operating Data</span></a>
 <a class="sourceLine" id="cb6-34" title="34"><span class="co">#&gt; 10     2134384           International Energy Data</span></a>
-<a class="sourceLine" id="cb6-35" title="35"><span class="co">#&gt; 11     2631064        International Energy Outlook</span></a>
-<a class="sourceLine" id="cb6-36" title="36"><span class="co">#&gt; 12     2889994                U.S. Nuclear Outages</span></a>
-<a class="sourceLine" id="cb6-37" title="37"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb6-38" title="38"><span class="co">#&gt; $category$childseries</span></a>
-<a class="sourceLine" id="cb6-39" title="39"><span class="co">#&gt; list()</span></a>
-<a class="sourceLine" id="cb6-40" title="40"><span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(<span class="dt">tidy =</span> <span class="ot">NA</span>))</a>
-<a class="sourceLine" id="cb6-41" title="41"><span class="co">#&gt; {"request":{"category_id":371,"command":"category"},"category":{"category_id":"371","parent_category_id":null,"name":"EIA Data Sets","notes":"","childcategories":[{"category_id":0,"name":"Electricity"},{"category_id":40203,"name":"State Energy Data System (SEDS)"},{"category_id":714755,"name":"Petroleum"},{"category_id":714804,"name":"Natural Gas"},{"category_id":711224,"name":"Total Energy"},{"category_id":717234,"name":"Coal"},{"category_id":829714,"name":"Short-Term Energy Outlook"},{"category_id":1292190,"name":"Crude Oil Imports"},{"category_id":2123635,"name":"U.S. Electric System Operating Data"},{"category_id":2134384,"name":"International Energy Data"},{"category_id":2631064,"name":"International Energy Outlook"},{"category_id":2889994,"name":"U.S. Nuclear Outages"}],"childseries":[]}}</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-35" title="35"><span class="co">#&gt; 11     2251604                       CO2 Emissions</span></a>
+<a class="sourceLine" id="cb6-36" title="36"><span class="co">#&gt; 12     2631064        International Energy Outlook</span></a>
+<a class="sourceLine" id="cb6-37" title="37"><span class="co">#&gt; 13     2889994                U.S. Nuclear Outages</span></a>
+<a class="sourceLine" id="cb6-38" title="38"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb6-39" title="39"><span class="co">#&gt; $category$childseries</span></a>
+<a class="sourceLine" id="cb6-40" title="40"><span class="co">#&gt; list()</span></a>
+<a class="sourceLine" id="cb6-41" title="41"><span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="kw"><a href="../reference/eia_cats.html">eia_cats</a></span>(<span class="dt">tidy =</span> <span class="ot">NA</span>))</a>
+<a class="sourceLine" id="cb6-42" title="42"><span class="co">#&gt; {"request":{"category_id":371,"command":"category"},"category":{"category_id":"371","parent_category_id":null,"name":"EIA Data Sets","notes":"","childcategories":[{"category_id":0,"name":"Electricity"},{"category_id":40203,"name":"State Energy Data System (SEDS)"},{"category_id":714755,"name":"Petroleum"},{"category_id":714804,"name":"Natural Gas"},{"category_id":711224,"name":"Total Energy"},{"category_id":717234,"name":"Coal"},{"category_id":829714,"name":"Short-Term Energy Outlook"},{"category_id":1292190,"name":"Crude Oil Imports"},{"category_id":2123635,"name":"U.S. Electric System Operating Data"},{"category_id":2134384,"name":"International Energy Data"},{"category_id":2251604,"name":"CO2 Emissions"},{"category_id":2631064,"name":"International Energy Outlook"},{"category_id":2889994,"name":"U.S. Nuclear Outages"}],"childseries":[]}}</span></a></code></pre></div>
 </div>
   </div>
 

@@ -123,7 +123,7 @@
 <a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyr)</a>
 <a class="sourceLine" id="cb1-4" title="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
 <a class="sourceLine" id="cb1-5" title="5"></a>
-<a class="sourceLine" id="cb1-6" title="6"><span class="co"># eia_set_key("yourkey") # set your API key</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="co"># eia_set_key("yourkey") # set API key if not already set globally</span></a>
 <a class="sourceLine" id="cb1-7" title="7">id &lt;-<span class="st"> "ELEC.GEN.ALL-99.A"</span></a>
 <a class="sourceLine" id="cb1-8" title="8">region &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"USA-CA"</span>, <span class="st">"USA-NY"</span>)</a>
 <a class="sourceLine" id="cb1-9" title="9">(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_geoset.html">eia_geoset</a></span>(id, region[<span class="dv">1</span>], <span class="dt">n =</span> <span class="dv">3</span>))</a>
@@ -175,7 +175,7 @@
 <a class="sourceLine" id="cb3-19" title="19"></a>
 <a class="sourceLine" id="cb3-20" title="20">region &lt;-<span class="st"> "Middle Atlantic"</span></a>
 <a class="sourceLine" id="cb3-21" title="21">x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/eia_geoset.html">eia_geoset</a></span>(id, region, <span class="dt">n =</span> <span class="dv">12</span>)</a>
-<a class="sourceLine" id="cb3-22" title="22"><span class="kw">select</span>(x, region, data) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>()</a>
+<a class="sourceLine" id="cb3-22" title="22"><span class="kw">select</span>(x, region, data) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unnest</span>(<span class="dt">cols =</span> data)</a>
 <a class="sourceLine" id="cb3-23" title="23"><span class="co">#&gt; # A tibble: 36 x 4</span></a>
 <a class="sourceLine" id="cb3-24" title="24"><span class="co">#&gt;    region  value date        year</span></a>
 <a class="sourceLine" id="cb3-25" title="25"><span class="co">#&gt;    &lt;chr&gt;   &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;</span></a>
@@ -191,11 +191,11 @@
 <a class="sourceLine" id="cb3-35" title="35"><span class="co">#&gt; 10 USA-NJ 61811. 2009-01-01  2009</span></a>
 <a class="sourceLine" id="cb3-36" title="36"><span class="co">#&gt; # ... with 26 more rows</span></a>
 <a class="sourceLine" id="cb3-37" title="37"></a>
-<a class="sourceLine" id="cb3-38" title="38"><span class="kw">unnest</span>(x, <span class="dt">cols =</span> data) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-38" title="38"><span class="kw">unnest</span>(x, <span class="dt">cols =</span> data) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb3-39" title="39"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(date, value, <span class="dt">color =</span> region)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-40" title="40"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-40" title="40"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-41" title="41"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">y =</span> x<span class="op">$</span>units[<span class="dv">1</span>], <span class="dt">title =</span> <span class="st">"Net electricity generation, all fuels"</span>)</a></code></pre></div>
-<p><img src="geoset_files/figure-html/geoset2-1.png" width="100%"></p>
+<p><img src="geoset-geoset2-1.png" title="plot of chunk geoset2" alt="plot of chunk geoset2" width="100%"></p>
 </div>
 <div id="relations" class="section level2">
 <h2 class="hasAnchor">
