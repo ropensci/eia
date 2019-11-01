@@ -56,11 +56,7 @@ NULL
 #' @importFrom httr GET content
 .eia_get <- function(x){
   .antidos_before("eia")
-  x <- httr::RETRY(
-    verb = "GET"
-    , url = x
-    , .session_eia_env$ua
-  )
+  x <- httr::RETRY(verb = "GET", url = x, .session_eia_env$ua)
   .antidos_after("eia")
   if(x$status_code == "404") stop("Page not found", call. = FALSE)
   httr::content(x, as = "text", encoding = "UTF-8")

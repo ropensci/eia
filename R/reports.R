@@ -28,11 +28,7 @@ eia_report <- function(id, ...){
 report_drilling_productivity <- function(){
   url <- paste0("https://www.eia.gov/petroleum/drilling/xls/dpr-data.xlsx")
   file <- file.path(tempdir(), "dpr-data.xlsx")
-  x <- httr::RETRY(
-    verb = "GET"
-    , url = url
-    , httr::write_disk(file)
-  )
+  x <- httr::RETRY(verb = "GET", url = url, httr::write_disk(file))
   x <- tryCatch(
     purrr::map(1:7, ~{
       readxl::read_xlsx(file, .x, skip = 1, .name_repair = "minimal")

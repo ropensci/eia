@@ -22,7 +22,7 @@ test_that("key storage and retrieval works as expected", {
 
 test_that("cache clearing functions execute", {
   expect_is(eia_clear_cache(), "NULL")
-  expect_is( eia_clear_cats(), "NULL")
+  expect_is(eia_clear_cats(), "NULL")
   expect_is(eia_clear_series(), "NULL")
   expect_is(eia_clear_geoset(), "NULL")
 })
