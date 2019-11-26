@@ -4,8 +4,15 @@
 \alias{eia_series}
 \title{EIA data series}
 \usage{
-eia_series(id, start = NULL, end = NULL, n = NULL, tidy = TRUE,
-  cache = TRUE, key = eia_get_key())
+eia_series(
+  id,
+  start = NULL,
+  end = NULL,
+  n = NULL,
+  tidy = TRUE,
+  cache = TRUE,
+  key = eia_get_key()
+)
 }
 \arguments{
 \item{id}{character, series ID, may be a vector.}

@@ -4,8 +4,14 @@
 \alias{eia_updates}
 \title{EIA data updates}
 \usage{
-eia_updates(id = NULL, deep = FALSE, n = 50, start = 1,
-  tidy = TRUE, key = eia_get_key())
+eia_updates(
+  id = NULL,
+  deep = FALSE,
+  n = 50,
+  start = 1,
+  tidy = TRUE,
+  key = eia_get_key()
+)
 }
 \arguments{
 \item{id}{integer, category ID, may be a vector. If \code{NULL}, the API root category.}

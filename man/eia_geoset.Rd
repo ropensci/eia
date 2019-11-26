@@ -4,8 +4,17 @@
 \alias{eia_geoset}
 \title{EIA geoset data}
 \usage{
-eia_geoset(id, region, relation = NULL, start = NULL, end = NULL,
-  n = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key())
+eia_geoset(
+  id,
+  region,
+  relation = NULL,
+  start = NULL,
+  end = NULL,
+  n = NULL,
+  tidy = TRUE,
+  cache = TRUE,
+  key = eia_get_key()
+)
 }
 \arguments{
 \item{id}{character, geoset series ID, may be a vector. See details.}

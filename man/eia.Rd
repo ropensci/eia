@@ -3,7 +3,6 @@
 \docType{package}
 \name{eia}
 \alias{eia}
-\alias{eia-package}
 \title{eia: EIA API wrapper}
 \description{
 This package provides API access to data from the US \href{https://www.eia.gov/}{Energy Information Administration} (EIA).
