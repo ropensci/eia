@@ -95,27 +95,27 @@ eia_cats(0)
 #> 
 #> $childcategories
 #> # A tibble: 19 x 2
-#>    category_id name                                                        
-#>          <int> <chr>                                                       
-#>  1           1 Net generation                                              
-#>  2          35 Total consumption                                           
-#>  3          32 Total consumption (Btu)                                     
-#>  4          36 Consumption for electricity generation                      
-#>  5          33 Consumption for electricity generation (Btu)                
-#>  6          37 Consumption for useful thermal output                       
-#>  7          34 Consumption for useful thermal output (Btu)                 
-#>  8        1017 Plant level data                                            
-#>  9          38 Retail sales of electricity                                 
-#> 10          39 Revenue from retail sales of electricity                    
-#> 11          40 Average retail price of electricity                         
-#> 12     1718389 Number of customer accounts                                 
-#> 13       41137 Fossil-fuel stocks for electricity generation               
-#> 14       41138 Receipts of fossil fuels by electricity plants              
-#> 15       41139 Receipts of fossil fuels by electricity plants (Btu)        
-#> 16       41140 Average cost of fossil fuels for electricity generation     
-#> 17       41141 Average cost of fossil fuels for electricity generation (pe~
-#> 18       41142 Quality of fossil fuels in electricity generation : sulfur ~
-#> 19       41143 Quality of fossil fuels in electricity generation : ash con~
+#>    category_id name                                                              
+#>          <int> <chr>                                                             
+#>  1           1 Net generation                                                    
+#>  2          35 Total consumption                                                 
+#>  3          32 Total consumption (Btu)                                           
+#>  4          36 Consumption for electricity generation                            
+#>  5          33 Consumption for electricity generation (Btu)                      
+#>  6          37 Consumption for useful thermal output                             
+#>  7          34 Consumption for useful thermal output (Btu)                       
+#>  8        1017 Plant level data                                                  
+#>  9          38 Retail sales of electricity                                       
+#> 10          39 Revenue from retail sales of electricity                          
+#> 11          40 Average retail price of electricity                               
+#> 12     1718389 Number of customer accounts                                       
+#> 13       41137 Fossil-fuel stocks for electricity generation                     
+#> 14       41138 Receipts of fossil fuels by electricity plants                    
+#> 15       41139 Receipts of fossil fuels by electricity plants (Btu)              
+#> 16       41140 Average cost of fossil fuels for electricity generation           
+#> 17       41141 Average cost of fossil fuels for electricity generation (per Btu) 
+#> 18       41142 Quality of fossil fuels in electricity generation : sulfur content
+#> 19       41143 Quality of fossil fuels in electricity generation : ash content
 ```
 
 ## EIA time series data
@@ -131,11 +131,9 @@ library(ggplot2)
 id <- "ELEC.GEN.ALL-AK-99.A"
 (x <- eia_series(id))
 #> # A tibble: 1 x 13
-#>   series_id name  units f     description copyright source iso3166
-#>   <chr>     <chr> <chr> <chr> <chr>       <chr>     <chr>  <chr>  
-#> 1 ELEC.GEN~ Net ~ thou~ A     "Summation~ None      EIA, ~ USA-AK 
-#> # ... with 5 more variables: geography <chr>, start <chr>, end <chr>,
-#> #   updated <chr>, data <list>
+#>   series_id     name                     units       f     description                      copyright source             iso3166 geography start end   updated      data     
+#>   <chr>         <chr>                    <chr>       <chr> <chr>                            <chr>     <chr>              <chr>   <chr>     <chr> <chr> <chr>        <list>   
+#> 1 ELEC.GEN.ALL~ Net generation : all fu~ thousand m~ A     "Summation of all fuels used fo~ None      EIA, U.S. Energy ~ USA-AK  USA-AK    2001  2018  2019-10-23T~ <tibble ~
 
 x$data[[1]]
 #> # A tibble: 18 x 3
@@ -199,11 +197,10 @@ id <- c("ELEC.GEN.ALL-99.M") # monthly
 region <- c("USA-CA", "USA-NY")
 (x <- eia_geoset(id, region, start = "201801", end = "201812"))
 #> # A tibble: 2 x 11
-#>   geoset_id setname f     units series_id name  region latlon start end  
-#>   <chr>     <chr>   <chr> <chr> <chr>     <chr> <chr>  <chr>  <chr> <chr>
-#> 1 ELEC.GEN~ Net ge~ M     thou~ ELEC.GEN~ Net ~ USA-CA <NA>   2001~ 2019~
-#> 2 ELEC.GEN~ Net ge~ M     thou~ ELEC.GEN~ Net ~ USA-NY <NA>   2001~ 2019~
-#> # ... with 1 more variable: data <list>
+#>   geoset_id      setname                            f     units            series_id        name                                       region latlon start end   data        
+#>   <chr>          <chr>                              <chr> <chr>            <chr>            <chr>                                      <chr>  <chr>  <chr> <chr> <list>      
+#> 1 ELEC.GEN.ALL-~ Net generation : all fuels : all ~ M     thousand megawa~ ELEC.GEN.ALL-CA~ Net generation : all fuels : California :~ USA-CA <NA>   2001~ 2019~ <tibble [12~
+#> 2 ELEC.GEN.ALL-~ Net generation : all fuels : all ~ M     thousand megawa~ ELEC.GEN.ALL-NY~ Net generation : all fuels : New York : a~ USA-NY <NA>   2001~ 2019~ <tibble [12~
 
 select(x, region, data) %>% unnest(cols = data)
 #> # A tibble: 24 x 5
@@ -247,19 +244,19 @@ select(x, region, data) %>% unnest(cols = data)
 #>    region value date        year month
 #>    <chr>  <dbl> <date>     <int> <int>
 #>  1 USA-AK  640. 2019-08-01  2019     8
-#>  2 USA-AK  690. 2019-07-01  2019     7
+#>  2 USA-AK  633. 2019-07-01  2019     7
 #>  3 USA-CT 3855. 2019-08-01  2019     8
-#>  4 USA-CT 4089. 2019-07-01  2019     7
+#>  4 USA-CT 4114. 2019-07-01  2019     7
 #>  5 USA-MA 1987. 2019-08-01  2019     8
-#>  6 USA-MA 2585. 2019-07-01  2019     7
+#>  6 USA-MA 2529. 2019-07-01  2019     7
 #>  7 USA-ME  801. 2019-08-01  2019     8
-#>  8 USA-ME  940. 2019-07-01  2019     7
+#>  8 USA-ME  921. 2019-07-01  2019     7
 #>  9 USA-NH 1711. 2019-08-01  2019     8
-#> 10 USA-NH 1870. 2019-07-01  2019     7
+#> 10 USA-NH 1855. 2019-07-01  2019     7
 #> 11 USA-RI  866. 2019-08-01  2019     8
-#> 12 USA-RI  807. 2019-07-01  2019     7
+#> 12 USA-RI  871. 2019-07-01  2019     7
 #> 13 USA-VT  161. 2019-08-01  2019     8
-#> 14 USA-VT  200. 2019-07-01  2019     7
+#> 14 USA-VT  198. 2019-07-01  2019     7
 
 region <- "Middle Atlantic"
 x <- eia_geoset(id, region, n = 12)
@@ -268,13 +265,13 @@ select(x, region, data) %>% unnest(cols = data)
 #>    region value date        year month
 #>    <chr>  <dbl> <date>     <int> <int>
 #>  1 USA-NJ 6872. 2019-08-01  2019     8
-#>  2 USA-NJ 7505. 2019-07-01  2019     7
-#>  3 USA-NJ 5803. 2019-06-01  2019     6
-#>  4 USA-NJ 4916. 2019-05-01  2019     5
-#>  5 USA-NJ 5486. 2019-04-01  2019     4
-#>  6 USA-NJ 5575. 2019-03-01  2019     3
-#>  7 USA-NJ 5645. 2019-02-01  2019     2
-#>  8 USA-NJ 6044. 2019-01-01  2019     1
+#>  2 USA-NJ 7461. 2019-07-01  2019     7
+#>  3 USA-NJ 5735. 2019-06-01  2019     6
+#>  4 USA-NJ 4905. 2019-05-01  2019     5
+#>  5 USA-NJ 5365. 2019-04-01  2019     4
+#>  6 USA-NJ 5514. 2019-03-01  2019     3
+#>  7 USA-NJ 5590. 2019-02-01  2019     2
+#>  8 USA-NJ 6006. 2019-01-01  2019     1
 #>  9 USA-NJ 5952. 2018-12-01  2018    12
 #> 10 USA-NJ 5183. 2018-11-01  2018    11
 #> # ... with 26 more rows

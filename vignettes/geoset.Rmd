@@ -27,10 +27,9 @@ id <- "ELEC.GEN.ALL-99.A"
 region <- c("USA-CA", "USA-NY")
 (x <- eia_geoset(id, region[1], n = 3))
 #> # A tibble: 1 x 11
-#>   geoset_id setname f     units series_id name  region latlon start end  
-#>   <chr>     <chr>   <chr> <chr> <chr>     <chr> <chr>  <chr>  <chr> <chr>
-#> 1 ELEC.GEN~ Net ge~ A     thou~ ELEC.GEN~ Net ~ USA-CA <NA>   2001  2018 
-#> # ... with 1 more variable: data <list>
+#>   geoset_id       setname                             f     units           series_id        name                                      region latlon start end   data        
+#>   <chr>           <chr>                               <chr> <chr>           <chr>            <chr>                                     <chr>  <chr>  <chr> <chr> <list>      
+#> 1 ELEC.GEN.ALL-9~ Net generation : all fuels : all s~ A     thousand megaw~ ELEC.GEN.ALL-CA~ Net generation : all fuels : California ~ USA-CA <NA>   2001  2018  <tibble [3 ~
 ```
 
 ## Groups of regions
@@ -65,16 +64,15 @@ Provide the associated label and `eia_geoset` recognizes subsets of US states. E
 
 (x <- eia_geoset(id, c("AK", "New England"), n = 1))
 #> # A tibble: 7 x 11
-#>   geoset_id setname f     units series_id name  region latlon start end  
-#>   <chr>     <chr>   <chr> <chr> <chr>     <chr> <chr>  <chr>  <chr> <chr>
-#> 1 ELEC.GEN~ Net ge~ A     thou~ ELEC.GEN~ Net ~ USA-AK <NA>   2001  2018 
-#> 2 ELEC.GEN~ Net ge~ A     thou~ ELEC.GEN~ Net ~ USA-CT <NA>   2001  2018 
-#> 3 ELEC.GEN~ Net ge~ A     thou~ ELEC.GEN~ Net ~ USA-MA <NA>   2001  2018 
-#> 4 ELEC.GEN~ Net ge~ A     thou~ ELEC.GEN~ Net ~ USA-ME <NA>   2001  2018 
-#> 5 ELEC.GEN~ Net ge~ A     thou~ ELEC.GEN~ Net ~ USA-NH <NA>   2001  2018 
-#> 6 ELEC.GEN~ Net ge~ A     thou~ ELEC.GEN~ Net ~ USA-RI <NA>   2001  2018 
-#> 7 ELEC.GEN~ Net ge~ A     thou~ ELEC.GEN~ Net ~ USA-VT <NA>   2001  2018 
-#> # ... with 1 more variable: data <list>
+#>   geoset_id       setname                            f     units            series_id        name                                       region latlon start end   data       
+#>   <chr>           <chr>                              <chr> <chr>            <chr>            <chr>                                      <chr>  <chr>  <chr> <chr> <list>     
+#> 1 ELEC.GEN.ALL-9~ Net generation : all fuels : all ~ A     thousand megawa~ ELEC.GEN.ALL-AK~ Net generation : all fuels : Alaska : all~ USA-AK <NA>   2001  2018  <tibble [1~
+#> 2 ELEC.GEN.ALL-9~ Net generation : all fuels : all ~ A     thousand megawa~ ELEC.GEN.ALL-CT~ Net generation : all fuels : Connecticut ~ USA-CT <NA>   2001  2018  <tibble [1~
+#> 3 ELEC.GEN.ALL-9~ Net generation : all fuels : all ~ A     thousand megawa~ ELEC.GEN.ALL-MA~ Net generation : all fuels : Massachusett~ USA-MA <NA>   2001  2018  <tibble [1~
+#> 4 ELEC.GEN.ALL-9~ Net generation : all fuels : all ~ A     thousand megawa~ ELEC.GEN.ALL-ME~ Net generation : all fuels : Maine : all ~ USA-ME <NA>   2001  2018  <tibble [1~
+#> 5 ELEC.GEN.ALL-9~ Net generation : all fuels : all ~ A     thousand megawa~ ELEC.GEN.ALL-NH~ Net generation : all fuels : New Hampshir~ USA-NH <NA>   2001  2018  <tibble [1~
+#> 6 ELEC.GEN.ALL-9~ Net generation : all fuels : all ~ A     thousand megawa~ ELEC.GEN.ALL-RI~ Net generation : all fuels : Rhode Island~ USA-RI <NA>   2001  2018  <tibble [1~
+#> 7 ELEC.GEN.ALL-9~ Net generation : all fuels : all ~ A     thousand megawa~ ELEC.GEN.ALL-VT~ Net generation : all fuels : Vermont : al~ USA-VT <NA>   2001  2018  <tibble [1~
 x$data[[1]]
 #> # A tibble: 1 x 3
 #>   value date        year

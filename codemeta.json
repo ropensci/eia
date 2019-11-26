@@ -235,7 +235,7 @@
   ],
   "releaseNotes": "https://github.com/ropensci/eia/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/eia/blob/master/README.md",
-  "fileSize": "253.967KB",
+  "fileSize": "254.271KB",
   "contIntegration": [
     "https://travis-ci.org/leonawicz/eia",
     "https://ci.appveyor.com/project/leonawicz/eia",

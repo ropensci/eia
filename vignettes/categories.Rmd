@@ -64,27 +64,27 @@ eia_cats(0)
 #> 
 #> $childcategories
 #> # A tibble: 19 x 2
-#>    category_id name                                                        
-#>          <int> <chr>                                                       
-#>  1           1 Net generation                                              
-#>  2          35 Total consumption                                           
-#>  3          32 Total consumption (Btu)                                     
-#>  4          36 Consumption for electricity generation                      
-#>  5          33 Consumption for electricity generation (Btu)                
-#>  6          37 Consumption for useful thermal output                       
-#>  7          34 Consumption for useful thermal output (Btu)                 
-#>  8        1017 Plant level data                                            
-#>  9          38 Retail sales of electricity                                 
-#> 10          39 Revenue from retail sales of electricity                    
-#> 11          40 Average retail price of electricity                         
-#> 12     1718389 Number of customer accounts                                 
-#> 13       41137 Fossil-fuel stocks for electricity generation               
-#> 14       41138 Receipts of fossil fuels by electricity plants              
-#> 15       41139 Receipts of fossil fuels by electricity plants (Btu)        
-#> 16       41140 Average cost of fossil fuels for electricity generation     
-#> 17       41141 Average cost of fossil fuels for electricity generation (pe~
-#> 18       41142 Quality of fossil fuels in electricity generation : sulfur ~
-#> 19       41143 Quality of fossil fuels in electricity generation : ash con~
+#>    category_id name                                                              
+#>          <int> <chr>                                                             
+#>  1           1 Net generation                                                    
+#>  2          35 Total consumption                                                 
+#>  3          32 Total consumption (Btu)                                           
+#>  4          36 Consumption for electricity generation                            
+#>  5          33 Consumption for electricity generation (Btu)                      
+#>  6          37 Consumption for useful thermal output                             
+#>  7          34 Consumption for useful thermal output (Btu)                       
+#>  8        1017 Plant level data                                                  
+#>  9          38 Retail sales of electricity                                       
+#> 10          39 Revenue from retail sales of electricity                          
+#> 11          40 Average retail price of electricity                               
+#> 12     1718389 Number of customer accounts                                       
+#> 13       41137 Fossil-fuel stocks for electricity generation                     
+#> 14       41138 Receipts of fossil fuels by electricity plants                    
+#> 15       41139 Receipts of fossil fuels by electricity plants (Btu)              
+#> 16       41140 Average cost of fossil fuels for electricity generation           
+#> 17       41141 Average cost of fossil fuels for electricity generation (per Btu) 
+#> 18       41142 Quality of fossil fuels in electricity generation : sulfur content
+#> 19       41143 Quality of fossil fuels in electricity generation : ash content
 ```
 
 View the immediate child categories for a given parent category.
