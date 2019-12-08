@@ -77,11 +77,9 @@ Load a time series of net electricity generation.
 id <- "ELEC.GEN.ALL-AK-99.A"
 (d <- eia_series(id, n = 10))
 #> # A tibble: 1 x 13
-#>   series_id name  units f     description copyright source iso3166
-#>   <chr>     <chr> <chr> <chr> <chr>       <chr>     <chr>  <chr>  
-#> 1 ELEC.GEN~ Net ~ thou~ A     "Summation~ None      EIA, ~ USA-AK 
-#> # ... with 5 more variables: geography <chr>, start <chr>, end <chr>,
-#> #   updated <chr>, data <list>
+#>   series_id     name                     units       f     description                      copyright source             iso3166 geography start end   updated      data     
+#>   <chr>         <chr>                    <chr>       <chr> <chr>                            <chr>     <chr>              <chr>   <chr>     <chr> <chr> <chr>        <list>   
+#> 1 ELEC.GEN.ALL~ Net generation : all fu~ thousand m~ A     "Summation of all fuels used fo~ None      EIA, U.S. Energy ~ USA-AK  USA-AK    2001  2018  2019-11-27T~ <tibble ~
 
 d$data[[1]]
 #> # A tibble: 10 x 3
@@ -114,8 +112,9 @@ complete package documentation available at the `eia` package
 
 -----
 
-Please note that this project is released with a [Contributor Code of
+Please note that the `eia` project is released with a [Contributor Code
+of
 Conduct](https://github.com/ropensci/eia/blob/master/CODE_OF_CONDUCT.md).
-By participating in this project you agree to abide by its terms.
+By contributing to this project, you agree to abide by its terms.
 
 [![ropensci\_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)

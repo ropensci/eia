@@ -1,3 +1,7 @@
+# eia 0.3.5
+
+* Minor documentation updates.
+
 # eia 0.3.4
 
 * Added initial report function.
