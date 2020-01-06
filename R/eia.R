@@ -39,7 +39,7 @@ NULL
     }
     id <- paste0("?", epid, "_id=", paste0(id, collapse = ";"), "&")
   }
-  paste0("http://api.eia.gov/", endpoint, "/", id, "api_key=", key, "&out=json")
+  paste0("https://api.eia.gov/", endpoint, "/", id, "api_key=", key, "&out=json")
 }
 
 .eia_time_params <- function(start = NULL, end = NULL, n = NULL){
