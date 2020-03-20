@@ -31,7 +31,12 @@ report_drilling_productivity <- function(){
   x <- httr::RETRY(verb = "GET", url = url, httr::write_disk(file))
   x <- tryCatch(
     purrr::map(1:7, ~{
-      readxl::read_xlsx(file, .x, skip = 1, .name_repair = "minimal")
+      z <- names(readxl::read_xlsx(file, .x, skip = 0, .name_repair = "minimal"))
+      z <- z[z != ""][-1]
+      x <- readxl::read_xlsx(file, .x, skip = 1, .name_repair = "minimal")
+      dplyr::bind_rows(x[1:5], x[c(1:2, 6:8)]) %>%
+        dplyr::mutate(Fuel = factor(rep(z, each = nrow(x)), levels = z)) %>%
+        dplyr::select(c(6, 1:5))
     }),
     error = function(e) NULL
   )
