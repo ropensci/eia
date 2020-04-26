@@ -1,10 +1,11 @@
 # eia 0.3.6
 
+* Minor fix to canned report.
 * Switch from http to https.
+* Documentation updates.
 
 # eia 0.3.5
 
-* Minor fix to canned report.
 * Minor documentation updates.
 
 # eia 0.3.4

@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eia</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6</span>
       </span>
     </div>
 
@@ -190,12 +190,12 @@
 <p>A call to <code>eia_parent_cats</code> is a good example. This function is recursive, but say you know the number of calls is going to be small; it is overkill to impose the additional wait. Note that in order to show this example, it is necessary to turn off memoization to avoid returning a cached result.</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(<span class="no">x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/eia_cats.html">eia_parent_cats</a></span>(<span class="fl">742</span>, <span class="kw">cache</span> <span class="kw">=</span> <span class="fl">FALSE</span>))
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;    0.11    0.03    7.54</span>
+<span class="co">#&gt;    0.14    0.04    6.73</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span>(<span class="kw">eia_antidos</span> <span class="kw">=</span> <span class="fl">0</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>(<span class="no">x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/eia_cats.html">eia_parent_cats</a></span>(<span class="fl">742</span>, <span class="kw">cache</span> <span class="kw">=</span> <span class="fl">FALSE</span>))
 <span class="co">#&gt;    user  system elapsed </span>
-<span class="co">#&gt;    0.08    0.00    2.70</span>
+<span class="co">#&gt;    0.02    0.00    1.05</span>
 
 <span class="no">x</span>
 <span class="co">#&gt; # A tibble: 6 x 4</span>

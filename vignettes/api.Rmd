@@ -112,12 +112,12 @@ A call to `eia_parent_cats` is a good example. This function is recursive, but s
 ```r
 system.time(x <- eia_parent_cats(742, cache = FALSE))
 #>    user  system elapsed 
-#>    0.15    0.00    6.60
+#>    0.14    0.04    6.73
 
 options(eia_antidos = 0)
 system.time(x <- eia_parent_cats(742, cache = FALSE))
 #>    user  system elapsed 
-#>    0.09    0.00    1.63
+#>    0.02    0.00    1.05
 
 x
 #> # A tibble: 6 x 4
