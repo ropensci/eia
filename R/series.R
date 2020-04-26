@@ -58,12 +58,13 @@ eia_series <- function(id, start = NULL, end = NULL, n = NULL,
   idx <- vapply(x$data, function(i) length(i) > 0, logical(1))
   if(any(idx)) x <- x[idx, ]
   f <- function(i){
-    .f <- function(name) c("date", "value")
     if(!length(x$data[[i]])){
       warning(paste0("No data returned for id: ", id[i], "."), call. = FALSE)
       return()
     }
-    x <- tibble::as_tibble(x$data[[i]], .name_repair = .f) %>%
+    x <- as.data.frame(x$data[[i]], stringsAsFactors = FALSE) %>%
+      stats::setNames(c("date", "value")) %>%
+      tibble::as_tibble() %>%
       .parse_series_eiadate(x$f[i])
     x$value <- as.numeric(x$value)
     x
@@ -210,8 +211,9 @@ eia_series_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   idx <- vapply(x$categories, function(i) length(i) > 0, logical(1))
   if(any(idx)) x <- x[idx, ]
   f <- function(i){
-    .f <- function(name) c("category_id", "name")
-    x <- tibble::as_tibble(x$categories[[i]], .name_repair = .f)
+    x <- as.data.frame(x$categories[[i]], stringsAsFactors = FALSE) %>%
+      stats::setNames(c("category_id", "name")) %>%
+      tibble::as_tibble()
     x$category_id <- as.integer(x$category_id)
     dplyr::mutate(x, series_id = id[i]) %>% dplyr::select(c(3, 1, 2))
   }

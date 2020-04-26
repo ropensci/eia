@@ -1,5 +1,5 @@
-pandoc: 2.7.2
-pkgdown: 1.4.1
+pandoc: 2.7.3
+pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
   api: api.html
@@ -7,6 +7,7 @@ articles:
   eia: eia.html
   geoset: geoset.html
   series: series.html
+last_built: 2020-04-26T19:27Z
 urls:
   reference: https://docs.ropensci.org/eia/reference
   article: https://docs.ropensci.org/eia/articles

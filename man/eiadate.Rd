@@ -16,7 +16,8 @@ eiadate_to_date_seq(start, end, weekly = FALSE)
 \arguments{
 \item{x}{character, EIA date string; character or date object for regular dates. See details.}
 
-\item{date_format}{EIA date format: "A", "Q", "M", "W", "D", "H". These stand for annual, quarterly, monthly, weekly, daily, hourly.}
+\item{date_format}{EIA date format: "A", "Q", "M", "W", "D", "H".
+These stand for annual, quarterly, monthly, weekly, daily, hourly. See details.}
 
 \item{start}{start EIA date or date.}
 
@@ -34,6 +35,10 @@ However, daily and weekly use the same format. Too avoid ambiguity in \code{eia_
 
 When providing a real date or date string, such as to \code{date_to_eiadate}, dates should be in \code{yyyy-mm-dd} format,
 or at least any format that can be parsed by \code{lubridate::ymd} or \code{lubridate::ymd_hms} for dates and hourly date times, respectively.
+
+\code{"HL"} is not a supported date format. Use \code{"H"}. The API does not
+translate the date and time when using \code{"HL"} anyhow; it simply appends
+the date string with the number of hours time difference.
 }
 \examples{
 eiadate_to_date(c("201803", "201804"))

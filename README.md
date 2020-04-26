@@ -77,24 +77,24 @@ Load a time series of net electricity generation.
 id <- "ELEC.GEN.ALL-AK-99.A"
 (d <- eia_series(id, n = 10))
 #> # A tibble: 1 x 13
-#>   series_id     name                     units       f     description                      copyright source             iso3166 geography start end   updated      data     
-#>   <chr>         <chr>                    <chr>       <chr> <chr>                            <chr>     <chr>              <chr>   <chr>     <chr> <chr> <chr>        <list>   
-#> 1 ELEC.GEN.ALL~ Net generation : all fu~ thousand m~ A     "Summation of all fuels used fo~ None      EIA, U.S. Energy ~ USA-AK  USA-AK    2001  2018  2019-11-27T~ <tibble ~
+#>   series_id    name                 units      f     description                 copyright source          iso3166 geography start end   updated     data    
+#>   <chr>        <chr>                <chr>      <chr> <chr>                       <chr>     <chr>           <chr>   <chr>     <chr> <chr> <chr>       <list>  
+#> 1 ELEC.GEN.AL~ Net generation : al~ thousand ~ A     "Summation of all fuels us~ None      EIA, U.S. Ener~ USA-AK  USA-AK    2001  2019  2020-03-23~ <tibble~
 
 d$data[[1]]
 #> # A tibble: 10 x 3
 #>    value date        year
 #>    <dbl> <date>     <int>
-#>  1 6247. 2018-01-01  2018
-#>  2 6497. 2017-01-01  2017
-#>  3 6335. 2016-01-01  2016
-#>  4 6285. 2015-01-01  2015
-#>  5 6043. 2014-01-01  2014
-#>  6 6497. 2013-01-01  2013
-#>  7 6946. 2012-01-01  2012
-#>  8 6871. 2011-01-01  2011
-#>  9 6760. 2010-01-01  2010
-#> 10 6702. 2009-01-01  2009
+#>  1 6340. 2019-01-01  2019
+#>  2 6247. 2018-01-01  2018
+#>  3 6497. 2017-01-01  2017
+#>  4 6335. 2016-01-01  2016
+#>  5 6285. 2015-01-01  2015
+#>  6 6043. 2014-01-01  2014
+#>  7 6497. 2013-01-01  2013
+#>  8 6946. 2012-01-01  2012
+#>  9 6871. 2011-01-01  2011
+#> 10 6760. 2010-01-01  2010
 
 library(ggplot2)
 library(tidyr)

@@ -89,18 +89,21 @@ eia_geoset <- function(id, region, relation = NULL, start = NULL, end = NULL,
   idx <- which(names(x) != "series")
   x <- list(geoset = tibble::as_tibble(x[idx]), series = x$series)
 
-  f <- function(name) c("date", "value")
   f2 <- function(s){
     if(is.null(s$unitsshort)) s <- s[-which(names(s) == "unitsshort")]
     if(is.null(s$latlon)) s$latlon <- NA_character_
-    s$data <- list(tibble::as_tibble(s$data, .name_repair = f) %>%
-                     .parse_series_eiadate(x$geoset$f))
+    s$data <- as.data.frame(s$data, stringsAsFactors = FALSE) %>%
+      stats::setNames(c("date", "value")) %>%
+      tibble::as_tibble() %>%
+      .parse_series_eiadate(x$geoset$f) %>%
+      list()
     s$data[[1]]$value <- as.numeric(s$data[[1]]$value)
     idx <- which(names(s) != "data")
     d <- tibble::as_tibble(s[idx])
     d$data <- s$data
     d
   }
+
   x$series <- purrr::map_dfr(x$series, f2)
   x$geoset <- dplyr::slice(x$geoset, rep(1, nrow(x$series)))
   dplyr::bind_cols(x$geoset, x$series)

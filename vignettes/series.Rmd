@@ -25,7 +25,7 @@ eia_cats()
 #> 1 371         EIA Data Sets ""   
 #> 
 #> $childcategories
-#> # A tibble: 13 x 2
+#> # A tibble: 14 x 2
 #>    category_id name                               
 #>          <int> <chr>                              
 #>  1           0 Electricity                        
@@ -35,12 +35,13 @@ eia_cats()
 #>  5      711224 Total Energy                       
 #>  6      717234 Coal                               
 #>  7      829714 Short-Term Energy Outlook          
-#>  8     1292190 Crude Oil Imports                  
-#>  9     2123635 U.S. Electric System Operating Data
-#> 10     2134384 International Energy Data          
-#> 11     2251604 CO2 Emissions                      
-#> 12     2631064 International Energy Outlook       
-#> 13     2889994 U.S. Nuclear Outages
+#>  8      964164 Annual Energy Outlook              
+#>  9     1292190 Crude Oil Imports                  
+#> 10     2123635 U.S. Electric System Operating Data
+#> 11     2134384 International Energy Data          
+#> 12     2251604 CO2 Emissions                      
+#> 13     2631064 International Energy Outlook       
+#> 14     2889994 U.S. Nuclear Outages
 ```
 
 Electricity has category ID 0. Take a closer look there.
@@ -162,16 +163,16 @@ And finally coal.
 #> # A tibble: 174 x 5
 #>    series_id                     name                                                                           f     units         updated              
 #>    <chr>                         <chr>                                                                          <chr> <chr>         <chr>                
-#>  1 ELEC.CONS_TOT_BTU.COW-AK-98.A Total consumption (Btu) : coal : Alaska : electric power (total) : annual      A     million MMBtu 27-NOV-19 04.57.27 PM
-#>  2 ELEC.CONS_TOT_BTU.COW-AK-98.M Total consumption (Btu) : coal : Alaska : electric power (total) : monthly     M     million MMBtu 27-NOV-19 04.57.27 PM
-#>  3 ELEC.CONS_TOT_BTU.COW-AK-98.Q Total consumption (Btu) : coal : Alaska : electric power (total) : quarterly   Q     million MMBtu 27-NOV-19 04.57.27 PM
-#>  4 ELEC.CONS_TOT_BTU.COW-AL-98.A Total consumption (Btu) : coal : Alabama : electric power (total) : annual     A     million MMBtu 27-NOV-19 04.57.27 PM
-#>  5 ELEC.CONS_TOT_BTU.COW-AL-98.M Total consumption (Btu) : coal : Alabama : electric power (total) : monthly    M     million MMBtu 27-NOV-19 04.57.27 PM
-#>  6 ELEC.CONS_TOT_BTU.COW-AL-98.Q Total consumption (Btu) : coal : Alabama : electric power (total) : quarterly  Q     million MMBtu 27-NOV-19 04.57.27 PM
-#>  7 ELEC.CONS_TOT_BTU.COW-AR-98.A Total consumption (Btu) : coal : Arkansas : electric power (total) : annual    A     million MMBtu 27-NOV-19 04.57.27 PM
-#>  8 ELEC.CONS_TOT_BTU.COW-AR-98.M Total consumption (Btu) : coal : Arkansas : electric power (total) : monthly   M     million MMBtu 27-NOV-19 04.57.27 PM
-#>  9 ELEC.CONS_TOT_BTU.COW-AR-98.Q Total consumption (Btu) : coal : Arkansas : electric power (total) : quarterly Q     million MMBtu 27-NOV-19 04.57.27 PM
-#> 10 ELEC.CONS_TOT_BTU.COW-AZ-98.A Total consumption (Btu) : coal : Arizona : electric power (total) : annual     A     million MMBtu 27-NOV-19 04.57.27 PM
+#>  1 ELEC.CONS_TOT_BTU.COW-AK-98.A Total consumption (Btu) : coal : Alaska : electric power (total) : annual      A     million MMBtu 23-MAR-20 06.31.14 PM
+#>  2 ELEC.CONS_TOT_BTU.COW-AK-98.M Total consumption (Btu) : coal : Alaska : electric power (total) : monthly     M     million MMBtu 24-APR-20 04.14.48 PM
+#>  3 ELEC.CONS_TOT_BTU.COW-AK-98.Q Total consumption (Btu) : coal : Alaska : electric power (total) : quarterly   Q     million MMBtu 23-MAR-20 06.31.14 PM
+#>  4 ELEC.CONS_TOT_BTU.COW-AL-98.A Total consumption (Btu) : coal : Alabama : electric power (total) : annual     A     million MMBtu 23-MAR-20 06.31.14 PM
+#>  5 ELEC.CONS_TOT_BTU.COW-AL-98.M Total consumption (Btu) : coal : Alabama : electric power (total) : monthly    M     million MMBtu 24-APR-20 04.14.48 PM
+#>  6 ELEC.CONS_TOT_BTU.COW-AL-98.Q Total consumption (Btu) : coal : Alabama : electric power (total) : quarterly  Q     million MMBtu 23-MAR-20 06.31.14 PM
+#>  7 ELEC.CONS_TOT_BTU.COW-AR-98.A Total consumption (Btu) : coal : Arkansas : electric power (total) : annual    A     million MMBtu 23-MAR-20 06.31.14 PM
+#>  8 ELEC.CONS_TOT_BTU.COW-AR-98.M Total consumption (Btu) : coal : Arkansas : electric power (total) : monthly   M     million MMBtu 24-APR-20 04.14.48 PM
+#>  9 ELEC.CONS_TOT_BTU.COW-AR-98.Q Total consumption (Btu) : coal : Arkansas : electric power (total) : quarterly Q     million MMBtu 23-MAR-20 06.31.14 PM
+#> 10 ELEC.CONS_TOT_BTU.COW-AZ-98.A Total consumption (Btu) : coal : Arizona : electric power (total) : annual     A     million MMBtu 23-MAR-20 06.31.14 PM
 #> # ... with 164 more rows
 ```
 
@@ -213,17 +214,17 @@ x1$data[[1]]
 #> # A tibble: 3 x 3
 #>   value date        year
 #>   <dbl> <date>     <int>
-#> 1 10.4  2018-01-01  2018
-#> 2  9.21 2017-01-01  2017
-#> 3  9.64 2016-01-01  2016
+#> 1  9.74 2019-01-01  2019
+#> 2 10.4  2018-01-01  2018
+#> 3  9.21 2017-01-01  2017
 
 select(x1, series_id, data) %>% unnest(cols = data)
 #> # A tibble: 3 x 4
 #>   series_id                     value date        year
 #>   <chr>                         <dbl> <date>     <int>
-#> 1 ELEC.CONS_TOT_BTU.COW-AK-98.A 10.4  2018-01-01  2018
-#> 2 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.21 2017-01-01  2017
-#> 3 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.64 2016-01-01  2016
+#> 1 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.74 2019-01-01  2019
+#> 2 ELEC.CONS_TOT_BTU.COW-AK-98.A 10.4  2018-01-01  2018
+#> 3 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.21 2017-01-01  2017
 
 unnest(x1, cols = data) %>%
   ggplot(aes(date, value)) + geom_col() +
@@ -240,23 +241,23 @@ x1$data[[1]]
 #> # A tibble: 3 x 3
 #>   value date        year
 #>   <dbl> <date>     <int>
-#> 1 10.4  2018-01-01  2018
-#> 2  9.21 2017-01-01  2017
-#> 3  9.64 2016-01-01  2016
+#> 1  9.74 2019-01-01  2019
+#> 2 10.4  2018-01-01  2018
+#> 3  9.21 2017-01-01  2017
 x2$data[[1]]
 #> # A tibble: 3 x 4
-#>   value date        year month
-#>   <dbl> <date>     <int> <int>
-#> 1 0.748 2019-09-01  2019     9
-#> 2 0.854 2019-08-01  2019     8
-#> 3 0.852 2019-07-01  2019     7
+#>    value date        year month
+#>    <dbl> <date>     <int> <int>
+#> 1  0.878 2020-02-01  2020     2
+#> 2 NA     2020-01-01  2020     1
+#> 3  0.846 2019-12-01  2019    12
 x3$data[[1]]
 #> # A tibble: 3 x 4
 #>   value date        year   qtr
 #>   <dbl> <date>     <int> <int>
-#> 1  2.45 2019-07-01  2019     3
-#> 2 NA    2019-04-01  2019     2
-#> 3  3.01 2019-01-01  2019     1
+#> 1  2.32 2019-10-01  2019     4
+#> 2  2.45 2019-07-01  2019     3
+#> 3 NA    2019-04-01  2019     2
 ```
 
 ## Multiple series
@@ -268,11 +269,11 @@ The EIA API allows multiple series to be requested in a single API call. You sho
 x <- eia_series(id, n = 3)
 x
 #> # A tibble: 3 x 13
-#>   series_id       name                      units    f     description                            copyright source          iso3166 geography start end   updated     data   
-#>   <chr>           <chr>                     <chr>    <chr> <chr>                                  <chr>     <chr>           <chr>   <chr>     <chr> <chr> <chr>       <list> 
-#> 1 ELEC.CONS_TOT_~ Total consumption (Btu) ~ million~ A     "Summation of all types of coal; Powe~ None      EIA, U.S. Ener~ USA-AK  USA-AK    2001  2018  2019-11-27~ <tibbl~
-#> 2 ELEC.CONS_TOT_~ Total consumption (Btu) ~ million~ M     "Summation of all types of coal; Powe~ None      EIA, U.S. Ener~ USA-AK  USA-AK    2001~ 2019~ 2019-11-27~ <tibbl~
-#> 3 ELEC.CONS_TOT_~ Total consumption (Btu) ~ million~ Q     "Summation of all types of coal; Powe~ None      EIA, U.S. Ener~ USA-AK  USA-AK    2001~ 2019~ 2019-11-27~ <tibbl~
+#>   series_id      name                 units   f     description                      copyright source        iso3166 geography start end   updated    data   
+#>   <chr>          <chr>                <chr>   <chr> <chr>                            <chr>     <chr>         <chr>   <chr>     <chr> <chr> <chr>      <list> 
+#> 1 ELEC.CONS_TOT~ Total consumption (~ millio~ A     "Summation of all types of coal~ None      EIA, U.S. En~ USA-AK  USA-AK    2001  2019  2020-03-2~ <tibbl~
+#> 2 ELEC.CONS_TOT~ Total consumption (~ millio~ M     "Summation of all types of coal~ None      EIA, U.S. En~ USA-AK  USA-AK    2001~ 2020~ 2020-04-2~ <tibbl~
+#> 3 ELEC.CONS_TOT~ Total consumption (~ millio~ Q     "Summation of all types of coal~ None      EIA, U.S. En~ USA-AK  USA-AK    2001~ 2019~ 2020-03-2~ <tibbl~
 ```
 
 There are now three rows in the table containing the same data as before. The `data` list column also contains the same structures as before.
@@ -284,25 +285,25 @@ x$data
 #> # A tibble: 3 x 3
 #>   value date        year
 #>   <dbl> <date>     <int>
-#> 1 10.4  2018-01-01  2018
-#> 2  9.21 2017-01-01  2017
-#> 3  9.64 2016-01-01  2016
+#> 1  9.74 2019-01-01  2019
+#> 2 10.4  2018-01-01  2018
+#> 3  9.21 2017-01-01  2017
 #> 
 #> [[2]]
 #> # A tibble: 3 x 4
-#>   value date        year month
-#>   <dbl> <date>     <int> <int>
-#> 1 0.748 2019-09-01  2019     9
-#> 2 0.854 2019-08-01  2019     8
-#> 3 0.852 2019-07-01  2019     7
+#>    value date        year month
+#>    <dbl> <date>     <int> <int>
+#> 1  0.878 2020-02-01  2020     2
+#> 2 NA     2020-01-01  2020     1
+#> 3  0.846 2019-12-01  2019    12
 #> 
 #> [[3]]
 #> # A tibble: 3 x 4
 #>   value date        year   qtr
 #>   <dbl> <date>     <int> <int>
-#> 1  2.45 2019-07-01  2019     3
-#> 2 NA    2019-04-01  2019     2
-#> 3  3.01 2019-01-01  2019     1
+#> 1  2.32 2019-10-01  2019     4
+#> 2  2.45 2019-07-01  2019     3
+#> 3 NA    2019-04-01  2019     2
 ```
 
 These can be unnested and filled in with `NA` as needed.
@@ -313,15 +314,15 @@ select(x, series_id, data) %>% unnest(cols = data)
 #> # A tibble: 9 x 6
 #>   series_id                      value date        year month   qtr
 #>   <chr>                          <dbl> <date>     <int> <int> <int>
-#> 1 ELEC.CONS_TOT_BTU.COW-AK-98.A 10.4   2018-01-01  2018    NA    NA
-#> 2 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.21  2017-01-01  2017    NA    NA
-#> 3 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.64  2016-01-01  2016    NA    NA
-#> 4 ELEC.CONS_TOT_BTU.COW-AK-98.M  0.748 2019-09-01  2019     9    NA
-#> 5 ELEC.CONS_TOT_BTU.COW-AK-98.M  0.854 2019-08-01  2019     8    NA
-#> 6 ELEC.CONS_TOT_BTU.COW-AK-98.M  0.852 2019-07-01  2019     7    NA
-#> 7 ELEC.CONS_TOT_BTU.COW-AK-98.Q  2.45  2019-07-01  2019    NA     3
-#> 8 ELEC.CONS_TOT_BTU.COW-AK-98.Q NA     2019-04-01  2019    NA     2
-#> 9 ELEC.CONS_TOT_BTU.COW-AK-98.Q  3.01  2019-01-01  2019    NA     1
+#> 1 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.74  2019-01-01  2019    NA    NA
+#> 2 ELEC.CONS_TOT_BTU.COW-AK-98.A 10.4   2018-01-01  2018    NA    NA
+#> 3 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.21  2017-01-01  2017    NA    NA
+#> 4 ELEC.CONS_TOT_BTU.COW-AK-98.M  0.878 2020-02-01  2020     2    NA
+#> 5 ELEC.CONS_TOT_BTU.COW-AK-98.M NA     2020-01-01  2020     1    NA
+#> 6 ELEC.CONS_TOT_BTU.COW-AK-98.M  0.846 2019-12-01  2019    12    NA
+#> 7 ELEC.CONS_TOT_BTU.COW-AK-98.Q  2.32  2019-10-01  2019    NA     4
+#> 8 ELEC.CONS_TOT_BTU.COW-AK-98.Q  2.45  2019-07-01  2019    NA     3
+#> 9 ELEC.CONS_TOT_BTU.COW-AK-98.Q NA     2019-04-01  2019    NA     2
 ```
 
 ## Time period and number of results
@@ -362,14 +363,14 @@ eia_series(id, n = 3, tidy = FALSE)
 #> 1 ELEC.CONS_TOT_BTU.COW-AK-98.A    Total consumption (Btu) : coal : Alaska : electric power (total) : annual million MMBtu A
 #> 2 ELEC.CONS_TOT_BTU.COW-AK-98.M   Total consumption (Btu) : coal : Alaska : electric power (total) : monthly million MMBtu M
 #> 3 ELEC.CONS_TOT_BTU.COW-AK-98.Q Total consumption (Btu) : coal : Alaska : electric power (total) : quarterly million MMBtu Q
-#>                                                                                                   description copyright                                      source iso3166
-#> 1 Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power;       None EIA, U.S. Energy Information Administration  USA-AK
-#> 2 Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power;       None EIA, U.S. Energy Information Administration  USA-AK
-#> 3 Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power;       None EIA, U.S. Energy Information Administration  USA-AK
-#>   geography  start    end                  updated                                              data
-#> 1    USA-AK   2001   2018 2019-11-27T16:57:27-0500      2018, 2017, 2016, 10.37727, 9.21412, 9.64353
-#> 2    USA-AK 200101 201909 2019-11-27T16:57:27-0500 201909, 201908, 201907, 0.74759, 0.85395, 0.85228
-#> 3    USA-AK 2001Q1 2019Q3 2019-11-27T16:57:27-0500      2019Q3, 2019Q2, 2019Q1, 2.45382, NA, 3.00949
+#>                                                                                                   description copyright
+#> 1 Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power;       None
+#> 2 Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power;       None
+#> 3 Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power;       None
+#>                                        source iso3166 geography  start    end                  updated                                         data
+#> 1 EIA, U.S. Energy Information Administration  USA-AK    USA-AK   2001   2019 2020-03-23T18:31:14-0400  2019, 2018, 2017, 9.7429, 10.37727, 9.21412
+#> 2 EIA, U.S. Energy Information Administration  USA-AK    USA-AK 200101 202002 2020-04-24T16:14:48-0400 202002, 202001, 201912, 0.87792, NA, 0.84623
+#> 3 EIA, U.S. Energy Information Administration  USA-AK    USA-AK 2001Q1 2019Q4 2020-03-23T18:31:14-0400 2019Q4, 2019Q3, 2019Q2, 2.31914, 2.45382, NA
 ```
 
 You can also return the raw JSON data in a character string if you need to process this directly with other code.
@@ -377,7 +378,7 @@ You can also return the raw JSON data in a character string if you need to proce
 
 ```r
 cat(eia_series(id, n = 3, tidy = NA))
-#> {"request":{"command":"series","series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.A;ELEC.CONS_TOT_BTU.COW-AK-98.M;ELEC.CONS_TOT_BTU.COW-AK-98.Q"},"series":[{"series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.A","name":"Total consumption (Btu) : coal : Alaska : electric power (total) : annual","units":"million MMBtu","f":"A","description":"Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power; ","copyright":"None","source":"EIA, U.S. Energy Information Administration","iso3166":"USA-AK","geography":"USA-AK","start":"2001","end":"2018","updated":"2019-11-27T16:57:27-0500","data":[["2018",10.37727],["2017",9.21412],["2016",9.64353]]},{"series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.M","name":"Total consumption (Btu) : coal : Alaska : electric power (total) : monthly","units":"million MMBtu","f":"M","description":"Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power; ","copyright":"None","source":"EIA, U.S. Energy Information Administration","iso3166":"USA-AK","geography":"USA-AK","start":"200101","end":"201909","updated":"2019-11-27T16:57:27-0500","data":[["201909",0.74759],["201908",0.85395],["201907",0.85228]]},{"series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.Q","name":"Total consumption (Btu) : coal : Alaska : electric power (total) : quarterly","units":"million MMBtu","f":"Q","description":"Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power; ","copyright":"None","source":"EIA, U.S. Energy Information Administration","iso3166":"USA-AK","geography":"USA-AK","start":"2001Q1","end":"2019Q3","updated":"2019-11-27T16:57:27-0500","data":[["2019Q3",2.45382],["2019Q2",null],["2019Q1",3.00949]]}]}
+#> {"request":{"command":"series","series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.A;ELEC.CONS_TOT_BTU.COW-AK-98.M;ELEC.CONS_TOT_BTU.COW-AK-98.Q"},"series":[{"series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.A","name":"Total consumption (Btu) : coal : Alaska : electric power (total) : annual","units":"million MMBtu","f":"A","description":"Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power; ","copyright":"None","source":"EIA, U.S. Energy Information Administration","iso3166":"USA-AK","geography":"USA-AK","start":"2001","end":"2019","updated":"2020-03-23T18:31:14-0400","data":[["2019",9.7429],["2018",10.37727],["2017",9.21412]]},{"series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.M","name":"Total consumption (Btu) : coal : Alaska : electric power (total) : monthly","units":"million MMBtu","f":"M","description":"Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power; ","copyright":"None","source":"EIA, U.S. Energy Information Administration","iso3166":"USA-AK","geography":"USA-AK","start":"200101","end":"202002","updated":"2020-04-24T16:14:48-0400","data":[["202002",0.87792],["202001",null],["201912",0.84623]]},{"series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.Q","name":"Total consumption (Btu) : coal : Alaska : electric power (total) : quarterly","units":"million MMBtu","f":"Q","description":"Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power; ","copyright":"None","source":"EIA, U.S. Energy Information Administration","iso3166":"USA-AK","geography":"USA-AK","start":"2001Q1","end":"2019Q4","updated":"2020-03-23T18:31:14-0400","data":[["2019Q4",2.31914],["2019Q3",2.45382],["2019Q2",null]]}]}
 ```
 
 This allows you to use the returned results with existing code you may have that requires data in one of these less processed structures.
@@ -392,22 +393,22 @@ There are some functions available that make small API calls and return only met
 ```r
 eia_series_metadata(id)
 #> # A tibble: 3 x 12
-#>   series_id        name                        units    f     description                              copyright source            iso3166 geography start end   updated     
-#>   <chr>            <chr>                       <chr>    <chr> <chr>                                    <chr>     <chr>             <chr>   <chr>     <chr> <chr> <chr>       
-#> 1 ELEC.CONS_TOT_B~ Total consumption (Btu) : ~ million~ A     "Summation of all types of coal; Power ~ None      EIA, U.S. Energy~ USA-AK  USA-AK    2001  2018  2019-11-27T~
-#> 2 ELEC.CONS_TOT_B~ Total consumption (Btu) : ~ million~ M     "Summation of all types of coal; Power ~ None      EIA, U.S. Energy~ USA-AK  USA-AK    2001~ 2019~ 2019-11-27T~
-#> 3 ELEC.CONS_TOT_B~ Total consumption (Btu) : ~ million~ Q     "Summation of all types of coal; Power ~ None      EIA, U.S. Energy~ USA-AK  USA-AK    2001~ 2019~ 2019-11-27T~
+#>   series_id      name                    units   f     description                         copyright source         iso3166 geography start end   updated    
+#>   <chr>          <chr>                   <chr>   <chr> <chr>                               <chr>     <chr>          <chr>   <chr>     <chr> <chr> <chr>      
+#> 1 ELEC.CONS_TOT~ Total consumption (Btu~ millio~ A     "Summation of all types of coal; P~ None      EIA, U.S. Ene~ USA-AK  USA-AK    2001  2019  2020-03-23~
+#> 2 ELEC.CONS_TOT~ Total consumption (Btu~ millio~ M     "Summation of all types of coal; P~ None      EIA, U.S. Ene~ USA-AK  USA-AK    2001~ 2020~ 2020-04-24~
+#> 3 ELEC.CONS_TOT~ Total consumption (Btu~ millio~ Q     "Summation of all types of coal; P~ None      EIA, U.S. Ene~ USA-AK  USA-AK    2001~ 2019~ 2020-03-23~
 eia_series_updates(id)
 #> # A tibble: 3 x 2
 #>   series_id                     updated                 
 #>   <chr>                         <chr>                   
-#> 1 ELEC.CONS_TOT_BTU.COW-AK-98.A 2019-11-27T16:57:27-0500
-#> 2 ELEC.CONS_TOT_BTU.COW-AK-98.M 2019-11-27T16:57:27-0500
-#> 3 ELEC.CONS_TOT_BTU.COW-AK-98.Q 2019-11-27T16:57:27-0500
+#> 1 ELEC.CONS_TOT_BTU.COW-AK-98.A 2020-03-23T18:31:14-0400
+#> 2 ELEC.CONS_TOT_BTU.COW-AK-98.M 2020-04-24T16:14:48-0400
+#> 3 ELEC.CONS_TOT_BTU.COW-AK-98.Q 2020-03-23T18:31:14-0400
 eia_series_dates(id)
-#> # A tibble: 318 x 4
+#> # A tibble: 325 x 4
 #>    series_id                     date       eiadate date_format
-#>    <chr>                         <date>     <chr>   <chr>      
+#>  * <chr>                         <date>     <chr>   <chr>      
 #>  1 ELEC.CONS_TOT_BTU.COW-AK-98.A 2001-01-01 2001    A          
 #>  2 ELEC.CONS_TOT_BTU.COW-AK-98.A 2002-01-01 2002    A          
 #>  3 ELEC.CONS_TOT_BTU.COW-AK-98.A 2003-01-01 2003    A          
@@ -418,18 +419,18 @@ eia_series_dates(id)
 #>  8 ELEC.CONS_TOT_BTU.COW-AK-98.A 2008-01-01 2008    A          
 #>  9 ELEC.CONS_TOT_BTU.COW-AK-98.A 2009-01-01 2009    A          
 #> 10 ELEC.CONS_TOT_BTU.COW-AK-98.A 2010-01-01 2010    A          
-#> # ... with 308 more rows
+#> # ... with 315 more rows
 eia_series_range(id)
 #> # A tibble: 3 x 7
 #>   series_id                     start_date end_date   start  end    date_format     n
-#>   <chr>                         <date>     <date>     <chr>  <chr>  <chr>       <int>
-#> 1 ELEC.CONS_TOT_BTU.COW-AK-98.A 2001-01-01 2018-01-01 2001   2018   A              18
-#> 2 ELEC.CONS_TOT_BTU.COW-AK-98.M 2001-01-01 2019-09-01 200101 201909 M             225
-#> 3 ELEC.CONS_TOT_BTU.COW-AK-98.Q 2001-01-01 2019-07-01 2001Q1 2019Q3 Q              75
+#> * <chr>                         <date>     <date>     <chr>  <chr>  <chr>       <int>
+#> 1 ELEC.CONS_TOT_BTU.COW-AK-98.A 2001-01-01 2019-01-01 2001   2019   A              19
+#> 2 ELEC.CONS_TOT_BTU.COW-AK-98.M 2001-01-01 2020-02-01 200101 202002 M             230
+#> 3 ELEC.CONS_TOT_BTU.COW-AK-98.Q 2001-01-01 2019-10-01 2001Q1 2019Q4 Q              76
 eia_series_cats(id)
 #> # A tibble: 6 x 3
 #>   series_id                     category_id name                  
-#>   <chr>                               <int> <chr>                 
+#> * <chr>                               <int> <chr>                 
 #> 1 ELEC.CONS_TOT_BTU.COW-AK-98.A         474 Electric power (total)
 #> 2 ELEC.CONS_TOT_BTU.COW-AK-98.A         738 Coal                  
 #> 3 ELEC.CONS_TOT_BTU.COW-AK-98.M         474 Electric power (total)
@@ -496,12 +497,12 @@ If a category has series available, paginated results are returned in a data fra
 eia_updates(742, n = 5)
 #> # A tibble: 5 x 2
 #>   series_id                    updated                 
-#>   <chr>                        <chr>                   
-#> 1 ELEC.CONS_TOT_BTU.COW-AK-1.A 2019-11-27T16:57:27-0500
-#> 2 ELEC.CONS_TOT_BTU.COW-AK-1.M 2019-11-27T16:57:27-0500
-#> 3 ELEC.CONS_TOT_BTU.COW-AK-1.Q 2019-11-27T16:57:27-0500
-#> 4 ELEC.CONS_TOT_BTU.COW-AL-1.A 2019-11-27T16:57:27-0500
-#> 5 ELEC.CONS_TOT_BTU.COW-AL-1.M 2019-11-27T16:57:27-0500
+#> * <chr>                        <chr>                   
+#> 1 ELEC.CONS_TOT_BTU.COW-AK-1.M 2020-04-24T16:14:48-0400
+#> 2 ELEC.CONS_TOT_BTU.COW-AL-1.M 2020-04-24T16:14:48-0400
+#> 3 ELEC.CONS_TOT_BTU.COW-AR-1.M 2020-04-24T16:14:48-0400
+#> 4 ELEC.CONS_TOT_BTU.COW-AZ-1.M 2020-04-24T16:14:48-0400
+#> 5 ELEC.CONS_TOT_BTU.COW-CO-1.M 2020-04-24T16:14:48-0400
 ```
 
 Set `deep = TRUE` to obtain series associated with child categories. Category 389 above did not have series, but some of the child categories do.
@@ -511,12 +512,12 @@ Set `deep = TRUE` to obtain series associated with child categories. Category 38
 eia_updates(389, n = 5, deep = TRUE)
 #> # A tibble: 5 x 2
 #>   series_id                    updated                 
-#>   <chr>                        <chr>                   
-#> 1 ELEC.CONS_TOT_BTU.COW-AK-1.A 2019-11-27T16:57:27-0500
-#> 2 ELEC.CONS_TOT_BTU.COW-AK-1.M 2019-11-27T16:57:27-0500
-#> 3 ELEC.CONS_TOT_BTU.COW-AK-1.Q 2019-11-27T16:57:27-0500
-#> 4 ELEC.CONS_TOT_BTU.COW-AL-1.A 2019-11-27T16:57:27-0500
-#> 5 ELEC.CONS_TOT_BTU.COW-AL-1.M 2019-11-27T16:57:27-0500
+#> * <chr>                        <chr>                   
+#> 1 ELEC.CONS_TOT_BTU.COW-AK-1.M 2020-04-24T16:14:48-0400
+#> 2 ELEC.CONS_TOT_BTU.COW-AL-1.M 2020-04-24T16:14:48-0400
+#> 3 ELEC.CONS_TOT_BTU.COW-AR-1.M 2020-04-24T16:14:48-0400
+#> 4 ELEC.CONS_TOT_BTU.COW-AZ-1.M 2020-04-24T16:14:48-0400
+#> 5 ELEC.CONS_TOT_BTU.COW-CO-1.M 2020-04-24T16:14:48-0400
 ```
 
 The above example works to show this while using `n = 5` because there were no results for the top parent category. if there had been, it would likely be necessary to request more results in order to see that child series were included.

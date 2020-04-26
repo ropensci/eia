@@ -64,7 +64,7 @@ eia_cats()
 #> 1 371         EIA Data Sets ""   
 #> 
 #> $childcategories
-#> # A tibble: 13 x 2
+#> # A tibble: 14 x 2
 #>    category_id name                               
 #>          <int> <chr>                              
 #>  1           0 Electricity                        
@@ -74,12 +74,13 @@ eia_cats()
 #>  5      711224 Total Energy                       
 #>  6      717234 Coal                               
 #>  7      829714 Short-Term Energy Outlook          
-#>  8     1292190 Crude Oil Imports                  
-#>  9     2123635 U.S. Electric System Operating Data
-#> 10     2134384 International Energy Data          
-#> 11     2251604 CO2 Emissions                      
-#> 12     2631064 International Energy Outlook       
-#> 13     2889994 U.S. Nuclear Outages
+#>  8      964164 Annual Energy Outlook              
+#>  9     1292190 Crude Oil Imports                  
+#> 10     2123635 U.S. Electric System Operating Data
+#> 11     2134384 International Energy Data          
+#> 12     2251604 CO2 Emissions                      
+#> 13     2631064 International Energy Outlook       
+#> 14     2889994 U.S. Nuclear Outages
 ```
 
 The child category IDs can be used to query results from that category.
@@ -131,32 +132,33 @@ library(ggplot2)
 id <- "ELEC.GEN.ALL-AK-99.A"
 (x <- eia_series(id))
 #> # A tibble: 1 x 13
-#>   series_id     name                     units       f     description                      copyright source             iso3166 geography start end   updated      data     
-#>   <chr>         <chr>                    <chr>       <chr> <chr>                            <chr>     <chr>              <chr>   <chr>     <chr> <chr> <chr>        <list>   
-#> 1 ELEC.GEN.ALL~ Net generation : all fu~ thousand m~ A     "Summation of all fuels used fo~ None      EIA, U.S. Energy ~ USA-AK  USA-AK    2001  2018  2019-11-27T~ <tibble ~
+#>   series_id    name                 units      f     description                 copyright source          iso3166 geography start end   updated     data    
+#>   <chr>        <chr>                <chr>      <chr> <chr>                       <chr>     <chr>           <chr>   <chr>     <chr> <chr> <chr>       <list>  
+#> 1 ELEC.GEN.AL~ Net generation : al~ thousand ~ A     "Summation of all fuels us~ None      EIA, U.S. Ener~ USA-AK  USA-AK    2001  2019  2020-03-23~ <tibble~
 
 x$data[[1]]
-#> # A tibble: 18 x 3
+#> # A tibble: 19 x 3
 #>    value date        year
 #>    <dbl> <date>     <int>
-#>  1 6247. 2018-01-01  2018
-#>  2 6497. 2017-01-01  2017
-#>  3 6335. 2016-01-01  2016
-#>  4 6285. 2015-01-01  2015
-#>  5 6043. 2014-01-01  2014
-#>  6 6497. 2013-01-01  2013
-#>  7 6946. 2012-01-01  2012
-#>  8 6871. 2011-01-01  2011
-#>  9 6760. 2010-01-01  2010
-#> 10 6702. 2009-01-01  2009
-#> 11 6775. 2008-01-01  2008
-#> 12 6821. 2007-01-01  2007
-#> 13 6674. 2006-01-01  2006
-#> 14 6577. 2005-01-01  2005
-#> 15 6527. 2004-01-01  2004
-#> 16 6339. 2003-01-01  2003
-#> 17 6767. 2002-01-01  2002
-#> 18 6744. 2001-01-01  2001
+#>  1 6340. 2019-01-01  2019
+#>  2 6247. 2018-01-01  2018
+#>  3 6497. 2017-01-01  2017
+#>  4 6335. 2016-01-01  2016
+#>  5 6285. 2015-01-01  2015
+#>  6 6043. 2014-01-01  2014
+#>  7 6497. 2013-01-01  2013
+#>  8 6946. 2012-01-01  2012
+#>  9 6871. 2011-01-01  2011
+#> 10 6760. 2010-01-01  2010
+#> 11 6702. 2009-01-01  2009
+#> 12 6775. 2008-01-01  2008
+#> 13 6821. 2007-01-01  2007
+#> 14 6674. 2006-01-01  2006
+#> 15 6577. 2005-01-01  2005
+#> 16 6527. 2004-01-01  2004
+#> 17 6339. 2003-01-01  2003
+#> 18 6767. 2002-01-01  2002
+#> 19 6744. 2001-01-01  2001
 
 select(x, units, data) %>% unnest(cols = data) %>%
   ggplot(aes(date, value)) + geom_line() +
@@ -197,10 +199,10 @@ id <- c("ELEC.GEN.ALL-99.M") # monthly
 region <- c("USA-CA", "USA-NY")
 (x <- eia_geoset(id, region, start = "201801", end = "201812"))
 #> # A tibble: 2 x 11
-#>   geoset_id      setname                            f     units            series_id        name                                       region latlon start end   data        
-#>   <chr>          <chr>                              <chr> <chr>            <chr>            <chr>                                      <chr>  <chr>  <chr> <chr> <list>      
-#> 1 ELEC.GEN.ALL-~ Net generation : all fuels : all ~ M     thousand megawa~ ELEC.GEN.ALL-CA~ Net generation : all fuels : California :~ USA-CA <NA>   2001~ 2019~ <tibble [12~
-#> 2 ELEC.GEN.ALL-~ Net generation : all fuels : all ~ M     thousand megawa~ ELEC.GEN.ALL-NY~ Net generation : all fuels : New York : a~ USA-NY <NA>   2001~ 2019~ <tibble [12~
+#>   geoset_id      setname                        f     units          series_id       name                               region latlon start end   data       
+#> * <chr>          <chr>                          <chr> <chr>          <chr>           <chr>                              <chr>  <chr>  <chr> <chr> <list>     
+#> 1 ELEC.GEN.ALL-~ Net generation : all fuels : ~ M     thousand mega~ ELEC.GEN.ALL-C~ Net generation : all fuels : Cali~ USA-CA <NA>   2001~ 2020~ <tibble [1~
+#> 2 ELEC.GEN.ALL-~ Net generation : all fuels : ~ M     thousand mega~ ELEC.GEN.ALL-N~ Net generation : all fuels : New ~ USA-NY <NA>   2001~ 2020~ <tibble [1~
 
 select(x, region, data) %>% unnest(cols = data)
 #> # A tibble: 24 x 5
@@ -243,20 +245,20 @@ select(x, region, data) %>% unnest(cols = data)
 #> # A tibble: 14 x 5
 #>    region value date        year month
 #>    <chr>  <dbl> <date>     <int> <int>
-#>  1 USA-AK  542. 2019-09-01  2019     9
-#>  2 USA-AK  640. 2019-08-01  2019     8
-#>  3 USA-CT 3361. 2019-09-01  2019     9
-#>  4 USA-CT 3855. 2019-08-01  2019     8
-#>  5 USA-MA 1491. 2019-09-01  2019     9
-#>  6 USA-MA 1987. 2019-08-01  2019     8
-#>  7 USA-ME  751. 2019-09-01  2019     9
-#>  8 USA-ME  801. 2019-08-01  2019     8
-#>  9 USA-NH 1416. 2019-09-01  2019     9
-#> 10 USA-NH 1711. 2019-08-01  2019     8
-#> 11 USA-RI  662. 2019-09-01  2019     9
-#> 12 USA-RI  866. 2019-08-01  2019     8
-#> 13 USA-VT  144. 2019-09-01  2019     9
-#> 14 USA-VT  161. 2019-08-01  2019     8
+#>  1 USA-AK  583. 2020-02-01  2020     2
+#>  2 USA-AK  607. 2020-01-01  2020     1
+#>  3 USA-CT 3516. 2020-02-01  2020     2
+#>  4 USA-CT 3806. 2020-01-01  2020     1
+#>  5 USA-MA 1576. 2020-02-01  2020     2
+#>  6 USA-MA 1903. 2020-01-01  2020     1
+#>  7 USA-ME  829. 2020-02-01  2020     2
+#>  8 USA-ME  859. 2020-01-01  2020     1
+#>  9 USA-NH 1394. 2020-02-01  2020     2
+#> 10 USA-NH 1520. 2020-01-01  2020     1
+#> 11 USA-RI  628. 2020-02-01  2020     2
+#> 12 USA-RI  686. 2020-01-01  2020     1
+#> 13 USA-VT  208. 2020-02-01  2020     2
+#> 14 USA-VT  206. 2020-01-01  2020     1
 
 region <- "Middle Atlantic"
 x <- eia_geoset(id, region, n = 12)
@@ -264,16 +266,16 @@ select(x, region, data) %>% unnest(cols = data)
 #> # A tibble: 36 x 5
 #>    region value date        year month
 #>    <chr>  <dbl> <date>     <int> <int>
-#>  1 USA-NJ 6139. 2019-09-01  2019     9
-#>  2 USA-NJ 6872. 2019-08-01  2019     8
-#>  3 USA-NJ 7461. 2019-07-01  2019     7
-#>  4 USA-NJ 5735. 2019-06-01  2019     6
-#>  5 USA-NJ 4905. 2019-05-01  2019     5
-#>  6 USA-NJ 5365. 2019-04-01  2019     4
-#>  7 USA-NJ 5514. 2019-03-01  2019     3
-#>  8 USA-NJ 5590. 2019-02-01  2019     2
-#>  9 USA-NJ 6006. 2019-01-01  2019     1
-#> 10 USA-NJ 5952. 2018-12-01  2018    12
+#>  1 USA-NJ 4928. 2020-02-01  2020     2
+#>  2 USA-NJ 5497. 2020-01-01  2020     1
+#>  3 USA-NJ 6302. 2019-12-01  2019    12
+#>  4 USA-NJ 5586. 2019-11-01  2019    11
+#>  5 USA-NJ 5715. 2019-10-01  2019    10
+#>  6 USA-NJ 6144. 2019-09-01  2019     9
+#>  7 USA-NJ 6878. 2019-08-01  2019     8
+#>  8 USA-NJ 7468. 2019-07-01  2019     7
+#>  9 USA-NJ 5740. 2019-06-01  2019     6
+#> 10 USA-NJ 4909. 2019-05-01  2019     5
 #> # ... with 26 more rows
 
 unnest(x, cols = data) %>%

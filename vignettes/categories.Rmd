@@ -31,7 +31,7 @@ eia_cats()
 #> 1 371         EIA Data Sets ""   
 #> 
 #> $childcategories
-#> # A tibble: 13 x 2
+#> # A tibble: 14 x 2
 #>    category_id name                               
 #>          <int> <chr>                              
 #>  1           0 Electricity                        
@@ -41,12 +41,13 @@ eia_cats()
 #>  5      711224 Total Energy                       
 #>  6      717234 Coal                               
 #>  7      829714 Short-Term Energy Outlook          
-#>  8     1292190 Crude Oil Imports                  
-#>  9     2123635 U.S. Electric System Operating Data
-#> 10     2134384 International Energy Data          
-#> 11     2251604 CO2 Emissions                      
-#> 12     2631064 International Energy Outlook       
-#> 13     2889994 U.S. Nuclear Outages
+#>  8      964164 Annual Energy Outlook              
+#>  9     1292190 Crude Oil Imports                  
+#> 10     2123635 U.S. Electric System Operating Data
+#> 11     2134384 International Energy Data          
+#> 12     2251604 CO2 Emissions                      
+#> 13     2631064 International Energy Outlook       
+#> 14     2889994 U.S. Nuclear Outages
 ```
 
 ## Child categories
@@ -110,7 +111,7 @@ View all parent categories for a given child category.
 eia_parent_cats(742)
 #> # A tibble: 6 x 4
 #>   category_id name                    notes parent_category_id
-#>   <chr>       <chr>                   <chr> <chr>             
+#> * <chr>       <chr>                   <chr> <chr>             
 #> 1 371         EIA Data Sets           ""    <NA>              
 #> 2 0           Electricity             ""    371               
 #> 3 32          Total consumption (Btu) ""    0                 
@@ -156,15 +157,16 @@ eia_cats(tidy = FALSE)
 #> 5       711224                        Total Energy
 #> 6       717234                                Coal
 #> 7       829714           Short-Term Energy Outlook
-#> 8      1292190                   Crude Oil Imports
-#> 9      2123635 U.S. Electric System Operating Data
-#> 10     2134384           International Energy Data
-#> 11     2251604                       CO2 Emissions
-#> 12     2631064        International Energy Outlook
-#> 13     2889994                U.S. Nuclear Outages
+#> 8       964164               Annual Energy Outlook
+#> 9      1292190                   Crude Oil Imports
+#> 10     2123635 U.S. Electric System Operating Data
+#> 11     2134384           International Energy Data
+#> 12     2251604                       CO2 Emissions
+#> 13     2631064        International Energy Outlook
+#> 14     2889994                U.S. Nuclear Outages
 #> 
 #> $category$childseries
 #> list()
 cat(eia_cats(tidy = NA))
-#> {"request":{"category_id":371,"command":"category"},"category":{"category_id":"371","parent_category_id":null,"name":"EIA Data Sets","notes":"","childcategories":[{"category_id":0,"name":"Electricity"},{"category_id":40203,"name":"State Energy Data System (SEDS)"},{"category_id":714755,"name":"Petroleum"},{"category_id":714804,"name":"Natural Gas"},{"category_id":711224,"name":"Total Energy"},{"category_id":717234,"name":"Coal"},{"category_id":829714,"name":"Short-Term Energy Outlook"},{"category_id":1292190,"name":"Crude Oil Imports"},{"category_id":2123635,"name":"U.S. Electric System Operating Data"},{"category_id":2134384,"name":"International Energy Data"},{"category_id":2251604,"name":"CO2 Emissions"},{"category_id":2631064,"name":"International Energy Outlook"},{"category_id":2889994,"name":"U.S. Nuclear Outages"}],"childseries":[]}}
+#> {"request":{"category_id":371,"command":"category"},"category":{"category_id":"371","parent_category_id":null,"name":"EIA Data Sets","notes":"","childcategories":[{"category_id":0,"name":"Electricity"},{"category_id":40203,"name":"State Energy Data System (SEDS)"},{"category_id":714755,"name":"Petroleum"},{"category_id":714804,"name":"Natural Gas"},{"category_id":711224,"name":"Total Energy"},{"category_id":717234,"name":"Coal"},{"category_id":829714,"name":"Short-Term Energy Outlook"},{"category_id":964164,"name":"Annual Energy Outlook"},{"category_id":1292190,"name":"Crude Oil Imports"},{"category_id":2123635,"name":"U.S. Electric System Operating Data"},{"category_id":2134384,"name":"International Energy Data"},{"category_id":2251604,"name":"CO2 Emissions"},{"category_id":2631064,"name":"International Energy Outlook"},{"category_id":2889994,"name":"U.S. Nuclear Outages"}],"childseries":[]}}
 ```

@@ -9,10 +9,15 @@
 #' When providing a real date or date string, such as to \code{date_to_eiadate}, dates should be in \code{yyyy-mm-dd} format,
 #' or at least any format that can be parsed by \code{lubridate::ymd} or \code{lubridate::ymd_hms} for dates and hourly date times, respectively.
 #'
+#' \code{"HL"} is not a supported date format. Use \code{"H"}. The API does not
+#' translate the date and time when using \code{"HL"} anyhow; it simply appends
+#' the date string with the number of hours time difference.
+#'
 #' @param x character, EIA date string; character or date object for regular dates. See details.
 #' @param start start EIA date or date.
 #' @param end end EIA date or date.
-#' @param date_format EIA date format: "A", "Q", "M", "W", "D", "H". These stand for annual, quarterly, monthly, weekly, daily, hourly.
+#' @param date_format EIA date format: "A", "Q", "M", "W", "D", "H".
+#' These stand for annual, quarterly, monthly, weekly, daily, hourly. See details.
 #' @param weekly logical. See details.
 #'
 #' @export
@@ -34,6 +39,7 @@
 #' date_to_eiadate(x, "H")
 eiadate_to_date <- function(x){
   date_format <- eiadate_format(x)
+  .check_hl(date_format)
   switch(date_format,
          "A" = lubridate::ymd(x, truncated = 2L),
          "Q" = lubridate::yq(x),
@@ -45,6 +51,7 @@ eiadate_to_date <- function(x){
 #' @export
 #' @rdname eiadate
 date_to_eiadate <- function(x, date_format = c("A", "Q", "M", "W", "D", "H")){
+  .check_hl(date_format[1])
   date_format <- match.arg(date_format)
   x <- if(date_format == "H") lubridate::ymd_hms(x) else lubridate::ymd(x)
   if(date_format == "A"){
@@ -61,6 +68,11 @@ date_to_eiadate <- function(x, date_format = c("A", "Q", "M", "W", "D", "H")){
   }
 }
 
+.check_hl <- function(x){
+  if(x == "HL")
+    stop("`HL` date format is not supported. Use `H`.", call. = FALSE)
+}
+
 #' @export
 #' @rdname eiadate
 eiadate_to_date_seq <- function(start, end, weekly = FALSE){
@@ -68,7 +80,7 @@ eiadate_to_date_seq <- function(start, end, weekly = FALSE){
   x <- eiadate_to_date(c(start, end))
   i <- switch(date_format,
               "Q" = "quarter", "M" = "month", "A" = "year",
-              "W" = "week", "D" = "day", "H" = "hour")
+              "W" = "week", "D" = "day", "H" = "hour", "HL" = "hour")
   seq(x[1], x[2], by = i)
 }
 
@@ -77,13 +89,15 @@ is_eiadate <- function(x){
   grepl("^\\d\\d\\d\\d((0[1-9]|1[0-2])|)$", x) |
     grepl("^\\d\\d\\d\\dQ(1|2|3|4)$", x) |
     grepl("^\\d\\d\\d\\d\\d\\d\\d\\d$", x) |
-    grepl("^\\d\\d\\d\\d\\d\\d\\d\\dT\\d\\dZ$", x)
+    grepl("^\\d\\d\\d\\d\\d\\d\\d\\dT\\d\\d(Z|-\\d\\d)$", x)
 }
 
 eiadate_format <- function(x, weekly = FALSE){
   if(any(!is_eiadate(x))) stop("Not an EIA format date string.", call. = FALSE)
   if(grepl("^\\d\\d\\d\\d\\d\\d\\d\\dT\\d\\dZ$", x[1])){
     "H"
+  } else if(grepl("^\\d\\d\\d\\d\\d\\d\\d\\dT\\d\\d-\\d\\d$", x[1])){
+    "HL"
   } else if(grepl("^\\d\\d\\d\\d\\d\\d\\d\\d$", x[1])){
     if(weekly) "W" else "D"
   } else if(grepl("^\\d\\d\\d\\d\\d\\d$", x[1])){
