@@ -130,17 +130,17 @@ library(tidyr)
 library(ggplot2)
 
 id <- "ELEC.GEN.ALL-AK-99.A"
-(x <- eia_series(id))
+(x <- eia_series(id, start = 2010, end = 2019))
 #> # A tibble: 1 x 13
-#>   series_id    name                 units      f     description                 copyright source          iso3166 geography start end   updated     data    
-#>   <chr>        <chr>                <chr>      <chr> <chr>                       <chr>     <chr>           <chr>   <chr>     <chr> <chr> <chr>       <list>  
-#> 1 ELEC.GEN.AL~ Net generation : al~ thousand ~ A     "Summation of all fuels us~ None      EIA, U.S. Ener~ USA-AK  USA-AK    2001  2019  2020-03-23~ <tibble~
+#>   series_id     name                     units       f     description                       copyright source              iso3166 geography start end   updated      data     
+#>   <chr>         <chr>                    <chr>       <chr> <chr>                             <chr>     <chr>               <chr>   <chr>     <chr> <chr> <chr>        <list>   
+#> 1 ELEC.GEN.ALL~ Net generation : all fu~ thousand m~ A     "Summation of all fuels used for~ None      EIA, U.S. Energy I~ USA-AK  USA-AK    2001  2019  2020-10-27T~ <tibble ~
 
 x$data[[1]]
-#> # A tibble: 19 x 3
+#> # A tibble: 10 x 3
 #>    value date        year
 #>    <dbl> <date>     <int>
-#>  1 6340. 2019-01-01  2019
+#>  1 6071. 2019-01-01  2019
 #>  2 6247. 2018-01-01  2018
 #>  3 6497. 2017-01-01  2017
 #>  4 6335. 2016-01-01  2016
@@ -150,19 +150,11 @@ x$data[[1]]
 #>  8 6946. 2012-01-01  2012
 #>  9 6871. 2011-01-01  2011
 #> 10 6760. 2010-01-01  2010
-#> 11 6702. 2009-01-01  2009
-#> 12 6775. 2008-01-01  2008
-#> 13 6821. 2007-01-01  2007
-#> 14 6674. 2006-01-01  2006
-#> 15 6577. 2005-01-01  2005
-#> 16 6527. 2004-01-01  2004
-#> 17 6339. 2003-01-01  2003
-#> 18 6767. 2002-01-01  2002
-#> 19 6744. 2001-01-01  2001
 
 select(x, units, data) %>% unnest(cols = data) %>%
-  ggplot(aes(date, value)) + geom_line() +
-  labs(y = x$units[1], title = "Net electricity generation, Alaska, all fuels")
+  ggplot(aes(factor(year), value)) + geom_col() +
+  labs(x = "Year", y = x$units[1], title = "Net Alaska electricity generation",
+       subtitle = "From all fuels", caption = x$description[1])
 ```
 
 <img src="eia-series1-1.png" title="plot of chunk series1" alt="plot of chunk series1" width="100%" />
@@ -199,31 +191,30 @@ id <- c("ELEC.GEN.ALL-99.M") # monthly
 region <- c("USA-CA", "USA-NY")
 (x <- eia_geoset(id, region, start = "201801", end = "201812"))
 #> # A tibble: 2 x 11
-#>   geoset_id      setname                        f     units          series_id       name                               region latlon start end   data       
-#> * <chr>          <chr>                          <chr> <chr>          <chr>           <chr>                              <chr>  <chr>  <chr> <chr> <list>     
-#> 1 ELEC.GEN.ALL-~ Net generation : all fuels : ~ M     thousand mega~ ELEC.GEN.ALL-C~ Net generation : all fuels : Cali~ USA-CA <NA>   2001~ 2020~ <tibble [1~
-#> 2 ELEC.GEN.ALL-~ Net generation : all fuels : ~ M     thousand mega~ ELEC.GEN.ALL-N~ Net generation : all fuels : New ~ USA-NY <NA>   2001~ 2020~ <tibble [1~
+#>   geoset_id       setname                             f     units            series_id        name                                       region latlon start end   data        
+#>   <chr>           <chr>                               <chr> <chr>            <chr>            <chr>                                      <chr>  <chr>  <chr> <chr> <list>      
+#> 1 ELEC.GEN.ALL-9~ Net generation : all fuels : all s~ M     thousand megawa~ ELEC.GEN.ALL-CA~ Net generation : all fuels : California :~ USA-CA <NA>   2001~ 2020~ <tibble [12~
+#> 2 ELEC.GEN.ALL-9~ Net generation : all fuels : all s~ M     thousand megawa~ ELEC.GEN.ALL-NY~ Net generation : all fuels : New York : a~ USA-NY <NA>   2001~ 2020~ <tibble [12~
 
 select(x, region, data) %>% unnest(cols = data)
 #> # A tibble: 24 x 5
 #>    region  value date        year month
 #>    <chr>   <dbl> <date>     <int> <int>
-#>  1 USA-CA 14346. 2018-12-01  2018    12
-#>  2 USA-CA 14587. 2018-11-01  2018    11
-#>  3 USA-CA 16844. 2018-10-01  2018    10
-#>  4 USA-CA 17574. 2018-09-01  2018     9
-#>  5 USA-CA 20972. 2018-08-01  2018     8
-#>  6 USA-CA 22332. 2018-07-01  2018     7
-#>  7 USA-CA 17500. 2018-06-01  2018     6
-#>  8 USA-CA 15922. 2018-05-01  2018     5
-#>  9 USA-CA 14800. 2018-04-01  2018     4
-#> 10 USA-CA 14024. 2018-03-01  2018     3
+#>  1 USA-CA 14364. 2018-12-01  2018    12
+#>  2 USA-CA 14605. 2018-11-01  2018    11
+#>  3 USA-CA 16864. 2018-10-01  2018    10
+#>  4 USA-CA 17592. 2018-09-01  2018     9
+#>  5 USA-CA 20994. 2018-08-01  2018     8
+#>  6 USA-CA 22356. 2018-07-01  2018     7
+#>  7 USA-CA 17514. 2018-06-01  2018     6
+#>  8 USA-CA 15932. 2018-05-01  2018     5
+#>  9 USA-CA 14811. 2018-04-01  2018     4
+#> 10 USA-CA 14039. 2018-03-01  2018     3
 #> # ... with 14 more rows
 
 unnest(x, cols = data) %>%
-  ggplot(aes(date, value, color = region)) +
-  geom_line() +
-  labs(y = x$units[1], title = "Net electricity generation, all fuels")
+  ggplot(aes(date, value, color = region)) + geom_line() +
+  labs(y = x$units[1], title = "Net electricity generation", subtitle = "From all fuels")
 ```
 
 <img src="eia-geoset1-1.png" title="plot of chunk geoset1" alt="plot of chunk geoset1" width="100%" />
@@ -245,20 +236,20 @@ select(x, region, data) %>% unnest(cols = data)
 #> # A tibble: 14 x 5
 #>    region value date        year month
 #>    <chr>  <dbl> <date>     <int> <int>
-#>  1 USA-AK  583. 2020-02-01  2020     2
-#>  2 USA-AK  607. 2020-01-01  2020     1
-#>  3 USA-CT 3516. 2020-02-01  2020     2
-#>  4 USA-CT 3806. 2020-01-01  2020     1
-#>  5 USA-MA 1576. 2020-02-01  2020     2
-#>  6 USA-MA 1903. 2020-01-01  2020     1
-#>  7 USA-ME  829. 2020-02-01  2020     2
-#>  8 USA-ME  859. 2020-01-01  2020     1
-#>  9 USA-NH 1394. 2020-02-01  2020     2
-#> 10 USA-NH 1520. 2020-01-01  2020     1
-#> 11 USA-RI  628. 2020-02-01  2020     2
-#> 12 USA-RI  686. 2020-01-01  2020     1
-#> 13 USA-VT  208. 2020-02-01  2020     2
-#> 14 USA-VT  206. 2020-01-01  2020     1
+#>  1 USA-AK  534. 2020-08-01  2020     8
+#>  2 USA-AK  626. 2020-07-01  2020     7
+#>  3 USA-CT 4001. 2020-08-01  2020     8
+#>  4 USA-CT 4443. 2020-07-01  2020     7
+#>  5 USA-MA 2200. 2020-08-01  2020     8
+#>  6 USA-MA 2754. 2020-07-01  2020     7
+#>  7 USA-ME  861. 2020-08-01  2020     8
+#>  8 USA-ME  962. 2020-07-01  2020     7
+#>  9 USA-NH 1632. 2020-08-01  2020     8
+#> 10 USA-NH 1794. 2020-07-01  2020     7
+#> 11 USA-RI  889. 2020-08-01  2020     8
+#> 12 USA-RI  845. 2020-07-01  2020     7
+#> 13 USA-VT  194. 2020-08-01  2020     8
+#> 14 USA-VT  203. 2020-07-01  2020     7
 
 region <- "Middle Atlantic"
 x <- eia_geoset(id, region, n = 12)
@@ -266,22 +257,21 @@ select(x, region, data) %>% unnest(cols = data)
 #> # A tibble: 36 x 5
 #>    region value date        year month
 #>    <chr>  <dbl> <date>     <int> <int>
-#>  1 USA-NJ 4928. 2020-02-01  2020     2
-#>  2 USA-NJ 5497. 2020-01-01  2020     1
-#>  3 USA-NJ 6302. 2019-12-01  2019    12
-#>  4 USA-NJ 5586. 2019-11-01  2019    11
-#>  5 USA-NJ 5715. 2019-10-01  2019    10
-#>  6 USA-NJ 6144. 2019-09-01  2019     9
-#>  7 USA-NJ 6878. 2019-08-01  2019     8
-#>  8 USA-NJ 7468. 2019-07-01  2019     7
-#>  9 USA-NJ 5740. 2019-06-01  2019     6
-#> 10 USA-NJ 4909. 2019-05-01  2019     5
+#>  1 USA-NJ 6639. 2020-08-01  2020     8
+#>  2 USA-NJ 7385. 2020-07-01  2020     7
+#>  3 USA-NJ 5721. 2020-06-01  2020     6
+#>  4 USA-NJ 4169. 2020-05-01  2020     5
+#>  5 USA-NJ 4334. 2020-04-01  2020     4
+#>  6 USA-NJ 4469. 2020-03-01  2020     3
+#>  7 USA-NJ 4912. 2020-02-01  2020     2
+#>  8 USA-NJ 5488. 2020-01-01  2020     1
+#>  9 USA-NJ 6193. 2019-12-01  2019    12
+#> 10 USA-NJ 5510. 2019-11-01  2019    11
 #> # ... with 26 more rows
 
 unnest(x, cols = data) %>%
-  ggplot(aes(date, value, color = region)) +
-  geom_line() +
-  labs(y = x$units[1], title = "Net electricity generation, all fuels")
+  ggplot(aes(date, value, color = region)) + geom_line() +
+  labs(y = x$units[1], title = "Net electricity generation", subtitle = "From all fuels")
 ```
 
 <img src="eia-geoset2-1.png" title="plot of chunk geoset2" alt="plot of chunk geoset2" width="100%" />

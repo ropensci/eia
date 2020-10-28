@@ -80,13 +80,14 @@ library(tidyr)
 library(ggplot2)
 
 id <- "ELEC.GEN.ALL-AK-99.A"
-(x <- eia_series(id))
+(x <- eia_series(id, start = 2010, end = 2019))
 
 x$data[[1]]
 
 select(x, units, data) %>% unnest(cols = data) %>%
-  ggplot(aes(date, value)) + geom_line() +
-  labs(y = x$units[1], title = "Net electricity generation, Alaska, all fuels")
+  ggplot(aes(factor(year), value)) + geom_col() +
+  labs(x = "Year", y = x$units[1], title = "Net Alaska electricity generation",
+       subtitle = "From all fuels", caption = x$description[1])
 ```
 
 You can provide arguments like the following:
@@ -121,9 +122,8 @@ region <- c("USA-CA", "USA-NY")
 select(x, region, data) %>% unnest(cols = data)
 
 unnest(x, cols = data) %>%
-  ggplot(aes(date, value, color = region)) +
-  geom_line() +
-  labs(y = x$units[1], title = "Net electricity generation, all fuels")
+  ggplot(aes(date, value, color = region)) + geom_line() +
+  labs(y = x$units[1], title = "Net electricity generation", subtitle = "From all fuels")
 ```
 
 Another convenience of `eia_geoset` is the ability to provide regions in the following forms.
@@ -145,9 +145,8 @@ x <- eia_geoset(id, region, n = 12)
 select(x, region, data) %>% unnest(cols = data)
 
 unnest(x, cols = data) %>%
-  ggplot(aes(date, value, color = region)) +
-  geom_line() +
-  labs(y = x$units[1], title = "Net electricity generation, all fuels")
+  ggplot(aes(date, value, color = region)) + geom_line() +
+  labs(y = x$units[1], title = "Net electricity generation", subtitle = "From all fuels")
 ```
 
 Even more convenient is that these names are available in R. See the `datasets::state.*` functions and the geoset vignette.

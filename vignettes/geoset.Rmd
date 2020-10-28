@@ -27,9 +27,9 @@ id <- "ELEC.GEN.ALL-99.A"
 region <- c("USA-CA", "USA-NY")
 (x <- eia_geoset(id, region[1], n = 3))
 #> # A tibble: 1 x 11
-#>   geoset_id      setname                        f     units           series_id      name                                region latlon start end   data      
-#> * <chr>          <chr>                          <chr> <chr>           <chr>          <chr>                               <chr>  <chr>  <chr> <chr> <list>    
-#> 1 ELEC.GEN.ALL-~ Net generation : all fuels : ~ A     thousand megaw~ ELEC.GEN.ALL-~ Net generation : all fuels : Calif~ USA-CA <NA>   2001  2019  <tibble [~
+#>   geoset_id       setname                             f     units            series_id        name                                       region latlon start end   data        
+#>   <chr>           <chr>                               <chr> <chr>            <chr>            <chr>                                      <chr>  <chr>  <chr> <chr> <list>      
+#> 1 ELEC.GEN.ALL-9~ Net generation : all fuels : all s~ A     thousand megawa~ ELEC.GEN.ALL-CA~ Net generation : all fuels : California :~ USA-CA <NA>   2001  2019  <tibble [3 ~
 ```
 
 ## Groups of regions
@@ -64,20 +64,20 @@ Provide the associated label and `eia_geoset` recognizes subsets of US states. E
 
 (x <- eia_geoset(id, c("AK", "New England"), n = 1))
 #> # A tibble: 7 x 11
-#>   geoset_id      setname                       f     units          series_id       name                                 region latlon start end   data      
-#> * <chr>          <chr>                         <chr> <chr>          <chr>           <chr>                                <chr>  <chr>  <chr> <chr> <list>    
-#> 1 ELEC.GEN.ALL-~ Net generation : all fuels :~ A     thousand mega~ ELEC.GEN.ALL-A~ Net generation : all fuels : Alaska~ USA-AK <NA>   2001  2019  <tibble [~
-#> 2 ELEC.GEN.ALL-~ Net generation : all fuels :~ A     thousand mega~ ELEC.GEN.ALL-C~ Net generation : all fuels : Connec~ USA-CT <NA>   2001  2019  <tibble [~
-#> 3 ELEC.GEN.ALL-~ Net generation : all fuels :~ A     thousand mega~ ELEC.GEN.ALL-M~ Net generation : all fuels : Massac~ USA-MA <NA>   2001  2019  <tibble [~
-#> 4 ELEC.GEN.ALL-~ Net generation : all fuels :~ A     thousand mega~ ELEC.GEN.ALL-M~ Net generation : all fuels : Maine ~ USA-ME <NA>   2001  2019  <tibble [~
-#> 5 ELEC.GEN.ALL-~ Net generation : all fuels :~ A     thousand mega~ ELEC.GEN.ALL-N~ Net generation : all fuels : New Ha~ USA-NH <NA>   2001  2019  <tibble [~
-#> 6 ELEC.GEN.ALL-~ Net generation : all fuels :~ A     thousand mega~ ELEC.GEN.ALL-R~ Net generation : all fuels : Rhode ~ USA-RI <NA>   2001  2019  <tibble [~
-#> 7 ELEC.GEN.ALL-~ Net generation : all fuels :~ A     thousand mega~ ELEC.GEN.ALL-V~ Net generation : all fuels : Vermon~ USA-VT <NA>   2001  2019  <tibble [~
+#>   geoset_id       setname                             f     units           series_id        name                                        region latlon start end   data        
+#>   <chr>           <chr>                               <chr> <chr>           <chr>            <chr>                                       <chr>  <chr>  <chr> <chr> <list>      
+#> 1 ELEC.GEN.ALL-9~ Net generation : all fuels : all s~ A     thousand megaw~ ELEC.GEN.ALL-AK~ Net generation : all fuels : Alaska : all ~ USA-AK <NA>   2001  2019  <tibble [1 ~
+#> 2 ELEC.GEN.ALL-9~ Net generation : all fuels : all s~ A     thousand megaw~ ELEC.GEN.ALL-CT~ Net generation : all fuels : Connecticut :~ USA-CT <NA>   2001  2019  <tibble [1 ~
+#> 3 ELEC.GEN.ALL-9~ Net generation : all fuels : all s~ A     thousand megaw~ ELEC.GEN.ALL-MA~ Net generation : all fuels : Massachusetts~ USA-MA <NA>   2001  2019  <tibble [1 ~
+#> 4 ELEC.GEN.ALL-9~ Net generation : all fuels : all s~ A     thousand megaw~ ELEC.GEN.ALL-ME~ Net generation : all fuels : Maine : all s~ USA-ME <NA>   2001  2019  <tibble [1 ~
+#> 5 ELEC.GEN.ALL-9~ Net generation : all fuels : all s~ A     thousand megaw~ ELEC.GEN.ALL-NH~ Net generation : all fuels : New Hampshire~ USA-NH <NA>   2001  2019  <tibble [1 ~
+#> 6 ELEC.GEN.ALL-9~ Net generation : all fuels : all s~ A     thousand megaw~ ELEC.GEN.ALL-RI~ Net generation : all fuels : Rhode Island ~ USA-RI <NA>   2001  2019  <tibble [1 ~
+#> 7 ELEC.GEN.ALL-9~ Net generation : all fuels : all s~ A     thousand megaw~ ELEC.GEN.ALL-VT~ Net generation : all fuels : Vermont : all~ USA-VT <NA>   2001  2019  <tibble [1 ~
 x$data[[1]]
 #> # A tibble: 1 x 3
 #>   value date        year
 #>   <dbl> <date>     <int>
-#> 1 6340. 2019-01-01  2019
+#> 1 6071. 2019-01-01  2019
 
 region <- "Middle Atlantic"
 x <- eia_geoset(id, region, n = 12)
@@ -85,7 +85,7 @@ select(x, region, data) %>% unnest(cols = data)
 #> # A tibble: 36 x 4
 #>    region  value date        year
 #>    <chr>   <dbl> <date>     <int>
-#>  1 USA-NJ 71230. 2019-01-01  2019
+#>  1 USA-NJ 71019. 2019-01-01  2019
 #>  2 USA-NJ 75034. 2018-01-01  2018
 #>  3 USA-NJ 75645. 2017-01-01  2017
 #>  4 USA-NJ 77611. 2016-01-01  2016
@@ -98,9 +98,8 @@ select(x, region, data) %>% unnest(cols = data)
 #> # ... with 26 more rows
 
 unnest(x, cols = data) %>%
-  ggplot(aes(date, value, color = region)) +
-  geom_line() +
-  labs(y = x$units[1], title = "Net electricity generation, all fuels")
+  ggplot(aes(date, value, color = region)) + geom_line() +
+  labs(y = x$units[1], title = "Net electricity generation", subtitle = "From all fuels")
 ```
 
 <img src="geoset-geoset2-1.png" title="plot of chunk geoset2" alt="plot of chunk geoset2" width="100%" />

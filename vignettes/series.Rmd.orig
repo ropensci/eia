@@ -94,8 +94,9 @@ x1$data[[1]]
 select(x1, series_id, data) %>% unnest(cols = data)
 
 unnest(x1, cols = data) %>%
-  ggplot(aes(date, value)) + geom_col() +
-  labs(y = x1$units[1], title = "Total electricity consumption from coal sources, Alaska")
+  ggplot(aes(factor(year), value)) + geom_col() +
+  labs(x = "Year", y = x1$units, title = "Total Alaska electricity consumption",
+       subtitle = "From coal sources", caption = x1$description)
 ```
 
 Results are similarly structured for the other series, but the columns containing date information differ.

@@ -111,7 +111,7 @@ View all parent categories for a given child category.
 eia_parent_cats(742)
 #> # A tibble: 6 x 4
 #>   category_id name                    notes parent_category_id
-#> * <chr>       <chr>                   <chr> <chr>             
+#>   <chr>       <chr>                   <chr> <chr>             
 #> 1 371         EIA Data Sets           ""    <NA>              
 #> 2 0           Electricity             ""    371               
 #> 3 32          Total consumption (Btu) ""    0                 

@@ -57,9 +57,8 @@ x <- eia_geoset(id, region, n = 12)
 select(x, region, data) %>% unnest(cols = data)
 
 unnest(x, cols = data) %>%
-  ggplot(aes(date, value, color = region)) +
-  geom_line() +
-  labs(y = x$units[1], title = "Net electricity generation, all fuels")
+  ggplot(aes(date, value, color = region)) + geom_line() +
+  labs(y = x$units[1], title = "Net electricity generation", subtitle = "From all fuels")
 ```
 
 ## Relations

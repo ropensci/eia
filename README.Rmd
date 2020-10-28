@@ -70,8 +70,8 @@ d$data[[1]]
 
 library(ggplot2)
 library(tidyr)
-unnest(d, cols = data) %>% ggplot(aes(year, value)) +
-  geom_line() + labs(y = d$units, title = d$name)
+unnest(d, cols = data) %>% ggplot(aes(factor(year), value)) + geom_col() + 
+  labs(x = "Year", y = d$units, title = d$name, caption = d$description)
 ```
 
 ## References
