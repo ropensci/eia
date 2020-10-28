@@ -10,7 +10,7 @@
 
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
-developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Travis build
 status](https://travis-ci.org/ropensci/eia.svg?branch=master)](https://travis-ci.org/ropensci/eia)
 [![AppVeyor Build
@@ -18,13 +18,13 @@ Status](https://ci.appveyor.com/api/projects/status/github/ropensci/eia?branch=m
 [![Codecov test
 coverage](https://codecov.io/gh/ropensci/eia/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/eia?branch=master)
 
-[![](https://badges.ropensci.org/342_status.svg)](https://github.com/ropensci/onboarding/issues/342)
+[![](https://badges.ropensci.org/342_status.svg)](https://github.com/ropensci/software-review/issues/342)
 [![CRAN
-status](http://www.r-pkg.org/badges/version/eia)](https://cran.r-project.org/package=eia)
+status](https://www.r-pkg.org/badges/version/eia)](https://cran.r-project.org/package=eia)
 [![CRAN RStudio mirror
-downloads](http://cranlogs.r-pkg.org/badges/eia)](https://cran.r-project.org/package=eia)
+downloads](https://cranlogs.r-pkg.org/badges/eia)](https://cran.r-project.org/package=eia)
 [![Github
-Stars](https://img.shields.io/github/stars/ropensci/eia.svg?style=social&label=Github)](https://github.com/ropensci/eia)
+Stars](https://img.shields.io/github/stars/ropensci/eia.svg?style=social&label=Github)](https://github.com/ropensci/eia/)
 
 The `eia` package provides API access to data from the US [Energy
 Information Administration](https://www.eia.gov/) (EIA).
@@ -108,7 +108,7 @@ unnest(d, cols = data) %>% ggplot(aes(factor(year), value)) + geom_col() +
 
 See the collection of vignette tutorials and examples as well as
 complete package documentation available at the `eia` package
-[website](https://docs.ropensci.org/eia).
+[website](https://docs.ropensci.org/eia/).
 
 -----
 

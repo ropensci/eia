@@ -14,7 +14,7 @@ Description: Provides API access to data from the 'US Energy Information Adminis
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-URL: https://docs.ropensci.org/eia (website) https://github.com/ropensci/eia
+URL: https://docs.ropensci.org/eia/ (website) https://github.com/ropensci/eia
 BugReports: https://github.com/ropensci/eia/issues
 Imports: 
     tibble,
