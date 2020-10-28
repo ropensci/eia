@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eia</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.7</span>
       </span>
     </div>
 
@@ -155,15 +155,15 @@
     <p>Make a small request to obtain a data frame containing metadata.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>eia_series_metadata</span>(<span class='no'>id</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span>())
+    <pre class="usage"><span class='fu'>eia_series_metadata</span><span class='op'>(</span><span class='va'>id</span>, cache <span class='op'>=</span> <span class='cn'>TRUE</span>, key <span class='op'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>eia_series_updates</span>(<span class='no'>id</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span>())
+<span class='fu'>eia_series_updates</span><span class='op'>(</span><span class='va'>id</span>, cache <span class='op'>=</span> <span class='cn'>TRUE</span>, key <span class='op'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>eia_series_dates</span>(<span class='no'>id</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span>())
+<span class='fu'>eia_series_dates</span><span class='op'>(</span><span class='va'>id</span>, cache <span class='op'>=</span> <span class='cn'>TRUE</span>, key <span class='op'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>eia_series_range</span>(<span class='no'>id</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span>())
+<span class='fu'>eia_series_range</span><span class='op'>(</span><span class='va'>id</span>, cache <span class='op'>=</span> <span class='cn'>TRUE</span>, key <span class='op'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>eia_series_cats</span>(<span class='no'>id</span>, <span class='kw'>tidy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span>())</pre>
+<span class='fu'>eia_series_cats</span><span class='op'>(</span><span class='va'>id</span>, tidy <span class='op'>=</span> <span class='cn'>TRUE</span>, cache <span class='op'>=</span> <span class='cn'>TRUE</span>, key <span class='op'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -203,23 +203,24 @@ instead, which makes an API call specifically to the EIA <code>updates</code> en
 <p><code>eia_series_cats</code> differs from the other functions in that it makes an API call directly to the <code>series categories</code> endpoint.
 Like other functions that return endpoint-specific output, it accepts the <code>tidy</code> argument for control over output structure.
 By default, additional processing is done to return a list containing tibble data frames.
-Set <code>tidy = FALSE</code> to return only the initial list result of <code><a href='https://jeroen.cran.dev/jsonlite/reference/fromJSON.html'>jsonlite::fromJSON</a></code>.
+Set <code>tidy = FALSE</code> to return only the initial list result of <code><a href='https://rdrr.io/pkg/jsonlite/man/fromJSON.html'>jsonlite::fromJSON</a></code>.
 Set <code>tidy = NA</code> to return the original JSON as a character string.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='eia_updates.html'>eia_updates</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># use eia_set_key() to store stored API key</span>
-<span class='no'>id</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"ELEC.CONS_TOT_BTU.COW-AK-1."</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"Q"</span>, <span class='st'>"M"</span>))
+<span class='va'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"ELEC.CONS_TOT_BTU.COW-AK-1."</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"Q"</span>, <span class='st'>"M"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>eia_series_metadata</span>(<span class='no'>id</span>)
-<span class='fu'>eia_series_updates</span>(<span class='no'>id</span>)
-<span class='fu'>eia_series_dates</span>(<span class='no'>id</span>)
-<span class='fu'>eia_series_range</span>(<span class='no'>id</span>)
-<span class='fu'>eia_series_cats</span>(<span class='no'>id</span>)
-}</div></pre>
+<span class='fu'>eia_series_metadata</span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span>
+<span class='fu'>eia_series_updates</span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span>
+<span class='fu'>eia_series_dates</span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span>
+<span class='fu'>eia_series_range</span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span>
+<span class='fu'>eia_series_cats</span><span class='op'>(</span><span class='va'>id</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -235,7 +236,7 @@ Set <code>tidy = NA</code> to return the original JSON as a character string.</p
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

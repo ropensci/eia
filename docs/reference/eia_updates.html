@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eia</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.7</span>
       </span>
     </div>
 
@@ -155,14 +155,14 @@
     <p>Obtain information on EIA data series updates for a given category to avoid having to make requests for data that have not been updated since your last request.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>eia_updates</span>(
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>50</span>,
-  <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>tidy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span>()
-)</pre>
+    <pre class="usage"><span class='fu'>eia_updates</span><span class='op'>(</span>
+  id <span class='op'>=</span> <span class='cn'>NULL</span>,
+  deep <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  n <span class='op'>=</span> <span class='fl'>50</span>,
+  start <span class='op'>=</span> <span class='fl'>1</span>,
+  tidy <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  key <span class='op'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -206,17 +206,18 @@ If you are only interested in update times for a specific set of series IDs,
 you can use <code><a href='eia_series_metadata.html'>eia_series_updates</a></code>.
 Note that while this function accepts a vector of IDs for <code>id</code>, it must make one API call per ID.</p>
 <p>By default, additional processing is done to return a tibble data frame.
-Set <code>tidy = FALSE</code> to return only the initial list result of <code><a href='https://jeroen.cran.dev/jsonlite/reference/fromJSON.html'>jsonlite::fromJSON</a></code>.
+Set <code>tidy = FALSE</code> to return only the initial list result of <code><a href='https://rdrr.io/pkg/jsonlite/man/fromJSON.html'>jsonlite::fromJSON</a></code>.
 Set <code>tidy = NA</code> to return the original JSON as a character string.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='eia_series_metadata.html'>eia_series_updates</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># use eia_set_key() to store stored API key</span>
-<span class='fu'>eia_updates</span>(<span class='fl'>742</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>5</span>)
-}</div></pre>
+<span class='fu'>eia_updates</span><span class='op'>(</span><span class='fl'>742</span>, n <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -232,7 +233,7 @@ Set <code>tidy = NA</code> to return the original JSON as a character string.</p
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eia</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.7</span>
       </span>
     </div>
 
@@ -155,11 +155,11 @@
     <p>Helper functions for manipulating and converting between regular year-month-day date strings and EIA date string notation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>eiadate_to_date</span>(<span class='no'>x</span>)
+    <pre class="usage"><span class='fu'>eiadate_to_date</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
-<span class='fu'>date_to_eiadate</span>(<span class='no'>x</span>, <span class='kw'>date_format</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"Q"</span>, <span class='st'>"M"</span>, <span class='st'>"W"</span>, <span class='st'>"D"</span>, <span class='st'>"H"</span>))
+<span class='fu'>date_to_eiadate</span><span class='op'>(</span><span class='va'>x</span>, date_format <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"Q"</span>, <span class='st'>"M"</span>, <span class='st'>"W"</span>, <span class='st'>"D"</span>, <span class='st'>"H"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>eiadate_to_date_seq</span>(<span class='no'>start</span>, <span class='no'>end</span>, <span class='kw'>weekly</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>eiadate_to_date_seq</span><span class='op'>(</span><span class='va'>start</span>, <span class='va'>end</span>, weekly <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -199,11 +199,21 @@ translate the date and time when using <code>"HL"</code> anyhow; it simply appen
 the date string with the number of hours time difference.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>eiadate_to_date</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"201803"</span>, <span class='st'>"201804"</span>))</div><div class='output co'>#&gt; [1] "2018-03-01" "2018-04-01"</div><div class='input'>
-<span class='fu'>date_to_eiadate</span>(<span class='st'>"2018-05-14"</span>, <span class='st'>"A"</span>)</div><div class='output co'>#&gt; [1] "2018"</div><div class='input'><span class='fu'>date_to_eiadate</span>(<span class='st'>"2018-05-14"</span>, <span class='st'>"Q"</span>)</div><div class='output co'>#&gt; [1] "2018Q2"</div><div class='input'><span class='fu'>date_to_eiadate</span>(<span class='st'>"2018-05-14"</span>, <span class='st'>"M"</span>)</div><div class='output co'>#&gt; [1] "201805"</div><div class='input'>
-(<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>eiadate_to_date_seq</span>(<span class='st'>"2018Q1"</span>, <span class='st'>"2018Q4"</span>))</div><div class='output co'>#&gt; [1] "2018-01-01" "2018-04-01" "2018-07-01" "2018-10-01"</div><div class='input'><span class='fu'>date_to_eiadate</span>(<span class='no'>x</span>, <span class='st'>"Q"</span>)</div><div class='output co'>#&gt; [1] "2018Q1" "2018Q2" "2018Q3" "2018Q4"</div><div class='input'>
-(<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>eiadate_to_date</span>(<span class='st'>"20190102T16Z"</span>))</div><div class='output co'>#&gt; [1] "2019-01-02 16:00:00 UTC"</div><div class='input'><span class='fu'>date_to_eiadate</span>(<span class='no'>x</span>, <span class='st'>"H"</span>)</div><div class='output co'>#&gt; [1] "20190102T16Z"</div><div class='input'>(<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>eiadate_to_date_seq</span>(<span class='st'>"20190102T16Z"</span>, <span class='st'>"20190102T19Z"</span>))</div><div class='output co'>#&gt; [1] "2019-01-02 16:00:00 UTC" "2019-01-02 17:00:00 UTC"
-#&gt; [3] "2019-01-02 18:00:00 UTC" "2019-01-02 19:00:00 UTC"</div><div class='input'><span class='fu'>date_to_eiadate</span>(<span class='no'>x</span>, <span class='st'>"H"</span>)</div><div class='output co'>#&gt; [1] "20190102T16Z" "20190102T17Z" "20190102T18Z" "20190102T19Z"</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>eiadate_to_date</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"201803"</span>, <span class='st'>"201804"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "2018-03-01" "2018-04-01"</div><div class='input'>
+<span class='fu'>date_to_eiadate</span><span class='op'>(</span><span class='st'>"2018-05-14"</span>, <span class='st'>"A"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "2018"</div><div class='input'><span class='fu'>date_to_eiadate</span><span class='op'>(</span><span class='st'>"2018-05-14"</span>, <span class='st'>"Q"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "2018Q2"</div><div class='input'><span class='fu'>date_to_eiadate</span><span class='op'>(</span><span class='st'>"2018-05-14"</span>, <span class='st'>"M"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "201805"</div><div class='input'>
+<span class='op'>(</span><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>eiadate_to_date_seq</span><span class='op'>(</span><span class='st'>"2018Q1"</span>, <span class='st'>"2018Q4"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "2018-01-01" "2018-04-01" "2018-07-01" "2018-10-01"</div><div class='input'><span class='fu'>date_to_eiadate</span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"Q"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "2018Q1" "2018Q2" "2018Q3" "2018Q4"</div><div class='input'>
+<span class='op'>(</span><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>eiadate_to_date</span><span class='op'>(</span><span class='st'>"20190102T16Z"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "2019-01-02 16:00:00 UTC"</div><div class='input'><span class='fu'>date_to_eiadate</span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"H"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "20190102T16Z"</div><div class='input'><span class='op'>(</span><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>eiadate_to_date_seq</span><span class='op'>(</span><span class='st'>"20190102T16Z"</span>, <span class='st'>"20190102T19Z"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "2019-01-02 16:00:00 UTC" "2019-01-02 17:00:00 UTC"
+#&gt; [3] "2019-01-02 18:00:00 UTC" "2019-01-02 19:00:00 UTC"</div><div class='input'><span class='fu'>date_to_eiadate</span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"H"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "20190102T16Z" "20190102T17Z" "20190102T18Z" "20190102T19Z"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -219,7 +229,7 @@ the date string with the number of hours time difference.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

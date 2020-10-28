@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eia</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.7</span>
       </span>
     </div>
 
@@ -155,11 +155,11 @@
     <p>Obtain EIA categories.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>eia_cats</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tidy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span>())
+    <pre class="usage"><span class='fu'>eia_cats</span><span class='op'>(</span>id <span class='op'>=</span> <span class='cn'>NULL</span>, tidy <span class='op'>=</span> <span class='cn'>TRUE</span>, cache <span class='op'>=</span> <span class='cn'>TRUE</span>, key <span class='op'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>eia_child_cats</span>(<span class='no'>id</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span>())
+<span class='fu'>eia_child_cats</span><span class='op'>(</span><span class='va'>id</span>, cache <span class='op'>=</span> <span class='cn'>TRUE</span>, key <span class='op'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>eia_parent_cats</span>(<span class='no'>id</span>, <span class='kw'>cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>key</span> <span class='kw'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span>())</pre>
+<span class='fu'>eia_parent_cats</span><span class='op'>(</span><span class='va'>id</span>, cache <span class='op'>=</span> <span class='cn'>TRUE</span>, key <span class='op'>=</span> <span class='fu'><a href='eia_key.html'>eia_get_key</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -188,7 +188,7 @@
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>By default, additional processing is done to return a list containing tibble data frames.
-Set <code>tidy = FALSE</code> to return only the initial list result of <code><a href='https://jeroen.cran.dev/jsonlite/reference/fromJSON.html'>jsonlite::fromJSON</a></code>.
+Set <code>tidy = FALSE</code> to return only the initial list result of <code><a href='https://rdrr.io/pkg/jsonlite/man/fromJSON.html'>jsonlite::fromJSON</a></code>.
 Set <code>tidy = NA</code> to return the original JSON as a character string.</p>
 <p>Set to <code>cache = FALSE</code> to force a new API call for updated data.
 Using <code>FALSE</code> always makes a new API call and returns the result from the server.
@@ -198,13 +198,14 @@ You can reset the entire cache by calling <code>eia_clear_cache</code>.</p>
 These are wrappers around <code>eia_cats</code> and always return a tibble data frame.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># use eia_set_key() to store stored API key</span>
-<span class='fu'>eia_cats</span>()
+<span class='fu'>eia_cats</span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'>eia_child_cats</span>(<span class='fl'>389</span>) <span class='co'># immedate children</span>
-<span class='fu'>eia_parent_cats</span>(<span class='fl'>742</span>) <span class='co'># all parents</span>
-}</div></pre>
+<span class='fu'>eia_child_cats</span><span class='op'>(</span><span class='fl'>389</span><span class='op'>)</span> <span class='co'># immedate children</span>
+<span class='fu'>eia_parent_cats</span><span class='op'>(</span><span class='fl'>742</span><span class='op'>)</span> <span class='co'># all parents</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -220,7 +221,7 @@ These are wrappers around <code>eia_cats</code> and always return a tibble data 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

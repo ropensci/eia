@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eia</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.7</span>
       </span>
     </div>
 
@@ -100,7 +100,8 @@
 
       
 
-      </header><div class="row">
+      </header><script src="series_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="series_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="series_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>EIA time series data</h1>
@@ -117,9 +118,10 @@
 <h2 class="hasAnchor">
 <a href="#finding-the-series-id" class="anchor"></a>Finding the series ID</h2>
 <p>Like category information, time series data is obtained based on its ID. A complete example includes finding the ID for the series if you do not already know it. Chances are you may already know the series IDs you need after using the API explorer on the EIA website. Below, look for total electricity consumption.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">eia</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/eia">eia</a></span><span class="op">)</span>
 <span class="co"># eia_set_key("yourkey") # set API key if not already set globally</span>
-<span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span>()
+<span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; $category</span>
 <span class="co">#&gt; # A tibble: 1 x 3</span>
 <span class="co">#&gt;   category_id name          notes</span>
@@ -143,9 +145,10 @@
 <span class="co">#&gt; 11     2134384 International Energy Data          </span>
 <span class="co">#&gt; 12     2251604 CO2 Emissions                      </span>
 <span class="co">#&gt; 13     2631064 International Energy Outlook       </span>
-<span class="co">#&gt; 14     2889994 U.S. Nuclear Outages</span></pre></body></html></div>
+<span class="co">#&gt; 14     2889994 U.S. Nuclear Outages</span></pre></div>
 <p>Electricity has category ID 0. Take a closer look there.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span>(<span class="fl">0</span>)
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
 <span class="co">#&gt; $category</span>
 <span class="co">#&gt; # A tibble: 1 x 4</span>
 <span class="co">#&gt;   category_id parent_category_id name        notes</span>
@@ -174,9 +177,10 @@
 <span class="co">#&gt; 16       41140 Average cost of fossil fuels for electricity generation           </span>
 <span class="co">#&gt; 17       41141 Average cost of fossil fuels for electricity generation (per Btu) </span>
 <span class="co">#&gt; 18       41142 Quality of fossil fuels in electricity generation : sulfur content</span>
-<span class="co">#&gt; 19       41143 Quality of fossil fuels in electricity generation : ash content</span></pre></body></html></div>
+<span class="co">#&gt; 19       41143 Quality of fossil fuels in electricity generation : ash content</span></pre></div>
 <p>There are two categories referring to total consumption. Take category ID 32 as an example and step deeper into the category hierarchy.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span>(<span class="fl">32</span>)
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span><span class="op">(</span><span class="fl">32</span><span class="op">)</span>
 <span class="co">#&gt; $category</span>
 <span class="co">#&gt; # A tibble: 1 x 4</span>
 <span class="co">#&gt;   category_id parent_category_id name                    notes</span>
@@ -188,9 +192,10 @@
 <span class="co">#&gt;   category_id name        </span>
 <span class="co">#&gt;         &lt;int&gt; &lt;chr&gt;       </span>
 <span class="co">#&gt; 1         373 By fuel type</span>
-<span class="co">#&gt; 2         372 By sector</span></pre></body></html></div>
+<span class="co">#&gt; 2         372 By sector</span></pre></div>
 <p>At this point you have a choice between total consumption by sector or fuel type. Select by sector.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span>(<span class="fl">372</span>)
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span><span class="op">(</span><span class="fl">372</span><span class="op">)</span>
 <span class="co">#&gt; $category</span>
 <span class="co">#&gt; # A tibble: 1 x 4</span>
 <span class="co">#&gt;   category_id parent_category_id name      notes</span>
@@ -211,9 +216,10 @@
 <span class="co">#&gt;  8         395 Commercial cogen                   </span>
 <span class="co">#&gt;  9         396 All industrial (total)             </span>
 <span class="co">#&gt; 10         397 Industrial non-cogen               </span>
-<span class="co">#&gt; 11         398 Industrial cogen</span></pre></body></html></div>
+<span class="co">#&gt; 11         398 Industrial cogen</span></pre></div>
 <p>Then total electrical power.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span>(<span class="fl">388</span>)
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span><span class="op">(</span><span class="fl">388</span><span class="op">)</span>
 <span class="co">#&gt; $category</span>
 <span class="co">#&gt; # A tibble: 1 x 4</span>
 <span class="co">#&gt;   category_id parent_category_id name                   notes</span>
@@ -227,9 +233,10 @@
 <span class="co">#&gt; 1         738 Coal             </span>
 <span class="co">#&gt; 2         739 Petroleum liquids</span>
 <span class="co">#&gt; 3         740 Petroleum coke   </span>
-<span class="co">#&gt; 4         741 Natural gas</span></pre></body></html></div>
+<span class="co">#&gt; 4         741 Natural gas</span></pre></div>
 <p>And finally coal.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r">(<span class="no">x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span>(<span class="fl">738</span>))
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="op">(</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span><span class="op">(</span><span class="fl">738</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; $category</span>
 <span class="co">#&gt; # A tibble: 1 x 4</span>
 <span class="co">#&gt;   category_id parent_category_id name  notes</span>
@@ -240,17 +247,17 @@
 <span class="co">#&gt; # A tibble: 174 x 5</span>
 <span class="co">#&gt;    series_id                     name                                                                           f     units         updated              </span>
 <span class="co">#&gt;    &lt;chr&gt;                         &lt;chr&gt;                                                                          &lt;chr&gt; &lt;chr&gt;         &lt;chr&gt;                </span>
-<span class="co">#&gt;  1 ELEC.CONS_TOT_BTU.COW-AK-98.A Total consumption (Btu) : coal : Alaska : electric power (total) : annual      A     million MMBtu 23-MAR-20 06.31.14 PM</span>
-<span class="co">#&gt;  2 ELEC.CONS_TOT_BTU.COW-AK-98.M Total consumption (Btu) : coal : Alaska : electric power (total) : monthly     M     million MMBtu 24-APR-20 04.14.48 PM</span>
-<span class="co">#&gt;  3 ELEC.CONS_TOT_BTU.COW-AK-98.Q Total consumption (Btu) : coal : Alaska : electric power (total) : quarterly   Q     million MMBtu 23-MAR-20 06.31.14 PM</span>
-<span class="co">#&gt;  4 ELEC.CONS_TOT_BTU.COW-AL-98.A Total consumption (Btu) : coal : Alabama : electric power (total) : annual     A     million MMBtu 23-MAR-20 06.31.14 PM</span>
-<span class="co">#&gt;  5 ELEC.CONS_TOT_BTU.COW-AL-98.M Total consumption (Btu) : coal : Alabama : electric power (total) : monthly    M     million MMBtu 24-APR-20 04.14.48 PM</span>
-<span class="co">#&gt;  6 ELEC.CONS_TOT_BTU.COW-AL-98.Q Total consumption (Btu) : coal : Alabama : electric power (total) : quarterly  Q     million MMBtu 23-MAR-20 06.31.14 PM</span>
-<span class="co">#&gt;  7 ELEC.CONS_TOT_BTU.COW-AR-98.A Total consumption (Btu) : coal : Arkansas : electric power (total) : annual    A     million MMBtu 23-MAR-20 06.31.14 PM</span>
-<span class="co">#&gt;  8 ELEC.CONS_TOT_BTU.COW-AR-98.M Total consumption (Btu) : coal : Arkansas : electric power (total) : monthly   M     million MMBtu 24-APR-20 04.14.48 PM</span>
-<span class="co">#&gt;  9 ELEC.CONS_TOT_BTU.COW-AR-98.Q Total consumption (Btu) : coal : Arkansas : electric power (total) : quarterly Q     million MMBtu 23-MAR-20 06.31.14 PM</span>
-<span class="co">#&gt; 10 ELEC.CONS_TOT_BTU.COW-AZ-98.A Total consumption (Btu) : coal : Arizona : electric power (total) : annual     A     million MMBtu 23-MAR-20 06.31.14 PM</span>
-<span class="co">#&gt; # ... with 164 more rows</span></pre></body></html></div>
+<span class="co">#&gt;  1 ELEC.CONS_TOT_BTU.COW-AK-98.A Total consumption (Btu) : coal : Alaska : electric power (total) : annual      A     million MMBtu 27-OCT-20 06.46.54 PM</span>
+<span class="co">#&gt;  2 ELEC.CONS_TOT_BTU.COW-AK-98.M Total consumption (Btu) : coal : Alaska : electric power (total) : monthly     M     million MMBtu 27-OCT-20 06.46.54 PM</span>
+<span class="co">#&gt;  3 ELEC.CONS_TOT_BTU.COW-AK-98.Q Total consumption (Btu) : coal : Alaska : electric power (total) : quarterly   Q     million MMBtu 27-OCT-20 06.46.54 PM</span>
+<span class="co">#&gt;  4 ELEC.CONS_TOT_BTU.COW-AL-98.A Total consumption (Btu) : coal : Alabama : electric power (total) : annual     A     million MMBtu 27-OCT-20 06.46.54 PM</span>
+<span class="co">#&gt;  5 ELEC.CONS_TOT_BTU.COW-AL-98.M Total consumption (Btu) : coal : Alabama : electric power (total) : monthly    M     million MMBtu 27-OCT-20 06.46.54 PM</span>
+<span class="co">#&gt;  6 ELEC.CONS_TOT_BTU.COW-AL-98.Q Total consumption (Btu) : coal : Alabama : electric power (total) : quarterly  Q     million MMBtu 27-OCT-20 06.46.54 PM</span>
+<span class="co">#&gt;  7 ELEC.CONS_TOT_BTU.COW-AR-98.A Total consumption (Btu) : coal : Arkansas : electric power (total) : annual    A     million MMBtu 27-OCT-20 06.46.54 PM</span>
+<span class="co">#&gt;  8 ELEC.CONS_TOT_BTU.COW-AR-98.M Total consumption (Btu) : coal : Arkansas : electric power (total) : monthly   M     million MMBtu 27-OCT-20 06.46.54 PM</span>
+<span class="co">#&gt;  9 ELEC.CONS_TOT_BTU.COW-AR-98.Q Total consumption (Btu) : coal : Arkansas : electric power (total) : quarterly Q     million MMBtu 27-OCT-20 06.46.54 PM</span>
+<span class="co">#&gt; 10 ELEC.CONS_TOT_BTU.COW-AZ-98.A Total consumption (Btu) : coal : Arizona : electric power (total) : annual     A     million MMBtu 27-OCT-20 06.46.54 PM</span>
+<span class="co">#&gt; # ... with 164 more rows</span></pre></div>
 </div>
 <div id="available-child-series" class="section level2">
 <h2 class="hasAnchor">
@@ -270,77 +277,83 @@
 <h2 class="hasAnchor">
 <a href="#time-formats" class="anchor"></a>Time formats</h2>
 <p>To see how the different time formats are parsed, take the first three IDs for Alaska. Request only the three most recent results for each series.</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">id</span> <span class="kw">&lt;-</span> <span class="no">x</span>$<span class="no">childseries</span>$<span class="no">series_id</span>[<span class="fl">1</span>:<span class="fl">3</span>]
-<span class="no">x1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/eia_series.html">eia_series</a></span>(<span class="no">id</span>[<span class="fl">1</span>], <span class="kw">n</span> <span class="kw">=</span> <span class="fl">3</span>)
-<span class="no">x2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/eia_series.html">eia_series</a></span>(<span class="no">id</span>[<span class="fl">2</span>], <span class="kw">n</span> <span class="kw">=</span> <span class="fl">3</span>)
-<span class="no">x3</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/eia_series.html">eia_series</a></span>(<span class="no">id</span>[<span class="fl">3</span>], <span class="kw">n</span> <span class="kw">=</span> <span class="fl">3</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="va">id</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">$</span><span class="va">childseries</span><span class="op">$</span><span class="va">series_id</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>
+<span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<span class="va">x2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<span class="va">x3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></pre></div>
 <p>The format of each result is the same. Inspect the first one. It is a data frame with one row. All but the final column, <code>data</code>, give metadata about the series. <code>data</code> is a list column (in this case of length one) that can be extracted directly or unnested using <code><a href="https://tidyr.tidyverse.org/reference/nest.html">tidyr::unnest</a></code>.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">dplyr</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyr</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">ggplot2</span>)
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 
-<span class="no">x1</span>$<span class="no">data</span><span class="kw">[[</span><span class="fl">1</span>]]
+<span class="va">x1</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="co">#&gt; # A tibble: 3 x 3</span>
 <span class="co">#&gt;   value date        year</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;</span>
-<span class="co">#&gt; 1  9.74 2019-01-01  2019</span>
+<span class="co">#&gt; 1 11.0  2019-01-01  2019</span>
 <span class="co">#&gt; 2 10.4  2018-01-01  2018</span>
 <span class="co">#&gt; 3  9.21 2017-01-01  2017</span>
 
-<span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">x1</span>, <span class="no">series_id</span>, <span class="no">data</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="kw">cols</span> <span class="kw">=</span> <span class="no">data</span>)
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">x1</span>, <span class="va">series_id</span>, <span class="va">data</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="va">data</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 3 x 4</span>
 <span class="co">#&gt;   series_id                     value date        year</span>
 <span class="co">#&gt;   &lt;chr&gt;                         &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;</span>
-<span class="co">#&gt; 1 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.74 2019-01-01  2019</span>
+<span class="co">#&gt; 1 ELEC.CONS_TOT_BTU.COW-AK-98.A 11.0  2019-01-01  2019</span>
 <span class="co">#&gt; 2 ELEC.CONS_TOT_BTU.COW-AK-98.A 10.4  2018-01-01  2018</span>
 <span class="co">#&gt; 3 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.21 2017-01-01  2017</span>
 
-<span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="no">x1</span>, <span class="kw">cols</span> <span class="kw">=</span> <span class="no">data</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="no">date</span>, <span class="no">value</span>)) + <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span>() +
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="kw">y</span> <span class="kw">=</span> <span class="no">x1</span>$<span class="no">units</span>[<span class="fl">1</span>], <span class="kw">title</span> <span class="kw">=</span> <span class="st">"Total electricity consumption from coal sources, Alaska"</span>)</pre></body></html></div>
+<span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">x1</span>, cols <span class="op">=</span> <span class="va">data</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span>, <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Year"</span>, y <span class="op">=</span> <span class="va">x1</span><span class="op">$</span><span class="va">units</span>, title <span class="op">=</span> <span class="st">"Total Alaska electricity consumption"</span>,
+       subtitle <span class="op">=</span> <span class="st">"From coal sources"</span>, caption <span class="op">=</span> <span class="va">x1</span><span class="op">$</span><span class="va">description</span><span class="op">)</span></pre></div>
 <p><img src="series-series2-1.png" title="plot of chunk series2" alt="plot of chunk series2" width="100%"></p>
 <p>Results are similarly structured for the other series, but the columns containing date information differ.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">x1</span>$<span class="no">data</span><span class="kw">[[</span><span class="fl">1</span>]]
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="va">x1</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="co">#&gt; # A tibble: 3 x 3</span>
 <span class="co">#&gt;   value date        year</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;</span>
-<span class="co">#&gt; 1  9.74 2019-01-01  2019</span>
+<span class="co">#&gt; 1 11.0  2019-01-01  2019</span>
 <span class="co">#&gt; 2 10.4  2018-01-01  2018</span>
 <span class="co">#&gt; 3  9.21 2017-01-01  2017</span>
-<span class="no">x2</span>$<span class="no">data</span><span class="kw">[[</span><span class="fl">1</span>]]
+<span class="va">x2</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="co">#&gt; # A tibble: 3 x 4</span>
 <span class="co">#&gt;    value date        year month</span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;int&gt; &lt;int&gt;</span>
-<span class="co">#&gt; 1  0.878 2020-02-01  2020     2</span>
-<span class="co">#&gt; 2 NA     2020-01-01  2020     1</span>
-<span class="co">#&gt; 3  0.846 2019-12-01  2019    12</span>
-<span class="no">x3</span>$<span class="no">data</span><span class="kw">[[</span><span class="fl">1</span>]]
+<span class="co">#&gt; 1 NA     2020-08-01  2020     8</span>
+<span class="co">#&gt; 2 NA     2020-07-01  2020     7</span>
+<span class="co">#&gt; 3  0.770 2020-06-01  2020     6</span>
+<span class="va">x3</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="co">#&gt; # A tibble: 3 x 4</span>
 <span class="co">#&gt;   value date        year   qtr</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;     &lt;int&gt; &lt;int&gt;</span>
-<span class="co">#&gt; 1  2.32 2019-10-01  2019     4</span>
-<span class="co">#&gt; 2  2.45 2019-07-01  2019     3</span>
-<span class="co">#&gt; 3 NA    2019-04-01  2019     2</span></pre></body></html></div>
+<span class="co">#&gt; 1 NA    2020-04-01  2020     2</span>
+<span class="co">#&gt; 2 NA    2020-01-01  2020     1</span>
+<span class="co">#&gt; 3  3.05 2019-10-01  2019     4</span></pre></div>
 </div>
 <div id="multiple-series" class="section level2">
 <h2 class="hasAnchor">
 <a href="#multiple-series" class="anchor"></a>Multiple series</h2>
 <p>The EIA API allows multiple series to be requested in a single API call. You should do this whenever possible to reduce the number of requests you make. To request the same data as above, just provide the <code>id</code> vector. Other arguments like <code>n</code> are not vectorized.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/eia_series.html">eia_series</a></span>(<span class="no">id</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fl">3</span>)
-<span class="no">x</span>
+<div class="sourceCode" id="cb10"><pre class="downlit">
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
+<span class="va">x</span>
 <span class="co">#&gt; # A tibble: 3 x 13</span>
-<span class="co">#&gt;   series_id      name                 units   f     description                      copyright source        iso3166 geography start end   updated    data   </span>
-<span class="co">#&gt;   &lt;chr&gt;          &lt;chr&gt;                &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;                            &lt;chr&gt;     &lt;chr&gt;         &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;list&gt; </span>
-<span class="co">#&gt; 1 ELEC.CONS_TOT~ Total consumption (~ millio~ A     "Summation of all types of coal~ None      EIA, U.S. En~ USA-AK  USA-AK    2001  2019  2020-03-2~ &lt;tibbl~</span>
-<span class="co">#&gt; 2 ELEC.CONS_TOT~ Total consumption (~ millio~ M     "Summation of all types of coal~ None      EIA, U.S. En~ USA-AK  USA-AK    2001~ 2020~ 2020-04-2~ &lt;tibbl~</span>
-<span class="co">#&gt; 3 ELEC.CONS_TOT~ Total consumption (~ millio~ Q     "Summation of all types of coal~ None      EIA, U.S. En~ USA-AK  USA-AK    2001~ 2019~ 2020-03-2~ &lt;tibbl~</span></pre></body></html></div>
+<span class="co">#&gt;   series_id       name                      units    f     description                            copyright source           iso3166 geography start end   updated     data    </span>
+<span class="co">#&gt;   &lt;chr&gt;           &lt;chr&gt;                     &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;                                  &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       &lt;list&gt;  </span>
+<span class="co">#&gt; 1 ELEC.CONS_TOT_~ Total consumption (Btu) ~ million~ A     "Summation of all types of coal; Powe~ None      EIA, U.S. Energ~ USA-AK  USA-AK    2001  2019  2020-10-27~ &lt;tibble~</span>
+<span class="co">#&gt; 2 ELEC.CONS_TOT_~ Total consumption (Btu) ~ million~ M     "Summation of all types of coal; Powe~ None      EIA, U.S. Energ~ USA-AK  USA-AK    2001~ 2020~ 2020-10-27~ &lt;tibble~</span>
+<span class="co">#&gt; 3 ELEC.CONS_TOT_~ Total consumption (Btu) ~ million~ Q     "Summation of all types of coal; Powe~ None      EIA, U.S. Energ~ USA-AK  USA-AK    2001~ 2020~ 2020-10-27~ &lt;tibble~</span></pre></div>
 <p>There are now three rows in the table containing the same data as before. The <code>data</code> list column also contains the same structures as before.</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">x</span>$<span class="no">data</span>
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="va">x</span><span class="op">$</span><span class="va">data</span>
 <span class="co">#&gt; [[1]]</span>
 <span class="co">#&gt; # A tibble: 3 x 3</span>
 <span class="co">#&gt;   value date        year</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;</span>
-<span class="co">#&gt; 1  9.74 2019-01-01  2019</span>
+<span class="co">#&gt; 1 11.0  2019-01-01  2019</span>
 <span class="co">#&gt; 2 10.4  2018-01-01  2018</span>
 <span class="co">#&gt; 3  9.21 2017-01-01  2017</span>
 <span class="co">#&gt; </span>
@@ -348,31 +361,32 @@
 <span class="co">#&gt; # A tibble: 3 x 4</span>
 <span class="co">#&gt;    value date        year month</span>
 <span class="co">#&gt;    &lt;dbl&gt; &lt;date&gt;     &lt;int&gt; &lt;int&gt;</span>
-<span class="co">#&gt; 1  0.878 2020-02-01  2020     2</span>
-<span class="co">#&gt; 2 NA     2020-01-01  2020     1</span>
-<span class="co">#&gt; 3  0.846 2019-12-01  2019    12</span>
+<span class="co">#&gt; 1 NA     2020-08-01  2020     8</span>
+<span class="co">#&gt; 2 NA     2020-07-01  2020     7</span>
+<span class="co">#&gt; 3  0.770 2020-06-01  2020     6</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; [[3]]</span>
 <span class="co">#&gt; # A tibble: 3 x 4</span>
 <span class="co">#&gt;   value date        year   qtr</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;     &lt;int&gt; &lt;int&gt;</span>
-<span class="co">#&gt; 1  2.32 2019-10-01  2019     4</span>
-<span class="co">#&gt; 2  2.45 2019-07-01  2019     3</span>
-<span class="co">#&gt; 3 NA    2019-04-01  2019     2</span></pre></body></html></div>
+<span class="co">#&gt; 1 NA    2020-04-01  2020     2</span>
+<span class="co">#&gt; 2 NA    2020-01-01  2020     1</span>
+<span class="co">#&gt; 3  3.05 2019-10-01  2019     4</span></pre></div>
 <p>These can be unnested and filled in with <code>NA</code> as needed.</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">x</span>, <span class="no">series_id</span>, <span class="no">data</span>) <span class="kw">%&gt;%</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span>(<span class="kw">cols</span> <span class="kw">=</span> <span class="no">data</span>)
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">series_id</span>, <span class="va">data</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="va">data</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 9 x 6</span>
 <span class="co">#&gt;   series_id                      value date        year month   qtr</span>
 <span class="co">#&gt;   &lt;chr&gt;                          &lt;dbl&gt; &lt;date&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;</span>
-<span class="co">#&gt; 1 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.74  2019-01-01  2019    NA    NA</span>
+<span class="co">#&gt; 1 ELEC.CONS_TOT_BTU.COW-AK-98.A 11.0   2019-01-01  2019    NA    NA</span>
 <span class="co">#&gt; 2 ELEC.CONS_TOT_BTU.COW-AK-98.A 10.4   2018-01-01  2018    NA    NA</span>
 <span class="co">#&gt; 3 ELEC.CONS_TOT_BTU.COW-AK-98.A  9.21  2017-01-01  2017    NA    NA</span>
-<span class="co">#&gt; 4 ELEC.CONS_TOT_BTU.COW-AK-98.M  0.878 2020-02-01  2020     2    NA</span>
-<span class="co">#&gt; 5 ELEC.CONS_TOT_BTU.COW-AK-98.M NA     2020-01-01  2020     1    NA</span>
-<span class="co">#&gt; 6 ELEC.CONS_TOT_BTU.COW-AK-98.M  0.846 2019-12-01  2019    12    NA</span>
-<span class="co">#&gt; 7 ELEC.CONS_TOT_BTU.COW-AK-98.Q  2.32  2019-10-01  2019    NA     4</span>
-<span class="co">#&gt; 8 ELEC.CONS_TOT_BTU.COW-AK-98.Q  2.45  2019-07-01  2019    NA     3</span>
-<span class="co">#&gt; 9 ELEC.CONS_TOT_BTU.COW-AK-98.Q NA     2019-04-01  2019    NA     2</span></pre></body></html></div>
+<span class="co">#&gt; 4 ELEC.CONS_TOT_BTU.COW-AK-98.M NA     2020-08-01  2020     8    NA</span>
+<span class="co">#&gt; 5 ELEC.CONS_TOT_BTU.COW-AK-98.M NA     2020-07-01  2020     7    NA</span>
+<span class="co">#&gt; 6 ELEC.CONS_TOT_BTU.COW-AK-98.M  0.770 2020-06-01  2020     6    NA</span>
+<span class="co">#&gt; 7 ELEC.CONS_TOT_BTU.COW-AK-98.Q NA     2020-04-01  2020    NA     2</span>
+<span class="co">#&gt; 8 ELEC.CONS_TOT_BTU.COW-AK-98.Q NA     2020-01-01  2020    NA     1</span>
+<span class="co">#&gt; 9 ELEC.CONS_TOT_BTU.COW-AK-98.Q  3.05  2019-10-01  2019    NA     4</span></pre></div>
 </div>
 <div id="time-period-and-number-of-results" class="section level2">
 <h2 class="hasAnchor">
@@ -386,15 +400,17 @@
 <li>If you do not provide a closed period or <code>n</code>, you will receive all relevant data available, subject to any API limits.</li>
 <li>Depending on the nature of the request, you may have to construct more than one call.</li>
 </ul>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="../reference/eia_series.html">eia_series</a></span>(<span class="no">id</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fl">10</span>)
-<span class="fu"><a href="../reference/eia_series.html">eia_series</a></span>(<span class="no">id</span>, <span class="kw">end</span> <span class="kw">=</span> <span class="fl">2016</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fl">5</span>)
-<span class="fu"><a href="../reference/eia_series.html">eia_series</a></span>(<span class="no">id</span>, <span class="kw">start</span> <span class="kw">=</span> <span class="fl">2000</span>, <span class="kw">end</span> <span class="kw">=</span> <span class="fl">2016</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb13"><pre class="downlit">
+<span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
+<span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span>, end <span class="op">=</span> <span class="fl">2016</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
+<span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span>, start <span class="op">=</span> <span class="fl">2000</span>, end <span class="op">=</span> <span class="fl">2016</span><span class="op">)</span></pre></div>
 </div>
 <div id="output-format" class="section level2">
 <h2 class="hasAnchor">
 <a href="#output-format" class="anchor"></a>Output format</h2>
-<p>The default is to return tidy data in a tibble data frame. You can set <code>tidy = FALSE</code> to return the list returned by <code><a href="https://jeroen.cran.dev/jsonlite/reference/fromJSON.html">jsonlite::fromJSON</a></code> without any further processing.</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="../reference/eia_series.html">eia_series</a></span>(<span class="no">id</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">tidy</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<p>The default is to return tidy data in a tibble data frame. You can set <code>tidy = FALSE</code> to return the list returned by <code><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html">jsonlite::fromJSON</a></code> without any further processing.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit">
+<span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span>, n <span class="op">=</span> <span class="fl">3</span>, tidy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt; $request</span>
 <span class="co">#&gt; $request$command</span>
 <span class="co">#&gt; [1] "series"</span>
@@ -408,17 +424,18 @@
 <span class="co">#&gt; 1 ELEC.CONS_TOT_BTU.COW-AK-98.A    Total consumption (Btu) : coal : Alaska : electric power (total) : annual million MMBtu A</span>
 <span class="co">#&gt; 2 ELEC.CONS_TOT_BTU.COW-AK-98.M   Total consumption (Btu) : coal : Alaska : electric power (total) : monthly million MMBtu M</span>
 <span class="co">#&gt; 3 ELEC.CONS_TOT_BTU.COW-AK-98.Q Total consumption (Btu) : coal : Alaska : electric power (total) : quarterly million MMBtu Q</span>
-<span class="co">#&gt;                                                                                                   description copyright</span>
-<span class="co">#&gt; 1 Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power;       None</span>
-<span class="co">#&gt; 2 Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power;       None</span>
-<span class="co">#&gt; 3 Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power;       None</span>
-<span class="co">#&gt;                                        source iso3166 geography  start    end                  updated                                         data</span>
-<span class="co">#&gt; 1 EIA, U.S. Energy Information Administration  USA-AK    USA-AK   2001   2019 2020-03-23T18:31:14-0400  2019, 2018, 2017, 9.7429, 10.37727, 9.21412</span>
-<span class="co">#&gt; 2 EIA, U.S. Energy Information Administration  USA-AK    USA-AK 200101 202002 2020-04-24T16:14:48-0400 202002, 202001, 201912, 0.87792, NA, 0.84623</span>
-<span class="co">#&gt; 3 EIA, U.S. Energy Information Administration  USA-AK    USA-AK 2001Q1 2019Q4 2020-03-23T18:31:14-0400 2019Q4, 2019Q3, 2019Q2, 2.31914, 2.45382, NA</span></pre></body></html></div>
+<span class="co">#&gt;                                                                                                   description copyright                                      source iso3166</span>
+<span class="co">#&gt; 1 Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power;       None EIA, U.S. Energy Information Administration  USA-AK</span>
+<span class="co">#&gt; 2 Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power;       None EIA, U.S. Energy Information Administration  USA-AK</span>
+<span class="co">#&gt; 3 Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power;       None EIA, U.S. Energy Information Administration  USA-AK</span>
+<span class="co">#&gt;   geography  start    end                  updated                                          data</span>
+<span class="co">#&gt; 1    USA-AK   2001   2019 2020-10-27T18:46:54-0400 2019, 2018, 2017, 11.03525, 10.37727, 9.21412</span>
+<span class="co">#&gt; 2    USA-AK 200101 202008 2020-10-27T18:46:54-0400       202008, 202007, 202006, NA, NA, 0.77003</span>
+<span class="co">#&gt; 3    USA-AK 2001Q1 2020Q2 2020-10-27T18:46:54-0400       2020Q2, 2020Q1, 2019Q4, NA, NA, 3.04527</span></pre></div>
 <p>You can also return the raw JSON data in a character string if you need to process this directly with other code.</p>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="fu"><a href="../reference/eia_series.html">eia_series</a></span>(<span class="no">id</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">tidy</span> <span class="kw">=</span> <span class="fl">NA</span>))
-<span class="co">#&gt; {"request":{"command":"series","series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.A;ELEC.CONS_TOT_BTU.COW-AK-98.M;ELEC.CONS_TOT_BTU.COW-AK-98.Q"},"series":[{"series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.A","name":"Total consumption (Btu) : coal : Alaska : electric power (total) : annual","units":"million MMBtu","f":"A","description":"Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power; ","copyright":"None","source":"EIA, U.S. Energy Information Administration","iso3166":"USA-AK","geography":"USA-AK","start":"2001","end":"2019","updated":"2020-03-23T18:31:14-0400","data":[["2019",9.7429],["2018",10.37727],["2017",9.21412]]},{"series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.M","name":"Total consumption (Btu) : coal : Alaska : electric power (total) : monthly","units":"million MMBtu","f":"M","description":"Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power; ","copyright":"None","source":"EIA, U.S. Energy Information Administration","iso3166":"USA-AK","geography":"USA-AK","start":"200101","end":"202002","updated":"2020-04-24T16:14:48-0400","data":[["202002",0.87792],["202001",null],["201912",0.84623]]},{"series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.Q","name":"Total consumption (Btu) : coal : Alaska : electric power (total) : quarterly","units":"million MMBtu","f":"Q","description":"Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power; ","copyright":"None","source":"EIA, U.S. Energy Information Administration","iso3166":"USA-AK","geography":"USA-AK","start":"2001Q1","end":"2019Q4","updated":"2020-03-23T18:31:14-0400","data":[["2019Q4",2.31914],["2019Q3",2.45382],["2019Q2",null]]}]}</span></pre></body></html></div>
+<div class="sourceCode" id="cb15"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span>, n <span class="op">=</span> <span class="fl">3</span>, tidy <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; {"request":{"command":"series","series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.A;ELEC.CONS_TOT_BTU.COW-AK-98.M;ELEC.CONS_TOT_BTU.COW-AK-98.Q"},"series":[{"series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.A","name":"Total consumption (Btu) : coal : Alaska : electric power (total) : annual","units":"million MMBtu","f":"A","description":"Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power; ","copyright":"None","source":"EIA, U.S. Energy Information Administration","iso3166":"USA-AK","geography":"USA-AK","start":"2001","end":"2019","updated":"2020-10-27T18:46:54-0400","data":[["2019",11.03525],["2018",10.37727],["2017",9.21412]]},{"series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.M","name":"Total consumption (Btu) : coal : Alaska : electric power (total) : monthly","units":"million MMBtu","f":"M","description":"Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power; ","copyright":"None","source":"EIA, U.S. Energy Information Administration","iso3166":"USA-AK","geography":"USA-AK","start":"200101","end":"202008","updated":"2020-10-27T18:46:54-0400","data":[["202008",null],["202007",null],["202006",0.77003]]},{"series_id":"ELEC.CONS_TOT_BTU.COW-AK-98.Q","name":"Total consumption (Btu) : coal : Alaska : electric power (total) : quarterly","units":"million MMBtu","f":"Q","description":"Summation of all types of coal; Power plants owned by companies whose primary purpose is to produce power; ","copyright":"None","source":"EIA, U.S. Energy Information Administration","iso3166":"USA-AK","geography":"USA-AK","start":"2001Q1","end":"2020Q2","updated":"2020-10-27T18:46:54-0400","data":[["2020Q2",null],["2020Q1",null],["2019Q4",3.04527]]}]}</span></pre></div>
 <p>This allows you to use the returned results with existing code you may have that requires data in one of these less processed structures.</p>
 </div>
 <div id="helpers-functions" class="section level2">
@@ -428,24 +445,25 @@
 <h3 class="hasAnchor">
 <a href="#time-series-metadata" class="anchor"></a>Time series metadata</h3>
 <p>There are some functions available that make small API calls and return only metadata associated with a time series dataset.</p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="../reference/eia_series_metadata.html">eia_series_metadata</a></span>(<span class="no">id</span>)
+<div class="sourceCode" id="cb16"><pre class="downlit">
+<span class="fu"><a href="../reference/eia_series_metadata.html">eia_series_metadata</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 3 x 12</span>
-<span class="co">#&gt;   series_id      name                    units   f     description                         copyright source         iso3166 geography start end   updated    </span>
-<span class="co">#&gt;   &lt;chr&gt;          &lt;chr&gt;                   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;                               &lt;chr&gt;     &lt;chr&gt;          &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      </span>
-<span class="co">#&gt; 1 ELEC.CONS_TOT~ Total consumption (Btu~ millio~ A     "Summation of all types of coal; P~ None      EIA, U.S. Ene~ USA-AK  USA-AK    2001  2019  2020-03-23~</span>
-<span class="co">#&gt; 2 ELEC.CONS_TOT~ Total consumption (Btu~ millio~ M     "Summation of all types of coal; P~ None      EIA, U.S. Ene~ USA-AK  USA-AK    2001~ 2020~ 2020-04-24~</span>
-<span class="co">#&gt; 3 ELEC.CONS_TOT~ Total consumption (Btu~ millio~ Q     "Summation of all types of coal; P~ None      EIA, U.S. Ene~ USA-AK  USA-AK    2001~ 2019~ 2020-03-23~</span>
-<span class="fu"><a href="../reference/eia_series_metadata.html">eia_series_updates</a></span>(<span class="no">id</span>)
+<span class="co">#&gt;   series_id        name                         units    f     description                               copyright source            iso3166 geography start end   updated     </span>
+<span class="co">#&gt;   &lt;chr&gt;            &lt;chr&gt;                        &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;                                     &lt;chr&gt;     &lt;chr&gt;             &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;       </span>
+<span class="co">#&gt; 1 ELEC.CONS_TOT_B~ Total consumption (Btu) : c~ million~ A     "Summation of all types of coal; Power p~ None      EIA, U.S. Energy~ USA-AK  USA-AK    2001  2019  2020-10-27T~</span>
+<span class="co">#&gt; 2 ELEC.CONS_TOT_B~ Total consumption (Btu) : c~ million~ M     "Summation of all types of coal; Power p~ None      EIA, U.S. Energy~ USA-AK  USA-AK    2001~ 2020~ 2020-10-27T~</span>
+<span class="co">#&gt; 3 ELEC.CONS_TOT_B~ Total consumption (Btu) : c~ million~ Q     "Summation of all types of coal; Power p~ None      EIA, U.S. Energy~ USA-AK  USA-AK    2001~ 2020~ 2020-10-27T~</span>
+<span class="fu"><a href="../reference/eia_series_metadata.html">eia_series_updates</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 3 x 2</span>
 <span class="co">#&gt;   series_id                     updated                 </span>
 <span class="co">#&gt;   &lt;chr&gt;                         &lt;chr&gt;                   </span>
-<span class="co">#&gt; 1 ELEC.CONS_TOT_BTU.COW-AK-98.A 2020-03-23T18:31:14-0400</span>
-<span class="co">#&gt; 2 ELEC.CONS_TOT_BTU.COW-AK-98.M 2020-04-24T16:14:48-0400</span>
-<span class="co">#&gt; 3 ELEC.CONS_TOT_BTU.COW-AK-98.Q 2020-03-23T18:31:14-0400</span>
-<span class="fu"><a href="../reference/eia_series_metadata.html">eia_series_dates</a></span>(<span class="no">id</span>)
-<span class="co">#&gt; # A tibble: 325 x 4</span>
+<span class="co">#&gt; 1 ELEC.CONS_TOT_BTU.COW-AK-98.A 2020-10-27T18:46:54-0400</span>
+<span class="co">#&gt; 2 ELEC.CONS_TOT_BTU.COW-AK-98.M 2020-10-27T18:46:54-0400</span>
+<span class="co">#&gt; 3 ELEC.CONS_TOT_BTU.COW-AK-98.Q 2020-10-27T18:46:54-0400</span>
+<span class="fu"><a href="../reference/eia_series_metadata.html">eia_series_dates</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 333 x 4</span>
 <span class="co">#&gt;    series_id                     date       eiadate date_format</span>
-<span class="co">#&gt;  * &lt;chr&gt;                         &lt;date&gt;     &lt;chr&gt;   &lt;chr&gt;      </span>
+<span class="co">#&gt;    &lt;chr&gt;                         &lt;date&gt;     &lt;chr&gt;   &lt;chr&gt;      </span>
 <span class="co">#&gt;  1 ELEC.CONS_TOT_BTU.COW-AK-98.A 2001-01-01 2001    A          </span>
 <span class="co">#&gt;  2 ELEC.CONS_TOT_BTU.COW-AK-98.A 2002-01-01 2002    A          </span>
 <span class="co">#&gt;  3 ELEC.CONS_TOT_BTU.COW-AK-98.A 2003-01-01 2003    A          </span>
@@ -456,24 +474,24 @@
 <span class="co">#&gt;  8 ELEC.CONS_TOT_BTU.COW-AK-98.A 2008-01-01 2008    A          </span>
 <span class="co">#&gt;  9 ELEC.CONS_TOT_BTU.COW-AK-98.A 2009-01-01 2009    A          </span>
 <span class="co">#&gt; 10 ELEC.CONS_TOT_BTU.COW-AK-98.A 2010-01-01 2010    A          </span>
-<span class="co">#&gt; # ... with 315 more rows</span>
-<span class="fu"><a href="../reference/eia_series_metadata.html">eia_series_range</a></span>(<span class="no">id</span>)
+<span class="co">#&gt; # ... with 323 more rows</span>
+<span class="fu"><a href="../reference/eia_series_metadata.html">eia_series_range</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 3 x 7</span>
 <span class="co">#&gt;   series_id                     start_date end_date   start  end    date_format     n</span>
-<span class="co">#&gt; * &lt;chr&gt;                         &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;       &lt;int&gt;</span>
+<span class="co">#&gt;   &lt;chr&gt;                         &lt;date&gt;     &lt;date&gt;     &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;       &lt;int&gt;</span>
 <span class="co">#&gt; 1 ELEC.CONS_TOT_BTU.COW-AK-98.A 2001-01-01 2019-01-01 2001   2019   A              19</span>
-<span class="co">#&gt; 2 ELEC.CONS_TOT_BTU.COW-AK-98.M 2001-01-01 2020-02-01 200101 202002 M             230</span>
-<span class="co">#&gt; 3 ELEC.CONS_TOT_BTU.COW-AK-98.Q 2001-01-01 2019-10-01 2001Q1 2019Q4 Q              76</span>
-<span class="fu"><a href="../reference/eia_series_metadata.html">eia_series_cats</a></span>(<span class="no">id</span>)
+<span class="co">#&gt; 2 ELEC.CONS_TOT_BTU.COW-AK-98.M 2001-01-01 2020-08-01 200101 202008 M             236</span>
+<span class="co">#&gt; 3 ELEC.CONS_TOT_BTU.COW-AK-98.Q 2001-01-01 2020-04-01 2001Q1 2020Q2 Q              78</span>
+<span class="fu"><a href="../reference/eia_series_metadata.html">eia_series_cats</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 6 x 3</span>
 <span class="co">#&gt;   series_id                     category_id name                  </span>
-<span class="co">#&gt; * &lt;chr&gt;                               &lt;int&gt; &lt;chr&gt;                 </span>
+<span class="co">#&gt;   &lt;chr&gt;                               &lt;int&gt; &lt;chr&gt;                 </span>
 <span class="co">#&gt; 1 ELEC.CONS_TOT_BTU.COW-AK-98.A         474 Electric power (total)</span>
 <span class="co">#&gt; 2 ELEC.CONS_TOT_BTU.COW-AK-98.A         738 Coal                  </span>
 <span class="co">#&gt; 3 ELEC.CONS_TOT_BTU.COW-AK-98.M         474 Electric power (total)</span>
 <span class="co">#&gt; 4 ELEC.CONS_TOT_BTU.COW-AK-98.M         738 Coal                  </span>
 <span class="co">#&gt; 5 ELEC.CONS_TOT_BTU.COW-AK-98.Q         474 Electric power (total)</span>
-<span class="co">#&gt; 6 ELEC.CONS_TOT_BTU.COW-AK-98.Q         738 Coal</span></pre></body></html></div>
+<span class="co">#&gt; 6 ELEC.CONS_TOT_BTU.COW-AK-98.Q         738 Coal</span></pre></div>
 <p>Like <code>eia_seires</code>, these functions accept an <code>id</code> vector. They always return a tibble data frame. <code>eia_series_cats</code> uses the <code>series categories</code> endpoint and accepts the <code>tidy</code> argument so that output from the endpoint may be a JSON string, list or the tibble data frame.</p>
 </div>
 <div id="eia-date-strings" class="section level3">
@@ -481,20 +499,23 @@
 <a href="#eia-date-strings" class="anchor"></a>EIA date strings</h3>
 <p>EIA date strings used to specify start and end dates for time series requests are character strings that are not in any standard date formats. There are several functions that assist with moving between these strings and standard dates.</p>
 <p>You can convert EIA date strings to dates.</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="../reference/eiadate.html">eiadate_to_date</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"201803"</span>, <span class="st">"201804"</span>))
-<span class="co">#&gt; [1] "2018-03-01" "2018-04-01"</span></pre></body></html></div>
+<div class="sourceCode" id="cb17"><pre class="downlit">
+<span class="fu"><a href="../reference/eiadate.html">eiadate_to_date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"201803"</span>, <span class="st">"201804"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; [1] "2018-03-01" "2018-04-01"</span></pre></div>
 <p>or dates to EIA format; here are examples using annual, quarterly and monthly time formats.</p>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="fu"><a href="../reference/eiadate.html">date_to_eiadate</a></span>(<span class="st">"2018-05-14"</span>, <span class="st">"A"</span>)
+<div class="sourceCode" id="cb18"><pre class="downlit">
+<span class="fu"><a href="../reference/eiadate.html">date_to_eiadate</a></span><span class="op">(</span><span class="st">"2018-05-14"</span>, <span class="st">"A"</span><span class="op">)</span>
 <span class="co">#&gt; [1] "2018"</span>
-<span class="fu"><a href="../reference/eiadate.html">date_to_eiadate</a></span>(<span class="st">"2018-05-14"</span>, <span class="st">"Q"</span>)
+<span class="fu"><a href="../reference/eiadate.html">date_to_eiadate</a></span><span class="op">(</span><span class="st">"2018-05-14"</span>, <span class="st">"Q"</span><span class="op">)</span>
 <span class="co">#&gt; [1] "2018Q2"</span>
-<span class="fu"><a href="../reference/eiadate.html">date_to_eiadate</a></span>(<span class="st">"2018-05-14"</span>, <span class="st">"M"</span>)
-<span class="co">#&gt; [1] "201805"</span></pre></body></html></div>
+<span class="fu"><a href="../reference/eiadate.html">date_to_eiadate</a></span><span class="op">(</span><span class="st">"2018-05-14"</span>, <span class="st">"M"</span><span class="op">)</span>
+<span class="co">#&gt; [1] "201805"</span></pre></div>
 <p>It is also easy to create a date sequence from two EIA time stamps. The format is parsed from the first value (they are intended to always be consistent).</p>
-<div class="sourceCode" id="cb19"><html><body><pre class="r">(<span class="no">x</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/eiadate.html">eiadate_to_date_seq</a></span>(<span class="st">"2018Q1"</span>, <span class="st">"2018Q4"</span>))
+<div class="sourceCode" id="cb19"><pre class="downlit">
+<span class="op">(</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eiadate.html">eiadate_to_date_seq</a></span><span class="op">(</span><span class="st">"2018Q1"</span>, <span class="st">"2018Q4"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] "2018-01-01" "2018-04-01" "2018-07-01" "2018-10-01"</span>
-<span class="fu"><a href="../reference/eiadate.html">date_to_eiadate</a></span>(<span class="no">x</span>)
-<span class="co">#&gt; [1] "2018" "2018" "2018" "2018"</span></pre></body></html></div>
+<span class="fu"><a href="../reference/eiadate.html">date_to_eiadate</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+<span class="co">#&gt; [1] "2018" "2018" "2018" "2018"</span></pre></div>
 </div>
 </div>
 <div id="checking-for-data-updates" class="section level2">
@@ -503,29 +524,32 @@
 <p>It is good practice to minimize the number of API calls you make wherever possible. One way to do this is to not request data that has not changed since you last requested it. You can make an API call to the EIA <code>updates</code> endpoint to check update times on data series. If any series have not been updated since you last obtained the data, then you know you do not need to request the data again.</p>
 <p>The <code>eia_series_updates</code> function shown above is handy for checking the most recent data update times of a specific set of series IDs. However, it must make one or more API calls to do so. For general checks on a potentially large number of series without having to query them all, you should use <code>eia_updates</code>. This function takes a category ID and can return the last update times for all series under that category.</p>
 <p>If a category level has no series directly associated with it, an empty data frame is returned.</p>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="fu"><a href="../reference/eia_updates.html">eia_updates</a></span>(<span class="fl">389</span>)
+<div class="sourceCode" id="cb20"><pre class="downlit">
+<span class="fu"><a href="../reference/eia_updates.html">eia_updates</a></span><span class="op">(</span><span class="fl">389</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 0 x 2</span>
-<span class="co">#&gt; # ... with 2 variables: series_id &lt;chr&gt;, updated &lt;chr&gt;</span></pre></body></html></div>
+<span class="co">#&gt; # ... with 2 variables: series_id &lt;chr&gt;, updated &lt;chr&gt;</span></pre></div>
 <p>If a category has series available, paginated results are returned in a data frame. You can use <code>n</code> and <code>start</code> (together, unlike for general data requests with <code>eia_series</code>) to indicate how many rows to return and where to start. This helps you to cycle through pages of results. By default, <code>n = 50</code> and <code>start = 1</code>. The EIA API <code>updates</code> endpoint allows a maximum of <code>n = 10000</code>.</p>
-<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="fu"><a href="../reference/eia_updates.html">eia_updates</a></span>(<span class="fl">742</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fl">5</span>)
+<div class="sourceCode" id="cb21"><pre class="downlit">
+<span class="fu"><a href="../reference/eia_updates.html">eia_updates</a></span><span class="op">(</span><span class="fl">742</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 5 x 2</span>
 <span class="co">#&gt;   series_id                    updated                 </span>
-<span class="co">#&gt; * &lt;chr&gt;                        &lt;chr&gt;                   </span>
-<span class="co">#&gt; 1 ELEC.CONS_TOT_BTU.COW-AK-1.M 2020-04-24T16:14:48-0400</span>
-<span class="co">#&gt; 2 ELEC.CONS_TOT_BTU.COW-AL-1.M 2020-04-24T16:14:48-0400</span>
-<span class="co">#&gt; 3 ELEC.CONS_TOT_BTU.COW-AR-1.M 2020-04-24T16:14:48-0400</span>
-<span class="co">#&gt; 4 ELEC.CONS_TOT_BTU.COW-AZ-1.M 2020-04-24T16:14:48-0400</span>
-<span class="co">#&gt; 5 ELEC.CONS_TOT_BTU.COW-CO-1.M 2020-04-24T16:14:48-0400</span></pre></body></html></div>
+<span class="co">#&gt;   &lt;chr&gt;                        &lt;chr&gt;                   </span>
+<span class="co">#&gt; 1 ELEC.CONS_TOT_BTU.COW-AK-1.A 2020-10-27T18:46:54-0400</span>
+<span class="co">#&gt; 2 ELEC.CONS_TOT_BTU.COW-AK-1.M 2020-10-27T18:46:54-0400</span>
+<span class="co">#&gt; 3 ELEC.CONS_TOT_BTU.COW-AK-1.Q 2020-10-27T18:46:54-0400</span>
+<span class="co">#&gt; 4 ELEC.CONS_TOT_BTU.COW-AL-1.A 2020-10-27T18:46:54-0400</span>
+<span class="co">#&gt; 5 ELEC.CONS_TOT_BTU.COW-AL-1.M 2020-10-27T18:46:54-0400</span></pre></div>
 <p>Set <code>deep = TRUE</code> to obtain series associated with child categories. Category 389 above did not have series, but some of the child categories do.</p>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="fu"><a href="../reference/eia_updates.html">eia_updates</a></span>(<span class="fl">389</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fl">5</span>, <span class="kw">deep</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<div class="sourceCode" id="cb22"><pre class="downlit">
+<span class="fu"><a href="../reference/eia_updates.html">eia_updates</a></span><span class="op">(</span><span class="fl">389</span>, n <span class="op">=</span> <span class="fl">5</span>, deep <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 5 x 2</span>
 <span class="co">#&gt;   series_id                    updated                 </span>
-<span class="co">#&gt; * &lt;chr&gt;                        &lt;chr&gt;                   </span>
-<span class="co">#&gt; 1 ELEC.CONS_TOT_BTU.COW-AK-1.M 2020-04-24T16:14:48-0400</span>
-<span class="co">#&gt; 2 ELEC.CONS_TOT_BTU.COW-AL-1.M 2020-04-24T16:14:48-0400</span>
-<span class="co">#&gt; 3 ELEC.CONS_TOT_BTU.COW-AR-1.M 2020-04-24T16:14:48-0400</span>
-<span class="co">#&gt; 4 ELEC.CONS_TOT_BTU.COW-AZ-1.M 2020-04-24T16:14:48-0400</span>
-<span class="co">#&gt; 5 ELEC.CONS_TOT_BTU.COW-CO-1.M 2020-04-24T16:14:48-0400</span></pre></body></html></div>
+<span class="co">#&gt;   &lt;chr&gt;                        &lt;chr&gt;                   </span>
+<span class="co">#&gt; 1 ELEC.CONS_TOT_BTU.COW-AK-1.A 2020-10-27T18:46:54-0400</span>
+<span class="co">#&gt; 2 ELEC.CONS_TOT_BTU.COW-AK-1.M 2020-10-27T18:46:54-0400</span>
+<span class="co">#&gt; 3 ELEC.CONS_TOT_BTU.COW-AK-1.Q 2020-10-27T18:46:54-0400</span>
+<span class="co">#&gt; 4 ELEC.CONS_TOT_BTU.COW-AL-1.A 2020-10-27T18:46:54-0400</span>
+<span class="co">#&gt; 5 ELEC.CONS_TOT_BTU.COW-AL-1.M 2020-10-27T18:46:54-0400</span></pre></div>
 <p>The above example works to show this while using <code>n = 5</code> because there were no results for the top parent category. if there had been, it would likely be necessary to request more results in order to see that child series were included.</p>
 </div>
   </div>
@@ -545,7 +569,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -1,3 +1,8 @@
+# eia 0.3.7
+
+* Updated URL for `eia_updates`.
+* Updated vignettes.
+
 # eia 0.3.6
 
 * Minor fix to canned report.

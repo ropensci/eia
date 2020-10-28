@@ -10,14 +10,13 @@
   "codeRepository": "https://github.com/ropensci/eia",
   "issueTracker": "https://github.com/ropensci/eia/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.6.3",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.6.3 (2020-02-29)",
+  "runtimePlatform": "R version 4.0.2 (2020-06-22)",
   "author": [
     {
       "@type": "Person",
@@ -235,12 +234,8 @@
   ],
   "releaseNotes": "https://github.com/ropensci/eia/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/eia/blob/master/README.md",
-  "fileSize": "254.725KB",
-  "contIntegration": [
-    "https://travis-ci.org/leonawicz/eia",
-    "https://ci.appveyor.com/project/leonawicz/eia",
-    "https://codecov.io/gh/leonawicz/eia?branch=master"
-  ],
+  "fileSize": "1228.177KB",
+  "contIntegration": ["https://travis-ci.org/ropensci/eia", "https://ci.appveyor.com/project/leonawicz/eia", "https://codecov.io/gh/ropensci/eia?branch=master"],
   "keywords": [
     "eia-api",
     "r",
@@ -265,7 +260,7 @@
   ],
   "review": {
     "@type": "Review",
-    "url": "https://github.com/ropensci/onboarding/issues/342",
-    "provider": "http://ropensci.org"
+    "url": "https://github.com/ropensci/software-review/issues/342",
+    "provider": "https://ropensci.org"
   }
 }
