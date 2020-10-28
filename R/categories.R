@@ -130,7 +130,7 @@ eia_updates <- function(id = NULL, deep = FALSE, n = 50, start = 1,
   } else {
     id <- paste0("?category_id=", id, "&")
   }
-  url <- paste0("http://api.eia.gov/updates/", id, "api_key=", key,
+  url <- paste0("https://api.eia.gov/updates/", id, "api_key=", key,
                 "&deep=", tolower(as.character(deep)),
                 "&rows=", n, "&firstrow=", start - 1, "&out=json")
   x <- .eia_get(url)
