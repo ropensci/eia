@@ -66,7 +66,7 @@ eia_series <- function(id, start = NULL, end = NULL, n = NULL,
       stats::setNames(c("date", "value")) %>%
       tibble::as_tibble() %>%
       .parse_series_eiadate(x$f[i])
-    x$value <- as.numeric(x$value)
+    suppressWarnings(x$value <- as.numeric(x$value))
     x
   }
   x$data <- lapply(seq_len(nrow(x)), f)
