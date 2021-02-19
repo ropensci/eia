@@ -5,7 +5,7 @@
 
 **Author:** [Matthew Leonawicz](https://github.com/leonawicz)
 <a href="https://orcid.org/0000-0001-9452-2771" target="orcid.widget">
-<image class="orcid" src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" height="16"></a>
+<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>
 <br/> **License:** [MIT](https://opensource.org/licenses/MIT)<br/>
 
 [![Project Status: Active – The project has reached a stable, usable
@@ -77,9 +77,9 @@ Load a time series of net electricity generation.
 id <- "ELEC.GEN.ALL-AK-99.A"
 (d <- eia_series(id, n = 10))
 #> # A tibble: 1 x 13
-#>   series_id     name                     units       f     description                       copyright source              iso3166 geography start end   updated      data     
-#>   <chr>         <chr>                    <chr>       <chr> <chr>                             <chr>     <chr>               <chr>   <chr>     <chr> <chr> <chr>        <list>   
-#> 1 ELEC.GEN.ALL~ Net generation : all fu~ thousand m~ A     "Summation of all fuels used for~ None      EIA, U.S. Energy I~ USA-AK  USA-AK    2001  2019  2020-10-27T~ <tibble ~
+#>   series_id      name                       units        f     description                         copyright source                iso3166 geography start end   updated       data     
+#>   <chr>          <chr>                      <chr>        <chr> <chr>                               <chr>     <chr>                 <chr>   <chr>     <chr> <chr> <chr>         <list>   
+#> 1 ELEC.GEN.ALL-~ Net generation : all fuel~ thousand me~ A     "Summation of all fuels used for e~ None      EIA, U.S. Energy Inf~ USA-AK  USA-AK    2001  2019  2020-10-27T1~ <tibble ~
 
 d$data[[1]]
 #> # A tibble: 10 x 3

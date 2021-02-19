@@ -1,6 +1,7 @@
 # eia 0.3.7
 
 * Updated URL for `eia_updates`.
+* Minor fixes.
 * Updated vignettes.
 
 # eia 0.3.6

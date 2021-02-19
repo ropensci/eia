@@ -22,29 +22,19 @@
       "@type": "Person",
       "givenName": "Matthew",
       "familyName": "Leonawicz",
-      "email": "matt_leonawicz@esource.com",
+      "email": "mfleonawicz@esource.com",
       "@id": "https://orcid.org/0000-0001-9452-2771"
     }
   ],
   "contributor": {},
-  "copyrightHolder": [
-    {
-      "@type": "Organization",
-      "name": "E Source"
-    }
-  ],
-  "funder": [
-    {
-      "@type": "Organization",
-      "name": "E Source"
-    }
-  ],
+  "copyrightHolder": {},
+  "funder": {},
   "maintainer": [
     {
       "@type": "Person",
       "givenName": "Matthew",
       "familyName": "Leonawicz",
-      "email": "matt_leonawicz@esource.com",
+      "email": "mfleonawicz@esource.com",
       "@id": "https://orcid.org/0000-0001-9452-2771"
     }
   ],
@@ -234,7 +224,7 @@
   ],
   "releaseNotes": "https://github.com/ropensci/eia/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/eia/blob/master/README.md",
-  "fileSize": "1228.225KB",
+  "fileSize": "1231.106KB",
   "contIntegration": ["https://travis-ci.org/ropensci/eia", "https://ci.appveyor.com/project/leonawicz/eia", "https://codecov.io/gh/ropensci/eia?branch=master"],
   "keywords": [
     "eia-api",
