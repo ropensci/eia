@@ -3,9 +3,6 @@ url: https://docs.ropensci.org/eia
 authors:
   Matthew Leonawicz:
     href: https://github.com/leonawicz
-  E Source:
-    href: https://www.esource.com/
-    html: <img src="https://raw.githubusercontent.com/leonawicz/leonawicz.github.io/master/assets/img/esource_logo.png" height="24" />
 
 reference:
 - title: Package

@@ -224,7 +224,7 @@
   ],
   "releaseNotes": "https://github.com/ropensci/eia/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/eia/blob/master/README.md",
-  "fileSize": "1228.031KB",
+  "fileSize": "1227.97KB",
   "contIntegration": ["https://travis-ci.org/ropensci/eia", "https://ci.appveyor.com/project/leonawicz/eia", "https://codecov.io/gh/ropensci/eia?branch=master"],
   "keywords": [
     "eia-api",
