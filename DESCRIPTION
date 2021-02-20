@@ -1,7 +1,7 @@
 Package: eia
 Title: API Wrapper for 'US Energy Information Administration' Open Data
 Version: 0.3.7
-Authors@R: person("Matthew", "Leonawicz", email = "mfleonawicz@esource.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9452-2771"))
+Authors@R: person("Matthew", "Leonawicz", email = "mfleonawicz@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-9452-2771"))
 Description: Provides API access to data from the 'US Energy Information Administration' ('EIA') <https://www.eia.gov/>. 
     Use of the API requires a free API key obtainable at <https://www.eia.gov/opendata/register.php>.
     The package includes functions for searching 'EIA' data categories and importing time series and geoset time series datasets. 

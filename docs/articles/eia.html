@@ -47,7 +47,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
@@ -86,7 +86,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ropensci/eia">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -100,8 +100,7 @@
 
       
 
-      </header><script src="eia_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="eia_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="eia_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="eia_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Package overview</h1>
@@ -130,16 +129,16 @@
 <a href="#key-storage-and-retrieval" class="anchor"></a>Key storage and retrieval</h3>
 <p>You can always provide the <code>key</code> argument to every API function call, but you do not have to. There are getter and setter helpers available to make using <code>eia</code> functions a more seamless experience.</p>
 <p><code>eia_set_key</code> gives you the option of storing your key for the duration of your R session.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/eia/">eia</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/eia">eia</a></span><span class="op">)</span>
 <span class="co"># eia_set_key("yourkey")</span>
-<span class="co"># eia_get_key() # retrieve it</span></pre></div>
+<span class="co"># eia_get_key() # retrieve it</span></code></pre></div>
 <p>If the key already exists in the system environment and you plan to pass <code>key</code> to functions explicitly, you could start as follows.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="va">key</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv</a></span><span class="op">(</span><span class="st">"EIA_KEY"</span><span class="op">)</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">key</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv</a></span><span class="op">(</span><span class="st">"EIA_KEY"</span><span class="op">)</span>
 
 <span class="co"># or:</span>
-<span class="va">key</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eia_key.html">eia_get_key</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<span class="va">key</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eia_key.html">eia_get_key</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>In general, however, if your key is set globally such as in <code>.Renviron</code>, you do not need to do anything regarding the key when you use the package. See the vignette on API details for more information about all the options you have for key storage.</p>
 </div>
 </div>
@@ -149,8 +148,8 @@
 <p>Once you have your EIA registered API key and have it in place for your R session by whichever method you prefer, you are ready to begin accessing data from the EIA API.</p>
 <p>It is helpful to be aware of various categories of data that are available. Each category has a unique ID number that is required to access associated data. The first call below does not include an ID. The result is a list of two data frames. The first is metadata associated with that position in the category hierarchy. The second is the child category information.</p>
 <p>Here is the top-level category information.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span><span class="op">(</span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; $category</span>
 <span class="co">#&gt; # A tibble: 1 x 3</span>
 <span class="co">#&gt;   category_id name          notes</span>
@@ -174,10 +173,10 @@
 <span class="co">#&gt; 11     2134384 International Energy Data          </span>
 <span class="co">#&gt; 12     2251604 CO2 Emissions                      </span>
 <span class="co">#&gt; 13     2631064 International Energy Outlook       </span>
-<span class="co">#&gt; 14     2889994 U.S. Nuclear Outages</span></pre></div>
+<span class="co">#&gt; 14     2889994 U.S. Nuclear Outages</span></code></pre></div>
 <p>The child category IDs can be used to query results from that category.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
 <span class="co">#&gt; $category</span>
 <span class="co">#&gt; # A tibble: 1 x 4</span>
 <span class="co">#&gt;   category_id parent_category_id name        notes</span>
@@ -206,16 +205,16 @@
 <span class="co">#&gt; 16       41140 Average cost of fossil fuels for electricity generation           </span>
 <span class="co">#&gt; 17       41141 Average cost of fossil fuels for electricity generation (per Btu) </span>
 <span class="co">#&gt; 18       41142 Quality of fossil fuels in electricity generation : sulfur content</span>
-<span class="co">#&gt; 19       41143 Quality of fossil fuels in electricity generation : ash content</span></pre></div>
+<span class="co">#&gt; 19       41143 Quality of fossil fuels in electricity generation : ash content</span></code></pre></div>
 </div>
 <div id="eia-time-series-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#eia-time-series-data" class="anchor"></a>EIA time series data</h2>
 <p>Time series data is obtained by series ID. Most columns contain metadata. The <code>data</code> column contains the time series data.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 
 <span class="va">id</span> <span class="op">&lt;-</span> <span class="st">"ELEC.GEN.ALL-AK-99.A"</span>
 <span class="op">(</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span>, start <span class="op">=</span> <span class="fl">2010</span>, end <span class="op">=</span> <span class="fl">2019</span><span class="op">)</span><span class="op">)</span>
@@ -242,18 +241,18 @@
 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">units</span>, <span class="va">data</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="va">data</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span>, <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Year"</span>, y <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">units</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, title <span class="op">=</span> <span class="st">"Net Alaska electricity generation"</span>,
-       subtitle <span class="op">=</span> <span class="st">"From all fuels"</span>, caption <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">description</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></pre></div>
+       subtitle <span class="op">=</span> <span class="st">"From all fuels"</span>, caption <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">description</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <p><img src="eia-series1-1.png" title="plot of chunk series1" alt="plot of chunk series1" width="100%"></p>
 <p>You can provide arguments like the following:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="co"># max results</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="co"># max results</span>
 <span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="co"># most recent five</span>
 <span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span>, end <span class="op">=</span> <span class="fl">2016</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="co"># ending in 2016</span>
-<span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span>, start <span class="op">=</span> <span class="fl">2000</span>, end <span class="op">=</span> <span class="fl">2016</span><span class="op">)</span> <span class="co"># specific period</span></pre></div>
+<span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span>, start <span class="op">=</span> <span class="fl">2000</span>, end <span class="op">=</span> <span class="fl">2016</span><span class="op">)</span> <span class="co"># specific period</span></code></pre></div>
 <p>As with <code>eia_cats</code>, the output format does not need to be tidy:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span>, n <span class="op">=</span> <span class="fl">5</span>, tidy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># results of jsonlite::fromJSON</span>
-<span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span>, n <span class="op">=</span> <span class="fl">5</span>, tidy <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="co"># origina JSON as character string</span></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span>, n <span class="op">=</span> <span class="fl">5</span>, tidy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># results of jsonlite::fromJSON</span>
+<span class="fu"><a href="../reference/eia_series.html">eia_series</a></span><span class="op">(</span><span class="va">id</span>, n <span class="op">=</span> <span class="fl">5</span>, tidy <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="co"># origina JSON as character string</span></code></pre></div>
 <p>This allows you to use the returned results with existing code you may have that requires data in one of these less processed structures.</p>
 </div>
 <div id="eia-geosets" class="section level2">
@@ -261,8 +260,8 @@
 <a href="#eia-geosets" class="anchor"></a>EIA geosets</h2>
 <p>Geosets are metadata structures organizing time series datasets that can be mapped. Arguments to <code>eia_geoset</code> are the same as <code>eia_series</code> with the addition of <code>region</code>. Like <code>id</code>, <code>region</code> can be a vector. Most of the details are the same as before.</p>
 <p>In the example below using total electricity generation, get the last two data points for each of and two US states. <code>dplyr</code> and <code>tidyr</code> are used here to clean up the result a bit for purposes of display. <code>gpplot2</code> is used to graph the data after it has been unnested for each state.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ELEC.GEN.ALL-99.M"</span><span class="op">)</span> <span class="co"># monthly</span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ELEC.GEN.ALL-99.M"</span><span class="op">)</span> <span class="co"># monthly</span>
 <span class="va">region</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"USA-CA"</span>, <span class="st">"USA-NY"</span><span class="op">)</span>
 <span class="op">(</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eia_geoset.html">eia_geoset</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">region</span>, start <span class="op">=</span> <span class="st">"201801"</span>, end <span class="op">=</span> <span class="st">"201812"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 2 x 11</span>
@@ -289,7 +288,7 @@
 
 <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">x</span>, cols <span class="op">=</span> <span class="va">data</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">value</span>, color <span class="op">=</span> <span class="va">region</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">units</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, title <span class="op">=</span> <span class="st">"Net electricity generation"</span>, subtitle <span class="op">=</span> <span class="st">"From all fuels"</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">units</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, title <span class="op">=</span> <span class="st">"Net electricity generation"</span>, subtitle <span class="op">=</span> <span class="st">"From all fuels"</span><span class="op">)</span></code></pre></div>
 <p><img src="eia-geoset1-1.png" title="plot of chunk geoset1" alt="plot of chunk geoset1" width="100%"></p>
 <p>Another convenience of <code>eia_geoset</code> is the ability to provide regions in the following forms.</p>
 <ul>
@@ -299,8 +298,8 @@
 <li>US census division names</li>
 </ul>
 <p>These shortcuts make it easier to construct an API call involving several states.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="va">region</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AK"</span>, <span class="st">"New England"</span><span class="op">)</span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">region</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AK"</span>, <span class="st">"New England"</span><span class="op">)</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eia_geoset.html">eia_geoset</a></span><span class="op">(</span><span class="va">id</span>, <span class="va">region</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">region</span>, <span class="va">data</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="va">data</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 14 x 5</span>
@@ -341,7 +340,7 @@
 
 <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">x</span>, cols <span class="op">=</span> <span class="va">data</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">value</span>, color <span class="op">=</span> <span class="va">region</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">units</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, title <span class="op">=</span> <span class="st">"Net electricity generation"</span>, subtitle <span class="op">=</span> <span class="st">"From all fuels"</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">units</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, title <span class="op">=</span> <span class="st">"Net electricity generation"</span>, subtitle <span class="op">=</span> <span class="st">"From all fuels"</span><span class="op">)</span></code></pre></div>
 <p><img src="eia-geoset2-1.png" title="plot of chunk geoset2" alt="plot of chunk geoset2" width="100%"></p>
 <p>Even more convenient is that these names are available in R. See the <code>datasets::state.*</code> functions and the geoset vignette.</p>
 </div>
@@ -358,7 +357,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/leonawicz">Matthew Leonawicz</a>, <a href="https://www.esource.com/"><img src="https://raw.githubusercontent.com/leonawicz/leonawicz.github.io/master/assets/img/esource_logo.png" height="24"></a>.</p>
+  <p>Developed by <a href="https://github.com/leonawicz">Matthew Leonawicz</a>.</p>
 </div>
 
 <div class="pkgdown">

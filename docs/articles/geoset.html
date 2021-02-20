@@ -47,7 +47,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
@@ -86,7 +86,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ropensci/eia">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -100,8 +100,7 @@
 
       
 
-      </header><script src="geoset_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="geoset_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="geoset_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="geoset_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>EIA geosets</h1>
@@ -119,11 +118,11 @@
 <a href="#time-series-by-region" class="anchor"></a>Time series by region</h2>
 <p>Geosets are metadata structures relating series together. Requesting series using the <code>geoset</code> API endpoint is much the same as requesting series data using the <code>series</code> endpoint. Instead of <code>eia_series</code>, use <code>eia_geoset</code>.</p>
 <p>The main difference is that you must provide a geoset ID to <code>id</code> and a <code>region</code> argument. Both may be vectors of multiple series and regions. The function returns the combination of time series datasets and regions that exist. The API will not return all geographic entities associated with a geoset. You are required to specify which region(s) you want and they must be associated with the given geoset ID.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/eia/">eia</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/eia">eia</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 
 <span class="co"># eia_set_key("yourkey") # set API key if not already set globally</span>
 <span class="va">id</span> <span class="op">&lt;-</span> <span class="st">"ELEC.GEN.ALL-99.A"</span>
@@ -132,15 +131,15 @@
 <span class="co">#&gt; # A tibble: 1 x 11</span>
 <span class="co">#&gt;   geoset_id       setname                             f     units            series_id        name                                       region latlon start end   data        </span>
 <span class="co">#&gt;   &lt;chr&gt;           &lt;chr&gt;                               &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;                                      &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;list&gt;      </span>
-<span class="co">#&gt; 1 ELEC.GEN.ALL-9~ Net generation : all fuels : all s~ A     thousand megawa~ ELEC.GEN.ALL-CA~ Net generation : all fuels : California :~ USA-CA &lt;NA&gt;   2001  2019  &lt;tibble [3 ~</span></pre></div>
+<span class="co">#&gt; 1 ELEC.GEN.ALL-9~ Net generation : all fuels : all s~ A     thousand megawa~ ELEC.GEN.ALL-CA~ Net generation : all fuels : California :~ USA-CA &lt;NA&gt;   2001  2019  &lt;tibble [3 ~</span></code></pre></div>
 </div>
 <div id="groups-of-regions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#groups-of-regions" class="anchor"></a>Groups of regions</h2>
 <p>If you want data for all fifty states for example, you can set <code>region = "USA"</code>; you do not need to make a vector of all fifty state IDs. However, if you want certain region subsets, there are other options besides making a vector of these values. For example, the <code>eia_geoset</code> accepts shorthand descriptions of specific, popular subsets of states; so popular in fact that their labels ship with R itself in the <code>datasts</code> package.</p>
 <p>You can provide simple state abbreviations (without the <code>USA-</code> prefix), state names, and more to the point, US Census regions and divisions. These are two hierarchical sets of US states.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="va">state.abb</span>, <span class="va">state.name</span>, <span class="va">state.region</span>, <span class="va">state.division</span><span class="op">)</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="va">state.abb</span>, <span class="va">state.name</span>, <span class="va">state.region</span>, <span class="va">state.division</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 50 x 4</span>
 <span class="co">#&gt;    state.abb state.name  state.region state.division    </span>
 <span class="co">#&gt;    &lt;chr&gt;     &lt;chr&gt;       &lt;fct&gt;        &lt;fct&gt;             </span>
@@ -154,10 +153,10 @@
 <span class="co">#&gt;  8 DE        Delaware    South        South Atlantic    </span>
 <span class="co">#&gt;  9 FL        Florida     South        South Atlantic    </span>
 <span class="co">#&gt; 10 GA        Georgia     South        South Atlantic    </span>
-<span class="co">#&gt; # ... with 40 more rows</span></pre></div>
+<span class="co">#&gt; # ... with 40 more rows</span></code></pre></div>
 <p>Provide the associated label and <code>eia_geoset</code> recognizes subsets of US states. Even this can be a vector. In the example below, <code>region</code> consists of Alaska plus the states belonging to the New England census division.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="op">(</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/eia_geoset.html">eia_geoset</a></span><span class="op">(</span><span class="va">id</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AK"</span>, <span class="st">"New England"</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 7 x 11</span>
 <span class="co">#&gt;   geoset_id       setname                             f     units           series_id        name                                        region latlon start end   data        </span>
@@ -195,7 +194,7 @@
 
 <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">x</span>, cols <span class="op">=</span> <span class="va">data</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">value</span>, color <span class="op">=</span> <span class="va">region</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">units</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, title <span class="op">=</span> <span class="st">"Net electricity generation"</span>, subtitle <span class="op">=</span> <span class="st">"From all fuels"</span><span class="op">)</span></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">units</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, title <span class="op">=</span> <span class="st">"Net electricity generation"</span>, subtitle <span class="op">=</span> <span class="st">"From all fuels"</span><span class="op">)</span></code></pre></div>
 <p><img src="geoset-geoset2-1.png" title="plot of chunk geoset2" alt="plot of chunk geoset2" width="100%"></p>
 </div>
 <div id="relations" class="section level2">
@@ -217,7 +216,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/leonawicz">Matthew Leonawicz</a>, <a href="https://www.esource.com/"><img src="https://raw.githubusercontent.com/leonawicz/leonawicz.github.io/master/assets/img/esource_logo.png" height="24"></a>.</p>
+  <p>Developed by <a href="https://github.com/leonawicz">Matthew Leonawicz</a>.</p>
 </div>
 
 <div class="pkgdown">

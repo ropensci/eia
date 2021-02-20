@@ -47,7 +47,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
@@ -86,7 +86,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ropensci/eia">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -100,8 +100,7 @@
 
       
 
-      </header><script src="categories_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="categories_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="categories_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="categories_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>EIA categories</h1>
@@ -118,12 +117,12 @@
 <h2 class="hasAnchor">
 <a href="#top-level-categories" class="anchor"></a>Top level categories</h2>
 <p>It is helpful to be aware of various categories of data that are available. Each category has a unique ID number that is required to access associated data. The first call below does not include an ID. The result is a list of two data frames. The first is metadata associated with that position in the category hierarchy. The second is the child category information.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/eia/">eia</a></span><span class="op">)</span>
-<span class="co"># eia_set_key("yourkey") # set API key if not already set globally</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/eia">eia</a></span><span class="op">)</span>
+<span class="co"># eia_set_key("yourkey") # set API key if not already set globally</span></code></pre></div>
 <p>Here is the top-level category information.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span><span class="op">(</span><span class="op">)</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; $category</span>
 <span class="co">#&gt; # A tibble: 1 x 3</span>
 <span class="co">#&gt;   category_id name          notes</span>
@@ -147,14 +146,14 @@
 <span class="co">#&gt; 11     2134384 International Energy Data          </span>
 <span class="co">#&gt; 12     2251604 CO2 Emissions                      </span>
 <span class="co">#&gt; 13     2631064 International Energy Outlook       </span>
-<span class="co">#&gt; 14     2889994 U.S. Nuclear Outages</span></pre></div>
+<span class="co">#&gt; 14     2889994 U.S. Nuclear Outages</span></code></pre></div>
 </div>
 <div id="child-categories" class="section level2">
 <h2 class="hasAnchor">
 <a href="#child-categories" class="anchor"></a>Child categories</h2>
 <p>The child category IDs can be used to query results from that category.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>
 <span class="co">#&gt; $category</span>
 <span class="co">#&gt; # A tibble: 1 x 4</span>
 <span class="co">#&gt;   category_id parent_category_id name        notes</span>
@@ -183,24 +182,24 @@
 <span class="co">#&gt; 16       41140 Average cost of fossil fuels for electricity generation           </span>
 <span class="co">#&gt; 17       41141 Average cost of fossil fuels for electricity generation (per Btu) </span>
 <span class="co">#&gt; 18       41142 Quality of fossil fuels in electricity generation : sulfur content</span>
-<span class="co">#&gt; 19       41143 Quality of fossil fuels in electricity generation : ash content</span></pre></div>
+<span class="co">#&gt; 19       41143 Quality of fossil fuels in electricity generation : ash content</span></code></pre></div>
 <p>View the immediate child categories for a given parent category.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="../reference/eia_cats.html">eia_child_cats</a></span><span class="op">(</span><span class="fl">389</span><span class="op">)</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/eia_cats.html">eia_child_cats</a></span><span class="op">(</span><span class="fl">389</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 4 x 2</span>
 <span class="co">#&gt;   category_id name             </span>
 <span class="co">#&gt;         &lt;int&gt; &lt;chr&gt;            </span>
 <span class="co">#&gt; 1         742 Coal             </span>
 <span class="co">#&gt; 2         743 Petroleum liquids</span>
 <span class="co">#&gt; 3         744 Petroleum coke   </span>
-<span class="co">#&gt; 4         745 Natural gas</span></pre></div>
+<span class="co">#&gt; 4         745 Natural gas</span></code></pre></div>
 </div>
 <div id="parent-categories" class="section level2">
 <h2 class="hasAnchor">
 <a href="#parent-categories" class="anchor"></a>Parent categories</h2>
 <p>View all parent categories for a given child category.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="../reference/eia_cats.html">eia_parent_cats</a></span><span class="op">(</span><span class="fl">742</span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/eia_cats.html">eia_parent_cats</a></span><span class="op">(</span><span class="fl">742</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 6 x 4</span>
 <span class="co">#&gt;   category_id name                    notes parent_category_id</span>
 <span class="co">#&gt;   &lt;chr&gt;       &lt;chr&gt;                   &lt;chr&gt; &lt;chr&gt;             </span>
@@ -209,14 +208,14 @@
 <span class="co">#&gt; 3 32          Total consumption (Btu) ""    0                 </span>
 <span class="co">#&gt; 4 372         By sector               ""    32                </span>
 <span class="co">#&gt; 5 389         Electric utility        ""    372               </span>
-<span class="co">#&gt; 6 742         Coal                    ""    389</span></pre></div>
+<span class="co">#&gt; 6 742         Coal                    ""    389</span></code></pre></div>
 </div>
 <div id="output-format" class="section level2">
 <h2 class="hasAnchor">
 <a href="#output-format" class="anchor"></a>Output format</h2>
 <p>The default is to return tidy data in a tibble data frame. For <code>eia_cats</code> you can set <code>tidy = FALSE</code> to return the list returned by <code><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html">jsonlite::fromJSON</a></code> without any further processing or <code>tidy = NA</code> to return the raw JSON data as a character string.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span><span class="op">(</span>tidy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span><span class="op">(</span>tidy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt; $request</span>
 <span class="co">#&gt; $request$category_id</span>
 <span class="co">#&gt; [1] 371</span>
@@ -258,7 +257,7 @@
 <span class="co">#&gt; $category$childseries</span>
 <span class="co">#&gt; list()</span>
 <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/eia_cats.html">eia_cats</a></span><span class="op">(</span>tidy <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; {"request":{"category_id":371,"command":"category"},"category":{"category_id":"371","parent_category_id":null,"name":"EIA Data Sets","notes":"","childcategories":[{"category_id":0,"name":"Electricity"},{"category_id":40203,"name":"State Energy Data System (SEDS)"},{"category_id":714755,"name":"Petroleum"},{"category_id":714804,"name":"Natural Gas"},{"category_id":711224,"name":"Total Energy"},{"category_id":717234,"name":"Coal"},{"category_id":829714,"name":"Short-Term Energy Outlook"},{"category_id":964164,"name":"Annual Energy Outlook"},{"category_id":1292190,"name":"Crude Oil Imports"},{"category_id":2123635,"name":"U.S. Electric System Operating Data"},{"category_id":2134384,"name":"International Energy Data"},{"category_id":2251604,"name":"CO2 Emissions"},{"category_id":2631064,"name":"International Energy Outlook"},{"category_id":2889994,"name":"U.S. Nuclear Outages"}],"childseries":[]}}</span></pre></div>
+<span class="co">#&gt; {"request":{"category_id":371,"command":"category"},"category":{"category_id":"371","parent_category_id":null,"name":"EIA Data Sets","notes":"","childcategories":[{"category_id":0,"name":"Electricity"},{"category_id":40203,"name":"State Energy Data System (SEDS)"},{"category_id":714755,"name":"Petroleum"},{"category_id":714804,"name":"Natural Gas"},{"category_id":711224,"name":"Total Energy"},{"category_id":717234,"name":"Coal"},{"category_id":829714,"name":"Short-Term Energy Outlook"},{"category_id":964164,"name":"Annual Energy Outlook"},{"category_id":1292190,"name":"Crude Oil Imports"},{"category_id":2123635,"name":"U.S. Electric System Operating Data"},{"category_id":2134384,"name":"International Energy Data"},{"category_id":2251604,"name":"CO2 Emissions"},{"category_id":2631064,"name":"International Energy Outlook"},{"category_id":2889994,"name":"U.S. Nuclear Outages"}],"childseries":[]}}</span></code></pre></div>
 </div>
   </div>
 
@@ -273,7 +272,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/leonawicz">Matthew Leonawicz</a>, <a href="https://www.esource.com/"><img src="https://raw.githubusercontent.com/leonawicz/leonawicz.github.io/master/assets/img/esource_logo.png" height="24"></a>.</p>
+  <p>Developed by <a href="https://github.com/leonawicz">Matthew Leonawicz</a>.</p>
 </div>
 
 <div class="pkgdown">
