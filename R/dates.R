@@ -40,12 +40,14 @@
 eiadate_to_date <- function(x){
   date_format <- eiadate_format(x)
   .check_hl(date_format)
-  switch(date_format,
-         "A" = lubridate::ymd(x, truncated = 2L),
-         "Q" = lubridate::yq(x),
-         "M" = lubridate::ymd(x, truncated = 1L),
-         "D" = lubridate::ymd(x),
-         "H" = lubridate::ymd_h(x))
+  switch(
+    date_format,
+    "A" = lubridate::ymd(x, truncated = 2L),
+    "Q" = lubridate::yq(x),
+    "M" = lubridate::ymd(x, truncated = 1L),
+    "D" = lubridate::ymd(x),
+    "H" = lubridate::ymd_h(x)
+  )
 }
 
 #' @export
@@ -63,8 +65,11 @@ date_to_eiadate <- function(x, date_format = c("A", "Q", "M", "W", "D", "H")){
   } else if(date_format %in% c("W", "D")){
     gsub("-", "", as.character(x))
   } else if(date_format == "H"){
-    gsub("(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d) (\\d\\d)", "\\1\\2\\3T\\4Z",
-         substr(as.character(x), 1, 13))
+    gsub(
+      "(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d) (\\d\\d)",
+      "\\1\\2\\3T\\4Z",
+      substr(as.character(x), 1, 13)
+    )
   }
 }
 
@@ -78,9 +83,16 @@ date_to_eiadate <- function(x, date_format = c("A", "Q", "M", "W", "D", "H")){
 eiadate_to_date_seq <- function(start, end, weekly = FALSE){
   date_format <- eiadate_format(start, weekly)
   x <- eiadate_to_date(c(start, end))
-  i <- switch(date_format,
-              "Q" = "quarter", "M" = "month", "A" = "year",
-              "W" = "week", "D" = "day", "H" = "hour", "HL" = "hour")
+  i <- switch(
+    date_format,
+    "A" = "year",
+    "Q" = "quarter",
+    "M" = "month",
+    "W" = "week",
+    "D" = "day",
+    "H" = "hour",
+    "HL" = "hour"
+  )
   seq(x[1], x[2], by = i)
 }
 

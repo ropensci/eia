@@ -5,6 +5,7 @@ globalVariables(".data")
 #' This package provides API access to data from the US \href{https://www.eia.gov/}{Energy Information Administration} (EIA).
 #' @docType package
 #' @name eia
+#' @aliases eia
 NULL
 
 #' @importFrom tibble tibble
@@ -22,9 +23,9 @@ NULL
 #' @usage lhs \%>\% rhs
 NULL
 
-.eia_url <- function(key, id = NULL,
-                     endpoint = c("category", "series", "series/categories",
-                                  "geoset", "relation"),
+.eia_url <- function(key,
+                     endpoint = "electricity",
+                     id = "retail-sales",
                      relation = FALSE){
   endpoint <- match.arg(endpoint)
   if(is.null(id)){
@@ -39,7 +40,7 @@ NULL
     }
     id <- paste0("?", epid, "_id=", paste0(id, collapse = ";"), "&")
   }
-  paste0("https://api.eia.gov/", endpoint, "/", id, "api_key=", key, "&out=json")
+  paste0("https://api.eia.gov/v2/", endpoint, "/", id, "api_key=", key, "&out=json")
 }
 
 .eia_time_params <- function(start = NULL, end = NULL, n = NULL){

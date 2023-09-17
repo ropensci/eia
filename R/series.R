@@ -170,9 +170,12 @@ eia_series_dates <- function(id, cache = TRUE, key = eia_get_key()){
   f <- function(x){
     date_format <- eiadate_format(x$start)
     dates <- eiadate_to_date_seq(x$start, x$end)
-    tibble::tibble(series_id = x$series_id, date = dates,
-                   eiadate = date_to_eiadate(dates, date_format),
-                   date_format = date_format)
+    tibble::tibble(
+      series_id = x$series_id,
+      date = dates,
+      eiadate = date_to_eiadate(dates, date_format),
+      date_format = date_format
+    )
   }
   purrr::map_dfr(x, f)
 }
@@ -184,10 +187,15 @@ eia_series_range <- function(id, cache = TRUE, key = eia_get_key()){
   x <- split(x, factor(x$series_id, levels = unique(x$series_id)))
   f <- function(x){
     n <- nrow(x)
-    tibble::tibble(series_id = x$series_id[1], start_date = min(x$date),
-                   end_date = max(x$date),
-                   start = x$eiadate[1], end = x$eiadate[n],
-                   date_format = x$date_format[1], n = n[1])
+    tibble::tibble(
+      series_id = x$series_id[1],
+      start_date = min(x$date),
+      end_date = max(x$date),
+      start = x$eiadate[1],
+      end = x$eiadate[n],
+      date_format = x$date_format[1],
+      n = n[1]
+    )
   }
   purrr::map_dfr(x, f)
 }
@@ -224,5 +232,4 @@ eia_series_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
 
 .eia_series_cats_url <- function(id, key){
   .eia_url(key, id, "series/categories")
-
 }

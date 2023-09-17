@@ -27,7 +27,7 @@
 #' # use eia_set_key() to store stored API key
 #' eia_cats()
 #'
-#' eia_child_cats(389) # immedate children
+#' eia_child_cats(389) # immediate children
 #' eia_parent_cats(742) # all parents
 #' }
 eia_cats <- function(id = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
