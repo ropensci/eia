@@ -1,5 +1,5 @@
 .onAttach <- function(libname, pkgname) {
-  options(eia_antidos = 1)
+  options(eia_antidos = 1) # not sure yet what "antidos" is...
   key = Sys.getenv("EIA_KEY")
   if(key == "") {
     x <- "EIA_KEY"
