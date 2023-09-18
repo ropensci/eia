@@ -11,15 +11,15 @@
 #' `TRUE` uses memoization on a per R session basis, caching the result of the function call in memory for the duration of the R session.
 #' You can reset the entire cache by calling `eia_clear_cache`.
 #'
-#' `eia_child_cats` returns only the immediate child categories. `eia_parent_cats` returns all parents.
-#' These are wrappers around `eia_categories` and always return a tibble data frame.
+#' `eia_subcategories` returns only the immediate subcategories under a given parent.
+#' This is a wrapper around `eia_categories` and always return a tibble data frame.
 #'
 #' @param cat character, category id, if `NULL` then the API root directory.
 #' @param tidy logical, return a tidier result. See details.
 #' @param cache logical, cache result for duration of R session using memoization. See details.
 #' @param key API key: character if set explicitly; not needed if key is set globally. See `eia_set_key()`.
 #'
-#' @return for `eia_categories`, a list of tibble data frames (or a less processed list, or character, depending on `tidy` value); others functions return a tibble data frame.
+#' @return for `eia_categories`, a tibble data frame (or a less processed list, or character, depending on `tidy` value); others functions return a tibble data frame.
 #' @export
 #'
 #' @examples
