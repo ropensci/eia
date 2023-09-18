@@ -13,7 +13,9 @@ knitr::opts_chunk$set(
 library(eia)
 ```
 # eia <img src="man/figures/logo.png" style="margin-left:10px;margin-bottom:5px;" width="120" align="right">
-**Author:** [Matthew Leonawicz](https://github.com/leonawicz) <a href="https://orcid.org/0000-0001-9452-2771" target="orcid.widget">
+**Authors:**
+  - [Matt Hoff](https://github.com/mghoff)
+  - [Matthew Leonawicz](https://github.com/leonawicz) <a href="https://orcid.org/0000-0001-9452-2771" target="orcid.widget">
 <img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>
 <br/>
 **License:** [MIT](https://opensource.org/licenses/MIT)<br/>
@@ -60,18 +62,12 @@ library(eia)
 eia_set_key("yourkey") # set API key if not already set globally
 ```
 
-Load a time series of net electricity generation.
+Get a list of available data categories provided by the EIA's API.
 
 ```{r example}
-id <- "ELEC.GEN.ALL-AK-99.A"
-(d <- eia_series(id, n = 10))
+eia_categories()
 
-d$data[[1]]
-
-library(ggplot2)
-library(tidyr)
-unnest(d, cols = data) %>% ggplot(aes(factor(year), value)) + geom_col() + 
-  labs(x = "Year", y = d$units, title = d$name, caption = d$description)
+eia_subcategories("electricity")
 ```
 
 ## References

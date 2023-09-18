@@ -1,3 +1,7 @@
+# eia 0.3.8
+
+* Updated functions and functionality based on the new v2 API, effective March 2023.
+
 # eia 0.3.7
 
 * Updated URL for `eia_updates`.
