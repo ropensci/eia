@@ -31,8 +31,7 @@
 #' }
 eia_categories <- function(cat = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   .key_check(key)
-  if(cache) .eia_cats_memoized(cat, tidy, key) else
-    .eia_cats(cat, tidy, key)
+  if(cache) .eia_cats_memoized(cat, tidy, key) else .eia_cats(cat, tidy, key)
 }
 
 #' @export
