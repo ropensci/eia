@@ -13,7 +13,7 @@ NULL
 
 #' Pipe operator
 #'
-#' See \code{magrittr} package for details.
+#' See `magrittr` package for details.
 #'
 #' @name %>%
 #' @rdname pipe
