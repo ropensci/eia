@@ -10,7 +10,7 @@
 #' then you can call all the package API functions without having to provide the `key` argument repeatedly.
 #'
 #' @section Key storage methods:
-#' If you have already set your key globally somewhere using \code{eia_set_key}, \code{eia_get_key} will retrieve it.
+#' If you have already set your key globally somewhere using `eia_set_key`, `eia_get_key` will retrieve it.
 #' You can add the `EIA_KEY = "yourkey"` key-value pair to `options()` or as a system environment variable yourself and `eia_get_key`
 #' will pick it up as long as you use the name `EIA_KEY. For convenience you can do this in your R session with `eia_set_key`.
 #' It gives you three options for how to store the key. The default is to use the `eia` package environment that is created when the package is loaded.
