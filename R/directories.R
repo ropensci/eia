@@ -63,12 +63,12 @@ eia_child_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
 .eia_dirs <- function(dir, tidy, key){
   spltdir <- if (!is.null(dir) && grepl("/", dir))
     unlist(strsplit(dir, "/"))
-  x <- .eia_dir_url(dir, key) |> .eia_get()
-  if(is.na(tidy)) return(x)
-  x <- jsonlite::fromJSON(x)
-  if(!tidy) return(x)
-  if (!is.null(x$response$routes)){
-    x <- x$response$routes
+  r <- .eia_dir_url(dir, key) |> .eia_get()
+  if(is.na(tidy)) return(r)
+  r <- jsonlite::fromJSON(r)
+  if(!tidy) return(r)
+  if (!is.null(r$response$routes)){
+    r <- r$response$routes
   } else {
     message(paste0(
       "No further sub-directories to discover; ",
@@ -76,8 +76,8 @@ eia_child_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
       spltdir[length(spltdir)]
     ))
   }
-  if(tidy && is.data.frame(x))
-    tibble::as_tibble(sapply(x, function(x) { gsub("( \\r\\n) *", " ", x) }))
+  if(tidy && is.data.frame(r))
+    tibble::as_tibble(sapply(r, function(x) { gsub("( \\r\\n) *", " ", x) }))
 
   ## NOT SURE OF USEFULNESS OF BELOW ERROR HANDLING...
   # empty <- which(vapply(x, length, integer(1)) == 0)
