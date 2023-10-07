@@ -44,7 +44,7 @@ eia_subdirectories <- function(dir, cache = TRUE, key = eia_get_key()){
 #' @export
 #' @rdname eia_directories
 eia_dirs <- function(id = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
-  .Deprecated("eia_categories")
+  .Deprecated("eia_directories")
   eia_directories(dir = id, tidy, cache, key)
 }
 
@@ -72,7 +72,7 @@ eia_child_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   } else {
     message(paste0(
       "No further sub-directories to discover; ",
-      "use `eia::eia_data()` to explore data within ",
+      "\n  use `eia::eia_data()` to explore data within ",
       spltdir[length(spltdir)]
     ))
   }
