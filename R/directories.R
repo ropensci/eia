@@ -72,7 +72,7 @@ eia_child_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   } else {
     message(paste0(
       "No further sub-directories to discover; ",
-      "\n  use `eia::eia_data()` to explore data within ",
+      "\n  use `eia::eia_metadata()` to explore data within ",
       spltdir[length(spltdir)]
     ))
   }
