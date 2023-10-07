@@ -1,6 +1,6 @@
 #' EIA categories
 #'
-#' Obtain EIA categories.
+#' Obtain EIA directories.
 #'
 #' By default, additional processing is done to return a list containing tibble data frames.
 #' Set `tidy = FALSE` to return only the initial list result of `jsonlite::fromJSON`.
@@ -11,61 +11,59 @@
 #' `TRUE` uses memoization on a per R session basis, caching the result of the function call in memory for the duration of the R session.
 #' You can reset the entire cache by calling `eia_clear_cache`.
 #'
-#' `eia_subcategories` returns only the immediate subcategories under a given parent.
-#' This is a wrapper around `eia_categories` and always return a tibble data frame.
+#' `eia_subdirectories` returns only the immediate subcategories under a given parent.
+#' This is a wrapper around `eia_directories` and always return a tibble data frame.
 #'
-#' @param cat character, category id, if `NULL` then the API root directory.
+#' @param dir character, directory path, if `NULL` then the API root directory.
 #' @param tidy logical, return a tidier result. See details.
 #' @param cache logical, cache result for duration of R session using memoization. See details.
 #' @param key API key: character if set explicitly; not needed if key is set globally. See `eia_set_key()`.
 #'
-#' @return for `eia_categories`, a tibble data frame (or a less processed list, or character, depending on `tidy` value); others functions return a tibble data frame.
+#' @return for `eia_directories`, a tibble data frame (or a less processed list, or character, depending on `tidy` value); others functions return a tibble data frame.
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' # use eia_set_key() to store API key
-#' eia_categories()
-#' eia_subcategories("electricity")
-#' eia_subcategories("electricity/rto")
+#' eia_directories()
+#' eia_subdirectories("electricity")
+#' eia_subdirectories("electricity/rto")
 #' }
-eia_categories <- function(cat = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
+eia_directories <- function(dir = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   .key_check(key)
-  if(cache) .eia_cats_memoized(cat, tidy, key) else .eia_cats(cat, tidy, key)
+  if(cache) .eia_cats_memoized(dir, tidy, key) else .eia_cats(dir, tidy, key)
 }
 
 #' @export
-#' @rdname eia_categories
-eia_subcategories <- function(cat, cache = TRUE, key = eia_get_key()){
+#' @rdname eia_directories
+eia_subdirectories <- function(dir, cache = TRUE, key = eia_get_key()){
   .key_check(key)
-  eia_categories(cat, cache = cache, key = key)
+  eia_categories(dir, cache = cache, key = key)
 }
 
 #' @export
-#' @rdname eia_categories
-eia_cats <- function(id = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
+#' @rdname eia_directories
+eia_dirs <- function(id = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   .Deprecated("eia_categories")
-  eia_categories(cat = id, tidy, cache, key)
+  eia_directories(dir = id, tidy, cache, key)
 }
 
 #' @export
-#' @rdname eia_categories
+#' @rdname eia_directories
 eia_parent_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
-  .Deprecated("eia_categories")
-  eia_categories(cat = id, tidy, cache, key)
+  .Defunct("eia_categories")
 }
 
 #' @export
-#' @rdname eia_categories
+#' @rdname eia_directories
 eia_child_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
-  .Deprecated("eia_subcategories")
-  eia_subcategories(cat = id, tidy, cache, key)
+  .Defunct("eia_subcategories")
 }
 
-.eia_cats <- function(cat, tidy, key){
-  cat_dir <- if (!is.null(cat) && grepl("/", cat))
-    unlist(strsplit(cat, "/"))
-  x <- .eia_cat_url(cat, key) |> .eia_get()
+.eia_dirs <- function(dir, tidy, key){
+  spltdir <- if (!is.null(dir) && grepl("/", dir))
+    unlist(strsplit(dir, "/"))
+  x <- .eia_cat_url(dir, key) |> .eia_get()
   if(is.na(tidy)) return(x)
   x <- jsonlite::fromJSON(x)
   if(!tidy) return(x)
@@ -75,7 +73,7 @@ eia_child_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
     message(paste0(
       "No further sub-categories to discover; ",
       "use `eia::eia_data()` to explore ",
-      cat_dir[length(cat_dir)], " data."
+      spltdir[length(spltdir)], " data."
     ))
   }
   if(tidy && is.data.frame(x))
@@ -92,8 +90,8 @@ eia_child_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
 
 .eia_cats_memoized <- memoise::memoise(.eia_cats)
 
-.eia_cat_url <- function(cat, key){
-  .eia_url(path = paste0(cat, "/?api_key=", key))
+.eia_cat_url <- function(dir, key){
+  .eia_url(path = paste0(dir, "/?api_key=", key))
 }
 
 
