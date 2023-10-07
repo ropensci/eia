@@ -31,7 +31,7 @@
 #' }
 eia_directories <- function(dir = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   .key_check(key)
-  if(cache) .eia_cats_memoized(dir, tidy, key) else .eia_cats(dir, tidy, key)
+  if(cache) .eia_dirs_memoized(dir, tidy, key) else .eia_dirs(dir, tidy, key)
 }
 
 #' @export
@@ -63,7 +63,7 @@ eia_child_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
 .eia_dirs <- function(dir, tidy, key){
   spltdir <- if (!is.null(dir) && grepl("/", dir))
     unlist(strsplit(dir, "/"))
-  x <- .eia_cat_url(dir, key) |> .eia_get()
+  x <- .eia_dir_url(dir, key) |> .eia_get()
   if(is.na(tidy)) return(x)
   x <- jsonlite::fromJSON(x)
   if(!tidy) return(x)
@@ -71,9 +71,9 @@ eia_child_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
     x <- x$response$routes
   } else {
     message(paste0(
-      "No further sub-categories to discover; ",
-      "use `eia::eia_data()` to explore ",
-      spltdir[length(spltdir)], " data."
+      "No further sub-directories to discover; ",
+      "use `eia::eia_data()` to explore data within ",
+      spltdir[length(spltdir)]
     ))
   }
   if(tidy && is.data.frame(x))
@@ -88,9 +88,9 @@ eia_child_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   # purrr::modify_if(x, is.data.frame, tibble::as_tibble)
 }
 
-.eia_cats_memoized <- memoise::memoise(.eia_cats)
+.eia_irss_memoized <- memoise::memoise(.eia_dirs)
 
-.eia_cat_url <- function(dir, key){
+.eia_dir_url <- function(dir, key){
   .eia_url(path = paste0(dir, "/?api_key=", key))
 }
 

@@ -2,20 +2,20 @@
 #'
 #' Reset the results of API calls that are currently cached in memory.
 #'
-#' \code{eia_clear_cache} clears the entire cache. The other functions clear the cache associated with specific endpoints.
+#' `eia_clear_cache` clears the entire cache. The other functions clear the cache associated with specific endpoints.
 #'
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' key <- Sys.getenv("EIA_KEY") # your stored API key
-#' system.time(eia_cats(key))
-#' system.time(eia_cats(key))
+#' system.time(eia_dirs(key))
+#' system.time(eia_dirs(key))
 #' eia_clear_cache()
-#' system.time(eia_cats(key))
+#' system.time(eia_dirs(key))
 #' }
 eia_clear_cache <- function(){
-  eia_clear_cats()
+  eia_clear_dirs()
   eia_clear_series()
   eia_clear_geoset()
   invisible()
@@ -23,8 +23,8 @@ eia_clear_cache <- function(){
 
 #' @rdname eia_clear_cache
 #' @export
-eia_clear_cats <- function(){
-  memoise::forget(.eia_cats_memoized)
+eia_clear_dirs <- function(){
+  memoise::forget(.eia_dirs_memoized)
   invisible()
 }
 
