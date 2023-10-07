@@ -7,12 +7,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-
-
-## Finding the series ID
+## Finding the desired data series
 
 Like category information, time series data is obtained based on its ID. A complete example includes finding the ID for the series if you do not already know it. Chances are you may already know the series IDs you need after using the API explorer on the EIA website. Below, look for total electricity consumption.
-
 
 ```r
 library(eia)
