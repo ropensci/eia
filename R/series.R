@@ -3,25 +3,25 @@
 #' Obtain EIA data series.
 #'
 #' By default, additional processing is done to return a tibble data frame.
-#' Set \code{tidy = FALSE} to return only the initial list result of \code{jsonlite::fromJSON}.
-#' Set \code{tidy = NA} to return the original JSON as a character string.
+#' Set `tidy = FALSE` to return only the initial list result of `jsonlite::fromJSON`.
+#' Set `tidy = NA` to return the original JSON as a character string.
 #'
-#' Set to \code{cache = FALSE} to force a new API call for updated data.
-#' Using \code{FALSE} always makes a new API call and returns the result from the server.
-#' \code{TRUE} uses memoization on a per R session basis, caching the result of the function call in memory for the duration of the R session.
-#' You can reset the entire cache by calling \code{eia_clear_cache()}.
+#' Set to `cache = FALSE` to force a new API call for updated data.
+#' Using `FALSE` always makes a new API call and returns the result from the server.
+#' `TRUE` uses memoization on a per R session basis, caching the result of the function call in memory for the duration of the R session.
+#' You can reset the entire cache by calling `eia_clear_cache()`.
 #'
 #' @param id character, series ID, may be a vector.
 #' @param start start date. Providing only a start date will return up to the maximum 100 results if available.
 #' @param end end date. Providing only an end date will a single result for that date.
-#' @param n integer, length of series to return ending at most recent value or at \code{end} date if also provided. Ignored if \code{start} is not \code{NULL}.
+#' @param n integer, length of series to return ending at most recent value or at `end` date if also provided. Ignored if `start` is not `NULL`.
 #' @param tidy logical, return a tidier result. See details.
 #' @param cache logical, cache result for duration of R session using memoization. See details.
-#' @param key API key: character if set explicitly; not needed if key is set globally. See \code{\link{eia_set_key}}.
+#' @param key API key: character if set explicitly; not needed if key is set globally. See `eia_set_key()`.
 #'
-#' @return a tibble data frame (or a list, or character, depending on \code{tidy} value)
+#' @return a tibble data frame (or a list, or character, depending on `tidy` value)
 #' @export
-#' @seealso \code{\link{eia_clear_cache}}
+#' @seealso `eia_clear_cache()`
 #'
 #' @examples
 #' \dontrun{
@@ -48,7 +48,7 @@ eia_series <- function(id, start = NULL, end = NULL, n = NULL,
 
 .eia_series <- function(id, start = NULL, end = NULL,
                         n = NULL, tidy = TRUE, key){
-  x <- .eia_series_url(id, start, end, n, key) %>% .eia_get()
+  x <- .eia_series_url(id, start, end, n, key) |> .eia_get()
   if(is.na(tidy)) return(x)
   x <- jsonlite::fromJSON(x)
   if("error" %in% names(x$data))
@@ -62,9 +62,9 @@ eia_series <- function(id, start = NULL, end = NULL, n = NULL,
       warning(paste0("No data returned for id: ", id[i], "."), call. = FALSE)
       return()
     }
-    x <- as.data.frame(x$data[[i]], stringsAsFactors = FALSE) %>%
-      stats::setNames(c("date", "value")) %>%
-      tibble::as_tibble() %>%
+    x <- as.data.frame(x$data[[i]], stringsAsFactors = FALSE) |>
+      stats::setNames(c("date", "value")) |>
+      tibble::as_tibble() |>
       .parse_series_eiadate(x$f[i])
     suppressWarnings(x$value <- as.numeric(x$value))
     x
