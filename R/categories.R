@@ -26,8 +26,8 @@
 #' \dontrun{
 #' # use eia_set_key() to store API key
 #' eia_categories()
-#'
 #' eia_subcategories("electricity")
+#' eia_subcategories("electricity/rto")
 #' }
 eia_categories <- function(cat = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   .key_check(key)
@@ -63,11 +63,21 @@ eia_child_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
 }
 
 .eia_cats <- function(cat, tidy, key){
+  cat_dir <- if (!is.null(cat) && grepl("/", cat))
+    unlist(strsplit(cat, "/"))
   x <- .eia_cat_url(cat, key) |> .eia_get()
   if(is.na(tidy)) return(x)
   x <- jsonlite::fromJSON(x)
   if(!tidy) return(x)
-  x <- x$response$routes
+  if (!is.null(x$response$routes)){
+    x <- x$response$routes
+  } else {
+    message(paste0(
+      "No further sub-categories to discover; ",
+      "use `eia::eia_data()` to explore ",
+      cat_dir[length(cat_dir)], " data."
+    ))
+  }
   if(tidy && is.data.frame(x))
     tibble::as_tibble(sapply(x, function(x) { gsub("( \\r\\n) *", " ", x) }))
 
