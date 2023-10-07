@@ -27,7 +27,7 @@ eia_series(
 
 \item{cache}{logical, cache result for duration of R session using memoization. See details.}
 
-\item{key}{API key: character if set explicitly; not needed if key is set globally. See \code{\link{eia_set_key}}.}
+\item{key}{API key: character if set explicitly; not needed if key is set globally. See \code{eia_set_key()}.}
 }
 \value{
 a tibble data frame (or a list, or character, depending on \code{tidy} value)
@@ -63,5 +63,5 @@ x$data
 }
 }
 \seealso{
-\code{\link{eia_clear_cache}}
+\code{eia_clear_cache()}
 }

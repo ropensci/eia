@@ -2,14 +2,14 @@
 % Please edit documentation in R/cache.R
 \name{eia_clear_cache}
 \alias{eia_clear_cache}
-\alias{eia_clear_cats}
+\alias{eia_clear_dirs}
 \alias{eia_clear_series}
 \alias{eia_clear_geoset}
 \title{Clear API results cache}
 \usage{
 eia_clear_cache()
 
-eia_clear_cats()
+eia_clear_dirs()
 
 eia_clear_series()
 
@@ -24,9 +24,9 @@ Reset the results of API calls that are currently cached in memory.
 \examples{
 \dontrun{
 key <- Sys.getenv("EIA_KEY") # your stored API key
-system.time(eia_cats(key))
-system.time(eia_cats(key))
+system.time(eia_dirs(key))
+system.time(eia_dirs(key))
 eia_clear_cache()
-system.time(eia_cats(key))
+system.time(eia_dirs(key))
 }
 }

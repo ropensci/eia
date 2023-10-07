@@ -34,8 +34,7 @@ then you can call all the package API functions without having to provide the \c
 
 If you have already set your key globally somewhere using \code{eia_set_key}, \code{eia_get_key} will retrieve it.
 You can add the \code{EIA_KEY = "yourkey"} key-value pair to \code{options()} or as a system environment variable yourself and \code{eia_get_key}
-will pick it up as long as you use the name \code{EIA_KEY}. For convenience you can do this in your R session with \code{eia_set_key}.
-It gives you three options for how to store the key. The default is to use the \code{eia} package environment that is created when the package is loaded.
+will pick it up as long as you use the name \verb{EIA_KEY. For convenience you can do this in your R session with }eia_set_key\verb{. It gives you three options for how to store the key. The default is to use the }eia` package environment that is created when the package is loaded.
 }
 
 \section{Precedence}{
