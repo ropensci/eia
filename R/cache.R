@@ -16,8 +16,8 @@
 #' }
 eia_clear_cache <- function(){
   eia_clear_dirs()
-  eia_clear_series()
-  eia_clear_geoset()
+  eia_clear_metadata()
+  eia_clear_data()
   invisible()
 }
 
@@ -30,14 +30,14 @@ eia_clear_dirs <- function(){
 
 #' @rdname eia_clear_cache
 #' @export
-eia_clear_series <- function(){
-  memoise::forget(.eia_series_memoized)
+eia_clear_metadata <- function(){
+  memoise::forget(.eia_metadata_memoized)
   invisible()
 }
 
 #' @rdname eia_clear_cache
 #' @export
-eia_clear_geoset <- function(){
-  memoise::forget(.eia_geoset_memoized)
+eia_clear_data <- function(){
+  memoise::forget(.eia_data_memoized)
   invisible()
 }

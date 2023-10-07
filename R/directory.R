@@ -1,6 +1,6 @@
-#' EIA categories
+#' EIA directory
 #'
-#' Obtain EIA directories.
+#' Obtain EIA directory listing.
 #'
 #' By default, additional processing is done to return a list containing tibble data frames.
 #' Set `tidy = FALSE` to return only the initial list result of `jsonlite::fromJSON`.
@@ -8,59 +8,60 @@
 #'
 #' Set to `cache = FALSE` to force a new API call for updated data.
 #' Using `FALSE` always makes a new API call and returns the result from the server.
-#' `TRUE` uses memoization on a per R session basis, caching the result of the function call in memory for the duration of the R session.
+#' `TRUE` uses memoization on a per R session basis, caching the result of the
+#' function call in memory for the duration of the R session.
 #' You can reset the entire cache by calling `eia_clear_cache`.
 #'
-#' `eia_subdirectories` returns only the immediate subcategories under a given parent.
-#' This is a wrapper around `eia_directories` and always return a tibble data frame.
+#' `eia_subdirectory` returns only the immediate sub-directories (folders/files) under a given parent.
+#' This is a wrapper around `eia_directory` and always return a tibble data frame.
 #'
 #' @param dir character, directory path, if `NULL` then the API root directory.
 #' @param tidy logical, return a tidier result. See details.
 #' @param cache logical, cache result for duration of R session using memoization. See details.
 #' @param key API key: character if set explicitly; not needed if key is set globally. See `eia_set_key()`.
 #'
-#' @return for `eia_directories`, a tibble data frame (or a less processed list, or character, depending on `tidy` value); others functions return a tibble data frame.
+#' @return for `eia_directory`, a tibble data frame (or a less processed list, or character, depending on `tidy` value); others functions return a tibble data frame.
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' # use eia_set_key() to store API key
-#' eia_directories()
-#' eia_subdirectories("electricity")
-#' eia_subdirectories("electricity/rto")
+#' eia_directory()
+#' eia_subdirectory("electricity")
+#' eia_subdirectory("electricity/rto")
 #' }
-eia_directories <- function(dir = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
+eia_directory <- function(dir = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   .key_check(key)
-  if(cache) .eia_dirs_memoized(dir, tidy, key) else .eia_dirs(dir, tidy, key)
+  if(cache) .eia_dir_memoized(dir, tidy, key) else .eia_dir(dir, tidy, key)
 }
 
 #' @export
-#' @rdname eia_directories
-eia_subdirectories <- function(dir, cache = TRUE, key = eia_get_key()){
+#' @rdname eia_directory
+eia_subdirectory <- function(dir, cache = TRUE, key = eia_get_key()){
   .key_check(key)
-  eia_directories(dir, cache = cache, key = key)
+  eia_directory(dir, cache = cache, key = key)
 }
 
 #' @export
-#' @rdname eia_directories
-eia_dirs <- function(id = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
-  .Deprecated("eia_directories")
-  eia_directories(dir = id, tidy, cache, key)
+#' @rdname eia_directory
+eia_dir <- function(id = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
+  .Deprecated("eia_directory")
+  eia_directory(dir = id, tidy, cache, key)
 }
 
 #' @export
-#' @rdname eia_directories
+#' @rdname eia_directory
 eia_parent_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   .Defunct("eia_categories")
 }
 
 #' @export
-#' @rdname eia_directories
+#' @rdname eia_directory
 eia_child_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   .Defunct("eia_subcategories")
 }
 
-.eia_dirs <- function(dir, tidy, key){
+.eia_dir <- function(dir, tidy, key){
   spltdir <- if (!is.null(dir) && grepl("/", dir))
     unlist(strsplit(dir, "/"))
   r <- .eia_dir_url(dir, key) |> .eia_get()
@@ -71,9 +72,8 @@ eia_child_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
     r <- r$response$routes
   } else {
     message(paste0(
-      "No further sub-directories to discover; ",
-      "\n  use `eia::eia_metadata()` to explore data within ",
-      spltdir[length(spltdir)]
+      "No further sub-directories to discover.\n",
+      'Use `eia::eia_metadata("', dir, '")` to explore this data.'
     ))
   }
   if(tidy && is.data.frame(r))
@@ -88,7 +88,7 @@ eia_child_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   # purrr::modify_if(x, is.data.frame, tibble::as_tibble)
 }
 
-.eia_dirs_memoized <- memoise::memoise(.eia_dirs)
+.eia_dir_memoized <- memoise::memoise(.eia_dir)
 
 .eia_dir_url <- function(dir, key){
   .eia_url(path = paste0(dir, "/?api_key=", key))
