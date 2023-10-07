@@ -88,7 +88,7 @@ eia_child_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   # purrr::modify_if(x, is.data.frame, tibble::as_tibble)
 }
 
-.eia_irss_memoized <- memoise::memoise(.eia_dirs)
+.eia_dirs_memoized <- memoise::memoise(.eia_dirs)
 
 .eia_dir_url <- function(dir, key){
   .eia_url(path = paste0(dir, "/?api_key=", key))
