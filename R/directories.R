@@ -38,7 +38,7 @@ eia_directories <- function(dir = NULL, tidy = TRUE, cache = TRUE, key = eia_get
 #' @rdname eia_directories
 eia_subdirectories <- function(dir, cache = TRUE, key = eia_get_key()){
   .key_check(key)
-  eia_categories(dir, cache = cache, key = key)
+  eia_directories(dir, cache = cache, key = key)
 }
 
 #' @export
