@@ -24,7 +24,7 @@ eia_clear_cache <- function(){
 #' @rdname eia_clear_cache
 #' @export
 eia_clear_dirs <- function(){
-  memoise::forget(.eia_dirs_memoized)
+  memoise::forget(.eia_dir_memoized)
   invisible()
 }
 
@@ -38,6 +38,6 @@ eia_clear_metadata <- function(){
 #' @rdname eia_clear_cache
 #' @export
 eia_clear_data <- function(){
-  memoise::forget(.eia_data_memoized)
+  memoise::forget(.eia_metadata_memoized)
   invisible()
 }
