@@ -4,13 +4,13 @@
 #'
 #' There is no reason to mix EIA date formats in this context. Functions that take EIA date strings expect a consistent format.
 #' Also, EIA date formats are parsed automatically from the dates themselves.
-#' However, daily and weekly use the same format. Too avoid ambiguity in \code{eia_date_seq}, daily is assumed; set \code{weekly = TRUE} to treat as weekly.
+#' However, daily and weekly use the same format. Too avoid ambiguity in `eia_date_seq`, daily is assumed; set `weekly = TRUE` to treat as weekly.
 #'
-#' When providing a real date or date string, such as to \code{date_to_eiadate}, dates should be in \code{yyyy-mm-dd} format,
-#' or at least any format that can be parsed by \code{lubridate::ymd} or \code{lubridate::ymd_hms} for dates and hourly date times, respectively.
+#' When providing a real date or date string, such as to `date_to_eiadate`, dates should be in `YYYY-MM-DD` format,
+#' or at least any format that can be parsed by `lubridate::ymd` or `lubridate::ymd_hms` for dates and hourly date times, respectively.
 #'
-#' \code{"HL"} is not a supported date format. Use \code{"H"}. The API does not
-#' translate the date and time when using \code{"HL"} anyhow; it simply appends
+#' `"LH"` is not a supported date format. Use `"H"`. The API does not
+#' translate the date and time when using `"LH"` anyhow; it simply appends
 #' the date string with the number of hours time difference.
 #'
 #' @param x character, EIA date string; character or date object for regular dates. See details.
