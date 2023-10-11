@@ -33,11 +33,11 @@ There is no reason to mix EIA date formats in this context. Functions that take 
 Also, EIA date formats are parsed automatically from the dates themselves.
 However, daily and weekly use the same format. Too avoid ambiguity in \code{eia_date_seq}, daily is assumed; set \code{weekly = TRUE} to treat as weekly.
 
-When providing a real date or date string, such as to \code{date_to_eiadate}, dates should be in \code{yyyy-mm-dd} format,
+When providing a real date or date string, such as to \code{date_to_eiadate}, dates should be in \code{YYYY-MM-DD} format,
 or at least any format that can be parsed by \code{lubridate::ymd} or \code{lubridate::ymd_hms} for dates and hourly date times, respectively.
 
-\code{"HL"} is not a supported date format. Use \code{"H"}. The API does not
-translate the date and time when using \code{"HL"} anyhow; it simply appends
+\code{"LH"} is not a supported date format. Use \code{"H"}. The API does not
+translate the date and time when using \code{"LH"} anyhow; it simply appends
 the date string with the number of hours time difference.
 }
 \examples{
@@ -47,11 +47,12 @@ date_to_eiadate("2018-05-14", "A")
 date_to_eiadate("2018-05-14", "Q")
 date_to_eiadate("2018-05-14", "M")
 
-(x <- eiadate_to_date_seq("2018Q1", "2018Q4"))
+(x <- eiadate_to_date_seq("2018-Q1", "2018-Q4"))
 date_to_eiadate(x, "Q")
+date_to_eiadate(x, "M")
 
-(x <- eiadate_to_date("20190102T16Z"))
+(x <- eiadate_to_date("2019-01-02T16Z"))
 date_to_eiadate(x, "H")
-(x <- eiadate_to_date_seq("20190102T16Z", "20190102T19Z"))
+(x <- eiadate_to_date_seq("2019-01-02T16Z", "2019-01-02T19Z"))
 date_to_eiadate(x, "H")
 }
