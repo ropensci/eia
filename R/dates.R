@@ -74,8 +74,8 @@ date_to_eiadate <- function(x, date_format = c("A", "Q", "M", "W", "D", "H")){
 }
 
 .check_hl <- function(x){
-  if(x == "HL")
-    stop("`HL` date format is not supported. Use `H`.", call. = FALSE)
+  if(x == "LH")
+    stop("`lH` date format is not supported. Use `H`.", call. = FALSE)
 }
 
 #' @export
@@ -91,7 +91,7 @@ eiadate_to_date_seq <- function(start, end, weekly = FALSE){
     "W" = "week",
     "D" = "day",
     "H" = "hour",
-    "HL" = "hour"
+    "LH" = "hour"
   )
   seq(x[1], x[2], by = i)
 }
@@ -100,19 +100,20 @@ is_eiadate <- function(x){
   if(!is.character(x)) return(FALSE)
   grepl("^\\d\\d\\d\\d((0[1-9]|1[0-2])|)$", x) |
     grepl("^\\d\\d\\d\\dQ(1|2|3|4)$", x) |
-    grepl("^\\d\\d\\d\\d\\d\\d\\d\\d$", x) |
-    grepl("^\\d\\d\\d\\d\\d\\d\\d\\dT\\d\\d(Z|-\\d\\d)$", x)
+    grepl("^\\d\\d\\d\\d-\\d\\d$", x) |
+    grepl("^\\d\\d\\d\\d-\\d\\d-\\d\\d$", x) |
+    grepl("^\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d(Z|-\\d\\d)$", x)
 }
 
 eiadate_format <- function(x, weekly = FALSE){
   if(any(!is_eiadate(x))) stop("Not an EIA format date string.", call. = FALSE)
-  if(grepl("^\\d\\d\\d\\d\\d\\d\\d\\dT\\d\\dZ$", x[1])){
+  if(grepl("^\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\dZ$", x[1])){
     "H"
-  } else if(grepl("^\\d\\d\\d\\d\\d\\d\\d\\dT\\d\\d-\\d\\d$", x[1])){
-    "HL"
-  } else if(grepl("^\\d\\d\\d\\d\\d\\d\\d\\d$", x[1])){
+  } else if(grepl("^\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d\\d\\d$", x[1])){
+    "LH"
+  } else if(grepl("^\\d\\d\\d\\d-\\d\\d\\d\\d$", x[1])){
     if(weekly) "W" else "D"
-  } else if(grepl("^\\d\\d\\d\\d\\d\\d$", x[1])){
+  } else if(grepl("^\\d\\d\\d\\d-\\d\\d$", x[1])){
     "M"
   } else if(grepl("^\\d\\d\\d\\d$", x[1])){
     "A"
