@@ -125,27 +125,28 @@ eia_data <- function(dir, data = NULL, facets = NULL,
   paste0("&end=", end)
 }
 
+# ordr <- list(cols = c("sectorid", "period"), ordr = "asc")
 .sort_specs <- function(sort){
-  if (length(sort) != 2 || !all(names(sort) %in% c("columns", "direction")))
+  if (length(sort) != 2 || !all(names(sort) %in% c("cols", "ordr")))
     stop(paste0(
       "'sort' must be a list of length 2 containing objects:",
-      "'columns' and 'direction' of arbitrary length and of length 1, respectively."
+      "'cols' and 'ordr' of arbitrary length and of length 1, respectively."
     ))
-  cols <- sort$columns
-  dirctn <- sort$direction
-  sort_cols <- paste0(unlist(lapply(
+  cols <- sort$cols; ordr <- sort$ordr
+  sort_cols <- lapply(
     1:length(cols),
     function(x){
-      paste0("&sort[0][column]=", unlist(cols[x]), collapse = "")
-    })), collapse = "")
-  sort_dirs <- if (length(dirctn) > 1) {
+      paste0("&sort[", x, "][column]=", unlist(cols[x]), collapse = "")
+    })
+  if (length(ordr) > 1)
     stop("must provide a single value for 'direction': 'asc' or 'desc'.")
-  } else if (!dirctn %in% c("asc", "desc")){
-    stop("'direction' must be one of 'asc' or 'desc'.")
-  } else {
-    paste0("&sort[0][direction]=", dirctn)
-  }
-  paste0(sort_cols, sort_dirs)
+  if (!ordr %in% c("asc", "desc"))
+    stop("'ordr' must be one of 'asc' or 'desc'.")
+  sort_ordr <- lapply(
+    1:length(cols),
+    function(x) { paste0("&sort[", x, "][direction]=", ordr) }
+  )
+  paste0(unlist(sort_cols), sort_ordr, collapse = "")
 }
 
 .lng_specs <- function(length){
