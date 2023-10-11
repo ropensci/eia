@@ -30,12 +30,13 @@
 #' date_to_eiadate("2018-05-14", "Q")
 #' date_to_eiadate("2018-05-14", "M")
 #'
-#' (x <- eiadate_to_date_seq("2018Q1", "2018Q4"))
+#' (x <- eiadate_to_date_seq("2018-Q1", "2018-Q4"))
 #' date_to_eiadate(x, "Q")
+#' date_to_eiadate(x, "M")
 #'
-#' (x <- eiadate_to_date("20190102T16Z"))
+#' (x <- eiadate_to_date("2019-01-02T16Z"))
 #' date_to_eiadate(x, "H")
-#' (x <- eiadate_to_date_seq("20190102T16Z", "20190102T19Z"))
+#' (x <- eiadate_to_date_seq("2019-01-02T16Z", "2019-01-02T19Z"))
 #' date_to_eiadate(x, "H")
 eiadate_to_date <- function(x){
   date_format <- eiadate_format(x)
@@ -59,23 +60,19 @@ date_to_eiadate <- function(x, date_format = c("A", "Q", "M", "W", "D", "H")){
   if(date_format == "A"){
     substr(as.character(x), 1, 4)
   } else if(date_format == "Q"){
-    gsub("\\.", "Q", lubridate::quarter(x, with_year = TRUE))
+    gsub("\\.", "-Q", lubridate::quarter(x, with_year = TRUE))
   } else if(date_format == "M"){
-    gsub("-", "", substr(as.character(x), 1, 7))
+    gsub("-", "-", substr(as.character(x), 1, 7))
   } else if(date_format %in% c("W", "D")){
     gsub("-", "", as.character(x))
   } else if(date_format == "H"){
-    gsub(
-      "(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d) (\\d\\d)",
-      "\\1\\2\\3T\\4Z",
-      substr(as.character(x), 1, 13)
-    )
+    paste0(gsub(" ", "T", substr(as.character(x), 1, 13)), "Z")
   }
 }
 
 .check_hl <- function(x){
   if(x == "LH")
-    stop("`lH` date format is not supported. Use `H`.", call. = FALSE)
+    stop("`LH` date format is not supported. Use `H`.", call. = FALSE)
 }
 
 #' @export
@@ -99,7 +96,7 @@ eiadate_to_date_seq <- function(start, end, weekly = FALSE){
 is_eiadate <- function(x){
   if(!is.character(x)) return(FALSE)
   grepl("^\\d\\d\\d\\d((0[1-9]|1[0-2])|)$", x) |
-    grepl("^\\d\\d\\d\\dQ(1|2|3|4)$", x) |
+    grepl("^\\d\\d\\d\\d-Q(1|2|3|4)$", x) |
     grepl("^\\d\\d\\d\\d-\\d\\d$", x) |
     grepl("^\\d\\d\\d\\d-\\d\\d-\\d\\d$", x) |
     grepl("^\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d(Z|-\\d\\d)$", x)
