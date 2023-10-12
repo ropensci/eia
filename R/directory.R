@@ -103,7 +103,9 @@ eia_child_cats <- function(dir, tidy = TRUE, cache = TRUE, key = eia_get_key()){
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' eia_updates()
+#' }
 eia_updates <- function(){
   .Defunct(msg = "eia::eia_updates() is defunct with no replacement - feature has been removed with APIv2.")
 }

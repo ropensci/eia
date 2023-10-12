@@ -13,5 +13,7 @@ character sting, defunct message
 NOW DEFUNCT - FEATURE NO LONGER PROVIDED WITH APIv2.
 }
 \examples{
+\dontrun{
 eia_updates()
+}
 }
