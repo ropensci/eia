@@ -4,7 +4,7 @@
 \alias{eia_updates}
 \title{EIA data updates}
 \usage{
-eia_updates(...)
+eia_updates()
 }
 \value{
 character sting, defunct message
