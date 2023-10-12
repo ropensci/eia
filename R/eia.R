@@ -11,18 +11,6 @@ NULL
 #' @importFrom tibble tibble
 NULL
 
-#' Pipe operator
-#'
-#' See `magrittr` package for details.
-#'
-#' @name %>%
-#' @rdname pipe
-#' @keywords internal
-#' @export
-#' @importFrom magrittr %>%
-#' @usage lhs \%>\% rhs
-NULL
-
 .eia_url <- function(path){
   gsub("//", "/", file.path("https://api.eia.gov/v2/", path))
 }
