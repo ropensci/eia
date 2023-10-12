@@ -1,0 +1,99 @@
+---
+title: "API details"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{API details}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## API key
+
+### Register a key with EIA
+
+Obtaining an API key is easy and free.
+
+Pulling data from the US Energy Information Administration (EIA) API requires a registered API key. A key can be obtained at no cost [here](https://www.eia.gov/opendata/register.php). A valid email and agreement to the API Terms of Service is required to obtain a key.
+
+It is important to store your API key somewhere secure. Do not commit it to a repository or otherwise share it. For example, you could store it in your `.Renviron` file.
+
+### Key storage and retrieval
+
+You can always provide the `key` argument to every API function call, but you do not have to. There are getter and setter helpers available to make using `eia` functions a more seamless experience.
+
+`eia_set_key` gives you the option of storing your key in any of three places via the `store` argument:
+
+* `store = "env"`: the package environment that is created when the package is loaded (default method)
+* `store = "options"`: in the global `options`
+* `store = "sysenv"`: as a system environment variable via `Sys.setenv`.
+
+The last two options require the name-value pair to be named `EIA_KEY = "yourkey"`. These three options also are the order of precedence if you do not specify the `store` argument.
+
+This setup also allows you to store a key that will override another key. This is because `eia_get_key` checks these three storage methods in this order and stops as soon as it finds a key. If you need it to check a specific location, you can specify `store`.
+
+As an example, if the key already exists in the system environment and you plan to pass `key` to functions explicitly, you could start as follows:
+
+```r
+library(eia)
+key <- Sys.getenv("EIA_KEY")
+# or:
+key <- eia_get_key()
+```
+
+If you need to set it, you can do so as follows.
+
+```r
+# eia_set_key("yourkey")
+# eia_get_key() # retrieve it
+```
+
+API functions in `eia` use `eia_get_key()` with no arguments as the default value of their `key` argument, checking in the order shown above for an existing key. This way you do not need to repeatedly provide it.
+
+Note that despite the name and behavior, storing an environment variable with `Sys.setenv` (and thus `eia_set_key(key, store = "sysenv")`) is not persistent; the key is lost when the R session terminates, just as it is with the other two session-based options. If you want a persistent key, you must manually add your key somewhere like `.Renviron`. In that cases, you never need `eia_set_key` and `eia_get_key` will retrieve the `EIA_KEY` environment variable. See the package documentation for more details on key options.
+
+In this and subsequent vignettes, you will not see a key being set because it is already an environment variable. You will also not see it used explicitly by any functions because the default behavior is to look up the key in the environment.
+
+## API requests
+
+The EIA API can of course impose its own rate-limiting and other limitations on usage by a given API key. If you use the API improperly or otherwise violate any Terms of Service, the EIA may withdraw your API access. However, the `eia` package also helps prevent accidental overuse by having default settings that limit the potential for making unnecessary API calls. It does this in two ways, both of which allow optional configuration:
+
+*   caching API results in memory using session-based memoization
+*   minimum delay between API calls
+
+By default the `eia` package prevents you from accidentally making too many requests too quickly, but it also offers sensible flexibility.
+
+### Memoization
+
+All functions in `eia` that make API calls use memoization by default. They will not make the same API call twice in one R session. A call is made once and the result is cached. Calling the same function with the identical arguments again will only returned the cached result.
+
+This approach limits the potential for accidentally using the EIA API more than necessary. This is fine for most uses cases. However, if you use your API key to access data that is updated very often, or you have a long-running R process such as a Shiny app on a server that may need to periodically update the data associated with a specific API call, you can set `cache = FALSE`.
+
+Run this example of the same request made with and without memoization. You will notice the cached result by the immediate return.
+
+```r
+system.time(eia_directory()) # API call; cache result
+system.time(eia_directory()) # read from cache
+system.time(eia_directory(cache = FALSE)) # API call
+```
+
+Results are cached in memory for the duration of the R session, but you can clear the cache at any time.
+
+```r
+eia_clear_cache()
+system.time(eia_directory())
+```
+
+This allows you to update the cached result. You can reset the cache for only specific endpoints using the following functions.
+
+*    `eia_clear_dirs`
+*    `eia_clear_metadata`
+*.   `eia_clear_data`
+*    `eia_clear_facet`
+
+### Anti-DOS measures
+
+Regardless of overall rate limiting imposed by the EIA API, the `eia` package sets a minimum wait time of one second between successive API calls. In most cases this is an irrelevant safeguard. Most `eia` functions make a single API call and requests for data often take a full second anyway once you factor in the subsequent data manipulation in R.
+
+However, there are cases where you might want to make multiple calls back to back programmatically and perhaps you are initially unsure how many requests will be made or how quickly these requests may execute. The default minimum wait between API calls is a precaution that helps you be a good neighbor.
+
+You can turn this off with `options` if not needed; for example, a case where you know that your API calls will be small in number and you have no reason to be concerned about exceeding the request limits associated with your API key. The default requires you to make an active decision about how to use the API with your own key and API limits in mind.
