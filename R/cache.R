@@ -18,6 +18,7 @@ eia_clear_cache <- function(){
   eia_clear_dirs()
   eia_clear_metadata()
   eia_clear_data()
+  eia_clear_facet()
   invisible()
 }
 
@@ -38,6 +39,13 @@ eia_clear_metadata <- function(){
 #' @rdname eia_clear_cache
 #' @export
 eia_clear_data <- function(){
-  memoise::forget(.eia_metadata_memoized)
+  memoise::forget(.eia_data_memoized)
+  invisible()
+}
+
+#' @rdname eia_clear_cache
+#' @export
+eia_clear_facet <- function(){
+  memoise::forget(.eia_facet_memoized)
   invisible()
 }

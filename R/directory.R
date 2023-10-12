@@ -44,20 +44,20 @@ eia_subdirectory <- function(dir, cache = TRUE, key = eia_get_key()){
 
 #' @export
 #' @rdname eia_directory
-eia_dir <- function(id = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
+eia_dir <- function(dir = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   .Deprecated("eia_directory")
-  eia_directory(dir = id, tidy, cache, key)
+  eia_directory(dir, tidy, cache, key)
 }
 
 #' @export
 #' @rdname eia_directory
-eia_parent_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
+eia_parent_cats <- function(dir, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   .Defunct("eia_categories")
 }
 
 #' @export
 #' @rdname eia_directory
-eia_child_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
+eia_child_cats <- function(dir, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   .Defunct("eia_subcategories")
 }
 
@@ -104,6 +104,6 @@ eia_child_cats <- function(id, tidy = TRUE, cache = TRUE, key = eia_get_key()){
 #'
 #' @examples
 #' eia_updates()
-eia_updates <- function(...){
+eia_updates <- function(){
   .Defunct(msg = "eia::eia_updates() is defunct with no replacement - feature has been removed with APIv2.")
 }

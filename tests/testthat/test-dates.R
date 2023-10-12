@@ -1,5 +1,3 @@
-context("dates")
-
 test_that("date helpers return as expected", {
   x <- eiadate_to_date(c("2018-03", "2018-04"))
   expect_s3_class(x, "Date")

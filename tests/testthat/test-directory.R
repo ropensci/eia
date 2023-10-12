@@ -1,9 +1,7 @@
-context("directory")
-
 options(eia_antidos = 0)
 suppressWarnings(key <- eia_get_key())
 
-test_that("category functions returns as expected", {
+test_that("directory functions returns as expected", {
   if(is.null(key)) skip("API key not available.")
 
   x <- eia_directory(tidy = FALSE, key = key)

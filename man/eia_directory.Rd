@@ -12,11 +12,11 @@ eia_directory(dir = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key())
 
 eia_subdirectory(dir, cache = TRUE, key = eia_get_key())
 
-eia_dir(id = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key())
+eia_dir(dir = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key())
 
-eia_parent_cats(id, tidy = TRUE, cache = TRUE, key = eia_get_key())
+eia_parent_cats(dir, tidy = TRUE, cache = TRUE, key = eia_get_key())
 
-eia_child_cats(id, tidy = TRUE, cache = TRUE, key = eia_get_key())
+eia_child_cats(dir, tidy = TRUE, cache = TRUE, key = eia_get_key())
 }
 \arguments{
 \item{dir}{character, directory path, if \code{NULL} then the API root directory.}
