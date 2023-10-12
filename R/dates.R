@@ -63,10 +63,10 @@ date_to_eiadate <- function(x, date_format = c("A", "Q", "M", "W", "D", "H")){
     gsub("\\.", "-Q", lubridate::quarter(x, with_year = TRUE))
   } else if(date_format == "M"){
     gsub("-", "-", substr(as.character(x), 1, 7))
-  } else if(date_format %in% c("W", "D")){
-    gsub("-", "", as.character(x))
   } else if(date_format == "H"){
     paste0(gsub(" ", "T", substr(as.character(x), 1, 13)), "Z")
+  } else if(date_format %in% c("W", "D")){
+    as.character(x)
   }
 }
 
@@ -108,7 +108,7 @@ eiadate_format <- function(x, weekly = FALSE){
     "H"
   } else if(grepl("^\\d\\d\\d\\d-\\d\\d-\\d\\dT\\d\\d\\d\\d$", x[1])){
     "LH"
-  } else if(grepl("^\\d\\d\\d\\d-\\d\\d\\d\\d$", x[1])){
+  } else if(grepl("^\\d\\d\\d\\d-\\d\\d-\\d\\d$", x[1])){
     if(weekly) "W" else "D"
   } else if(grepl("^\\d\\d\\d\\d-\\d\\d$", x[1])){
     "M"

@@ -1,11 +1,11 @@
 context("dates")
 
 test_that("date helpers return as expected", {
-  x <- eiadate_to_date(c("201803", "201804"))
-  expect_is(x, "Date")
+  x <- eiadate_to_date(c("2018-03", "2018-04"))
+  expect_s3_class(x, "Date")
   expect_true(!any(is.na(x)))
-  x <- eiadate_to_date(c("20180302", "20180312"))
-  expect_is(x, "Date")
+  x <- eiadate_to_date(c("2018-03-02", "2018-03-12"))
+  expect_s3_class(x, "Date")
   expect_true(!any(is.na(x)))
 
   expect_equal(date_to_eiadate("2018-05-14", "A"), "2018")
