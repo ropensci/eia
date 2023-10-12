@@ -41,7 +41,6 @@ Suggests:
     testthat (>= 3.0.0),
     knitr,
     rmarkdown,
-    covr,
     tidyr,
     ggplot2,
     spelling
