@@ -1,22 +1,26 @@
 {
-  "@context": [
-    "https://doi.org/10.5063/schema/codemeta-2.0",
-    "http://schema.org"
-  ],
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "eia",
-  "description": "Provides API access to data from the 'US Energy Information Administration' ('EIA') <https://www.eia.gov/>. \n    Use of the API requires a free API key obtainable at <https://www.eia.gov/opendata/register.php>.\n    The package includes functions for searching 'EIA' data categories and importing time series and geoset time series datasets. \n    Datasets returned by these functions are provided in a tidy format or alternatively in more raw form. \n    It also offers helper functions for working with 'EIA' date strings and time formats and for inspecting different summaries of series metadata.\n    The package also provides control over API key storage and caching of API request results. ",
+  "description": "Provides API access to data from the 'US Energy Information Administration' ('EIA') <https://www.eia.gov/>. Use of the API requires a free API key obtainable at <https://www.eia.gov/opendata/register.php>. The package includes functions for searching 'EIA' data categories and importing time series and geoset time series datasets. Datasets returned by these functions are provided in a tidy format or alternatively in more raw form. It also offers helper functions for working with 'EIA' date strings and time formats and for inspecting different summaries of series metadata. The package also provides control over API key storage and caching of API request results. ",
   "name": "eia: API Wrapper for 'US Energy Information Administration' Open Data",
+  "relatedLink": "https://docs.ropensci.org/eia/",
   "codeRepository": "https://github.com/ropensci/eia",
   "issueTracker": "https://github.com/ropensci/eia/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.3 (2020-10-10)",
+  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
   "author": [
     {
       "@type": "Person",
@@ -24,11 +28,14 @@
       "familyName": "Leonawicz",
       "email": "mfleonawicz@gmail.com",
       "@id": "https://orcid.org/0000-0001-9452-2771"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Matthew",
+      "familyName": "Hoff",
+      "email": "matthew.g.hoff@gmail.com"
     }
   ],
-  "contributor": {},
-  "copyrightHolder": {},
-  "funder": {},
   "maintainer": [
     {
       "@type": "Person",
@@ -43,6 +50,7 @@
       "@type": "SoftwareApplication",
       "identifier": "testthat",
       "name": "testthat",
+      "version": ">= 3.0.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -110,10 +118,22 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=ggplot2"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "spelling",
+      "name": "spelling",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=spelling"
     }
   ],
-  "softwareRequirements": [
-    {
+  "softwareRequirements": {
+    "1": {
       "@type": "SoftwareApplication",
       "identifier": "tibble",
       "name": "tibble",
@@ -125,7 +145,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tibble"
     },
-    {
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "magrittr",
       "name": "magrittr",
@@ -137,7 +157,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=magrittr"
     },
-    {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "httr",
       "name": "httr",
@@ -149,7 +169,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=httr"
     },
-    {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "jsonlite",
       "name": "jsonlite",
@@ -161,7 +181,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=jsonlite"
     },
-    {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "dplyr",
       "name": "dplyr",
@@ -173,7 +193,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=dplyr"
     },
-    {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "purrr",
       "name": "purrr",
@@ -185,7 +205,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=purrr"
     },
-    {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "memoise",
       "name": "memoise",
@@ -197,7 +217,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=memoise"
     },
-    {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "lubridate",
       "name": "lubridate",
@@ -209,7 +229,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=lubridate"
     },
-    {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "readxl",
       "name": "readxl",
@@ -220,38 +240,8 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=readxl"
-    }
-  ],
-  "releaseNotes": "https://github.com/ropensci/eia/blob/master/NEWS.md",
-  "readme": "https://github.com/ropensci/eia/blob/master/README.md",
-  "fileSize": "1227.97KB",
-  "contIntegration": ["https://travis-ci.org/ropensci/eia", "https://ci.appveyor.com/project/leonawicz/eia", "https://codecov.io/gh/ropensci/eia?branch=master"],
-  "keywords": [
-    "eia-api",
-    "r",
-    "package",
-    "r-package",
-    "energy-data",
-    "energy-information-administration",
-    "open-data",
-    "eia",
-    "cran"
-  ],
-  "provider": {
-    "@id": "https://cran.r-project.org",
-    "@type": "Organization",
-    "name": "Comprehensive R Archive Network (CRAN)",
-    "url": "https://cran.r-project.org"
+    },
+    "SystemRequirements": null
   },
-  "developmentStatus": "https://www.repostatus.org/#active",
-  "relatedLink": [
-    "https://CRAN.R-project.org/package=eia",
-    "https://docs.ropensci.org/eia",
-    "https://docs.ropensci.org/eia/"
-  ],
-  "review": {
-    "@type": "Review",
-    "url": "https://github.com/ropensci/software-review/issues/342",
-    "provider": "https://ropensci.org"
-  }
+  "fileSize": "320.565KB"
 }
