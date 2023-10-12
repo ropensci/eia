@@ -77,7 +77,8 @@ eia_cats(0)
 #> 19       41143 Quality of fossil fuels in electricity generation : ash content
 ```
 
-There are two categories referring to total consumption. Take category ID 32 as an example and step deeper into the category hierarchy.
+There are two categories referring to total consumption.
+Take category ID 32 as an example and step deeper into the category hierarchy.
 
 
 ```r
@@ -96,7 +97,7 @@ eia_cats(32)
 #> 2         372 By sector
 ```
 
-At this point you have a choice between total consumption by sector or fuel type. Select by sector.
+At this point, you have a choice between total consumption by sector or fuel type. Select by sector.
 
 
 ```r
@@ -126,7 +127,6 @@ eia_cats(372)
 
 Then total electrical power.
 
-
 ```r
 eia_cats(388)
 #> $category
@@ -146,7 +146,6 @@ eia_cats(388)
 ```
 
 And finally coal.
-
 
 ```r
 (x <- eia_cats(738))
