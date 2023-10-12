@@ -35,7 +35,6 @@ This setup also allows you to store a key that will override another key. This i
 
 As an example, if the key already exists in the system environment and you plan to pass `key` to functions explicitly, you could start as follows:
 
-
 ```r
 library(eia)
 key <- Sys.getenv("EIA_KEY") 
@@ -45,7 +44,6 @@ key <- eia_get_key()
 ```
 
 If you need to set it, you can do so as follows.
-
 
 ```r
 # eia_set_key("yourkey")
@@ -75,7 +73,6 @@ This approach limits the potential for accidentally using the EIA API more than 
 
 Run this example of the same request made with and without memoization. You will notice the cached result by the immediate return.
 
-
 ```r
 system.time(eia_directory()) # API call; cache result
 system.time(eia_directory()) # read from cache
@@ -104,30 +101,3 @@ Regardless of overall rate limiting imposed by the EIA API, the `eia` package se
 However, there are cases where you might want to make multiple calls back to back programmatically and perhaps you are initially unsure how many requests will be made or how quickly these requests may execute. The default minimum wait between API calls is a precaution that helps you be a good neighbor.
 
 You can turn this off with `options` if not needed; for example, a case where you know that your API calls will be small in number and you have no reason to be concerned about exceeding the request limits associated with your API key. The default requires you to make an active decision about how to use the API with your own key and API limits in mind.
-
-A call to `eia_parent_cats` is a good example. This function is recursive, but say you know the number of calls is going to be small; it is overkill to impose the additional wait. Note that in order to show this example, it is necessary to turn off memoization to avoid returning a cached result.
-
-
-
-
-```r
-system.time(x <- eia_parent_cats(742, cache = FALSE))
-#>    user  system elapsed 
-#>    0.12    0.00    5.89
-
-options(eia_antidos = 0)
-system.time(x <- eia_parent_cats(742, cache = FALSE))
-#>    user  system elapsed 
-#>    0.08    0.00    0.80
-
-x
-#> # A tibble: 6 x 4
-#>   category_id name                    notes parent_category_id
-#>   <chr>       <chr>                   <chr> <chr>             
-#> 1 371         EIA Data Sets           ""    <NA>              
-#> 2 0           Electricity             ""    371               
-#> 3 32          Total consumption (Btu) ""    0                 
-#> 4 372         By sector               ""    32                
-#> 5 389         Electric utility        ""    372               
-#> 6 742         Coal                    ""    389
-```
