@@ -1,6 +1,10 @@
 # eia 0.3.8
 
 * Updated functions and functionality based on the new v2 API, effective March 2023.
+* Made defunct `eia_updates`.
+* Deprecated `eia_child_cats` and `eia_parent_cats` in favor of `eia_directory` and `eia_subdirectory`.
+* Added new `eia_metadata` and `eia_data` functions.
+* Updated docs and vignettes.
 
 # eia 0.3.7
 
