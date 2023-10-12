@@ -78,7 +78,6 @@ eia_metadata <- function(dir, tidy = TRUE, cache = TRUE, key = eia_get_key()){
 }
 
 
-
 #' EIA facets
 #'
 #' Obtain facets for a given set of EIA data.
