@@ -43,9 +43,10 @@ Suggests:
     rmarkdown,
     covr,
     tidyr,
-    ggplot2
+    ggplot2,
+    spelling
 VignetteBuilder: knitr
 Language: en-US
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.1
 Config/testthat/edition: 3
