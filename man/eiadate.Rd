@@ -41,7 +41,7 @@ translate the date and time when using \code{"LH"} anyhow; it simply appends
 the date string with the number of hours time difference.
 }
 \examples{
-eiadate_to_date(c("201803", "201804"))
+eiadate_to_date(c("2018-03", "2018-04"))
 
 date_to_eiadate("2018-05-14", "A")
 date_to_eiadate("2018-05-14", "Q")
