@@ -51,13 +51,11 @@ eia_data <- function(dir, data = NULL, facets = NULL,
                      sort = NULL, length = NULL, offset = NULL,
                      tidy = TRUE, cache = TRUE, key = eia_get_key()){
   .key_check(key)
-  # if(cache){
-  # .eia_data_memoized(dir, data, facets, freq, start, end, tidy, key)
-  # } else {
-  # .eia_data(dir, data, facets, freq, start, end, tidy, key)
-  # }
-  print(.eia_data_url(dir, data, facets, freq, start, end, sort, length, offset, key))
+  if(cache){
+  .eia_data_memoized(dir, data, facets, freq, start, end, sort, length, offset, tidy, key)
+  } else {
   .eia_data(dir, data, facets, freq, start, end, sort, length, offset, tidy, key)
+  }
 }
 
 .eia_data <- function(dir, data, facets, freq, start, end, sort, length, offset, tidy, key){
