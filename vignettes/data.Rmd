@@ -277,7 +277,7 @@ eia_data(
 As you can see, we get back a data frame with 10 annual observations, two for
 each sector (residential and commercial). However, you may have also noticed the
 hectic ordering of the returned data. Thankfully, we can have the API service sort
-this in either ascending or descending order using the `sort` function arg.
+this in either ascending or descending order using the `sort` function argument.
 
 Similar to `facets`, `sort` requires a named list object with two components:
 

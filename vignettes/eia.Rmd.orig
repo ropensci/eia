@@ -61,7 +61,7 @@ Once you have your EIA registered API key and have it in place for your R sessio
 by whichever method you prefer, you are ready to begin accessing data from the EIA API.
 
 The EIA's APIv2 has been redesigned to be more human friendly, and rather than
-rely on the numeric ID values, is now built around a self-discoverable folder
+rely on the numeric ID values, is now built around a self-searchable folder
 structure where the ID values are now just natural language, i.e. words.
 
 Here is the top-level directory information:
@@ -87,7 +87,7 @@ eia_directory("electricity/retail-sales")
 ```
 
 Now we've reached the end of the directory path, as you can see by the message
-provided in the console output; i.e. there are no more subfolders to explore;
+provided in the console output; i.e. there are no more sub-folders to explore;
 and as such, you are prompted to explore the available data at the end
 of this directory path with `eia_metadata`.
 
@@ -138,7 +138,7 @@ in the Data Values section of the `eia_metadata` console output, in this case `"
 eia_data("electricity/retail-sales", data = "price", length = 6)
 ```
 
-Now we have pricing data values column-binded to the data structure.
+Now we have pricing data values column-bound to the data structure.
 
 ## EIA facets
 
