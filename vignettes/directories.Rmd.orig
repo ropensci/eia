@@ -7,20 +7,30 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, comment = "#>", out.width = "100%",
+  message = FALSE, warning = FALSE, error = FALSE
+)
+library(eia)
+options(eia_antidos = 0)
+key <- Sys.getenv("EIA_KEY")
+```
+
 The first call below does not include a directory name and provides a data.frame
 of all available categories. The second call shows all the sub-directories for which
 there may be tertiary sub-folders, or data.
 
 ## Top level directory
 
-```r
+```{r key, eval=FALSE}
 library(eia)
 # eia_set_key("yourkey") # set API key if not already set globally
 ```
 
 Here is the top-level directory information.
 
-```r
+```{r dir1}
 eia_directory()
 ```
 
@@ -29,7 +39,7 @@ eia_directory()
 The directory folders from above can be used to obtain subdirectory folder paths
 from which further subdirectories or data may be obtained.
 
-```r
+```{r dir2}
 eia_subdirectory("electricity")
 ```
 
@@ -37,6 +47,6 @@ eia_subdirectory("electricity")
 
 The default is to return tidy data in a tibble data frame. For `eia_dir` you can set `tidy = FALSE` to return the list returned by `jsonlite::fromJSON` without any further processing or `tidy = NA` to return the raw JSON data as a character string.
 
-```r
+```{r dir3}
 eia_directory(tidy = FALSE)
 ```

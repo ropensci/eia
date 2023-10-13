@@ -7,11 +7,14 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+
+
 The first call below does not include a directory name and provides a data.frame
 of all available categories. The second call shows all the sub-directories for which
 there may be tertiary sub-folders, or data.
 
 ## Top level directory
+
 
 ```r
 library(eia)
@@ -20,8 +23,26 @@ library(eia)
 
 Here is the top-level directory information.
 
+
 ```r
 eia_directory()
+#> # A tibble: 14 × 3
+#>    id                name                            description                                                                             
+#>    <chr>             <chr>                           <chr>                                                                                   
+#>  1 coal              Coal                            EIA coal energy data                                                                    
+#>  2 crude-oil-imports Crude Oil Imports               Crude oil imports by country to destination, includes type, grade, quantity.  Source: E…
+#>  3 electricity       Electricity                     EIA electricity survey data                                                             
+#>  4 international     International                   Country level production, consumption, imports, exports by energy source (petroleum, na…
+#>  5 natural-gas       Natural Gas                     EIA natural gas survey data                                                             
+#>  6 nuclear-outages   Nuclear Outages                 EIA nuclear outages survey data                                                         
+#>  7 petroleum         Petroleum                       EIA petroleum gas survey data                                                           
+#>  8 seds              State Energy Data System (SEDS) Estimated production, consumption, price, and expenditure data for all energy sources b…
+#>  9 steo              Short Term Energy Outlook       Monthly short term (18 month) projections using STEO model.  Report and interactive pro…
+#> 10 densified-biomass Densified Biomass               EIA densified biomass data                                                              
+#> 11 total-energy      Total Energy                    These data represent the most recent comprehensive energy statistics integrated across …
+#> 12 aeo               Annual Energy Outlook           Annual U.S. projections using National Energy Modelling System (NEMS) for release year.…
+#> 13 ieo               International Energy Outlook    Annual international projections using the World Energy Projection System (WEPS) model …
+#> 14 co2-emissions     State CO2 Emissions             EIA CO2 Emissions data
 ```
 
 ## Subdirectories
@@ -29,14 +50,80 @@ eia_directory()
 The directory folders from above can be used to obtain subdirectory folder paths
 from which further subdirectories or data may be obtained.
 
+
 ```r
 eia_subdirectory("electricity")
+#> # A tibble: 6 × 3
+#>   id                              name                                                                       description                     
+#>   <chr>                           <chr>                                                                      <chr>                           
+#> 1 retail-sales                    Electricity Sales to Ultimate Customers                                    "Electricity sales to ultimate …
+#> 2 electric-power-operational-data Electric Power Operations (Annual and Monthly)                             "Monthly and annual electric po…
+#> 3 rto                             Electric Power Operations (Daily and Hourly)                               "Hourly and daily electric powe…
+#> 4 state-electricity-profiles      State Specific Data                                                        "State Specific Data"           
+#> 5 operating-generator-capacity    Inventory of Operable Generators                                           "Inventory of operable generato…
+#> 6 facility-fuel                   Electric Power Operations for Individual Power Plants (Annual and Monthly) "Annual and monthly electric po…
 ```
 
 ## Output format
 
 The default is to return tidy data in a tibble data frame. For `eia_dir` you can set `tidy = FALSE` to return the list returned by `jsonlite::fromJSON` without any further processing or `tidy = NA` to return the raw JSON data as a character string.
 
+
 ```r
 eia_directory(tidy = FALSE)
+#> $response
+#> $response$id
+#> [1] ""
+#> 
+#> $response$name
+#> [1] ""
+#> 
+#> $response$description
+#> [1] ""
+#> 
+#> $response$routes
+#>                   id                            name
+#> 1               coal                            Coal
+#> 2  crude-oil-imports               Crude Oil Imports
+#> 3        electricity                     Electricity
+#> 4      international                   International
+#> 5        natural-gas                     Natural Gas
+#> 6    nuclear-outages                 Nuclear Outages
+#> 7          petroleum                       Petroleum
+#> 8               seds State Energy Data System (SEDS)
+#> 9               steo       Short Term Energy Outlook
+#> 10 densified-biomass               Densified Biomass
+#> 11      total-energy                    Total Energy
+#> 12               aeo           Annual Energy Outlook
+#> 13               ieo    International Energy Outlook
+#> 14     co2-emissions             State CO2 Emissions
+#>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              description
+#> 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   EIA coal energy data
+#> 2                                                                                                                                                                                                                                                                                                          Crude oil imports by country to destination, \r\n        includes type, grade, quantity.  Source: EIA-814  Interactive data \r\n        product:  www.eia.gov/petroleum/imports/companylevel/
+#> 3                                                                                                                                                                                                                                                                                                                                                                                                                                                                            EIA electricity survey data
+#> 4                                                                                                                                                                                                                                                                                        Country level production, consumption, imports, exports by energy source (petroleum, natural gas, electricity, renewable, etc.)  \r\n        Interactive product:  https://www.eia.gov/international/data/world
+#> 5                                                                                                                                                                                                                                                                                                                                                                                                                                                                            EIA natural gas survey data
+#> 6                                                                                                                                                                                                                                                                                                                                                                                                                                                                        EIA nuclear outages survey data
+#> 7                                                                                                                                                                                                                                                                                                                                                                                                                                                                          EIA petroleum gas survey data
+#> 8                                                                                                                                                                                                                                        Estimated production, consumption, price, and expenditure data for all energy sources by state and sector.  \r\n        Source:  https://www.eia.gov/state/seds/seds-technical-notes-complete.php  \r\n        Product:  SEDS (https://www.eia.gov/state/seds/)
+#> 9                                                                                                                                                                                                                                                                                                                                                     Monthly short term (18 month) projections using STEO model.  \r\n        Report and interactive projection data browser:  STEO (www.eia.gov/steo/)
+#> 10                                                                                                                                                                                                                                                                                                                                                                                                                                                                            EIA densified biomass data
+#> 11 These data represent the most recent comprehensive energy statistics integrated across all energy sources.  The data includes total energy production, consumption, stocks, and trade; energy prices; overviews of petroleum, natural gas, coal, electricity, nuclear energy, renewable energy, and carbon dioxide emissions; and data unit conversions values.  Source: https://www.eia.gov/totalenergy/data/monthly/pdf/mer_a_doc.pdf  Report:  MER (https://www.eia.gov/totalenergy/data/monthly/)
+#> 12                                                                                                                                                                                                                                                                                                                      Annual U.S. projections using National Energy Modelling System (NEMS) for release year.  Report, documentation, and interactive projection data browser:  AEO (www.eia.gov/aeo/)
+#> 13                                                                                                                                                                                                                                                                                                                     Annual international projections using the World Energy Projection System (WEPS) model for release year.  Report and interactive projection data browser:  IEO (www.eia.gov/ieo/)
+#> 14                                                                                                                                                                                                                                                                                                                                                                                                                                                                                EIA CO2 Emissions data
+#> 
+#> 
+#> $request
+#> $request$command
+#> [1] "/v2/"
+#> 
+#> $request$params
+#> $request$params$api_key
+#> [1] "dUlpeaO4fNAmo9nJcgIhtCfBN5VtiZnoZDzuYGuG"
+#> 
+#> 
+#> 
+#> $apiVersion
+#> [1] "2.1.4"
 ```
