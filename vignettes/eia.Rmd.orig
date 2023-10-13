@@ -1,0 +1,172 @@
+---
+title: "Package overview"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Package overview}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, comment = "#>", out.width = "100%",
+  fig.width = 7, fig.height = 4, dev = "CairoPNG", dpi = 150, fig.path = "eia-",
+  message = FALSE, warning = FALSE, error = FALSE
+)
+library(eia)
+options(eia_antidos = 0)
+```
+
+This vignette provides a brief overview of the most important functions in `eia`. Other vignettes go into greater depth on specific topics and API endpoints.
+
+## API key
+
+### Register a key with EIA
+
+Obtaining an API key is easy and free.
+
+Pulling data from the US Energy Information Administration (EIA) API requires a registered API key. A key can be obtained at no cost [here](https://www.eia.gov/opendata/register.php). A valid email and agreement to the API Terms of Service is required to obtain a key.
+
+It is important to store your API key somewhere secure. Do not commit it to a repository or otherwise share it. For example, you could store it in your `.Renviron` file.
+
+### Key storage and retrieval
+
+You can always provide the `key` argument to every API function call, but you do not have to. There are getter and setter helpers available to make using `eia` functions a more seamless experience.
+
+`eia_set_key` gives you the option of storing your key for the duration of your R session.
+
+
+```{r key1, eval=FALSE}
+library(eia)
+# eia_set_key("yourkey")
+# eia_get_key() # retrieve it
+```
+
+If the key already exists in the system environment and you plan to pass `key`
+to functions explicitly, you could start as follows.
+
+```{r key2, eval=FALSE}
+key <- Sys.getenv("EIA_KEY")
+# or:
+key <- eia_get_key()
+```
+
+In general, however, if your key is set globally such as in `.Renviron`, you do
+not need to do anything regarding the key when you use the package.
+See the vignette on API details for more information about all the options you have for key storage.
+
+## EIA directories
+
+Once you have your EIA registered API key and have it in place for your R session
+by whichever method you prefer, you are ready to begin accessing data from the EIA API.
+
+The EIA's APIv2 has been redesigned to be more human friendly, and rather than
+rely on the numeric ID values, is now built around a self-discoverable folder
+structure where the ID values are now just natural language, i.e. words.
+
+Here is the top-level directory information:
+
+```{r dir1}
+eia_directory()
+```
+
+You can navigate deeper into this directory by supplying a folder id (e.g. id = "electricity").
+
+```{r dir2}
+eia_directory("electricity")
+```
+
+And, because this APIv2 is a directory listing, to go any deeper simply requires
+appending the next id separated by `"/"`, where the first folder ID in from the top-level
+directory is "electricity" and the next folder ID in from there is "retail-sales", we
+would supply "electricity/retail-sales" to the first argument in `eia_directory`, as
+shown below.
+
+```{r dir3}
+eia_directory("electricity/retail-sales")
+```
+
+Now we've reached the end of the directory path, as you can see by the message
+provided in the console output; i.e. there are no more subfolders to explore;
+and as such, you are prompted to explore the available data at the end
+of this directory path with `eia_metadata`.
+
+
+## EIA metadata
+
+`eia_metadata` provides as the name suggests - metadata on a given set of data
+provided by a terminal directory path, which includes:
+
+  * Name
+  * Description
+  * Data values (i.e. column names)
+  * Facets (i.e. filter options)
+    * e.g. filter on State = "OH" and Sector = "RES" (residential)
+  * Frequencies (i.e. available time denominations)
+    * e.g. monthly, quarterly, annual, etc.
+  * Defaults
+    * e.g. default date format and frequency
+  * Date range
+
+```{r metadata}
+eia_metadata("electricity/retail-sales")
+```
+
+## EIA data
+
+### Data structure
+
+Once you have the necessary metadata from above, you will have a better understanding
+of what data is available and can query the API for that data using `eia_data`.
+However, simply supplying the above directory path from above ("electricity/retail-sales")
+will only provide the data structure with no meaningful values.
+
+```{r data1}
+eia_data("electricity/retail-sales") |> head()
+```
+
+Note the console warning that appears. The API can only provide a maximum of 5000
+records. If there are more data available than returned, a warning message like above
+will be provided informing the user of their "incomplete return".
+
+### Data values
+
+To get data values, e.g. prices, you must supply the proper column name id, as provided
+in the Data Values section of the `eia_metadata` console output, in this case `"price"`.
+
+```{r data2}
+eia_data("electricity/retail-sales", data = "price", length = 6)
+```
+
+Now we have pricing data values column-binded to the data structure.
+
+## EIA facets
+
+### Getting facet values
+
+But what if we only want data for one sector, say "residential"?
+This is where facets arrive, and for any given terminal directory, the facet values
+can be found with `eia_facets()` by supplying the terminal directory path and facet id,
+the latter of which can be found from the console output of `eia_metadata`.
+
+```{r facets}
+eia_facets("electricity/retail-sales", "sectorid")
+# or
+eia_facets("electricity/retail-sales", "stateid")
+```
+
+### Using facet values
+
+Now we can use any of the ID values from the above output to further limit our
+returned data with the `facets` argument in `eia_data`.
+
+```{r data3}
+eia_data(
+  dir = "electricity/retail-sales",
+  data = "price",
+  facets = list(sectorid = "RES", stateid = "OH"),
+  length = 6
+)
+```
+
+Further info on obtaining data - subsets & sorting of - can be found in the data vignette.
