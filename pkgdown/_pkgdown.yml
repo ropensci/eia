@@ -3,6 +3,8 @@ url: https://docs.ropensci.org/eia
 authors:
   Matthew Leonawicz:
     href: https://github.com/leonawicz
+  Matthew Hoff:
+    href: https://github.com/mghoff
 
 reference:
 - title: Package
@@ -11,17 +13,15 @@ reference:
 - title: API functions
   contents:
   - eia_key
-  - eia_cats
-  - eia_series
-  - eia_series_metadata
-  - eia_geoset
-  - eia_updates
+  - eia_directory
+  - eia_metadata
+  - eia_facets
+  - eia_data
 - title: Other functions
   contents:
   - eia_report
   - eiadate
   - eia_clear_cache
-  - "%>%"
 
 navbar:
   left:
@@ -32,12 +32,10 @@ navbar:
       href: "articles/eia.html"
     - text: "Articles"
       menu:
-        - text: "Categories"
-          href: "articles/categories.html"
-        - text: "Time series"
-          href: "articles/series.html"
-        - text: "Geosets"
-          href: "articles/geoset.html"
+        - text: "Directory"
+          href: "articles/dirs.html"
+        - text: "Data"
+          href: "articles/data.html"
         - text: "API details"
           href: "articles/api.html"
     - text: "Reference"
