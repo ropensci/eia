@@ -93,19 +93,3 @@ eia_child_cats <- function(dir, tidy = TRUE, cache = TRUE, key = eia_get_key()){
 .eia_dir_url <- function(dir, key){
   .eia_url(path = paste0(dir, "/?api_key=", key))
 }
-
-
-#' EIA data updates
-#'
-#' NOW DEFUNCT - FEATURE NO LONGER PROVIDED WITH APIv2.
-#'
-#' @return character sting, defunct message
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' eia_updates()
-#' }
-eia_updates <- function(){
-  .Defunct(msg = "eia::eia_updates() is defunct with no replacement - feature has been removed with APIv2.")
-}
