@@ -5,7 +5,7 @@ globalVariables(".data")
 #' This package provides API access to data from the US \href{https://www.eia.gov/}{Energy Information Administration} (EIA).
 #' @docType package
 #' @name eia
-#' @aliases eia
+#' @aliases eia-package
 NULL
 
 #' @importFrom tibble tibble
