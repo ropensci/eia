@@ -13,22 +13,15 @@ knitr::opts_chunk$set(
 library(eia)
 ```
 # eia <img src="man/figures/logo.png" style="margin-left:10px;margin-bottom:5px;" width="120" align="right">
-**Authors:**
-  - [Matt Hoff](https://github.com/mghoff)
-  - [Matthew Leonawicz](https://github.com/leonawicz) <a href="https://orcid.org/0000-0001-9452-2771" target="orcid.widget">
-<img alt="ORCID logo" src="https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png" width="16" height="16" /></a>
-<br/>
-**License:** [MIT](https://opensource.org/licenses/MIT)<br/>
 
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Travis build status](https://travis-ci.org/ropensci/eia.svg?branch=master)](https://travis-ci.org/ropensci/eia)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropensci/eia?branch=master&svg=true)](https://ci.appveyor.com/project/leonawicz/eia)
-[![Codecov test coverage](https://codecov.io/gh/ropensci/eia/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/eia?branch=master)
-
-[![](https://badges.ropensci.org/342_status.svg)](https://github.com/ropensci/software-review/issues/342)
+<!-- badges: start -->
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/)
+[![R-CMD-check](https://github.com/ropensci/eia/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/eia/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/ropensci/eia/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ropensci/eia?branch=master)
 [![CRAN status](https://www.r-pkg.org/badges/version/eia)](https://cran.r-project.org/package=eia)
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/eia)](https://cran.r-project.org/package=eia)
-[![Github Stars](https://img.shields.io/github/stars/ropensci/eia.svg?style=social&label=Github)](https://github.com/ropensci/eia/)
+[![Github Stars](https://img.shields.io/github/stars/ropensci/eia.svg?style=social&label=Github)](https://github.com/ropensci/eia)
+<!-- badges: end -->
 
 The `eia` package provides API access to data from the US [Energy Information Administration](https://www.eia.gov/) (EIA).
 
@@ -65,7 +58,7 @@ eia_set_key("yourkey") # set API key if not already set globally
 Get a list of available data categories provided by the EIA's API.
 
 ```{r example}
-eia_categories()
+eia_directory()
 
 eia_subcategories("electricity")
 ```
