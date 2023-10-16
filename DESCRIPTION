@@ -29,7 +29,6 @@ URL: https://docs.ropensci.org/eia/ (website) https://github.com/ropensci/eia
 BugReports: https://github.com/ropensci/eia/issues
 Imports: 
     tibble,
-    magrittr,
     httr,
     jsonlite,
     purrr,
@@ -48,5 +47,5 @@ Suggests:
 VignetteBuilder: knitr
 Language: en-US
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Config/testthat/edition: 3
