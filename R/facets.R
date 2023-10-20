@@ -3,23 +3,24 @@
 #' Obtain facets for a given set of EIA data.
 #'
 #' By default, additional processing is done to return a list containing tibble data frames.
-#' Set `tidy = FALSE` to return only the initial list result of `jsonlite::fromJSON`.
+#' Set `tidy = FALSE` to return only the initial list result of `jsonlite::fromJSON()`.
 #' Set `tidy = NA` to return the original JSON as a character string.
 #'
 #' Set to `cache = FALSE` to force a new API call for updated data.
 #' Using `FALSE` always makes a new API call and returns the result from the server.
 #' `TRUE` uses memoization on a per R session basis, caching the result of the
 #' function call in memory for the duration of the R session.
-#' You can reset the entire cache by calling `eia_clear_cache`.
+#' You can reset the entire cache by calling `eia_clear_cache()`.
 #'
 #' @param dir character, directory path.
 #' @param facet character
 #' @param tidy logical, return a tidier result. See details.
-#' @param cache logical, cache result for duration of R session using memoization. See details.
-#' @param key API key: character if set explicitly; not needed if key is set globally. See `eia_set_key()`.
+#' @param cache logical, cache result for duration of R session using memoization.
+#' See details.
+#' @param key API key: character if set explicitly; not needed if key is set
+#' globally. See `eia_set_key()`.
 #'
-#' @return if `tidy = TRUE`, then `data.frame/tibble`; f `tidy = NA` or `tidy = FALSE`, then
-#' JSON the latter of which is a list result from `jsonlite::fromJSON`.
+#' @return data frame, list, or character; see details.
 #' @export
 #'
 #' @examples

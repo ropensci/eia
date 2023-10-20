@@ -1,10 +1,12 @@
 #' Download data for various EIA reports
 #'
-#' These functions download data for various EIA reports found on the EIA website but not necessarily available through the EIA API.
+#' These functions download data for various EIA reports found on the EIA
+#' website but not necessarily available through the EIA API.
 #'
-#' The wrapper function and the individual report functions do not make API calls and do not require an API key.
+#' The wrapper function and the individual report functions do not make API
+#' calls and do not require an API key.
 #'
-#' @param id character, the report ID. See details for the list of available reports.
+#' @param id character, the report ID. See examples for available reports.
 #' @param ... arguments passed to individual report data functions.
 #'
 #' @return a list, typically a list of data frames

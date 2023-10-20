@@ -2,9 +2,9 @@
 #'
 #' Obtain data from the EIA.
 #'
-#' By default, `data`, `facets`, and `freq` are set to `NULL`. To obtain valid input
-#' values for each of these arguments, one must use the specific ID labels as
-#' provided by `eia_metadata()`.
+#' By default, `data`, `facets`, and `freq` are set to `NULL`. To obtain valid
+#' input values for each of these arguments, one must use the specific ID labels
+#' as provided by `eia_metadata()`.
 #'
 #' By default, additional processing is done to return a list containing tibble data frames.
 #' Set `tidy = FALSE` to return only the initial list result of `jsonlite::fromJSON`.
@@ -14,28 +14,26 @@
 #' Using `FALSE` always makes a new API call and returns the result from the server.
 #' `TRUE` uses memoization on a per R session basis, caching the result of the
 #' function call in memory for the duration of the R session.
-#' You can reset the entire cache by calling `eia_clear_cache`.
+#' You can reset the entire cache by calling `eia_clear_cache()`.
 #'
 #' @param dir character, directory path.
 #' @param data character or `NULL`, see details.
 #' @param facets character list or `NULL`, see details.
-#' @param freq character or `NULL`, if char, then one of: "yearly", "monthly", "daily", "hourly".
-#' @param start character or `NULL`, must match format of either default or supplied `freq`;
-#' i.e. if `freq = "yearly"`, then format of `start` must be `YYYY`.
-#' @param end character or `NULL`, must match format of either default or supplied `freq`;
-#' i.e. if `freq = "yearly"`, then format of `start` must be `YYYY`.
-#' @param sort character list, list containing two character objects `"columns"` and `"direction"*`.
-#'    * `"columns"` may be of arbitrary length and must contain the precise names of the columns
-#'    by which to sort.
-#'    * `"direction"` must be of length 1 and contain either `"asc"` or `"desc"` for ascending
-#'    or descending order, respectively.
-#' @param length numeric or `NULL`, specify number of rows to return.
-#' @param offset numeric or `NULL`, specify number of rows to skip before return.
+#' @param freq character or `NULL`, if char, then one of: "yearly", "monthly",
+#' "daily", "hourly".
+#' @param start,end character or `NULL`, must match format of default or supplied
+#' `freq`; i.e. if `freq = "yearly"`, then format of `start` must be `YYYY`.
+#' @param sort named list of two. `columns`: names of columns to sort by.
+#' `direction`: `"asc"` or `"desc"` for ascending or descending.
+#' @param length numeric or `NULL`, number of rows to return.
+#' @param offset numeric or `NULL`, number of rows to skip before return.
 #' @param tidy logical or `NULL`, return a tidier result. See details.
-#' @param cache logical, cache result for duration of R session using memoization. See details.
-#' @param key API key: character if set explicitly; not needed if key is set globally. See `eia_set_key()`.
+#' @param cache logical, cache result for duration of R session using memoization.
+#' See details.
+#' @param key API key: character if set explicitly; not needed if key is set
+#' globally. See `eia_set_key()`.
 #'
-#' @return data.frame/tibble
+#' @return data frame
 #' @export
 #'
 #' @examples

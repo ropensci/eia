@@ -13,27 +13,28 @@ eia_facets(dir, facet, tidy = TRUE, cache = TRUE, key = eia_get_key())
 
 \item{tidy}{logical, return a tidier result. See details.}
 
-\item{cache}{logical, cache result for duration of R session using memoization. See details.}
+\item{cache}{logical, cache result for duration of R session using memoization.
+See details.}
 
-\item{key}{API key: character if set explicitly; not needed if key is set globally. See \code{eia_set_key()}.}
+\item{key}{API key: character if set explicitly; not needed if key is set
+globally. See \code{eia_set_key()}.}
 }
 \value{
-if \code{tidy = TRUE}, then \code{data.frame/tibble}; f \code{tidy = NA} or \code{tidy = FALSE}, then
-JSON the latter of which is a list result from \code{jsonlite::fromJSON}.
+data frame, list, or character; see details.
 }
 \description{
 Obtain facets for a given set of EIA data.
 }
 \details{
 By default, additional processing is done to return a list containing tibble data frames.
-Set \code{tidy = FALSE} to return only the initial list result of \code{jsonlite::fromJSON}.
+Set \code{tidy = FALSE} to return only the initial list result of \code{jsonlite::fromJSON()}.
 Set \code{tidy = NA} to return the original JSON as a character string.
 
 Set to \code{cache = FALSE} to force a new API call for updated data.
 Using \code{FALSE} always makes a new API call and returns the result from the server.
 \code{TRUE} uses memoization on a per R session basis, caching the result of the
 function call in memory for the duration of the R session.
-You can reset the entire cache by calling \code{eia_clear_cache}.
+You can reset the entire cache by calling \code{eia_clear_cache()}.
 }
 \examples{
 \dontrun{

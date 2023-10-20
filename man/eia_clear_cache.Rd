@@ -22,7 +22,8 @@ eia_clear_facet()
 Reset the results of API calls that are currently cached in memory.
 }
 \details{
-\code{eia_clear_cache} clears the entire cache. The other functions clear the cache associated with specific endpoints.
+\code{eia_clear_cache()} clears the entire cache. The other functions clear the
+cache associated with specific endpoints.
 }
 \examples{
 \dontrun{

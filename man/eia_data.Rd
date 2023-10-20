@@ -26,42 +26,37 @@ eia_data(
 
 \item{facets}{character list or \code{NULL}, see details.}
 
-\item{freq}{character or \code{NULL}, if char, then one of: "yearly", "monthly", "daily", "hourly".}
+\item{freq}{character or \code{NULL}, if char, then one of: "yearly", "monthly",
+"daily", "hourly".}
 
-\item{start}{character or \code{NULL}, must match format of either default or supplied \code{freq};
-i.e. if \code{freq = "yearly"}, then format of \code{start} must be \code{YYYY}.}
+\item{start, end}{character or \code{NULL}, must match format of default or supplied
+\code{freq}; i.e. if \code{freq = "yearly"}, then format of \code{start} must be \code{YYYY}.}
 
-\item{end}{character or \code{NULL}, must match format of either default or supplied \code{freq};
-i.e. if \code{freq = "yearly"}, then format of \code{start} must be \code{YYYY}.}
+\item{sort}{named list of two. \code{columns}: names of columns to sort by.
+\code{direction}: \code{"asc"} or \code{"desc"} for ascending or descending.}
 
-\item{sort}{character list, list containing two character objects \code{"columns"} and \verb{"direction"*}.
-\itemize{
-\item \code{"columns"} may be of arbitrary length and must contain the precise names of the columns
-by which to sort.
-\item \code{"direction"} must be of length 1 and contain either \code{"asc"} or \code{"desc"} for ascending
-or descending order, respectively.
-}}
+\item{length}{numeric or \code{NULL}, number of rows to return.}
 
-\item{length}{numeric or \code{NULL}, specify number of rows to return.}
-
-\item{offset}{numeric or \code{NULL}, specify number of rows to skip before return.}
+\item{offset}{numeric or \code{NULL}, number of rows to skip before return.}
 
 \item{tidy}{logical or \code{NULL}, return a tidier result. See details.}
 
-\item{cache}{logical, cache result for duration of R session using memoization. See details.}
+\item{cache}{logical, cache result for duration of R session using memoization.
+See details.}
 
-\item{key}{API key: character if set explicitly; not needed if key is set globally. See \code{eia_set_key()}.}
+\item{key}{API key: character if set explicitly; not needed if key is set
+globally. See \code{eia_set_key()}.}
 }
 \value{
-data.frame/tibble
+data frame
 }
 \description{
 Obtain data from the EIA.
 }
 \details{
-By default, \code{data}, \code{facets}, and \code{freq} are set to \code{NULL}. To obtain valid input
-values for each of these arguments, one must use the specific ID labels as
-provided by \code{eia_metadata()}.
+By default, \code{data}, \code{facets}, and \code{freq} are set to \code{NULL}. To obtain valid
+input values for each of these arguments, one must use the specific ID labels
+as provided by \code{eia_metadata()}.
 
 By default, additional processing is done to return a list containing tibble data frames.
 Set \code{tidy = FALSE} to return only the initial list result of \code{jsonlite::fromJSON}.
@@ -71,7 +66,7 @@ Set to \code{cache = FALSE} to force a new API call for updated data.
 Using \code{FALSE} always makes a new API call and returns the result from the server.
 \code{TRUE} uses memoization on a per R session basis, caching the result of the
 function call in memory for the duration of the R session.
-You can reset the entire cache by calling \code{eia_clear_cache}.
+You can reset the entire cache by calling \code{eia_clear_cache()}.
 }
 \examples{
 \dontrun{

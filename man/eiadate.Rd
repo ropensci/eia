@@ -14,7 +14,8 @@ date_to_eiadate(x, date_format = c("A", "Q", "M", "W", "D", "H"))
 eiadate_to_date_seq(start, end, weekly = FALSE)
 }
 \arguments{
-\item{x}{character, EIA date string; character or date object for regular dates. See details.}
+\item{x}{character, EIA date string; character or date object for regular
+dates. See details.}
 
 \item{date_format}{EIA date format: "A", "Q", "M", "W", "D", "H".
 These stand for annual, quarterly, monthly, weekly, daily, hourly. See details.}
@@ -26,19 +27,24 @@ These stand for annual, quarterly, monthly, weekly, daily, hourly. See details.}
 \item{weekly}{logical. See details.}
 }
 \description{
-Helper functions for manipulating and converting between regular year-month-day date strings and EIA date string notation.
+Helper functions for manipulating and converting between regular
+year-month-day date strings and EIA date string notation.
 }
 \details{
-There is no reason to mix EIA date formats in this context. Functions that take EIA date strings expect a consistent format.
-Also, EIA date formats are parsed automatically from the dates themselves.
-However, daily and weekly use the same format. Too avoid ambiguity in \code{eia_date_seq}, daily is assumed; set \code{weekly = TRUE} to treat as weekly.
+There is no reason to mix EIA date formats in this context. Functions that
+take EIA date strings expect a consistent format. Also, EIA date formats are
+parsed automatically from the dates themselves. However, daily and weekly use
+the same format. Too avoid ambiguity in \code{eia_date_seq()}, daily is assumed;
+set \code{weekly = TRUE} to treat as weekly.
 
-When providing a real date or date string, such as to \code{date_to_eiadate}, dates should be in \code{YYYY-MM-DD} format,
-or at least any format that can be parsed by \code{lubridate::ymd} or \code{lubridate::ymd_hms} for dates and hourly date times, respectively.
+When providing a real date or date string, such as to \code{date_to_eiadate()},
+dates should be in \code{YYYY-MM-DD} format, or at least any format that can be
+parsed by \code{lubridate::ymd} or \code{lubridate::ymd_hms} for dates and hourly date
+times, respectively.
 
-\code{"LH"} is not a supported date format. Use \code{"H"}. The API does not
-translate the date and time when using \code{"LH"} anyhow; it simply appends
-the date string with the number of hours time difference.
+\code{"LH"} is not a supported date format. Use \code{"H"}. The API does not translate
+the date and time when using \code{"LH"} anyhow; it simply appends the date string
+with the number of hours time difference.
 }
 \examples{
 eiadate_to_date(c("2018-03", "2018-04"))

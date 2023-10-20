@@ -2,7 +2,8 @@
 #'
 #' Reset the results of API calls that are currently cached in memory.
 #'
-#' `eia_clear_cache` clears the entire cache. The other functions clear the cache associated with specific endpoints.
+#' `eia_clear_cache()` clears the entire cache. The other functions clear the
+#' cache associated with specific endpoints.
 #'
 #' @export
 #'
