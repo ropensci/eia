@@ -13,7 +13,7 @@ reference:
 - title: API functions
   contents:
   - eia_key
-  - eia_directory
+  - eia_dirs
   - eia_metadata
   - eia_facets
   - eia_data

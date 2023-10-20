@@ -81,21 +81,21 @@ This approach limits the potential for accidentally using the EIA API more than 
 Run this example of the same request made with and without memoization. You will notice the cached result by the immediate return.
 
 ```{r memo1, eval=FALSE}
-system.time(eia_directory()) # API call; cache result
-system.time(eia_directory()) # read from cache
-system.time(eia_directory(cache = FALSE)) # API call
+system.time(eia_dir()) # API call; cache result
+system.time(eia_dir()) # read from cache
+system.time(eia_dir(cache = FALSE)) # API call
 ```
 
 Results are cached in memory for the duration of the R session, but you can clear the cache at any time.
 
 ```{r memo2, eval=FALSE}
 eia_clear_cache()
-system.time(eia_directory())
+system.time(eia_dir())
 ```
 
 This allows you to update the cached result. You can reset the cache for only specific endpoints using the following functions.
 
-*    `eia_clear_dirs`
+*    `eia_clear_dir`
 *    `eia_clear_metadata`
 *.   `eia_clear_data`
 *    `eia_clear_facet`

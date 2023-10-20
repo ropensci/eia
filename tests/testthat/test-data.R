@@ -26,7 +26,7 @@ test_that("metadata helper returns as expected", {
   if(is.null(key)) skip("API key not available.")
 
   x <- eia_metadata("electricity/retail-sales", cache = FALSE)
-  expect_null(x)
+  expect_type(x, "character")
 
   x <- eia_metadata("electricity/retail-sales", tidy = FALSE, cache = FALSE)
   expect_type(x, "list")

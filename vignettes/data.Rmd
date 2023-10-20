@@ -18,7 +18,7 @@ Below, look for total electricity consumption.
 ```r
 library(eia)
 # eia_set_key("yourkey") # set API key if not already set globally
-eia_directory()
+eia_dir()
 ```
 
 ```
@@ -44,7 +44,7 @@ Let's take a closer look at the Electricity directory.
 
 
 ```r
-eia_directory("electricity")
+eia_dir("electricity")
 ```
 
 ```
@@ -64,7 +64,12 @@ Using Retail Sales as an example, let's see what sub-folders are available there
 
 
 ```r
-eia_directory("electricity/retail-sales")
+eia_dir("electricity/retail-sales")
+```
+
+```
+## No further sub-directories to discover.
+## Use `eia::eia_metadata("electricity/retail-sales")` to explore this data.
 ```
 
 At this point, we've been informed that we've reached the end of the directory path;
@@ -75,6 +80,45 @@ what data is available here and how it can be obtained, we have been prompted to
 
 ```r
 eia::eia_metadata("electricity/retail-sales")
+```
+
+```
+## Name:
+##    Electricity Sales to Ultimate Customers
+## 
+## Description:
+##    Electricity sales to ultimate customer by state and sector (number of customers, average price, revenue, and megawatthours of sales).  
+##     Sources: Forms EIA-826, EIA-861, EIA-861M
+## 
+## Data Values:
+##   # A tibble: 4 × 3
+##   id        alias                                              units                 
+##   <chr>     <chr>                                              <chr>                 
+## 1 revenue   Revenue from Sales to Ultimate Customers           million dollars       
+## 2 sales     Megawatthours Sold to Utlimate Customers           million kilowatthours 
+## 3 price     Average Price of Electricity to Utlimate Customers cents per kilowatthour
+## 4 customers Number of Ultimate Customers                       number of customers   
+## 
+## Facets:
+##   # A tibble: 2 × 2
+##   id       description          
+##   <chr>    <chr>                
+## 1 stateid  State / Census Region
+## 2 sectorid Sector               
+## 
+## Frequency:
+##   # A tibble: 3 × 4
+##   id        description                            query format 
+##   <chr>     <chr>                                  <chr> <chr>  
+## 1 monthly   One data point for each month.         M     YYYY-MM
+## 2 quarterly One data point every 3 months.         Q     YYYY-QQ
+## 3 annual    One data point for each calendar year. A     YYYY   
+## 
+## Defaults:
+##   Date Format: YYYY-MM 
+##   Frequency: monthly
+## 
+## Date Range:  2001-01 to 2023-07
 ```
 
 The console output of `eia_metadata`, above, provides a brief description, available data

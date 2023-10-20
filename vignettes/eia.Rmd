@@ -62,7 +62,7 @@ Here is the top-level directory information:
 
 
 ```r
-eia_directory()
+eia_dir()
 #> # A tibble: 14 × 3
 #>    id                name                            description                                                                                
 #>    <chr>             <chr>                           <chr>                                                                                      
@@ -86,7 +86,7 @@ You can navigate deeper into this directory by supplying a folder id (e.g. id = 
 
 
 ```r
-eia_directory("electricity")
+eia_dir("electricity")
 #> # A tibble: 6 × 3
 #>   id                              name                                                                       description                        
 #>   <chr>                           <chr>                                                                      <chr>                              
@@ -101,12 +101,12 @@ eia_directory("electricity")
 And, because this APIv2 is a directory listing, to go any deeper simply requires
 appending the next id separated by `"/"`, where the first folder ID in from the top-level
 directory is "electricity" and the next folder ID in from there is "retail-sales", we
-would supply "electricity/retail-sales" to the first argument in `eia_directory`, as
+would supply "electricity/retail-sales" to the first argument in `eia_dir`, as
 shown below.
 
 
 ```r
-eia_directory("electricity/retail-sales")
+eia_dir("electricity/retail-sales")
 ```
 
 Now we've reached the end of the directory path, as you can see by the message

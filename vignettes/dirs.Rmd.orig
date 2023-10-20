@@ -31,7 +31,7 @@ library(eia)
 Here is the top-level directory information.
 
 ```{r dir1}
-eia_directory()
+eia_dir()
 ```
 
 ## Subdirectories
@@ -40,13 +40,19 @@ The directory folders from above can be used to obtain subdirectory folder paths
 from which further subdirectories or data may be obtained.
 
 ```{r dir2}
-eia_subdirectory("electricity")
+eia_dir("electricity")
+```
+
+...and so on.
+
+```{r dir3}
+eia_dir("electricity/rto")
 ```
 
 ## Output format
 
 The default is to return tidy data in a tibble data frame. For `eia_dir` you can set `tidy = FALSE` to return the list returned by `jsonlite::fromJSON` without any further processing or `tidy = NA` to return the raw JSON data as a character string.
 
-```{r dir3}
-eia_directory(tidy = FALSE)
+```{r dir4}
+eia_dir(tidy = FALSE)
 ```

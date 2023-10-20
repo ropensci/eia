@@ -12,53 +12,24 @@
 #' function call in memory for the duration of the R session.
 #' You can reset the entire cache by calling `eia_clear_cache`.
 #'
-#' `eia_subdirectory` returns only the immediate sub-directories (folders/files) under a given parent.
-#' This is a wrapper around `eia_directory` and always return a tibble data frame.
-#'
 #' @param dir character, directory path, if `NULL` then the API root directory.
 #' @param tidy logical, return a tidier result. See details.
 #' @param cache logical, cache result for duration of R session using memoization. See details.
 #' @param key API key: character if set explicitly; not needed if key is set globally. See `eia_set_key()`.
 #'
-#' @return for `eia_directory`, a tibble data frame (or a less processed list, or character, depending on `tidy` value); others functions return a tibble data frame.
+#' @return a tibble data frame (or a less processed list, or character, depending on `tidy` value); others functions return a tibble data frame.
 #' @export
 #'
 #' @examples
 #' \dontrun{
 #' # use eia_set_key() to store API key
-#' eia_directory()
-#' eia_subdirectory("electricity")
-#' eia_subdirectory("electricity/rto")
+#' eia_dir()
+#' eia_dir("electricity")
+#' eia_dir("electricity/rto")
 #' }
-eia_directory <- function(dir = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
+eia_dir <- function(dir = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   .key_check(key)
   if(cache) .eia_dir_memoized(dir, tidy, key) else .eia_dir(dir, tidy, key)
-}
-
-#' @export
-#' @rdname eia_directory
-eia_subdirectory <- function(dir, cache = TRUE, key = eia_get_key()){
-  .key_check(key)
-  eia_directory(dir, cache = cache, key = key)
-}
-
-#' @export
-#' @rdname eia_directory
-eia_dir <- function(dir = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
-  .Deprecated("eia_directory")
-  eia_directory(dir, tidy, cache, key)
-}
-
-#' @export
-#' @rdname eia_directory
-eia_parent_cats <- function(dir, tidy = TRUE, cache = TRUE, key = eia_get_key()){
-  .Defunct("eia_categories")
-}
-
-#' @export
-#' @rdname eia_directory
-eia_child_cats <- function(dir, tidy = TRUE, cache = TRUE, key = eia_get_key()){
-  .Defunct("eia_subcategories")
 }
 
 .eia_dir <- function(dir, tidy, key){

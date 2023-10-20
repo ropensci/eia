@@ -9,13 +9,13 @@
 #' @examples
 #' \dontrun{
 #' key <- Sys.getenv("EIA_KEY") # your stored API key
-#' system.time(eia_dirs(key))
-#' system.time(eia_dirs(key))
+#' system.time(eia_dir(key))
+#' system.time(eia_dir(key))
 #' eia_clear_cache()
-#' system.time(eia_dirs(key))
+#' system.time(eia_dir(key))
 #' }
 eia_clear_cache <- function(){
-  eia_clear_dirs()
+  eia_clear_dir()
   eia_clear_metadata()
   eia_clear_data()
   eia_clear_facet()
@@ -24,7 +24,7 @@ eia_clear_cache <- function(){
 
 #' @rdname eia_clear_cache
 #' @export
-eia_clear_dirs <- function(){
+eia_clear_dir <- function(){
   memoise::forget(.eia_dir_memoized)
   invisible()
 }

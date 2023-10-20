@@ -58,9 +58,9 @@ eia_set_key("yourkey") # set API key if not already set globally
 Get a list of available data categories provided by the EIA's API.
 
 ```{r example}
-eia_directory()
+eia_dir()
 
-eia_subcategories("electricity")
+eia_dir("electricity")
 ```
 
 ## References

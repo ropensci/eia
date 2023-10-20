@@ -17,19 +17,19 @@ Below, look for total electricity consumption.
 ```{r setup}
 library(eia)
 # eia_set_key("yourkey") # set API key if not already set globally
-eia_directory()
+eia_dir()
 ```
 Let's take a closer look at the Electricity directory.
 
 ```{r elec}
-eia_directory("electricity")
+eia_dir("electricity")
 ```
 
 There are six sub-folders within the electricity directory.
 Using Retail Sales as an example, let's see what sub-folders are available there.
 
 ```{r sales}
-eia_directory("electricity/retail-sales")
+eia_dir("electricity/retail-sales")
 ```
 
 At this point, we've been informed that we've reached the end of the directory path;
