@@ -16,8 +16,8 @@ eia_metadata(dir, tidy = TRUE, cache = TRUE, key = eia_get_key())
 \item{key}{API key: character if set explicitly; not needed if key is set globally. See \code{eia_set_key()}.}
 }
 \value{
-if \code{tidy = TRUE}, then \code{NULL}; if \code{tidy = NA} or \code{tidy = FALSE}, then
-JSON the latter of which is a list result from \code{jsonlite::fromJSON}.
+if \code{tidy = TRUE}, then character (invisibly); if \code{tidy \%in\% c(NA, FALSE)}, then
+JSON - the latter of which is a list result from \code{jsonlite::fromJSON}.
 }
 \description{
 Obtain EIA data metadata
@@ -35,7 +35,7 @@ You can reset the entire cache by calling \code{eia_clear_cache}.
 }
 \examples{
 \dontrun{
-eia_directory("electricity/retail-sales")
+eia_dir("electricity/retail-sales")
 eia_metadata("electricity/retail-sales")
 }
 }

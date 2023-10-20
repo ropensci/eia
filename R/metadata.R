@@ -17,13 +17,13 @@
 #' @param cache logical, cache result for duration of R session using memoization. See details.
 #' @param key API key: character if set explicitly; not needed if key is set globally. See `eia_set_key()`.
 #'
-#' @return if `tidy = TRUE`, then `NULL`; if `tidy = NA` or `tidy = FALSE`, then
-#' JSON the latter of which is a list result from `jsonlite::fromJSON`.
+#' @return if `tidy = TRUE`, then character (invisibly); if `tidy %in% c(NA, FALSE)`, then
+#' JSON - the latter of which is a list result from `jsonlite::fromJSON`.
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' eia_directory("electricity/retail-sales")
+#' eia_dir("electricity/retail-sales")
 #' eia_metadata("electricity/retail-sales")
 #' }
 eia_metadata <- function(dir, tidy = TRUE, cache = TRUE, key = eia_get_key()){
@@ -38,23 +38,21 @@ eia_metadata <- function(dir, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   if(!tidy) return(r)
   if(tidy){
     name <- if(!is.null(r$response$name)) r$response$name else r$response$id
-    cat("Name:\n  ", name)
-    if(!is.null(r$response$description)){
-      cat("\n\nDescription:\n  ", r$response$description)
-    }
-    if (!is.null(r$response$data)){
-      cat("\n\nData Values:\n  "); print(.eia_data_values(r$response$data))
-    }
-    if (!is.null(r$response$facets)){
-      cat("\nFacets:\n  "); print(tibble::as_tibble(r$response$facets))
-    }
-    if (!is.null(r$response$frequency)){
-      cat("\nFrequency:\n  "); print(.eia_freq_fmt(r$response$frequency))
-    }
-    cat("\nDefaults:\n  ")
-    cat("Date Format:", r$response$defaultDateFormat, "\n  Frequency:", r$response$defaultFrequency)
-    cat("\n\nDate Range: ", r$response$startPeriod, "to", r$response$endPeriod)
-    invisible(NULL)
+    desc <- if(!is.null(r$response$description)) r$response$description
+    data <- if(!is.null(r$response$data)) .eia_data_fmt(r$response$data)
+    fcts <- if(!is.null(r$response$facets)) .eia_fcts_fmt(r$response$facets)
+    freq <- if(!is.null(r$response$frequency)) .eia_freq_fmt(r$response$frequency)
+    msg <- paste(
+      cat("Name:\n  ", name),
+      cat("\n\nDescription:\n  ", desc),
+      cat("\n\nData Values:\n  "), print(data),
+      cat("\nFacets:\n  "), print(fcts),
+      cat("\nFrequency:\n  "), print(freq),
+      cat("\nDefaults:\n  "),
+      cat("Date Format:", r$response$defaultDateFormat, "\n  Frequency:", r$response$defaultFrequency),
+      cat("\n\nDate Range: ", r$response$startPeriod, "to", r$response$endPeriod)
+    )
+    invisible(msg)
   }
 }
 
@@ -64,11 +62,15 @@ eia_metadata <- function(dir, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   .eia_url(path = paste0(dir, "/?api_key=", key))
 }
 
-.eia_data_values <- function(data){
+.eia_data_fmt <- function(data){
   d <- sapply(names(data), function(x){
     unlist(list("id" = x, data[[x]]))
   })
   tibble::as_tibble(t(d))
+}
+
+.eia_fcts_fmt <- function(fcts){
+  tibble::as_tibble(fcts)
 }
 
 .eia_freq_fmt <- function(freq){
