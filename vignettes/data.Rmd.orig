@@ -41,7 +41,7 @@ what data is available here and how it can be obtained, we have been prompted to
 eia::eia_metadata("electricity/retail-sales")
 ```
 
-The console output of `eia_metadata`, above, provides a brief description, available data
+The console output of `eia_metadata()`, above, provides a brief description, available data
 values (data column names), facet ids for filtering, available time frequencies, a
 set of default values for formats and frequency, and finally the full time range
 of available data.
@@ -58,7 +58,7 @@ But what if we only want `"sales"` for residential customers in Vermont?
 This is where `facets` come in, and we can obtain specific values for facets by
 way of `eia_facets`.
 
-Remember, `eia_metadata` provided us with the facet ids (`"stateid"`, `"sectorid"`)
+Remember, `eia_metadata()` provided us with the facet ids (`"stateid"`, `"sectorid"`)
 needed to obtain the facet values.
 
 ```{r facets}
@@ -80,7 +80,7 @@ be required for obtaining Retail Sales for Residential customers in Vermont.
 ### Data values and facet subsetting
 
 From the Data Values (column names) and Facet IDs obtained above, we can now
-effectively create a query with `eia_data` to get just that.
+effectively create a query with `eia_data()` to get just that.
 
 Note that the `facets` argument requires a named list with the proper facet IDs
 discovered above.
@@ -121,7 +121,7 @@ cat("\nDate Range:\n  ", r$response$startPeriod, "to", r$response$endPeriod)
 
 The default frequency for this data is monthly, but maybe we only want annualized
 data for a truncated time frame, say the last five years. We can do that with the
-`start`, `end`, and `freq` arguments of `eia_data`.
+`start`, `end`, and `freq` arguments of `eia_data()`.
 
 ```{r data3}
 eia_data(

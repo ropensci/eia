@@ -51,7 +51,7 @@ eia_dir("electricity/rto")
 
 ## Output format
 
-The default is to return tidy data in a tibble data frame. For `eia_dir` you can set `tidy = FALSE` to return the list returned by `jsonlite::fromJSON` without any further processing or `tidy = NA` to return the raw JSON data as a character string.
+The default is to return tidy data in a tibble data frame. For `eia_dir()` you can set `tidy = FALSE` to return the list returned by `jsonlite::fromJSON` without any further processing or `tidy = NA` to return the raw JSON data as a character string.
 
 ```{r dir4}
 eia_dir(tidy = FALSE)

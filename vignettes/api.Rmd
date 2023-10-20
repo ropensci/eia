@@ -23,7 +23,7 @@ It is important to store your API key somewhere secure. Do not commit it to a re
 
 You can always provide the `key` argument to every API function call, but you do not have to. There are getter and setter helpers available to make using `eia` functions a more seamless experience.
 
-`eia_set_key` gives you the option of storing your key in any of three places via the `store` argument:
+`eia_set_key()` gives you the option of storing your key in any of three places via the `store` argument:
 
 * `store = "env"`: the package environment that is created when the package is loaded (default method)
 * `store = "options"`: in the global `options`
@@ -31,7 +31,7 @@ You can always provide the `key` argument to every API function call, but you do
 
 The last two options require the name-value pair to be named `EIA_KEY = "yourkey"`. These three options also are the order of precedence if you do not specify the `store` argument.
 
-This setup also allows you to store a key that will override another key. This is because `eia_get_key` checks these three storage methods in this order and stops as soon as it finds a key. If you need it to check a specific location, you can specify `store`.
+This setup also allows you to store a key that will override another key. This is because `eia_get_key()` checks these three storage methods in this order and stops as soon as it finds a key. If you need it to check a specific location, you can specify `store`.
 
 As an example, if the key already exists in the system environment and you plan to pass `key` to functions explicitly, you could start as follows:
 
@@ -53,7 +53,7 @@ If you need to set it, you can do so as follows.
 
 API functions in `eia` use `eia_get_key()` with no arguments as the default value of their `key` argument, checking in the order shown above for an existing key. This way you do not need to repeatedly provide it.
 
-Note that despite the name and behavior, storing an environment variable with `Sys.setenv` (and thus `eia_set_key(key, store = "sysenv")`) is not persistent; the key is lost when the R session terminates, just as it is with the other two session-based options. If you want a persistent key, you must manually add your key somewhere like `.Renviron`. In that cases, you never need `eia_set_key` and `eia_get_key` will retrieve the `EIA_KEY` environment variable. See the package documentation for more details on key options.
+Note that despite the name and behavior, storing an environment variable with `Sys.setenv` (and thus `eia_set_key(key, store = "sysenv")`) is not persistent; the key is lost when the R session terminates, just as it is with the other two session-based options. If you want a persistent key, you must manually add your key somewhere like `.Renviron`. In that cases, you never need `eia_set_key()` and `eia_get_key()` will retrieve the `EIA_KEY` environment variable. See the package documentation for more details on key options.
 
 In this and subsequent vignettes, you will not see a key being set because it is already an environment variable. You will also not see it used explicitly by any functions because the default behavior is to look up the key in the environment.
 
@@ -91,10 +91,10 @@ system.time(eia_dir())
 
 This allows you to update the cached result. You can reset the cache for only specific endpoints using the following functions.
 
-*    `eia_clear_dir`
-*    `eia_clear_metadata`
-*.   `eia_clear_data`
-*    `eia_clear_facet`
+*    `eia_clear_dir()`
+*    `eia_clear_metadata()`
+*.   `eia_clear_data()`
+*    `eia_clear_facets()`
 
 ### Anti-DOS measures
 

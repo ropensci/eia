@@ -23,21 +23,21 @@ eia_dir()
 
 ```
 ## # A tibble: 14 × 3
-##    id                name                            description                                                                                
-##    <chr>             <chr>                           <chr>                                                                                      
-##  1 coal              Coal                            EIA coal energy data                                                                       
-##  2 crude-oil-imports Crude Oil Imports               Crude oil imports by country to destination, includes type, grade, quantity.  Source: EIA-…
-##  3 electricity       Electricity                     EIA electricity survey data                                                                
-##  4 international     International                   Country level production, consumption, imports, exports by energy source (petroleum, natur…
-##  5 natural-gas       Natural Gas                     EIA natural gas survey data                                                                
-##  6 nuclear-outages   Nuclear Outages                 EIA nuclear outages survey data                                                            
-##  7 petroleum         Petroleum                       EIA petroleum gas survey data                                                              
-##  8 seds              State Energy Data System (SEDS) Estimated production, consumption, price, and expenditure data for all energy sources by s…
-##  9 steo              Short Term Energy Outlook       Monthly short term (18 month) projections using STEO model.  Report and interactive projec…
-## 10 densified-biomass Densified Biomass               EIA densified biomass data                                                                 
-## 11 total-energy      Total Energy                    These data represent the most recent comprehensive energy statistics integrated across all…
-## 12 aeo               Annual Energy Outlook           Annual U.S. projections using National Energy Modelling System (NEMS) for release year.  R…
-## 13 ieo               International Energy Outlook    Annual international projections using the World Energy Projection System (WEPS) model for…
+##    id                name                            description                                                                                              
+##    <chr>             <chr>                           <chr>                                                                                                    
+##  1 coal              Coal                            EIA coal energy data                                                                                     
+##  2 crude-oil-imports Crude Oil Imports               Crude oil imports by country to destination, includes type, grade, quantity.  Source: EIA-814  Interacti…
+##  3 electricity       Electricity                     EIA electricity survey data                                                                              
+##  4 international     International                   Country level production, consumption, imports, exports by energy source (petroleum, natural gas, electr…
+##  5 natural-gas       Natural Gas                     EIA natural gas survey data                                                                              
+##  6 nuclear-outages   Nuclear Outages                 EIA nuclear outages survey data                                                                          
+##  7 petroleum         Petroleum                       EIA petroleum gas survey data                                                                            
+##  8 seds              State Energy Data System (SEDS) Estimated production, consumption, price, and expenditure data for all energy sources by state and secto…
+##  9 steo              Short Term Energy Outlook       Monthly short term (18 month) projections using STEO model.  Report and interactive projection data brow…
+## 10 densified-biomass Densified Biomass               EIA densified biomass data                                                                               
+## 11 total-energy      Total Energy                    These data represent the most recent comprehensive energy statistics integrated across all energy source…
+## 12 aeo               Annual Energy Outlook           Annual U.S. projections using National Energy Modelling System (NEMS) for release year.  Report, documen…
+## 13 ieo               International Energy Outlook    Annual international projections using the World Energy Projection System (WEPS) model for release year.…
 ## 14 co2-emissions     State CO2 Emissions             EIA CO2 Emissions data
 ```
 Let's take a closer look at the Electricity directory.
@@ -49,14 +49,14 @@ eia_dir("electricity")
 
 ```
 ## # A tibble: 6 × 3
-##   id                              name                                                                       description                        
-##   <chr>                           <chr>                                                                      <chr>                              
-## 1 retail-sales                    Electricity Sales to Ultimate Customers                                    "Electricity sales to ultimate cus…
-## 2 electric-power-operational-data Electric Power Operations (Annual and Monthly)                             "Monthly and annual electric power…
-## 3 rto                             Electric Power Operations (Daily and Hourly)                               "Hourly and daily electric power o…
-## 4 state-electricity-profiles      State Specific Data                                                        "State Specific Data"              
-## 5 operating-generator-capacity    Inventory of Operable Generators                                           "Inventory of operable generators …
-## 6 facility-fuel                   Electric Power Operations for Individual Power Plants (Annual and Monthly) "Annual and monthly electric power…
+##   id                              name                                                                       description                                      
+##   <chr>                           <chr>                                                                      <chr>                                            
+## 1 retail-sales                    Electricity Sales to Ultimate Customers                                    "Electricity sales to ultimate customer by state…
+## 2 electric-power-operational-data Electric Power Operations (Annual and Monthly)                             "Monthly and annual electric power operations by…
+## 3 rto                             Electric Power Operations (Daily and Hourly)                               "Hourly and daily electric power operations by b…
+## 4 state-electricity-profiles      State Specific Data                                                        "State Specific Data"                            
+## 5 operating-generator-capacity    Inventory of Operable Generators                                           "Inventory of operable generators in the U.S.\n …
+## 6 facility-fuel                   Electric Power Operations for Individual Power Plants (Annual and Monthly) "Annual and monthly electric power operations fo…
 ```
 
 There are six sub-folders within the electricity directory.
@@ -69,7 +69,7 @@ eia_dir("electricity/retail-sales")
 
 ```
 ## No further sub-directories to discover.
-## Use `eia::eia_metadata("electricity/retail-sales")` to explore this data.
+## Use `eia_metadata("electricity/retail-sales")` to explore this data.
 ```
 
 At this point, we've been informed that we've reached the end of the directory path;
@@ -83,15 +83,14 @@ eia::eia_metadata("electricity/retail-sales")
 ```
 
 ```
-## Name:
-##    Electricity Sales to Ultimate Customers
+## $Name
+## [1] "Electricity Sales to Ultimate Customers"
 ## 
-## Description:
-##    Electricity sales to ultimate customer by state and sector (number of customers, average price, revenue, and megawatthours of sales).  
-##     Sources: Forms EIA-826, EIA-861, EIA-861M
+## $Description
+## [1] "Electricity sales to ultimate customer by state and sector (number of customers, average price, revenue, and megawatthours of sales).  \n    Sources: Forms EIA-826, EIA-861, EIA-861M"
 ## 
-## Data Values:
-##   # A tibble: 4 × 3
+## $Data
+## # A tibble: 4 × 3
 ##   id        alias                                              units                 
 ##   <chr>     <chr>                                              <chr>                 
 ## 1 revenue   Revenue from Sales to Ultimate Customers           million dollars       
@@ -99,29 +98,35 @@ eia::eia_metadata("electricity/retail-sales")
 ## 3 price     Average Price of Electricity to Utlimate Customers cents per kilowatthour
 ## 4 customers Number of Ultimate Customers                       number of customers   
 ## 
-## Facets:
-##   # A tibble: 2 × 2
+## $Facets
+## # A tibble: 2 × 2
 ##   id       description          
 ##   <chr>    <chr>                
 ## 1 stateid  State / Census Region
 ## 2 sectorid Sector               
 ## 
-## Frequency:
-##   # A tibble: 3 × 4
+## $Frequency
+## # A tibble: 3 × 4
 ##   id        description                            query format 
 ##   <chr>     <chr>                                  <chr> <chr>  
 ## 1 monthly   One data point for each month.         M     YYYY-MM
 ## 2 quarterly One data point every 3 months.         Q     YYYY-QQ
 ## 3 annual    One data point for each calendar year. A     YYYY   
 ## 
-## Defaults:
-##   Date Format: YYYY-MM 
-##   Frequency: monthly
+## $Defaults
+## # A tibble: 1 × 2
+##   format  frequency
+##   <chr>   <chr>    
+## 1 YYYY-MM monthly  
 ## 
-## Date Range:  2001-01 to 2023-07
+## $Period
+## # A tibble: 1 × 2
+##   start   end    
+##   <chr>   <chr>  
+## 1 2001-01 2023-07
 ```
 
-The console output of `eia_metadata`, above, provides a brief description, available data
+The console output of `eia_metadata()`, above, provides a brief description, available data
 values (data column names), facet ids for filtering, available time frequencies, a
 set of default values for formats and frequency, and finally the full time range
 of available data.
@@ -138,7 +143,7 @@ But what if we only want `"sales"` for residential customers in Vermont?
 This is where `facets` come in, and we can obtain specific values for facets by
 way of `eia_facets`.
 
-Remember, `eia_metadata` provided us with the facet ids (`"stateid"`, `"sectorid"`)
+Remember, `eia_metadata()` provided us with the facet ids (`"stateid"`, `"sectorid"`)
 needed to obtain the facet values.
 
 
@@ -192,7 +197,7 @@ be required for obtaining Retail Sales for Residential customers in Vermont.
 ### Data values and facet subsetting
 
 From the Data Values (column names) and Facet IDs obtained above, we can now
-effectively create a query with `eia_data` to get just that.
+effectively create a query with `eia_data()` to get just that.
 
 Note that the `facets` argument requires a named list with the proper facet IDs
 discovered above.
@@ -278,7 +283,7 @@ for a defined date range, as shown below:
 
 The default frequency for this data is monthly, but maybe we only want annualized
 data for a truncated time frame, say the last five years. We can do that with the
-`start`, `end`, and `freq` arguments of `eia_data`.
+`start`, `end`, and `freq` arguments of `eia_data()`.
 
 
 ```r

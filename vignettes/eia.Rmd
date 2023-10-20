@@ -25,7 +25,7 @@ It is important to store your API key somewhere secure. Do not commit it to a re
 
 You can always provide the `key` argument to every API function call, but you do not have to. There are getter and setter helpers available to make using `eia` functions a more seamless experience.
 
-`eia_set_key` gives you the option of storing your key for the duration of your R session.
+`eia_set_key()` gives you the option of storing your key for the duration of your R session.
 
 
 
@@ -64,21 +64,21 @@ Here is the top-level directory information:
 ```r
 eia_dir()
 #> # A tibble: 14 × 3
-#>    id                name                            description                                                                                
-#>    <chr>             <chr>                           <chr>                                                                                      
-#>  1 coal              Coal                            EIA coal energy data                                                                       
-#>  2 crude-oil-imports Crude Oil Imports               Crude oil imports by country to destination, includes type, grade, quantity.  Source: EIA-…
-#>  3 electricity       Electricity                     EIA electricity survey data                                                                
-#>  4 international     International                   Country level production, consumption, imports, exports by energy source (petroleum, natur…
-#>  5 natural-gas       Natural Gas                     EIA natural gas survey data                                                                
-#>  6 nuclear-outages   Nuclear Outages                 EIA nuclear outages survey data                                                            
-#>  7 petroleum         Petroleum                       EIA petroleum gas survey data                                                              
-#>  8 seds              State Energy Data System (SEDS) Estimated production, consumption, price, and expenditure data for all energy sources by s…
-#>  9 steo              Short Term Energy Outlook       Monthly short term (18 month) projections using STEO model.  Report and interactive projec…
-#> 10 densified-biomass Densified Biomass               EIA densified biomass data                                                                 
-#> 11 total-energy      Total Energy                    These data represent the most recent comprehensive energy statistics integrated across all…
-#> 12 aeo               Annual Energy Outlook           Annual U.S. projections using National Energy Modelling System (NEMS) for release year.  R…
-#> 13 ieo               International Energy Outlook    Annual international projections using the World Energy Projection System (WEPS) model for…
+#>    id                name                            description                                                                                              
+#>    <chr>             <chr>                           <chr>                                                                                                    
+#>  1 coal              Coal                            EIA coal energy data                                                                                     
+#>  2 crude-oil-imports Crude Oil Imports               Crude oil imports by country to destination, includes type, grade, quantity.  Source: EIA-814  Interacti…
+#>  3 electricity       Electricity                     EIA electricity survey data                                                                              
+#>  4 international     International                   Country level production, consumption, imports, exports by energy source (petroleum, natural gas, electr…
+#>  5 natural-gas       Natural Gas                     EIA natural gas survey data                                                                              
+#>  6 nuclear-outages   Nuclear Outages                 EIA nuclear outages survey data                                                                          
+#>  7 petroleum         Petroleum                       EIA petroleum gas survey data                                                                            
+#>  8 seds              State Energy Data System (SEDS) Estimated production, consumption, price, and expenditure data for all energy sources by state and secto…
+#>  9 steo              Short Term Energy Outlook       Monthly short term (18 month) projections using STEO model.  Report and interactive projection data brow…
+#> 10 densified-biomass Densified Biomass               EIA densified biomass data                                                                               
+#> 11 total-energy      Total Energy                    These data represent the most recent comprehensive energy statistics integrated across all energy source…
+#> 12 aeo               Annual Energy Outlook           Annual U.S. projections using National Energy Modelling System (NEMS) for release year.  Report, documen…
+#> 13 ieo               International Energy Outlook    Annual international projections using the World Energy Projection System (WEPS) model for release year.…
 #> 14 co2-emissions     State CO2 Emissions             EIA CO2 Emissions data
 ```
 
@@ -88,20 +88,20 @@ You can navigate deeper into this directory by supplying a folder id (e.g. id = 
 ```r
 eia_dir("electricity")
 #> # A tibble: 6 × 3
-#>   id                              name                                                                       description                        
-#>   <chr>                           <chr>                                                                      <chr>                              
-#> 1 retail-sales                    Electricity Sales to Ultimate Customers                                    "Electricity sales to ultimate cus…
-#> 2 electric-power-operational-data Electric Power Operations (Annual and Monthly)                             "Monthly and annual electric power…
-#> 3 rto                             Electric Power Operations (Daily and Hourly)                               "Hourly and daily electric power o…
-#> 4 state-electricity-profiles      State Specific Data                                                        "State Specific Data"              
-#> 5 operating-generator-capacity    Inventory of Operable Generators                                           "Inventory of operable generators …
-#> 6 facility-fuel                   Electric Power Operations for Individual Power Plants (Annual and Monthly) "Annual and monthly electric power…
+#>   id                              name                                                                       description                                      
+#>   <chr>                           <chr>                                                                      <chr>                                            
+#> 1 retail-sales                    Electricity Sales to Ultimate Customers                                    "Electricity sales to ultimate customer by state…
+#> 2 electric-power-operational-data Electric Power Operations (Annual and Monthly)                             "Monthly and annual electric power operations by…
+#> 3 rto                             Electric Power Operations (Daily and Hourly)                               "Hourly and daily electric power operations by b…
+#> 4 state-electricity-profiles      State Specific Data                                                        "State Specific Data"                            
+#> 5 operating-generator-capacity    Inventory of Operable Generators                                           "Inventory of operable generators in the U.S.\n …
+#> 6 facility-fuel                   Electric Power Operations for Individual Power Plants (Annual and Monthly) "Annual and monthly electric power operations fo…
 ```
 
 And, because this APIv2 is a directory listing, to go any deeper simply requires
 appending the next id separated by `"/"`, where the first folder ID in from the top-level
 directory is "electricity" and the next folder ID in from there is "retail-sales", we
-would supply "electricity/retail-sales" to the first argument in `eia_dir`, as
+would supply "electricity/retail-sales" to the first argument in `eia_dir()`, as
 shown below.
 
 
@@ -112,12 +112,12 @@ eia_dir("electricity/retail-sales")
 Now we've reached the end of the directory path, as you can see by the message
 provided in the console output; i.e. there are no more sub-folders to explore;
 and as such, you are prompted to explore the available data at the end
-of this directory path with `eia_metadata`.
+of this directory path with `eia_metadata()`.
 
 
 ## EIA metadata
 
-`eia_metadata` provides as the name suggests - metadata on a given set of data
+`eia_metadata()` provides as the name suggests - metadata on a given set of data
 provided by a terminal directory path, which includes:
 
   * Name
@@ -134,6 +134,47 @@ provided by a terminal directory path, which includes:
 
 ```r
 eia_metadata("electricity/retail-sales")
+#> $Name
+#> [1] "Electricity Sales to Ultimate Customers"
+#> 
+#> $Description
+#> [1] "Electricity sales to ultimate customer by state and sector (number of customers, average price, revenue, and megawatthours of sales).  \n    Sources: Forms EIA-826, EIA-861, EIA-861M"
+#> 
+#> $Data
+#> # A tibble: 4 × 3
+#>   id        alias                                              units                 
+#>   <chr>     <chr>                                              <chr>                 
+#> 1 revenue   Revenue from Sales to Ultimate Customers           million dollars       
+#> 2 sales     Megawatthours Sold to Utlimate Customers           million kilowatthours 
+#> 3 price     Average Price of Electricity to Utlimate Customers cents per kilowatthour
+#> 4 customers Number of Ultimate Customers                       number of customers   
+#> 
+#> $Facets
+#> # A tibble: 2 × 2
+#>   id       description          
+#>   <chr>    <chr>                
+#> 1 stateid  State / Census Region
+#> 2 sectorid Sector               
+#> 
+#> $Frequency
+#> # A tibble: 3 × 4
+#>   id        description                            query format 
+#>   <chr>     <chr>                                  <chr> <chr>  
+#> 1 monthly   One data point for each month.         M     YYYY-MM
+#> 2 quarterly One data point every 3 months.         Q     YYYY-QQ
+#> 3 annual    One data point for each calendar year. A     YYYY   
+#> 
+#> $Defaults
+#> # A tibble: 1 × 2
+#>   format  frequency
+#>   <chr>   <chr>    
+#> 1 YYYY-MM monthly  
+#> 
+#> $Period
+#> # A tibble: 1 × 2
+#>   start   end    
+#>   <chr>   <chr>  
+#> 1 2001-01 2023-07
 ```
 
 ## EIA data
@@ -141,7 +182,7 @@ eia_metadata("electricity/retail-sales")
 ### Data structure
 
 Once you have the necessary metadata from above, you will have a better understanding
-of what data is available and can query the API for that data using `eia_data`.
+of what data is available and can query the API for that data using `eia_data()`.
 However, simply supplying the above directory path from above ("electricity/retail-sales")
 will only provide the data structure with no meaningful values.
 
@@ -166,7 +207,7 @@ will be provided informing the user of their "incomplete return".
 ### Data values
 
 To get data values, e.g. prices, you must supply the proper column name id, as provided
-in the Data Values section of the `eia_metadata` console output, in this case `"price"`.
+in the Data Values section of the `eia_metadata()` console output, in this case `"price"`.
 
 
 ```r
@@ -191,7 +232,7 @@ Now we have pricing data values column-bound to the data structure.
 But what if we only want data for one sector, say "residential"?
 This is where facets arrive, and for any given terminal directory, the facet values
 can be found with `eia_facets()` by supplying the terminal directory path and facet id,
-the latter of which can be found from the console output of `eia_metadata`.
+the latter of which can be found from the console output of `eia_metadata()`.
 
 
 ```r
@@ -226,7 +267,7 @@ eia_facets("electricity/retail-sales", "stateid")
 ### Using facet values
 
 Now we can use any of the ID values from the above output to further limit our
-returned data with the `facets` argument in `eia_data`.
+returned data with the `facets` argument in `eia_data()`.
 
 
 ```r
