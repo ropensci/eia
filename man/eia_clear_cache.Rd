@@ -5,7 +5,7 @@
 \alias{eia_clear_dir}
 \alias{eia_clear_metadata}
 \alias{eia_clear_data}
-\alias{eia_clear_facet}
+\alias{eia_clear_facets}
 \title{Clear API results cache}
 \usage{
 eia_clear_cache()
@@ -16,7 +16,7 @@ eia_clear_metadata()
 
 eia_clear_data()
 
-eia_clear_facet()
+eia_clear_facets()
 }
 \description{
 Reset the results of API calls that are currently cached in memory.

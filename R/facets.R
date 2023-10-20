@@ -29,19 +29,19 @@
 #' }
 eia_facets <- function(dir, facet, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   .key_check(key)
-  if(cache) .eia_facet_memoized(dir, facet, tidy, key) else .eia_facets(dir, facet, tidy, key)
+  if(cache) .eia_facets_memoized(dir, facet, tidy, key) else .eia_facets(dir, facet, tidy, key)
 }
 
-.eia_facet_url <- function(dir, facet, key){
+.eia_facets_url <- function(dir, facet, key){
   .eia_url(path = paste0(dir, "/facet/", facet, "/?api_key=", key))
 }
 
 .eia_facets <- function(dir, facet, tidy, key){
-  r <- .eia_facet_url(dir, facet, key) |> .eia_get()
+  r <- .eia_facets_url(dir, facet, key) |> .eia_get()
   if(is.na(tidy)) return(r)
   r <- jsonlite::fromJSON(r)
   if(!tidy) return(r)
   tibble::as_tibble(r$response$facets)
 }
 
-.eia_facet_memoized <- memoise::memoise(.eia_facets)
+.eia_facets_memoized <- memoise::memoise(.eia_facets)
