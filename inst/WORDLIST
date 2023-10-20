@@ -1,14 +1,14 @@
 APIv
-AppVeyor
-asc
+CMD
 Codecov
-desc
 EIA's
-Geosets
+EIA’s
 Github
 JSON
 Memoization
 RStudio
+asc
+desc
 geoset
 geosets
 getter
@@ -18,5 +18,3 @@ memoization
 programmatically
 ropensci
 tibble
-unnested
-vectorized
