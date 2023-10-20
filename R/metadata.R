@@ -3,22 +3,23 @@
 #' Obtain EIA data metadata
 #'
 #' By default, additional processing is done to return a list containing tibble data frames.
-#' Set `tidy = FALSE` to return only the initial list result of `jsonlite::fromJSON`.
+#' Set `tidy = FALSE` to return only the initial list result of `jsonlite::fromJSON()`.
 #' Set `tidy = NA` to return the original JSON as a character string.
 #'
 #' Set to `cache = FALSE` to force a new API call for updated data.
 #' Using `FALSE` always makes a new API call and returns the result from the server.
 #' `TRUE` uses memoization on a per R session basis, caching the result of the
 #' function call in memory for the duration of the R session.
-#' You can reset the entire cache by calling `eia_clear_cache`.
+#' You can reset the entire cache by calling `eia_clear_cache()`.
 #'
 #' @param dir character, directory path.
 #' @param tidy logical, return a tidier result. See details.
-#' @param cache logical, cache result for duration of R session using memoization. See details.
-#' @param key API key: character if set explicitly; not needed if key is set globally. See `eia_set_key()`.
+#' @param cache logical, cache result for duration of R session using memoization.
+#' See details.
+#' @param key API key: character if set explicitly; not needed if key is set
+#' globally. See `eia_set_key()`.
 #'
-#' @return if `tidy = TRUE`, then character (invisibly); if `tidy %in% c(NA, FALSE)`, then
-#' JSON - the latter of which is a list result from `jsonlite::fromJSON`.
+#' @return named list or character; see details.
 #' @export
 #'
 #' @examples
@@ -42,17 +43,14 @@ eia_metadata <- function(dir, tidy = TRUE, cache = TRUE, key = eia_get_key()){
     data <- if(!is.null(r$response$data)) .eia_data_fmt(r$response$data)
     fcts <- if(!is.null(r$response$facets)) .eia_fcts_fmt(r$response$facets)
     freq <- if(!is.null(r$response$frequency)) .eia_freq_fmt(r$response$frequency)
-    msg <- paste(
-      cat("Name:\n  ", name),
-      cat("\n\nDescription:\n  ", desc),
-      cat("\n\nData Values:\n  "), print(data),
-      cat("\nFacets:\n  "), print(fcts),
-      cat("\nFrequency:\n  "), print(freq),
-      cat("\nDefaults:\n  "),
-      cat("Date Format:", r$response$defaultDateFormat, "\n  Frequency:", r$response$defaultFrequency),
-      cat("\n\nDate Range: ", r$response$startPeriod, "to", r$response$endPeriod)
+    list(
+      Name = name, Description = desc, Data = data, Facets = fcts, Frequency = freq,
+      Defaults = tibble::tibble(
+        format = r$response$defaultDateFormat,
+        frequency = r$response$defaultFrequency
+      ),
+      Period = tibble::tibble(start = r$response$startPeriod, end = r$response$endPeriod)
     )
-    invisible(msg)
   }
 }
 
