@@ -159,18 +159,6 @@
     },
     "2": {
       "@type": "SoftwareApplication",
-      "identifier": "magrittr",
-      "name": "magrittr",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=magrittr"
-    },
-    "3": {
-      "@type": "SoftwareApplication",
       "identifier": "httr",
       "name": "httr",
       "provider": {
@@ -181,7 +169,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=httr"
     },
-    "4": {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "jsonlite",
       "name": "jsonlite",
@@ -193,7 +181,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=jsonlite"
     },
-    "5": {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "purrr",
       "name": "purrr",
@@ -205,7 +193,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=purrr"
     },
-    "6": {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "memoise",
       "name": "memoise",
@@ -217,7 +205,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=memoise"
     },
-    "7": {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "lubridate",
       "name": "lubridate",
@@ -229,7 +217,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=lubridate"
     },
-    "8": {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "readxl",
       "name": "readxl",
@@ -243,5 +231,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "157.988KB"
+  "fileSize": "186.371KB"
 }
