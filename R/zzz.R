@@ -1,21 +1,10 @@
-.onAttach <- function(libname, pkgname) {
+.onAttach <- function(libname, pkgname){
   options(eia_antidos = 1)
-  key = Sys.getenv("EIA_KEY")
-  x <- if(key == "") "EIA_KEY" else ""
-  if(x == ""){
-    packageStartupMessage("EIA_KEY found in Renviron.")
-  } else {
+  if(Sys.getenv("EIA_KEY") == ""){
     packageStartupMessage(
-      x, " not found in Renviron.\n",
-      "Please instantiate with eia::eia_set_key(<YOUR_KEY>), or...\n",
-      "edit your Renviron file with usethis::edit_r_environ(), ",
-      "then restart R."
+      "EIA_KEY not found. See `vignette(\"api\", \"eia\")` for key storage options."
     )
-    if(identical(find.package("usethis", quiet = TRUE), character(0))) {
-      packageStartupMessage("Install usethis with install.packages(\"usethis\").")
-    }
   }
-  invisible()
 }
 
 .session_eia_env <- new.env()
