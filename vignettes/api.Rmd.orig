@@ -23,19 +23,21 @@ key <- Sys.getenv("EIA_KEY")
 
 Obtaining an API key is easy and free.
 
-Pulling data from the US Energy Information Administration (EIA) API requires a registered API key. A key can be obtained at no cost [here](https://www.eia.gov/opendata/register.php). A valid email and agreement to the API Terms of Service is required to obtain a key.
+Pulling data from the US Energy Information Administration (EIA) API requires a registered API key. A key can be obtained at no cost [here](https://www.eia.gov/opendata/register.php).
 
-It is important to store your API key somewhere secure. Do not commit it to a repository or otherwise share it. For example, you could store it in your `.Renviron` file.
+A valid email and agreement to the API Terms of Service is required to obtain a key.
 
 ### Key storage and retrieval
 
-You can always provide the `key` argument to every API function call, but you do not have to. There are getter and setter helpers available to make using `eia` functions a more seamless experience.
+It is important to store your API key somewhere secure. Do not commit it to a repository or otherwise share it. For example, you can store it in your `.Renviron` file. This is the recommended method for simplicity and persistent availability. If you do this, you do not have to do anything else. Other approaches that allow for emphemeral storage or overriding a default key with another key are outlined below.
+
+You can always provide the `key` argument to every API function call, but you do not have to. There are environmental getter and setter functions available. Whichever method you use to set your key environmentally, `eia` API functions can get the key implicitly.
 
 `eia_set_key()` gives you the option of storing your key in any of three places via the `store` argument:
 
 * `store = "env"`: the package environment that is created when the package is loaded (default method)
-* `store = "options"`: in the global `options`
-* `store = "sysenv"`: as a system environment variable via `Sys.setenv`.
+* `store = "options"`: in the global `options()`
+* `store = "sysenv"`: as a system environment variable via `Sys.setenv()`.
 
 The last two options require the name-value pair to be named `EIA_KEY = "yourkey"`. These three options also are the order of precedence if you do not specify the `store` argument.
 
@@ -59,7 +61,7 @@ If you need to set it, you can do so as follows.
 
 API functions in `eia` use `eia_get_key()` with no arguments as the default value of their `key` argument, checking in the order shown above for an existing key. This way you do not need to repeatedly provide it.
 
-Note that despite the name and behavior, storing an environment variable with `Sys.setenv` (and thus `eia_set_key(key, store = "sysenv")`) is not persistent; the key is lost when the R session terminates, just as it is with the other two session-based options. If you want a persistent key, you must manually add your key somewhere like `.Renviron`. In that cases, you never need `eia_set_key()` and `eia_get_key()` will retrieve the `EIA_KEY` environment variable. See the package documentation for more details on key options.
+Note that despite the name and behavior, storing an environment variable with `Sys.setenv()` (and thus `eia_set_key(key, store = "sysenv")`) is not persistent; the key is lost when the R session terminates, just as it is with the other two session-based options. If you want a persistent key, you must manually add your key somewhere like `.Renviron`. In that cases, you never need `eia_set_key()` and `eia_get_key()` will retrieve the `EIA_KEY` environment variable. See the package documentation for more details on key options.
 
 In this and subsequent vignettes, you will not see a key being set because it is already an environment variable. You will also not see it used explicitly by any functions because the default behavior is to look up the key in the environment.
 
@@ -67,8 +69,8 @@ In this and subsequent vignettes, you will not see a key being set because it is
 
 The EIA API can of course impose its own rate-limiting and other limitations on usage by a given API key. If you use the API improperly or otherwise violate any Terms of Service, the EIA may withdraw your API access. However, the `eia` package also helps prevent accidental overuse by having default settings that limit the potential for making unnecessary API calls. It does this in two ways, both of which allow optional configuration:
 
-*   caching API results in memory using session-based memoization
-*   minimum delay between API calls
+* caching API results in memory using session-based memoization
+* minimum delay between API calls
 
 By default the `eia` package prevents you from accidentally making too many requests too quickly, but it also offers sensible flexibility.
 
@@ -95,10 +97,10 @@ system.time(eia_dir())
 
 This allows you to update the cached result. You can reset the cache for only specific endpoints using the following functions.
 
-*    `eia_clear_dir()`
-*    `eia_clear_metadata()`
-*.   `eia_clear_data()`
-*    `eia_clear_facets()`
+* `eia_clear_dir()`
+* `eia_clear_metadata()`
+* `eia_clear_data()`
+* `eia_clear_facets()`
 
 ### Anti-DOS measures
 
@@ -106,4 +108,4 @@ Regardless of overall rate limiting imposed by the EIA API, the `eia` package se
 
 However, there are cases where you might want to make multiple calls back to back programmatically and perhaps you are initially unsure how many requests will be made or how quickly these requests may execute. The default minimum wait between API calls is a precaution that helps you be a good neighbor.
 
-You can turn this off with `options` if not needed; for example, a case where you know that your API calls will be small in number and you have no reason to be concerned about exceeding the request limits associated with your API key. The default requires you to make an active decision about how to use the API with your own key and API limits in mind.
+You can turn this off with `options()` if not needed; for example, a case where you know that your API calls will be small in number and you have no reason to be concerned about exceeding the request limits associated with your API key. The default requires you to make an active decision about how to use the API with your own key and API limits in mind.

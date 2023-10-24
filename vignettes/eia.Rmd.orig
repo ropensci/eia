@@ -97,16 +97,16 @@ of this directory path with `eia_metadata()`.
 `eia_metadata()` provides as the name suggests - metadata on a given set of data
 provided by a terminal directory path, which includes:
 
-  * Name
-  * Description
-  * Data values (i.e. column names)
-  * Facets (i.e. filter options)
-    * e.g. filter on State = "OH" and Sector = "RES" (residential)
-  * Frequencies (i.e. available time denominations)
-    * e.g. monthly, quarterly, annual, etc.
-  * Defaults
-    * e.g. default date format and frequency
-  * Date range
+* Name
+* Description
+* Data values (i.e. column names)
+* Facets (i.e. filter options)
+  * e.g. filter on State = "OH" and Sector = "RES" (residential)
+* Frequencies (i.e. available time denominations)
+  * e.g. monthly, quarterly, annual, etc.
+* Defaults
+  * e.g. default date format and frequency
+* Date range
 
 ```{r metadata}
 eia_metadata("electricity/retail-sales")
@@ -169,4 +169,4 @@ eia_data(
 )
 ```
 
-Further info on obtaining data - subsets & sorting of - can be found in the data vignette.
+Further information on obtaining data - subsets and sorting of - can be found in the data vignette.

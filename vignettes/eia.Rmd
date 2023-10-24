@@ -64,21 +64,21 @@ Here is the top-level directory information:
 ```r
 eia_dir()
 #> # A tibble: 14 × 3
-#>    id                name                            description                                                                                              
-#>    <chr>             <chr>                           <chr>                                                                                                    
-#>  1 coal              Coal                            EIA coal energy data                                                                                     
-#>  2 crude-oil-imports Crude Oil Imports               Crude oil imports by country to destination, includes type, grade, quantity.  Source: EIA-814  Interacti…
-#>  3 electricity       Electricity                     EIA electricity survey data                                                                              
-#>  4 international     International                   Country level production, consumption, imports, exports by energy source (petroleum, natural gas, electr…
-#>  5 natural-gas       Natural Gas                     EIA natural gas survey data                                                                              
-#>  6 nuclear-outages   Nuclear Outages                 EIA nuclear outages survey data                                                                          
-#>  7 petroleum         Petroleum                       EIA petroleum gas survey data                                                                            
-#>  8 seds              State Energy Data System (SEDS) Estimated production, consumption, price, and expenditure data for all energy sources by state and secto…
-#>  9 steo              Short Term Energy Outlook       Monthly short term (18 month) projections using STEO model.  Report and interactive projection data brow…
-#> 10 densified-biomass Densified Biomass               EIA densified biomass data                                                                               
-#> 11 total-energy      Total Energy                    These data represent the most recent comprehensive energy statistics integrated across all energy source…
-#> 12 aeo               Annual Energy Outlook           Annual U.S. projections using National Energy Modelling System (NEMS) for release year.  Report, documen…
-#> 13 ieo               International Energy Outlook    Annual international projections using the World Energy Projection System (WEPS) model for release year.…
+#>    id                name                            description                                                                                       
+#>    <chr>             <chr>                           <chr>                                                                                             
+#>  1 coal              Coal                            EIA coal energy data                                                                              
+#>  2 crude-oil-imports Crude Oil Imports               Crude oil imports by country to destination, includes type, grade, quantity.  Source: EIA-814  In…
+#>  3 electricity       Electricity                     EIA electricity survey data                                                                       
+#>  4 international     International                   Country level production, consumption, imports, exports by energy source (petroleum, natural gas,…
+#>  5 natural-gas       Natural Gas                     EIA natural gas survey data                                                                       
+#>  6 nuclear-outages   Nuclear Outages                 EIA nuclear outages survey data                                                                   
+#>  7 petroleum         Petroleum                       EIA petroleum gas survey data                                                                     
+#>  8 seds              State Energy Data System (SEDS) Estimated production, consumption, price, and expenditure data for all energy sources by state an…
+#>  9 steo              Short Term Energy Outlook       Monthly short term (18 month) projections using STEO model.  Report and interactive projection da…
+#> 10 densified-biomass Densified Biomass               EIA densified biomass data                                                                        
+#> 11 total-energy      Total Energy                    These data represent the most recent comprehensive energy statistics integrated across all energy…
+#> 12 aeo               Annual Energy Outlook           Annual U.S. projections using National Energy Modelling System (NEMS) for release year.  Report, …
+#> 13 ieo               International Energy Outlook    Annual international projections using the World Energy Projection System (WEPS) model for releas…
 #> 14 co2-emissions     State CO2 Emissions             EIA CO2 Emissions data
 ```
 
@@ -88,14 +88,14 @@ You can navigate deeper into this directory by supplying a folder id (e.g. id = 
 ```r
 eia_dir("electricity")
 #> # A tibble: 6 × 3
-#>   id                              name                                                                       description                                      
-#>   <chr>                           <chr>                                                                      <chr>                                            
-#> 1 retail-sales                    Electricity Sales to Ultimate Customers                                    "Electricity sales to ultimate customer by state…
-#> 2 electric-power-operational-data Electric Power Operations (Annual and Monthly)                             "Monthly and annual electric power operations by…
-#> 3 rto                             Electric Power Operations (Daily and Hourly)                               "Hourly and daily electric power operations by b…
-#> 4 state-electricity-profiles      State Specific Data                                                        "State Specific Data"                            
-#> 5 operating-generator-capacity    Inventory of Operable Generators                                           "Inventory of operable generators in the U.S.\n …
-#> 6 facility-fuel                   Electric Power Operations for Individual Power Plants (Annual and Monthly) "Annual and monthly electric power operations fo…
+#>   id                              name                                                                       description                               
+#>   <chr>                           <chr>                                                                      <chr>                                     
+#> 1 retail-sales                    Electricity Sales to Ultimate Customers                                    "Electricity sales to ultimate customer b…
+#> 2 electric-power-operational-data Electric Power Operations (Annual and Monthly)                             "Monthly and annual electric power operat…
+#> 3 rto                             Electric Power Operations (Daily and Hourly)                               "Hourly and daily electric power operatio…
+#> 4 state-electricity-profiles      State Specific Data                                                        "State Specific Data"                     
+#> 5 operating-generator-capacity    Inventory of Operable Generators                                           "Inventory of operable generators in the …
+#> 6 facility-fuel                   Electric Power Operations for Individual Power Plants (Annual and Monthly) "Annual and monthly electric power operat…
 ```
 
 And, because this APIv2 is a directory listing, to go any deeper simply requires
@@ -120,16 +120,16 @@ of this directory path with `eia_metadata()`.
 `eia_metadata()` provides as the name suggests - metadata on a given set of data
 provided by a terminal directory path, which includes:
 
-  * Name
-  * Description
-  * Data values (i.e. column names)
-  * Facets (i.e. filter options)
-    * e.g. filter on State = "OH" and Sector = "RES" (residential)
-  * Frequencies (i.e. available time denominations)
-    * e.g. monthly, quarterly, annual, etc.
-  * Defaults
-    * e.g. default date format and frequency
-  * Date range
+* Name
+* Description
+* Data values (i.e. column names)
+* Facets (i.e. filter options)
+  * e.g. filter on State = "OH" and Sector = "RES" (residential)
+* Frequencies (i.e. available time denominations)
+  * e.g. monthly, quarterly, annual, etc.
+* Defaults
+  * e.g. default date format and frequency
+* Date range
 
 
 ```r
@@ -174,7 +174,7 @@ eia_metadata("electricity/retail-sales")
 #> # A tibble: 1 × 2
 #>   start   end    
 #>   <chr>   <chr>  
-#> 1 2001-01 2023-07
+#> 1 2001-01 2023-08
 ```
 
 ## EIA data
@@ -190,14 +190,14 @@ will only provide the data structure with no meaningful values.
 ```r
 eia_data("electricity/retail-sales") |> head()
 #> # A tibble: 6 × 5
-#>   period  stateid stateDescription sectorid sectorName    
-#>   <chr>   <chr>   <chr>            <chr>    <chr>         
-#> 1 2019-07 ME      Maine            ALL      all sectors   
-#> 2 2019-07 ME      Maine            COM      commercial    
-#> 3 2019-07 ME      Maine            IND      industrial    
-#> 4 2019-07 ME      Maine            OTH      other         
-#> 5 2019-07 ME      Maine            RES      residential   
-#> 6 2019-07 ME      Maine            TRA      transportation
+#>   period  stateid stateDescription   sectorid sectorName    
+#>   <chr>   <chr>   <chr>              <chr>    <chr>         
+#> 1 2008-07 WSC     West South Central IND      industrial    
+#> 2 2008-07 WSC     West South Central OTH      other         
+#> 3 2008-07 WSC     West South Central RES      residential   
+#> 4 2008-07 WSC     West South Central TRA      transportation
+#> 5 2008-07 MTN     Mountain           ALL      all sectors   
+#> 6 2008-07 MTN     Mountain           COM      commercial
 ```
 
 Note the console warning that appears. The API can only provide a maximum of 5000
@@ -213,14 +213,14 @@ in the Data Values section of the `eia_metadata()` console output, in this case 
 ```r
 eia_data("electricity/retail-sales", data = "price", length = 6)
 #> # A tibble: 6 × 7
-#>   period  stateid stateDescription sectorid sectorName     price `price-units`         
-#>   <chr>   <chr>   <chr>            <chr>    <chr>          <dbl> <chr>                 
-#> 1 2019-07 ME      Maine            ALL      all sectors    13.6  cents per kilowatthour
-#> 2 2019-07 ME      Maine            COM      commercial     12.6  cents per kilowatthour
-#> 3 2019-07 ME      Maine            IND      industrial      8.94 cents per kilowatthour
-#> 4 2019-07 ME      Maine            OTH      other          NA    cents per kilowatthour
-#> 5 2019-07 ME      Maine            RES      residential    17.9  cents per kilowatthour
-#> 6 2019-07 ME      Maine            TRA      transportation  0    cents per kilowatthour
+#>   period  stateid stateDescription   sectorid sectorName     price `price-units`         
+#>   <chr>   <chr>   <chr>              <chr>    <chr>          <dbl> <chr>                 
+#> 1 2008-07 WSC     West South Central IND      industrial      9.33 cents per kilowatthour
+#> 2 2008-07 WSC     West South Central OTH      other          NA    cents per kilowatthour
+#> 3 2008-07 WSC     West South Central RES      residential    12.9  cents per kilowatthour
+#> 4 2008-07 WSC     West South Central TRA      transportation  8.64 cents per kilowatthour
+#> 5 2008-07 MTN     Mountain           ALL      all sectors     9.02 cents per kilowatthour
+#> 6 2008-07 MTN     Mountain           COM      commercial      8.96 cents per kilowatthour
 ```
 
 Now we have pricing data values column-bound to the data structure.
@@ -240,8 +240,8 @@ eia_facets("electricity/retail-sales", "sectorid")
 #> # A tibble: 6 × 3
 #>   id    name           alias               
 #>   <chr> <chr>          <chr>               
-#> 1 COM   commercial     (COM) commercial    
-#> 2 RES   residential    (RES) residential   
+#> 1 RES   residential    (RES) residential   
+#> 2 COM   commercial     (COM) commercial    
 #> 3 ALL   all sectors    (ALL) all sectors   
 #> 4 OTH   other          (OTH) other         
 #> 5 TRA   transportation (TRA) transportation
@@ -254,14 +254,14 @@ eia_facets("electricity/retail-sales", "stateid")
 #>  1 MA    Massachusetts      (MA) Massachusetts              
 #>  2 VT    Vermont            (VT) Vermont                    
 #>  3 WA    Washington         (WA) Washington                 
-#>  4 ENC   East North Central Region: (ENC) East North Central
+#>  4 HI    Hawaii             (HI) Hawaii                     
 #>  5 WNC   West North Central Region: (WNC) West North Central
 #>  6 NC    North Carolina     (NC) North Carolina             
-#>  7 HI    Hawaii             (HI) Hawaii                     
-#>  8 MD    Maryland           (MD) Maryland                   
-#>  9 NM    New Mexico         (NM) New Mexico                 
-#> 10 MTN   Mountain           Region: (MTN) Mountain          
-#> # … with 52 more rows
+#>  7 ENC   East North Central Region: (ENC) East North Central
+#>  8 MTN   Mountain           Region: (MTN) Mountain          
+#>  9 MD    Maryland           (MD) Maryland                   
+#> 10 VA    Virginia           (VA) Virginia                   
+#> # ℹ 52 more rows
 ```
 
 ### Using facet values
@@ -280,12 +280,12 @@ eia_data(
 #> # A tibble: 6 × 7
 #>   period  stateid stateDescription sectorid sectorName  price `price-units`         
 #>   <chr>   <chr>   <chr>            <chr>    <chr>       <dbl> <chr>                 
-#> 1 2016-05 OH      Ohio             RES      residential  13.2 cents per kilowatthour
-#> 2 2013-11 OH      Ohio             RES      residential  12.0 cents per kilowatthour
-#> 3 2023-03 OH      Ohio             RES      residential  14.9 cents per kilowatthour
-#> 4 2013-12 OH      Ohio             RES      residential  11.3 cents per kilowatthour
-#> 5 2017-03 OH      Ohio             RES      residential  12.6 cents per kilowatthour
-#> 6 2016-11 OH      Ohio             RES      residential  12.4 cents per kilowatthour
+#> 1 2008-08 OH      Ohio             RES      residential  10.8 cents per kilowatthour
+#> 2 2010-11 OH      Ohio             RES      residential  11.5 cents per kilowatthour
+#> 3 2022-05 OH      Ohio             RES      residential  13.5 cents per kilowatthour
+#> 4 2016-05 OH      Ohio             RES      residential  13.2 cents per kilowatthour
+#> 5 2015-06 OH      Ohio             RES      residential  13.2 cents per kilowatthour
+#> 6 2019-03 OH      Ohio             RES      residential  12.3 cents per kilowatthour
 ```
 
-Further info on obtaining data - subsets & sorting of - can be found in the data vignette.
+Further information on obtaining data - subsets and sorting of - can be found in the data vignette.

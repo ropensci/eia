@@ -2,7 +2,7 @@
 title: "EIA data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{EIA time series data}
+  %\VignetteIndexEntry{EIA data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -72,8 +72,8 @@ eia_facets("electricity/retail-sales", "sectorid")
 The above output provides the ids for both the State/Region and Sector that will
 be required for obtaining Retail Sales for Residential customers in Vermont.
 
-  * `"stateid"` for Vermont is "VT"
-  * `"sectorid"` for residential is "RES"
+* `"stateid"` for Vermont is "VT"
+* `"sectorid"` for residential is "RES"
 
 ## Getting data
 
@@ -141,9 +141,9 @@ this in either ascending or descending order using the `sort` function argument.
 
 Similar to `facets`, `sort` requires a named list object with two components:
 
-  * `"cols"` will contain a list of column names by which to order.
-  * `"ordr"` requires a single character, the value of which can be either "asc" or "desc"
-  for ascending and descending, respectively.
+* `"cols"` will contain a list of column names by which to order.
+* `"ordr"` requires a single character, the value of which can be either "asc" or "desc"
+for ascending and descending, respectively.
 
 ```{r data4}
 eia_data(
