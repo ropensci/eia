@@ -55,9 +55,9 @@ remotes::install_github("ropensci/eia")
 ## Example
 
 After obtaining the API key, store it somewhere such as `.Renviron` and never have
-to do anything with the key when you use the package. Alternatively, set it manually
-with `eia_set_key()` in your R session. Further, it can always be passed explicitly
-to the `key` argument of a given `eia` function.
+to do anything with the key when using the package. Alternatively, set it manually
+with `eia_set_key()` in the current R session. Further, it can always be passed
+explicitly to the `key` argument of a given `eia` function.
 
 ### Load package and set key
 
