@@ -50,9 +50,9 @@ eia_data <- function(dir, data = NULL, facets = NULL,
                      tidy = TRUE, cache = TRUE, key = eia_get_key()){
   .key_check(key)
   if(cache){
-  .eia_data_memoized(dir, data, facets, freq, start, end, sort, length, offset, tidy, key)
+    .eia_data_memoized(dir, data, facets, freq, start, end, sort, length, offset, tidy, key)
   } else {
-  .eia_data(dir, data, facets, freq, start, end, sort, length, offset, tidy, key)
+    .eia_data(dir, data, facets, freq, start, end, sort, length, offset, tidy, key)
   }
 }
 
@@ -64,11 +64,12 @@ eia_data <- function(dir, data = NULL, facets = NULL,
   if (!is.null(r$response$warnings) & is.null(length)){
     wrngs <- paste0(r$response$warnings[[1]], "\n", r$response$warnings[[2]])
     ttlrs <- r$response$total
-    warning(wrngs, "\nTotal available rows: ", ttlrs)
+    warning(wrngs, "\nTotal available rows: ", ttlrs, call. = FALSE)
   } else {
     rtrnd <- nrow(r$response$data)
     ttlrs <- r$response$total
-    if (rtrnd != ttlrs) message("Rows returned: ", rtrnd, "\nRows available: ", ttlrs)
+    if (rtrnd != ttlrs)
+      warning("Rows returned: ", rtrnd, "\nRows available: ", ttlrs, call. = FALSE)
   }
   tibble::as_tibble(r$response$data)
 }
