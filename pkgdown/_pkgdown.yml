@@ -32,10 +32,6 @@ navbar:
       href: "articles/eia.html"
     - text: "Articles"
       menu:
-        - text: "Directory"
-          href: "articles/dirs.html"
-        - text: "Data"
-          href: "articles/data.html"
         - text: "API details"
           href: "articles/api.html"
     - text: "Reference"
