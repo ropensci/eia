@@ -190,12 +190,6 @@ eia_dir(tidy = NA)
 ## EIA metadata
 
 Now back to our example regarding the Retail Sales of Electricity...
-<<<<<<< HEAD
-=======
-
-`eia_metadata()` provides as the name suggests: metadata on a given set of data
-provided by a terminal (i.e. final) directory path. This includes the following:
->>>>>>> 26af571 (embed data & dirs vignettes into the eia vignette)
 
 `eia_metadata()` provides as the name suggests: metadata on a given set of data
 provided by a terminal (i.e. final) directory path. This includes the following:
