@@ -27,13 +27,13 @@ requires a registered API key. A key can be obtained at no cost
 [here](https://www.eia.gov/opendata/register.php). A valid email and
 agreement to the API Terms of Service is required to obtain a key.
 
-`eia` includes functions for searching EIA API data categories and
-importing time series and geoset time series datasets. Datasets returned
-by these functions are provided in a tidy format or alternatively in
-more raw form. It also offers helper functions for working with EIA API
-date strings and time formats and for inspecting different summaries of
-series metadata. The package also provides control over API key storage
-and caching of API request results.
+`eia` includes functions for searching the EIA API data directory and
+importing various datasets. Datasets returned by these functions are
+provided in a tidy format or alternatively in more raw form. It also
+offers helper functions for working with EIA API date strings and time
+formats and for inspecting different summaries of data metadata. The
+package also provides control over API key storage and caching of API
+request results.
 
 ## Installation
 
@@ -43,7 +43,7 @@ Install the CRAN release of `eia` with
 install.packages("eia")
 ```
 
-To install the development version from GitHub use
+or install the development version from GitHub with
 
 ``` r
 # install.packages("remotes")
@@ -52,10 +52,13 @@ remotes::install_github("ropensci/eia")
 
 ## Example
 
-To begin, store your API key. You can place it somewhere like your
-`.Renviron` file and never have to do anything with the key when you use
-the package. You can set it with `eia_set_key()` in your R session. You
-can always pass it explicitly to the `key` argument of a function.
+After obtaining the API key, store it somewhere such as `.Renviron` and
+never have to do anything with the key when you use the package.
+Alternatively, set it manually with `eia_set_key()` in your R session.
+Further, it can always be passed explicitly to the `key` argument of a
+given `eia` function.
+
+### Load package and set key
 
 ``` r
 library(eia)
@@ -64,9 +67,13 @@ library(eia)
 eia_set_key("yourkey") # set API key if not already set globally
 ```
 
-Get a list of available data categories provided by the EIA’s API.
+### Explore the API directory
+
+Get a list of the EIA’s data directory (and sub-directories) with
+`eia_dir()`.
 
 ``` r
+# Top-level directory
 eia_dir()
 #> # A tibble: 14 × 3
 #>    id                name                            description                
@@ -86,6 +93,7 @@ eia_dir()
 #> 13 ieo               International Energy Outlook    Annual international proje…
 #> 14 co2-emissions     State CO2 Emissions             EIA CO2 Emissions data
 
+# Electricity sub-directory
 eia_dir("electricity")
 #> # A tibble: 6 × 3
 #>   id                              name                 description              
@@ -97,6 +105,54 @@ eia_dir("electricity")
 #> 5 operating-generator-capacity    Inventory of Operab… "Inventory of operable g…
 #> 6 facility-fuel                   Electric Power Oper… "Annual and monthly elec…
 ```
+
+### Get data
+
+Get annual retail electric sales for the Ohio residential sector since
+2010
+
+``` r
+(d <- eia_data(
+  dir = "electricity/retail-sales",
+  data = "sales",
+  facets = list(stateid = "OH", sectorid = "RES"),
+  freq = "annual",
+  start = "2010",
+  sort = list(cols = "period", ordr = "asc"),
+))
+#> # A tibble: 13 × 7
+#>    period stateid stateDescription sectorid sectorName   sales `sales-units`    
+#>     <int> <chr>   <chr>            <chr>    <chr>        <dbl> <chr>            
+#>  1   2010 OH      Ohio             RES      residential 54474. million kilowatt…
+#>  2   2011 OH      Ohio             RES      residential 53687. million kilowatt…
+#>  3   2012 OH      Ohio             RES      residential 52288. million kilowatt…
+#>  4   2013 OH      Ohio             RES      residential 52158. million kilowatt…
+#>  5   2014 OH      Ohio             RES      residential 52804. million kilowatt…
+#>  6   2015 OH      Ohio             RES      residential 51493. million kilowatt…
+#>  7   2016 OH      Ohio             RES      residential 52524. million kilowatt…
+#>  8   2017 OH      Ohio             RES      residential 49796. million kilowatt…
+#>  9   2018 OH      Ohio             RES      residential 54452. million kilowatt…
+#> 10   2019 OH      Ohio             RES      residential 52226. million kilowatt…
+#> 11   2020 OH      Ohio             RES      residential 52553. million kilowatt…
+#> 12   2021 OH      Ohio             RES      residential 53171. million kilowatt…
+#> 13   2022 OH      Ohio             RES      residential 53312. million kilowatt…
+```
+
+and make a nice plot.
+
+``` r
+library(ggplot2)
+ggplot(d, aes(x = period, y = sales / 1e3)) +
+  geom_bar(col = "steelblue", fill = "steelblue", stat = "identity") +
+  theme_bw() +
+  labs(
+    title = "Annual Retail Sales of Electricity (GWh)",
+    subtitle = "State: Ohio; Sector: Residential",
+    x = "Year", y = "Sales (GWh)"
+  )
+```
+
+<img src="man/figures/README-plt-1.png" width="100%" />
 
 ## References
 
