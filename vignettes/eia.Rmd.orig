@@ -29,15 +29,15 @@ Pulling data from the US Energy Information Administration (EIA) API requires a
 registered API key. A key can be obtained at no cost [here](https://www.eia.gov/opendata/register.php).
 A valid email and agreement to the API Terms of Service is required to obtain a key.
 
-It is important to store our API key somewhere secure. Do not commit it to a repository
-or otherwise share it. For example, we could store it in our `.Renviron` file.
+It is important to store the API key somewhere secure. Do not commit it to a repository
+or otherwise share it. For example, one option is to store it in the `.Renviron` file.
 
 ### Key storage and retrieval
 
-We can always provide the `key` argument to every API function call, but we do not have to.
+While the `key` argument can be provided to every API function call, it is not necessary.
 There are "get" and "set" helpers available to make using `eia` functions a more seamless experience.
 
-`eia_set_key()` gives you the option of storing your key for the duration of your R session.
+`eia_set_key()` provides the option of storing the key for the duration of the R session.
 
 ```{r key1, eval=FALSE}
 library(eia)
@@ -45,8 +45,8 @@ library(eia)
 # eia_get_key() # retrieve it
 ```
 
-If the key already exists in the system environment and we plan to pass `key`
-to functions explicitly, we would start as follows.
+If the key already exists in the system environment and the plan is to pass `key`
+to functions explicitly, then start as follows.
 
 ```{r key2, eval=FALSE}
 key <- Sys.getenv("EIA_KEY")
@@ -54,14 +54,15 @@ key <- Sys.getenv("EIA_KEY")
 key <- eia_get_key()
 ```
 
-In general, however, if our key is set globally - such as in `.Renviron` - we do
-not need to do anything regarding the key when using the package. See the vignette
+In general, however, if the key is set globally - such as in `.Renviron` - then
+no further action regarding the keyis required when using the package. See the vignette
 on API details for more information about all the available options for key storage.
 
 ## EIA directory
 
-Once we have your registered EIA API key and have it in place for our active R session
-by whichever method preferred, we are ready to begin accessing data from the EIA API.
+Once the fully registered EIA API key is obtained and properly stored in theactive R session,
+by whichever method preferred, the ability to explore the API directory (folder structure)
+and obtain the data within is set.
 
 Note, the EIA's APIv2 has been redesigned to be more human-readable friendly; and,
 rather than rely on numeric ID values, it is now built around a self-searchable
@@ -73,7 +74,7 @@ Here is the top-level directory information:
 eia_dir()
 ```
 
-We can navigate deeper into this directory by supplying a folder id (e.g. id = "electricity").
+Navigate deeper into this directory by supplying a folder id (e.g. id = "electricity").
 
 ```{r dir2}
 eia_dir("electricity")
@@ -82,23 +83,23 @@ eia_dir("electricity")
 And, because APIv2 is a directory listing, to go any deeper simply requires
 appending the next id (folder name) separated by `"/"`, where the first folder ID
 in from the top-level directory is "electricity" and the next deeper folder ID
-from there is "retail-sales". As a result, we would supply "electricity/retail-sales"
-to the first argument in `eia_dir()`, as shown below.
+from there is "retail-sales". As a result, supply "electricity/retail-sales" to
+the first argument in `eia_dir()`, as shown below, to see the next next layer in.
 
 ```{r dir3}
 eia_dir("electricity/retail-sales")
 ```
 
-Finally, we've reached the end of the directory path, as you can see by the message
+Finally, the end of the directory path has been reached, as shown by the message
 provided in the console output above; i.e. there are no more sub-folders to explore.
-As such, we are prompted to explore the available data at the end of this directory
+This message is prompting to explore the available data at the end of this directory
 path with `eia_metadata()`.
 
 ### Note on output format
 
 The default is to return tidy data in a tibble data frame. For `eia_dir()`,
-we can set `tidy = FALSE` to return a list as returned by `jsonlite::fromJSON`.
-Additionally, we can set `tidy = NA` to return a raw character string of the JSON payload.
+set `tidy = FALSE` to return a list as returned by `jsonlite::fromJSON`.
+Additionally, set `tidy = NA` to return a raw character string of the JSON payload.
 
 ```{r dir4}
 eia_dir(tidy = FALSE)
@@ -108,7 +109,7 @@ eia_dir(tidy = NA)
 
 ## EIA metadata
 
-Now back to our example regarding the Retail Sales of Electricity...
+Now back to the example regarding the Retail Sales of Electricity...
 
 `eia_metadata()` provides as the name suggests: metadata on a given set of data
 provided by a terminal (i.e. final) directory path. This includes the following:
@@ -132,10 +133,11 @@ eia_metadata("electricity/retail-sales")
 
 ### Data structure
 
-Once we have the necessary metadata from above, we will have a better understanding
-of what data is available and can query the API for that data using `eia_data()`.
+The metadata from above can be used to have a better understanding of what data
+is available and how that data can be pulled from the API using `eia_data()`.
 However, simply supplying the above directory path from above ("electricity/retail-sales")
-will only provide the data structure with no meaningful data values (more on this below).
+will only provide the data structure, i.e. no meaningful data values will be present
+(more on this below).
 
 ```{r data1}
 eia_data("electricity/retail-sales") |> head()
@@ -148,25 +150,24 @@ will be provided informing the user of their "incomplete return".
 ### Data values
 
 "Data Values" are just the names of the columns that hold the specific, respective data value.
-In this example, we are interested in the overall number of power units sold to customers.
-The associated column name for this is `"sales"`.
+For this example, the overall number of power units sold to customers is of main interest,
+and the associated column name for this information is `"sales"`.
 
-To get data values, e.g. sales, we must supply the proper column name id,
-as provided in the Data Values section of the `eia_metadata()` console output,
-again, in this case `"sales"`.
+To get data values, e.g. sales, supply the proper column name id, as provided in
+the Data Values section of the `eia_metadata()` console output, again, in this case `"sales"`.
 
 ```{r data2}
 eia_data("electricity/retail-sales", data = "sales", length = 6) # length = 6 instead of `|> head()`
 ```
 
-See now that we have sales data values right-column-bound to the data structure
+See now that sales data values have been right-column-bound to the data structure
 as originally provided by `eia_data("electricity/retail-sales")`.
 
 ## EIA facets
 
 ### Getting facet values
 
-But what if we only want data for one sector, say "residential"?
+But what if data is wanted for just one sector, say "residential"?
 This is where facets arrive, and for any given terminal directory, the facet values
 can be found with `eia_facets()` by supplying the terminal directory path and facet id,
 the latter of which can, again, be found from the console output of `eia_metadata()`.
@@ -185,7 +186,7 @@ be required for obtaining Retail Sales for Residential customers in Vermont.
 
 ### Using facet values
 
-Now we can use any of the ID values from the above output to further limit our
+Now, the ID values from the above output can be used to further limit the
 returned data with the `facets` argument in `eia_data()`.
 
 ```{r data3}
@@ -197,9 +198,8 @@ eia_data(
 )
 ```
 
-But what if we want both sales *and* price?
-Further, what if we also want multiple sectors, say, residential *and* commercial?
-We can simply concatenate these entries with `c()`, as shown below:
+If multiple data values (sales *and* price) or facets (residential *and* commercial)
+are of interest, simply concatenate these entries with `c()`, as shown below:
 
 ```{r data4}
 eia_data(
@@ -224,9 +224,10 @@ f
 cat("\nDate Range:\n  ", r$response$startPeriod, "to", r$response$endPeriod)
 ```
 
-The default frequency for this data is monthly, but maybe we only want annualized
-data for a truncated time frame, say the last five years. We can do that with the
-`start`, `end`, and `freq` arguments of `eia_data()`.
+The default frequency for this data is monthly, but maybe annualized data for a
+truncated time frame - say the last five years - is all that is needed. The ability
+to alter the granularity or truncate time frame of the returned data is provided
+by the `freq`, `start`, and `end` arguments of `eia_data()`.
 
 ```{r data5}
 eia_data(
@@ -239,15 +240,15 @@ eia_data(
 )
 ```
 
-As shown above, we get back a data frame with 20 records - 10 annual observations for
-each sector (residential and commercial). However, you may have also noticed the
-hectic ordering of the returned data. Thankfully, we can have the API service sort
-this in either ascending or descending order using the `sort` function argument.
+As shown above, the returned data frame has 20 records - 10 annual observations for
+each sector (residential and commercial). However, notice the hectic ordering of
+the returned data. Thankfully, the API service can sort this in either ascending
+or descending order using the `sort` argument.
 
 Similar to `facets`, `sort` requires a named list object with two components:
 
-  * `"cols"` will contain a list of column names by which to order.
-  * `"ordr"` requires a single character value, either "asc" or "desc" for
+  * `"cols"` - a list of column names by which to order.
+  * `"ordr"` - a single character value, either "asc" or "desc" for
   ascending and descending, respectively.
 
 ```{r data6}
