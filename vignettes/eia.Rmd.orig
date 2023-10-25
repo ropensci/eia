@@ -55,12 +55,12 @@ key <- eia_get_key()
 ```
 
 In general, however, if the key is set globally - such as in `.Renviron` - then
-no further action regarding the keyis required when using the package. See the vignette
+no further action regarding the key is required when using the package. See the vignette
 on API details for more information about all the available options for key storage.
 
 ## EIA directory
 
-Once the fully registered EIA API key is obtained and properly stored in theactive R session,
+Once the fully registered EIA API key is obtained and properly stored in the active R session,
 by whichever method preferred, the ability to explore the API directory (folder structure)
 and obtain the data within is set.
 
@@ -247,8 +247,8 @@ or descending order using the `sort` argument.
 
 Similar to `facets`, `sort` requires a named list object with two components:
 
-  * `"cols"` - a list of column names by which to order.
-  * `"ordr"` - a single character value, either "asc" or "desc" for
+  * `"cols"` - a list of column names on which to sort.
+  * `"order"` - a single character value, either "asc" or "desc" for
   ascending and descending, respectively.
 
 ```{r data6}

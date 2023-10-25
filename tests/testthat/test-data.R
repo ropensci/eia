@@ -13,6 +13,7 @@ test_that("data queries returns as expected", {
     freq = "annual",
     start = "2011",
     end = "2020",
+    sort = list(cols = "period", order = "asc")
   )
   expect_s3_class(x, "tbl_df")
   expect_equal(ncol(x), 7)

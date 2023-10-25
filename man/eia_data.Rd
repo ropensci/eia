@@ -32,8 +32,11 @@ eia_data(
 \item{start, end}{character or \code{NULL}, must match format of default or supplied
 \code{freq}; i.e. if \code{freq = "yearly"}, then format of \code{start} must be \code{YYYY}.}
 
-\item{sort}{named list of two. \code{columns}: names of columns to sort by.
-\code{direction}: \code{"asc"} or \code{"desc"} for ascending or descending.}
+\item{sort}{named list of two.
+\itemize{
+\item \code{cols}: list column names on which to sort.
+\item \code{order}: \code{"asc"} or \code{"desc"} for ascending or descending, respectively.
+}}
 
 \item{length}{numeric or \code{NULL}, number of rows to return.}
 

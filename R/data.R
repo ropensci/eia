@@ -23,8 +23,9 @@
 #' "daily", "hourly".
 #' @param start,end character or `NULL`, must match format of default or supplied
 #' `freq`; i.e. if `freq = "yearly"`, then format of `start` must be `YYYY`.
-#' @param sort named list of two. `columns`: names of columns to sort by.
-#' `direction`: `"asc"` or `"desc"` for ascending or descending.
+#' @param sort named list of two.
+#'   * `cols`: list column names on which to sort.
+#'   * `order`: `"asc"` or `"desc"` for ascending or descending, respectively.
 #' @param length numeric or `NULL`, number of rows to return.
 #' @param offset numeric or `NULL`, number of rows to skip before return.
 #' @param tidy logical or `NULL`, return a tidier result. See details.
@@ -122,28 +123,28 @@ eia_data <- function(dir, data = NULL, facets = NULL,
   paste0("&end=", end)
 }
 
-# ordr <- list(cols = c("sectorid", "period"), ordr = "asc")
 .sort_specs <- function(sort){
-  if (length(sort) != 2 || !all(names(sort) %in% c("cols", "ordr")))
-    stop(paste0(
-      "'sort' must be a list of length 2 containing objects:",
-      "'cols' and 'ordr' of arbitrary length and of length 1, respectively."
-    ))
-  cols <- sort$cols; ordr <- sort$ordr
+  if (length(sort) != 2 || !all(names(sort) %in% c("cols", "order")))
+    stop(
+      "'sort' must be a named list of length 2 containing the following:\n",
+      "'cols' and 'order' of arbitrary length and of length 1, respectively."
+    )
+  cols <- sort$cols
+  order <- sort$order
   sort_cols <- lapply(
     1:length(cols),
     function(x){
       paste0("&sort[", x, "][column]=", unlist(cols[x]), collapse = "")
     })
-  if (length(ordr) > 1)
-    stop("must provide a single value for 'direction': 'asc' or 'desc'.")
-  if (!ordr %in% c("asc", "desc"))
-    stop("'ordr' must be one of 'asc' or 'desc'.")
-  sort_ordr <- lapply(
+  if (length(order) > 1)
+    stop("must provide a single value for 'order': 'asc' or 'desc'.")
+  if (!order %in% c("asc", "desc"))
+    stop("'order' must be one of 'asc' or 'desc'.")
+  sort_order <- lapply(
     1:length(cols),
-    function(x) { paste0("&sort[", x, "][direction]=", ordr) }
+    function(x) { paste0("&sort[", x, "][direction]=", order) }
   )
-  paste0(unlist(sort_cols), sort_ordr, collapse = "")
+  paste0(unlist(sort_cols), sort_order, collapse = "")
 }
 
 .lng_specs <- function(length){

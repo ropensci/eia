@@ -50,12 +50,12 @@ key <- eia_get_key()
 ```
 
 In general, however, if the key is set globally - such as in `.Renviron` - then
-no further action regarding the keyis required when using the package. See the vignette
+no further action regarding the key is required when using the package. See the vignette
 on API details for more information about all the available options for key storage.
 
 ## EIA directory
 
-Once the fully registered EIA API key is obtained and properly stored in theactive R session,
+Once the fully registered EIA API key is obtained and properly stored in the active R session,
 by whichever method preferred, the ability to explore the API directory (folder structure)
 and obtain the data within is set.
 
@@ -461,42 +461,8 @@ or descending order using the `sort` argument.
 
 Similar to `facets`, `sort` requires a named list object with two components:
 
-  * `"cols"` - a list of column names by which to order.
-  * `"ordr"` - a single character value, either "asc" or "desc" for
+  * `"cols"` - a list of column names on which to sort.
+  * `"order"` - a single character value, either "asc" or "desc" for
   ascending and descending, respectively.
 
 
-```r
-eia_data(
-  dir = "electricity/retail-sales",
-  data = c("sales", "price"),
-  facets = list(sectorid = c("RES", "COM"), stateid = "VT"),
-  freq = "annual",
-  start = "2013",
-  end = "2023",
-  sort = list(cols = c("period", "sectorid"), ordr = "asc")
-)
-#> # A tibble: 20 × 9
-#>    period stateid stateDescription sectorid sectorName  sales price `sales-units`         `price-units`         
-#>     <int> <chr>   <chr>            <chr>    <chr>       <dbl> <dbl> <chr>                 <chr>                 
-#>  1   2013 VT      Vermont          COM      commercial  2017.  14.7 million kilowatthours cents per kilowatthour
-#>  2   2013 VT      Vermont          RES      residential 2125.  17.1 million kilowatthours cents per kilowatthour
-#>  3   2014 VT      Vermont          COM      commercial  2031.  14.6 million kilowatthours cents per kilowatthour
-#>  4   2014 VT      Vermont          RES      residential 2121.  17.5 million kilowatthours cents per kilowatthour
-#>  5   2015 VT      Vermont          COM      commercial  2011.  14.5 million kilowatthours cents per kilowatthour
-#>  6   2015 VT      Vermont          RES      residential 2089.  17.1 million kilowatthours cents per kilowatthour
-#>  7   2016 VT      Vermont          COM      commercial  2014.  14.5 million kilowatthours cents per kilowatthour
-#>  8   2016 VT      Vermont          RES      residential 2056.  17.4 million kilowatthours cents per kilowatthour
-#>  9   2017 VT      Vermont          COM      commercial  1977.  14.6 million kilowatthours cents per kilowatthour
-#> 10   2017 VT      Vermont          RES      residential 2023.  17.7 million kilowatthours cents per kilowatthour
-#> 11   2018 VT      Vermont          COM      commercial  2004.  15.2 million kilowatthours cents per kilowatthour
-#> 12   2018 VT      Vermont          RES      residential 2116.  18.0 million kilowatthours cents per kilowatthour
-#> 13   2019 VT      Vermont          COM      commercial  1934.  16.0 million kilowatthours cents per kilowatthour
-#> 14   2019 VT      Vermont          RES      residential 2082.  17.7 million kilowatthours cents per kilowatthour
-#> 15   2020 VT      Vermont          COM      commercial  1806.  16.4 million kilowatthours cents per kilowatthour
-#> 16   2020 VT      Vermont          RES      residential 2157.  19.5 million kilowatthours cents per kilowatthour
-#> 17   2021 VT      Vermont          COM      commercial  1867.  16.6 million kilowatthours cents per kilowatthour
-#> 18   2021 VT      Vermont          RES      residential 2174.  19.3 million kilowatthours cents per kilowatthour
-#> 19   2022 VT      Vermont          COM      commercial  1916.  17.3 million kilowatthours cents per kilowatthour
-#> 20   2022 VT      Vermont          RES      residential 2187.  19.9 million kilowatthours cents per kilowatthour
-```
