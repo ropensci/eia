@@ -259,6 +259,6 @@ eia_data(
   freq = "annual",
   start = "2013",
   end = "2023",
-  sort = list(cols = c("period", "sectorid"), ordr = "asc")
+  sort = list(cols = c("period", "sectorid"), order = "asc")
 )
 ```
