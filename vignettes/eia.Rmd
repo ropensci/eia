@@ -9,23 +9,28 @@ vignette: >
 
 
 
-This vignette provides a brief overview of the most important functions in `eia`. Other vignettes go into greater depth on specific topics and API endpoints.
+This vignette provides a brief overview of the most important functions in `eia`.
+Other vignettes go into greater depth on specific topics and API endpoints.
 
 ## API key
 
 ### Register a key with EIA
 
-Obtaining an API key is easy and free.
+Obtaining an API key is easy, and free!
 
-Pulling data from the US Energy Information Administration (EIA) API requires a registered API key. A key can be obtained at no cost [here](https://www.eia.gov/opendata/register.php). A valid email and agreement to the API Terms of Service is required to obtain a key.
+Pulling data from the US Energy Information Administration (EIA) API requires a
+registered API key. A key can be obtained at no cost [here](https://www.eia.gov/opendata/register.php).
+A valid email and agreement to the API Terms of Service is required to obtain a key.
 
-It is important to store your API key somewhere secure. Do not commit it to a repository or otherwise share it. For example, you could store it in your `.Renviron` file.
+It is important to store the API key somewhere secure. Do not commit it to a repository
+or otherwise share it. For example, one option is to store it in the `.Renviron` file.
 
 ### Key storage and retrieval
 
-You can always provide the `key` argument to every API function call, but you do not have to. There are getter and setter helpers available to make using `eia` functions a more seamless experience.
+While the `key` argument can be provided to every API function call, it is not necessary.
+There are "get" and "set" helpers available to make using `eia` functions a more seamless experience.
 
-`eia_set_key` gives you the option of storing your key for the duration of your R session.
+`eia_set_key()` provides the option of storing the key for the duration of the R session.
 
 
 ```r
@@ -34,246 +39,464 @@ library(eia)
 # eia_get_key() # retrieve it
 ```
 
-If the key already exists in the system environment and you plan to pass `key` to functions explicitly, you could start as follows.
+If the key already exists in the system environment and the plan is to pass `key`
+to functions explicitly, then start as follows.
 
 
 ```r
 key <- Sys.getenv("EIA_KEY")
-
 # or:
 key <- eia_get_key()
 ```
 
-In general, however, if your key is set globally such as in `.Renviron`, you do not need to do anything regarding the key when you use the package. See the vignette on API details for more information about all the options you have for key storage.
+In general, however, if the key is set globally - such as in `.Renviron` - then
+no further action regarding the key is required when using the package. See the vignette
+on API details for more information about all the available options for key storage.
 
-## EIA categories
+## EIA directory
 
-Once you have your EIA registered API key and have it in place for your R session by whichever method you prefer, you are ready to begin accessing data from the EIA API.
+Once the fully registered EIA API key is obtained and properly stored in the active R session,
+by whichever method preferred, the ability to explore the API directory (folder structure)
+and obtain the data within is set.
 
-It is helpful to be aware of various categories of data that are available. Each category has a unique ID number that is required to access associated data. The first call below does not include an ID. The result is a list of two data frames. The first is metadata associated with that position in the category hierarchy. The second is the child category information.
+Note, the EIA's APIv2 has been redesigned to be more human-readable friendly; and,
+rather than rely on numeric ID values, it is now built around a self-searchable
+folder structure where the ID values are now just natural language, i.e. words.
 
-Here is the top-level category information.
+Here is the top-level directory information:
 
 
 ```r
-eia_cats()
-#> $category
-#> # A tibble: 1 x 3
-#>   category_id name          notes
-#>   <chr>       <chr>         <chr>
-#> 1 371         EIA Data Sets ""   
+eia_dir()
+#> # A tibble: 14 × 3
+#>    id                name                            description                                                                        
+#>    <chr>             <chr>                           <chr>                                                                              
+#>  1 coal              Coal                            EIA coal energy data                                                               
+#>  2 crude-oil-imports Crude Oil Imports               Crude oil imports by country to destination, includes type, grade, quantity.  Sour…
+#>  3 electricity       Electricity                     EIA electricity survey data                                                        
+#>  4 international     International                   Country level production, consumption, imports, exports by energy source (petroleu…
+#>  5 natural-gas       Natural Gas                     EIA natural gas survey data                                                        
+#>  6 nuclear-outages   Nuclear Outages                 EIA nuclear outages survey data                                                    
+#>  7 petroleum         Petroleum                       EIA petroleum gas survey data                                                      
+#>  8 seds              State Energy Data System (SEDS) Estimated production, consumption, price, and expenditure data for all energy sour…
+#>  9 steo              Short Term Energy Outlook       Monthly short term (18 month) projections using STEO model.  Report and interactiv…
+#> 10 densified-biomass Densified Biomass               EIA densified biomass data                                                         
+#> 11 total-energy      Total Energy                    These data represent the most recent comprehensive energy statistics integrated ac…
+#> 12 aeo               Annual Energy Outlook           Annual U.S. projections using National Energy Modelling System (NEMS) for release …
+#> 13 ieo               International Energy Outlook    Annual international projections using the World Energy Projection System (WEPS) m…
+#> 14 co2-emissions     State CO2 Emissions             EIA CO2 Emissions data
+```
+
+Navigate deeper into this directory by supplying a folder id (e.g. id = "electricity").
+
+
+```r
+eia_dir("electricity")
+#> # A tibble: 6 × 3
+#>   id                              name                                                                       description                
+#>   <chr>                           <chr>                                                                      <chr>                      
+#> 1 retail-sales                    Electricity Sales to Ultimate Customers                                    "Electricity sales to ulti…
+#> 2 electric-power-operational-data Electric Power Operations (Annual and Monthly)                             "Monthly and annual electr…
+#> 3 rto                             Electric Power Operations (Daily and Hourly)                               "Hourly and daily electric…
+#> 4 state-electricity-profiles      State Specific Data                                                        "State Specific Data"      
+#> 5 operating-generator-capacity    Inventory of Operable Generators                                           "Inventory of operable gen…
+#> 6 facility-fuel                   Electric Power Operations for Individual Power Plants (Annual and Monthly) "Annual and monthly electr…
+```
+
+And, because APIv2 is a directory listing, to go any deeper simply requires
+appending the next id (folder name) separated by `"/"`, where the first folder ID
+in from the top-level directory is "electricity" and the next deeper folder ID
+from there is "retail-sales". As a result, supply "electricity/retail-sales" to
+the first argument in `eia_dir()`, as shown below, to see the next next layer in.
+
+
+```r
+eia_dir("electricity/retail-sales")
+```
+
+Finally, the end of the directory path has been reached, as shown by the message
+provided in the console output above; i.e. there are no more sub-folders to explore.
+This message is prompting to explore the available data at the end of this directory
+path with `eia_metadata()`.
+
+### Note on output format
+
+The default is to return tidy data in a tibble data frame. For `eia_dir()`,
+set `tidy = FALSE` to return a list as returned by `jsonlite::fromJSON`.
+Additionally, set `tidy = NA` to return a raw character string of the JSON payload.
+
+
+```r
+eia_dir(tidy = FALSE)
+#> $response
+#> $response$id
+#> [1] ""
 #> 
-#> $childcategories
-#> # A tibble: 14 x 2
-#>    category_id name                               
-#>          <int> <chr>                              
-#>  1           0 Electricity                        
-#>  2       40203 State Energy Data System (SEDS)    
-#>  3      714755 Petroleum                          
-#>  4      714804 Natural Gas                        
-#>  5      711224 Total Energy                       
-#>  6      717234 Coal                               
-#>  7      829714 Short-Term Energy Outlook          
-#>  8      964164 Annual Energy Outlook              
-#>  9     1292190 Crude Oil Imports                  
-#> 10     2123635 U.S. Electric System Operating Data
-#> 11     2134384 International Energy Data          
-#> 12     2251604 CO2 Emissions                      
-#> 13     2631064 International Energy Outlook       
-#> 14     2889994 U.S. Nuclear Outages
-```
-
-The child category IDs can be used to query results from that category.
-
-
-```r
-eia_cats(0)
-#> $category
-#> # A tibble: 1 x 4
-#>   category_id parent_category_id name        notes
-#>   <chr>       <chr>              <chr>       <chr>
-#> 1 0           371                Electricity ""   
+#> $response$name
+#> [1] ""
 #> 
-#> $childcategories
-#> # A tibble: 19 x 2
-#>    category_id name                                                              
-#>          <int> <chr>                                                             
-#>  1           1 Net generation                                                    
-#>  2          35 Total consumption                                                 
-#>  3          32 Total consumption (Btu)                                           
-#>  4          36 Consumption for electricity generation                            
-#>  5          33 Consumption for electricity generation (Btu)                      
-#>  6          37 Consumption for useful thermal output                             
-#>  7          34 Consumption for useful thermal output (Btu)                       
-#>  8        1017 Plant level data                                                  
-#>  9          38 Retail sales of electricity                                       
-#> 10          39 Revenue from retail sales of electricity                          
-#> 11          40 Average retail price of electricity                               
-#> 12     1718389 Number of customer accounts                                       
-#> 13       41137 Fossil-fuel stocks for electricity generation                     
-#> 14       41138 Receipts of fossil fuels by electricity plants                    
-#> 15       41139 Receipts of fossil fuels by electricity plants (Btu)              
-#> 16       41140 Average cost of fossil fuels for electricity generation           
-#> 17       41141 Average cost of fossil fuels for electricity generation (per Btu) 
-#> 18       41142 Quality of fossil fuels in electricity generation : sulfur content
-#> 19       41143 Quality of fossil fuels in electricity generation : ash content
+#> $response$description
+#> [1] ""
+#> 
+#> $response$routes
+#>                   id                            name
+#> 1               coal                            Coal
+#> 2  crude-oil-imports               Crude Oil Imports
+#> 3        electricity                     Electricity
+#> 4      international                   International
+#> 5        natural-gas                     Natural Gas
+#> 6    nuclear-outages                 Nuclear Outages
+#> 7          petroleum                       Petroleum
+#> 8               seds State Energy Data System (SEDS)
+#> 9               steo       Short Term Energy Outlook
+#> 10 densified-biomass               Densified Biomass
+#> 11      total-energy                    Total Energy
+#> 12               aeo           Annual Energy Outlook
+#> 13               ieo    International Energy Outlook
+#> 14     co2-emissions             State CO2 Emissions
+#>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              description
+#> 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   EIA coal energy data
+#> 2                                                                                                                                                                                                                                                                                                          Crude oil imports by country to destination, \r\n        includes type, grade, quantity.  Source: EIA-814  Interactive data \r\n        product:  www.eia.gov/petroleum/imports/companylevel/
+#> 3                                                                                                                                                                                                                                                                                                                                                                                                                                                                            EIA electricity survey data
+#> 4                                                                                                                                                                                                                                                                                        Country level production, consumption, imports, exports by energy source (petroleum, natural gas, electricity, renewable, etc.)  \r\n        Interactive product:  https://www.eia.gov/international/data/world
+#> 5                                                                                                                                                                                                                                                                                                                                                                                                                                                                            EIA natural gas survey data
+#> 6                                                                                                                                                                                                                                                                                                                                                                                                                                                                        EIA nuclear outages survey data
+#> 7                                                                                                                                                                                                                                                                                                                                                                                                                                                                          EIA petroleum gas survey data
+#> 8                                                                                                                                                                                                                                        Estimated production, consumption, price, and expenditure data for all energy sources by state and sector.  \r\n        Source:  https://www.eia.gov/state/seds/seds-technical-notes-complete.php  \r\n        Product:  SEDS (https://www.eia.gov/state/seds/)
+#> 9                                                                                                                                                                                                                                                                                                                                                     Monthly short term (18 month) projections using STEO model.  \r\n        Report and interactive projection data browser:  STEO (www.eia.gov/steo/)
+#> 10                                                                                                                                                                                                                                                                                                                                                                                                                                                                            EIA densified biomass data
+#> 11 These data represent the most recent comprehensive energy statistics integrated across all energy sources.  The data includes total energy production, consumption, stocks, and trade; energy prices; overviews of petroleum, natural gas, coal, electricity, nuclear energy, renewable energy, and carbon dioxide emissions; and data unit conversions values.  Source: https://www.eia.gov/totalenergy/data/monthly/pdf/mer_a_doc.pdf  Report:  MER (https://www.eia.gov/totalenergy/data/monthly/)
+#> 12                                                                                                                                                                                                                                                                                                                      Annual U.S. projections using National Energy Modelling System (NEMS) for release year.  Report, documentation, and interactive projection data browser:  AEO (www.eia.gov/aeo/)
+#> 13                                                                                                                                                                                                                                                                                                                     Annual international projections using the World Energy Projection System (WEPS) model for release year.  Report and interactive projection data browser:  IEO (www.eia.gov/ieo/)
+#> 14                                                                                                                                                                                                                                                                                                                                                                                                                                                                                EIA CO2 Emissions data
+#> 
+#> 
+#> $request
+#> $request$command
+#> [1] "/v2/"
+#> 
+#> $request$params
+#> $request$params$api_key
+#> [1] "dUlpeaO4fNAmo9nJcgIhtCfBN5VtiZnoZDzuYGuG"
+#> 
+#> 
+#> 
+#> $apiVersion
+#> [1] "2.1.4"
+
+eia_dir(tidy = NA)
+#> [1] "{\"response\":{\"id\":\"\",\"name\":\"\",\"description\":\"\",\"routes\":[{\"id\":\"coal\",\"name\":\"Coal\",\"description\":\"EIA coal energy data\"},{\"id\":\"crude-oil-imports\",\"name\":\"Crude Oil Imports\",\"description\":\"Crude oil imports by country to destination, \\r\\n        includes type, grade, quantity.  Source: EIA-814  Interactive data \\r\\n        product:  www.eia.gov\\/petroleum\\/imports\\/companylevel\\/\"},{\"id\":\"electricity\",\"name\":\"Electricity\",\"description\":\"EIA electricity survey data\"},{\"id\":\"international\",\"name\":\"International\",\"description\":\"Country level production, consumption, imports, exports by energy source (petroleum, natural gas, electricity, renewable, etc.)  \\r\\n        Interactive product:  https:\\/\\/www.eia.gov\\/international\\/data\\/world\"},{\"id\":\"natural-gas\",\"name\":\"Natural Gas\",\"description\":\"EIA natural gas survey data\"},{\"id\":\"nuclear-outages\",\"name\":\"Nuclear Outages\",\"description\":\"EIA nuclear outages survey data\"},{\"id\":\"petroleum\",\"name\":\"Petroleum\",\"description\":\"EIA petroleum gas survey data\"},{\"id\":\"seds\",\"name\":\"State Energy Data System (SEDS)\",\"description\":\"Estimated production, consumption, price, and expenditure data for all energy sources by state and sector.  \\r\\n        Source:  https:\\/\\/www.eia.gov\\/state\\/seds\\/seds-technical-notes-complete.php  \\r\\n        Product:  SEDS (https:\\/\\/www.eia.gov\\/state\\/seds\\/)\"},{\"id\":\"steo\",\"name\":\"Short Term Energy Outlook\",\"description\":\"Monthly short term (18 month) projections using STEO model.  \\r\\n        Report and interactive projection data browser:  STEO (www.eia.gov\\/steo\\/)\"},{\"id\":\"densified-biomass\",\"name\":\"Densified Biomass\",\"description\":\"EIA densified biomass data\"},{\"id\":\"total-energy\",\"name\":\"Total Energy\",\"description\":\"These data represent the most recent comprehensive energy statistics integrated across all energy sources.  The data includes total energy production, consumption, stocks, and trade; energy prices; overviews of petroleum, natural gas, coal, electricity, nuclear energy, renewable energy, and carbon dioxide emissions; and data unit conversions values.  Source: https:\\/\\/www.eia.gov\\/totalenergy\\/data\\/monthly\\/pdf\\/mer_a_doc.pdf  Report:  MER (https:\\/\\/www.eia.gov\\/totalenergy\\/data\\/monthly\\/)\"},{\"id\":\"aeo\",\"name\":\"Annual Energy Outlook\",\"description\":\"Annual U.S. projections using National Energy Modelling System (NEMS) for release year.  Report, documentation, and interactive projection data browser:  AEO (www.eia.gov\\/aeo\\/)\"},{\"id\":\"ieo\",\"name\":\"International Energy Outlook\",\"description\":\"Annual international projections using the World Energy Projection System (WEPS) model for release year.  Report and interactive projection data browser:  IEO (www.eia.gov\\/ieo\\/)\"},{\"id\":\"co2-emissions\",\"name\":\"State CO2 Emissions\",\"description\":\"EIA CO2 Emissions data\"}]},\"request\":{\"command\":\"\\/v2\\/\",\"params\":{\"api_key\":\"dUlpeaO4fNAmo9nJcgIhtCfBN5VtiZnoZDzuYGuG\"}},\"apiVersion\":\"2.1.4\"}"
 ```
 
-## EIA time series data
+## EIA metadata
 
-Time series data is obtained by series ID. Most columns contain metadata. The `data` column contains the time series data.
+Now back to the example regarding the Retail Sales of Electricity...
+
+`eia_metadata()` provides as the name suggests: metadata on a given set of data
+provided by a terminal (i.e. final) directory path. This includes the following:
+
+* Name
+* Description
+* Data values (i.e. column names)
+* Facets (i.e. filter options)
+  * e.g. filter on State = "OH" and Sector = "RES" (residential)
+* Frequencies (i.e. available time denominations)
+  * e.g. monthly, quarterly, annual, etc.
+* Defaults
+  * e.g. default date format and frequency
+* Date range
 
 
 ```r
-library(dplyr)
-library(tidyr)
-library(ggplot2)
-
-id <- "ELEC.GEN.ALL-AK-99.A"
-(x <- eia_series(id, start = 2010, end = 2019))
-#> # A tibble: 1 x 13
-#>   series_id     name                     units       f     description                       copyright source              iso3166 geography start end   updated      data     
-#>   <chr>         <chr>                    <chr>       <chr> <chr>                             <chr>     <chr>               <chr>   <chr>     <chr> <chr> <chr>        <list>   
-#> 1 ELEC.GEN.ALL~ Net generation : all fu~ thousand m~ A     "Summation of all fuels used for~ None      EIA, U.S. Energy I~ USA-AK  USA-AK    2001  2019  2020-10-27T~ <tibble ~
-
-x$data[[1]]
-#> # A tibble: 10 x 3
-#>    value date        year
-#>    <dbl> <date>     <int>
-#>  1 6071. 2019-01-01  2019
-#>  2 6247. 2018-01-01  2018
-#>  3 6497. 2017-01-01  2017
-#>  4 6335. 2016-01-01  2016
-#>  5 6285. 2015-01-01  2015
-#>  6 6043. 2014-01-01  2014
-#>  7 6497. 2013-01-01  2013
-#>  8 6946. 2012-01-01  2012
-#>  9 6871. 2011-01-01  2011
-#> 10 6760. 2010-01-01  2010
-
-select(x, units, data) %>% unnest(cols = data) %>%
-  ggplot(aes(factor(year), value)) + geom_col() +
-  labs(x = "Year", y = x$units[1], title = "Net Alaska electricity generation",
-       subtitle = "From all fuels", caption = x$description[1])
+eia_metadata("electricity/retail-sales")
+#> $Name
+#> [1] "Electricity Sales to Ultimate Customers"
+#> 
+#> $Description
+#> [1] "Electricity sales to ultimate customer by state and sector (number of customers, average price, revenue, and megawatthours of sales).  \n    Sources: Forms EIA-826, EIA-861, EIA-861M"
+#> 
+#> $Data
+#> # A tibble: 4 × 3
+#>   id        alias                                              units                 
+#>   <chr>     <chr>                                              <chr>                 
+#> 1 revenue   Revenue from Sales to Ultimate Customers           million dollars       
+#> 2 sales     Megawatthours Sold to Utlimate Customers           million kilowatthours 
+#> 3 price     Average Price of Electricity to Utlimate Customers cents per kilowatthour
+#> 4 customers Number of Ultimate Customers                       number of customers   
+#> 
+#> $Facets
+#> # A tibble: 2 × 2
+#>   id       description          
+#>   <chr>    <chr>                
+#> 1 stateid  State / Census Region
+#> 2 sectorid Sector               
+#> 
+#> $Frequency
+#> # A tibble: 3 × 4
+#>   id        description                            query format 
+#>   <chr>     <chr>                                  <chr> <chr>  
+#> 1 monthly   One data point for each month.         M     YYYY-MM
+#> 2 quarterly One data point every 3 months.         Q     YYYY-QQ
+#> 3 annual    One data point for each calendar year. A     YYYY   
+#> 
+#> $Defaults
+#> # A tibble: 1 × 2
+#>   format  frequency
+#>   <chr>   <chr>    
+#> 1 YYYY-MM monthly  
+#> 
+#> $Period
+#> # A tibble: 1 × 2
+#>   start   end    
+#>   <chr>   <chr>  
+#> 1 2001-01 2023-08
 ```
 
-<img src="eia-series1-1.png" title="plot of chunk series1" alt="plot of chunk series1" width="100%" />
+## EIA data
 
-You can provide arguments like the following:
+### Data structure
+
+The metadata from above can be used to have a better understanding of what data
+is available and how that data can be pulled from the API using `eia_data()`.
+However, simply supplying the above directory path from above ("electricity/retail-sales")
+will only provide the data structure, i.e. no meaningful data values will be present
+(more on this below).
 
 
 ```r
-eia_series(id) # max results
-eia_series(id, n = 5) # most recent five
-eia_series(id, end = 2016, n = 5) # ending in 2016
-eia_series(id, start = 2000, end = 2016) # specific period
+eia_data("electricity/retail-sales") |> head()
+#> # A tibble: 6 × 5
+#>   period  stateid stateDescription   sectorid sectorName    
+#>   <chr>   <chr>   <chr>              <chr>    <chr>         
+#> 1 2008-07 WSC     West South Central IND      industrial    
+#> 2 2008-07 WSC     West South Central OTH      other         
+#> 3 2008-07 WSC     West South Central RES      residential   
+#> 4 2008-07 WSC     West South Central TRA      transportation
+#> 5 2008-07 MTN     Mountain           ALL      all sectors   
+#> 6 2008-07 MTN     Mountain           COM      commercial
 ```
 
-As with `eia_cats`, the output format does not need to be tidy:
+Note the console warning that appears. The API can only provide a maximum of 5000
+records. If there are more data available than returned, a warning message like above
+will be provided informing the user of their "incomplete return".
+
+### Data values
+
+"Data Values" are just the names of the columns that hold the specific, respective data value.
+For this example, the overall number of power units sold to customers is of main interest,
+and the associated column name for this information is `"sales"`.
+
+To get data values, e.g. sales, supply the proper column name id, as provided in
+the Data Values section of the `eia_metadata()` console output, again, in this case `"sales"`.
 
 
 ```r
-eia_series(id, n = 5, tidy = FALSE) # results of jsonlite::fromJSON
-eia_series(id, n = 5, tidy = NA) # origina JSON as character string
+eia_data("electricity/retail-sales", data = "sales", length = 6) # length = 6 instead of `|> head()`
+#> # A tibble: 6 × 7
+#>   period  stateid stateDescription   sectorid sectorName        sales `sales-units`        
+#>   <chr>   <chr>   <chr>              <chr>    <chr>             <dbl> <chr>                
+#> 1 2008-07 WSC     West South Central IND      industrial     14800.   million kilowatthours
+#> 2 2008-07 WSC     West South Central OTH      other             NA    million kilowatthours
+#> 3 2008-07 WSC     West South Central RES      residential    22406.   million kilowatthours
+#> 4 2008-07 WSC     West South Central TRA      transportation     7.41 million kilowatthours
+#> 5 2008-07 MTN     Mountain           ALL      all sectors    27756.   million kilowatthours
+#> 6 2008-07 MTN     Mountain           COM      commercial      9123.   million kilowatthours
 ```
 
-This allows you to use the returned results with existing code you may have that requires data in one of these less processed structures.
+See now that sales data values have been right-column-bound to the data structure
+as originally provided by `eia_data("electricity/retail-sales")`.
 
-## EIA geosets
+## EIA facets
 
-Geosets are metadata structures organizing time series datasets that can be mapped. Arguments to `eia_geoset` are the same as `eia_series` with the addition of `region`. Like `id`, `region` can be a vector. Most of the details are the same as before.
+### Getting facet values
 
-In the example below using total electricity generation, get the last two data points for each of and two US states. `dplyr` and `tidyr` are used here to clean up the result a bit for purposes of display. `gpplot2` is used to graph the data after it has been unnested for each state.
+But what if data is wanted for just one sector, say "residential"?
+This is where facets arrive, and for any given terminal directory, the facet values
+can be found with `eia_facets()` by supplying the terminal directory path and facet id,
+the latter of which can, again, be found from the console output of `eia_metadata()`.
 
 
 ```r
-id <- c("ELEC.GEN.ALL-99.M") # monthly
-region <- c("USA-CA", "USA-NY")
-(x <- eia_geoset(id, region, start = "201801", end = "201812"))
-#> # A tibble: 2 x 11
-#>   geoset_id       setname                             f     units            series_id        name                                       region latlon start end   data        
-#>   <chr>           <chr>                               <chr> <chr>            <chr>            <chr>                                      <chr>  <chr>  <chr> <chr> <list>      
-#> 1 ELEC.GEN.ALL-9~ Net generation : all fuels : all s~ M     thousand megawa~ ELEC.GEN.ALL-CA~ Net generation : all fuels : California :~ USA-CA <NA>   2001~ 2020~ <tibble [12~
-#> 2 ELEC.GEN.ALL-9~ Net generation : all fuels : all s~ M     thousand megawa~ ELEC.GEN.ALL-NY~ Net generation : all fuels : New York : a~ USA-NY <NA>   2001~ 2020~ <tibble [12~
-
-select(x, region, data) %>% unnest(cols = data)
-#> # A tibble: 24 x 5
-#>    region  value date        year month
-#>    <chr>   <dbl> <date>     <int> <int>
-#>  1 USA-CA 14364. 2018-12-01  2018    12
-#>  2 USA-CA 14605. 2018-11-01  2018    11
-#>  3 USA-CA 16864. 2018-10-01  2018    10
-#>  4 USA-CA 17592. 2018-09-01  2018     9
-#>  5 USA-CA 20994. 2018-08-01  2018     8
-#>  6 USA-CA 22356. 2018-07-01  2018     7
-#>  7 USA-CA 17514. 2018-06-01  2018     6
-#>  8 USA-CA 15932. 2018-05-01  2018     5
-#>  9 USA-CA 14811. 2018-04-01  2018     4
-#> 10 USA-CA 14039. 2018-03-01  2018     3
-#> # ... with 14 more rows
-
-unnest(x, cols = data) %>%
-  ggplot(aes(date, value, color = region)) + geom_line() +
-  labs(y = x$units[1], title = "Net electricity generation", subtitle = "From all fuels")
+eia_facets("electricity/retail-sales", "sectorid")
+#> # A tibble: 6 × 3
+#>   id    name           alias               
+#>   <chr> <chr>          <chr>               
+#> 1 RES   residential    (RES) residential   
+#> 2 COM   commercial     (COM) commercial    
+#> 3 ALL   all sectors    (ALL) all sectors   
+#> 4 OTH   other          (OTH) other         
+#> 5 TRA   transportation (TRA) transportation
+#> 6 IND   industrial     (IND) industrial
+# or
+eia_facets("electricity/retail-sales", "stateid")
+#> # A tibble: 62 × 3
+#>    id    name               alias                           
+#>    <chr> <chr>              <chr>                           
+#>  1 MA    Massachusetts      (MA) Massachusetts              
+#>  2 VT    Vermont            (VT) Vermont                    
+#>  3 WA    Washington         (WA) Washington                 
+#>  4 HI    Hawaii             (HI) Hawaii                     
+#>  5 WNC   West North Central Region: (WNC) West North Central
+#>  6 NC    North Carolina     (NC) North Carolina             
+#>  7 ENC   East North Central Region: (ENC) East North Central
+#>  8 MTN   Mountain           Region: (MTN) Mountain          
+#>  9 MD    Maryland           (MD) Maryland                   
+#> 10 VA    Virginia           (VA) Virginia                   
+#> # … with 52 more rows
 ```
 
-<img src="eia-geoset1-1.png" title="plot of chunk geoset1" alt="plot of chunk geoset1" width="100%" />
+The above output provides the ids for both the State/Region and Sector that will
+be required for obtaining Retail Sales for Residential customers in Vermont.
 
-Another convenience of `eia_geoset` is the ability to provide regions in the following forms.
+  * `"stateid"` for Vermont is "VT"
+  * `"sectorid"` for residential is "RES"
 
-* 2-character US state abbreviations
-* State names
-* US Census region names
-* US census division names
+### Using facet values
 
-These shortcuts make it easier to construct an API call involving several states.
+Now, the ID values from the above output can be used to further limit the
+returned data with the `facets` argument in `eia_data()`.
 
 
 ```r
-region <- c("AK", "New England")
-x <- eia_geoset(id, region, n = 2)
-select(x, region, data) %>% unnest(cols = data)
-#> # A tibble: 14 x 5
-#>    region value date        year month
-#>    <chr>  <dbl> <date>     <int> <int>
-#>  1 USA-AK  534. 2020-08-01  2020     8
-#>  2 USA-AK  626. 2020-07-01  2020     7
-#>  3 USA-CT 4001. 2020-08-01  2020     8
-#>  4 USA-CT 4443. 2020-07-01  2020     7
-#>  5 USA-MA 2200. 2020-08-01  2020     8
-#>  6 USA-MA 2754. 2020-07-01  2020     7
-#>  7 USA-ME  861. 2020-08-01  2020     8
-#>  8 USA-ME  962. 2020-07-01  2020     7
-#>  9 USA-NH 1632. 2020-08-01  2020     8
-#> 10 USA-NH 1794. 2020-07-01  2020     7
-#> 11 USA-RI  889. 2020-08-01  2020     8
-#> 12 USA-RI  845. 2020-07-01  2020     7
-#> 13 USA-VT  194. 2020-08-01  2020     8
-#> 14 USA-VT  203. 2020-07-01  2020     7
-
-region <- "Middle Atlantic"
-x <- eia_geoset(id, region, n = 12)
-select(x, region, data) %>% unnest(cols = data)
-#> # A tibble: 36 x 5
-#>    region value date        year month
-#>    <chr>  <dbl> <date>     <int> <int>
-#>  1 USA-NJ 6639. 2020-08-01  2020     8
-#>  2 USA-NJ 7385. 2020-07-01  2020     7
-#>  3 USA-NJ 5721. 2020-06-01  2020     6
-#>  4 USA-NJ 4169. 2020-05-01  2020     5
-#>  5 USA-NJ 4334. 2020-04-01  2020     4
-#>  6 USA-NJ 4469. 2020-03-01  2020     3
-#>  7 USA-NJ 4912. 2020-02-01  2020     2
-#>  8 USA-NJ 5488. 2020-01-01  2020     1
-#>  9 USA-NJ 6193. 2019-12-01  2019    12
-#> 10 USA-NJ 5510. 2019-11-01  2019    11
-#> # ... with 26 more rows
-
-unnest(x, cols = data) %>%
-  ggplot(aes(date, value, color = region)) + geom_line() +
-  labs(y = x$units[1], title = "Net electricity generation", subtitle = "From all fuels")
+eia_data(
+  dir = "electricity/retail-sales",
+  data = "sales",
+  facets = list(sectorid = "RES", stateid = "VT"),
+  length = 6
+)
+#> # A tibble: 6 × 7
+#>   period  stateid stateDescription sectorid sectorName  sales `sales-units`        
+#>   <chr>   <chr>   <chr>            <chr>    <chr>       <dbl> <chr>                
+#> 1 2008-07 VT      Vermont          RES      residential  188. million kilowatthours
+#> 2 2010-07 VT      Vermont          RES      residential  198. million kilowatthours
+#> 3 2023-08 VT      Vermont          RES      residential  180. million kilowatthours
+#> 4 2016-02 VT      Vermont          RES      residential  185. million kilowatthours
+#> 5 2015-05 VT      Vermont          RES      residential  143. million kilowatthours
+#> 6 2010-06 VT      Vermont          RES      residential  158. million kilowatthours
 ```
 
-<img src="eia-geoset2-1.png" title="plot of chunk geoset2" alt="plot of chunk geoset2" width="100%" />
+If multiple data values (sales *and* price) or facets (residential *and* commercial)
+are of interest, simply concatenate these entries with `c()`, as shown below:
 
-Even more convenient is that these names are available in R. See the `datasets::state.*` functions and the geoset vignette.
+
+```r
+eia_data(
+  dir = "electricity/retail-sales",
+  data = c("sales", "price"),
+  facets = list(sectorid = c("RES", "COM"), stateid = "VT"),
+  length = 6
+)
+#> # A tibble: 6 × 9
+#>   period  stateid stateDescription sectorid sectorName  sales price `sales-units`         `price-units`         
+#>   <chr>   <chr>   <chr>            <chr>    <chr>       <dbl> <dbl> <chr>                 <chr>                 
+#> 1 2008-07 VT      Vermont          COM      commercial   187.  12.5 million kilowatthours cents per kilowatthour
+#> 2 2008-07 VT      Vermont          RES      residential  188.  14.5 million kilowatthours cents per kilowatthour
+#> 3 2010-07 VT      Vermont          COM      commercial   189.  13.3 million kilowatthours cents per kilowatthour
+#> 4 2010-07 VT      Vermont          RES      residential  198.  15.4 million kilowatthours cents per kilowatthour
+#> 5 2023-08 VT      Vermont          COM      commercial   174.  17.3 million kilowatthours cents per kilowatthour
+#> 6 2023-08 VT      Vermont          RES      residential  180.  20.4 million kilowatthours cents per kilowatthour
+```
+
+## Frequency-, time-subsetting, and sorting
+
+This electric retail sales data is available in multiple frequencies and
+for a defined date range, as shown below:
+
+
+```
+#> Frequency:
+#>          id                            description query  format
+#> 1   monthly         One data point for each month.     M YYYY-MM
+#> 2 quarterly         One data point every 3 months.     Q YYYY-QQ
+#> 3    annual One data point for each calendar year.     A    YYYY
+#> 
+#> Date Range:
+#>    2001-01 to 2023-08
+```
+
+The default frequency for this data is monthly, but maybe annualized data for a
+truncated time frame - say the last five years - is all that is needed. The ability
+to alter the granularity or truncate time frame of the returned data is provided
+by the `freq`, `start`, and `end` arguments of `eia_data()`.
+
+
+```r
+eia_data(
+  dir = "electricity/retail-sales",
+  data = c("sales", "price"),
+  facets = list(sectorid = c("RES", "COM"), stateid = "VT"),
+  freq = "annual",
+  start = "2013",
+  end = "2023"
+)
+#> # A tibble: 20 × 9
+#>    period stateid stateDescription sectorid sectorName  sales price `sales-units`         `price-units`         
+#>     <int> <chr>   <chr>            <chr>    <chr>       <dbl> <dbl> <chr>                 <chr>                 
+#>  1   2018 VT      Vermont          COM      commercial  2004.  15.2 million kilowatthours cents per kilowatthour
+#>  2   2018 VT      Vermont          RES      residential 2116.  18.0 million kilowatthours cents per kilowatthour
+#>  3   2015 VT      Vermont          COM      commercial  2011.  14.5 million kilowatthours cents per kilowatthour
+#>  4   2015 VT      Vermont          RES      residential 2089.  17.1 million kilowatthours cents per kilowatthour
+#>  5   2014 VT      Vermont          COM      commercial  2031.  14.6 million kilowatthours cents per kilowatthour
+#>  6   2017 VT      Vermont          RES      residential 2023.  17.7 million kilowatthours cents per kilowatthour
+#>  7   2017 VT      Vermont          COM      commercial  1977.  14.6 million kilowatthours cents per kilowatthour
+#>  8   2021 VT      Vermont          COM      commercial  1867.  16.6 million kilowatthours cents per kilowatthour
+#>  9   2021 VT      Vermont          RES      residential 2174.  19.3 million kilowatthours cents per kilowatthour
+#> 10   2022 VT      Vermont          COM      commercial  1916.  17.3 million kilowatthours cents per kilowatthour
+#> 11   2022 VT      Vermont          RES      residential 2187.  19.9 million kilowatthours cents per kilowatthour
+#> 12   2014 VT      Vermont          RES      residential 2121.  17.5 million kilowatthours cents per kilowatthour
+#> 13   2020 VT      Vermont          COM      commercial  1806.  16.4 million kilowatthours cents per kilowatthour
+#> 14   2020 VT      Vermont          RES      residential 2157.  19.5 million kilowatthours cents per kilowatthour
+#> 15   2013 VT      Vermont          RES      residential 2125.  17.1 million kilowatthours cents per kilowatthour
+#> 16   2013 VT      Vermont          COM      commercial  2017.  14.7 million kilowatthours cents per kilowatthour
+#> 17   2019 VT      Vermont          COM      commercial  1934.  16.0 million kilowatthours cents per kilowatthour
+#> 18   2019 VT      Vermont          RES      residential 2082.  17.7 million kilowatthours cents per kilowatthour
+#> 19   2016 VT      Vermont          COM      commercial  2014.  14.5 million kilowatthours cents per kilowatthour
+#> 20   2016 VT      Vermont          RES      residential 2056.  17.4 million kilowatthours cents per kilowatthour
+```
+
+As shown above, the returned data frame has 20 records - 10 annual observations for
+each sector (residential and commercial). However, notice the hectic ordering of
+the returned data. Thankfully, the API service can sort this in either ascending
+or descending order using the `sort` argument.
+
+Similar to `facets`, `sort` requires a named list object with two components:
+
+  * `"cols"` - a list of column names on which to sort.
+  * `"order"` - a single character value, either "asc" or "desc" for
+  ascending and descending, respectively.
+
+
+```r
+eia_data(
+  dir = "electricity/retail-sales",
+  data = c("sales", "price"),
+  facets = list(sectorid = c("RES", "COM"), stateid = "VT"),
+  freq = "annual",
+  start = "2013",
+  end = "2023",
+  sort = list(cols = c("period", "sectorid"), order = "asc")
+)
+#> # A tibble: 20 × 9
+#>    period stateid stateDescription sectorid sectorName  sales price `sales-units`         `price-units`         
+#>     <int> <chr>   <chr>            <chr>    <chr>       <dbl> <dbl> <chr>                 <chr>                 
+#>  1   2013 VT      Vermont          COM      commercial  2017.  14.7 million kilowatthours cents per kilowatthour
+#>  2   2013 VT      Vermont          RES      residential 2125.  17.1 million kilowatthours cents per kilowatthour
+#>  3   2014 VT      Vermont          COM      commercial  2031.  14.6 million kilowatthours cents per kilowatthour
+#>  4   2014 VT      Vermont          RES      residential 2121.  17.5 million kilowatthours cents per kilowatthour
+#>  5   2015 VT      Vermont          COM      commercial  2011.  14.5 million kilowatthours cents per kilowatthour
+#>  6   2015 VT      Vermont          RES      residential 2089.  17.1 million kilowatthours cents per kilowatthour
+#>  7   2016 VT      Vermont          COM      commercial  2014.  14.5 million kilowatthours cents per kilowatthour
+#>  8   2016 VT      Vermont          RES      residential 2056.  17.4 million kilowatthours cents per kilowatthour
+#>  9   2017 VT      Vermont          COM      commercial  1977.  14.6 million kilowatthours cents per kilowatthour
+#> 10   2017 VT      Vermont          RES      residential 2023.  17.7 million kilowatthours cents per kilowatthour
+#> 11   2018 VT      Vermont          COM      commercial  2004.  15.2 million kilowatthours cents per kilowatthour
+#> 12   2018 VT      Vermont          RES      residential 2116.  18.0 million kilowatthours cents per kilowatthour
+#> 13   2019 VT      Vermont          COM      commercial  1934.  16.0 million kilowatthours cents per kilowatthour
+#> 14   2019 VT      Vermont          RES      residential 2082.  17.7 million kilowatthours cents per kilowatthour
+#> 15   2020 VT      Vermont          COM      commercial  1806.  16.4 million kilowatthours cents per kilowatthour
+#> 16   2020 VT      Vermont          RES      residential 2157.  19.5 million kilowatthours cents per kilowatthour
+#> 17   2021 VT      Vermont          COM      commercial  1867.  16.6 million kilowatthours cents per kilowatthour
+#> 18   2021 VT      Vermont          RES      residential 2174.  19.3 million kilowatthours cents per kilowatthour
+#> 19   2022 VT      Vermont          COM      commercial  1916.  17.3 million kilowatthours cents per kilowatthour
+#> 20   2022 VT      Vermont          RES      residential 2187.  19.9 million kilowatthours cents per kilowatthour
+```

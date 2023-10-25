@@ -1,10 +1,12 @@
 #' Download data for various EIA reports
 #'
-#' These functions download data for various EIA reports found on the EIA website but not necessarily available through the EIA API.
+#' These functions download data for various EIA reports found on the EIA
+#' website but not necessarily available through the EIA API.
 #'
-#' The wrapper function and the individual report functions do not make API calls and do not require an API key.
+#' The wrapper function and the individual report functions do not make API
+#' calls and do not require an API key.
 #'
-#' @param id character, the report ID. See details for the list of available reports.
+#' @param id character, the report ID. See examples for available reports.
 #' @param ... arguments passed to individual report data functions.
 #'
 #' @return a list, typically a list of data frames
@@ -34,8 +36,8 @@ report_drilling_productivity <- function(){
       z <- names(readxl::read_xlsx(file, .x, skip = 0, .name_repair = "minimal"))
       z <- z[z != ""][-1]
       x <- readxl::read_xlsx(file, .x, skip = 1, .name_repair = "minimal")
-      dplyr::bind_rows(x[1:5], x[c(1:2, 6:8)]) %>%
-        dplyr::mutate(Fuel = factor(rep(z, each = nrow(x)), levels = z)) %>%
+      dplyr::bind_rows(x[1:5], x[c(1:2, 6:8)]) |>
+        dplyr::mutate(Fuel = factor(rep(z, each = nrow(x)), levels = z)) |>
         dplyr::select(c(6, 1:5))
     }),
     error = function(e) NULL
@@ -52,7 +54,7 @@ report_drilling_productivity <- function(){
   names(x) <- readxl::excel_sheets(file)[1:7]
   unlink(file, recursive = TRUE, force = TRUE)
   list(
-    data = dplyr::bind_rows(x, .id = "Region") %>%
+    data = dplyr::bind_rows(x, .id = "Region") |>
       dplyr::mutate(Region = factor(.data[["Region"]])),
     counties = y
   )
