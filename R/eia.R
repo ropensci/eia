@@ -2,44 +2,18 @@ globalVariables(".data")
 
 #' eia: EIA API wrapper
 #'
-#' This package provides API access to data from the US \href{https://www.eia.gov/}{Energy Information Administration} (EIA).
+#' This package provides API access to data from the US
+#' \href{https://www.eia.gov/}{Energy Information Administration} (EIA).
 #' @docType package
 #' @name eia
+#' @aliases eia-package
 NULL
 
 #' @importFrom tibble tibble
 NULL
 
-#' Pipe operator
-#'
-#' See \code{magrittr} package for details.
-#'
-#' @name %>%
-#' @rdname pipe
-#' @keywords internal
-#' @export
-#' @importFrom magrittr %>%
-#' @usage lhs \%>\% rhs
-NULL
-
-.eia_url <- function(key, id = NULL,
-                     endpoint = c("category", "series", "series/categories",
-                                  "geoset", "relation"),
-                     relation = FALSE){
-  endpoint <- match.arg(endpoint)
-  if(is.null(id)){
-    id <- "?"
-  } else {
-    if(endpoint == "relation"){
-      epid <- "geoset"
-    } else if(endpoint == "series/categories"){
-      epid <- "series"
-    } else {
-      epid <- endpoint
-    }
-    id <- paste0("?", epid, "_id=", paste0(id, collapse = ";"), "&")
-  }
-  paste0("https://api.eia.gov/", endpoint, "/", id, "api_key=", key, "&out=json")
+.eia_url <- function(path){
+  gsub("//", "/", file.path("https://api.eia.gov/v2/", path))
 }
 
 .eia_time_params <- function(start = NULL, end = NULL, n = NULL){
@@ -54,12 +28,12 @@ NULL
 }
 
 #' @importFrom httr GET content
-.eia_get <- function(x){
+.eia_get <- function(url){
   .antidos_before("eia")
-  x <- httr::RETRY(verb = "GET", url = x, .session_eia_env$ua)
+  r <- httr::RETRY(verb = "GET", url = url, .session_eia_env$ua)
   .antidos_after("eia")
-  if(x$status_code == "404") stop("Page not found", call. = FALSE)
-  httr::content(x, as = "text", encoding = "UTF-8")
+  if(r$status_code == "404") stop("Page not found", call. = FALSE)
+  httr::content(r, as = "text", encoding = "UTF-8")
 }
 
 .antidos_before <- function(x, sec = getOption("eia_antidos", 1)){
