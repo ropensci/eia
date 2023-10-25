@@ -20,6 +20,7 @@ library(ggplot2)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/)
 [![R-CMD-check](https://github.com/ropensci/eia/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/eia/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/ropensci/eia/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ropensci/eia?branch=master)
+[![](https://badges.ropensci.org/342_status.svg)](https://github.com/ropensci/software-review/issues/342)
 [![CRAN status](https://www.r-pkg.org/badges/version/eia)](https://cran.r-project.org/package=eia)
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/eia)](https://cran.r-project.org/package=eia)
 [![Github Stars](https://img.shields.io/github/stars/ropensci/eia.svg?style=social&label=Github)](https://github.com/ropensci/eia)
@@ -91,7 +92,7 @@ Get annual retail electric sales for the Ohio residential sector since 2010
   facets = list(stateid = "OH", sectorid = "RES"),
   freq = "annual",
   start = "2010",
-  sort = list(cols = "period", ordr = "asc"),
+  sort = list(cols = "period", order = "asc"),
 ))
 ```
 

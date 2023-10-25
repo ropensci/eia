@@ -11,6 +11,7 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 [![R-CMD-check](https://github.com/ropensci/eia/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/eia/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/ropensci/eia/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ropensci/eia?branch=master)
+[![](https://badges.ropensci.org/342_status.svg)](https://github.com/ropensci/software-review/issues/342)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/eia)](https://cran.r-project.org/package=eia)
 [![CRAN RStudio mirror
@@ -96,14 +97,14 @@ eia_dir()
 # Electricity sub-directory
 eia_dir("electricity")
 #> # A tibble: 6 × 3
-#>   id                              name                 description              
-#>   <chr>                           <chr>                <chr>                    
-#> 1 retail-sales                    Electricity Sales t… "Electricity sales to ul…
-#> 2 electric-power-operational-data Electric Power Oper… "Monthly and annual elec…
-#> 3 rto                             Electric Power Oper… "Hourly and daily electr…
-#> 4 state-electricity-profiles      State Specific Data  "State Specific Data"    
-#> 5 operating-generator-capacity    Inventory of Operab… "Inventory of operable g…
-#> 6 facility-fuel                   Electric Power Oper… "Annual and monthly elec…
+#>   id                              name                               description
+#>   <chr>                           <chr>                              <chr>      
+#> 1 retail-sales                    Electricity Sales to Ultimate Cus… "Electrici…
+#> 2 electric-power-operational-data Electric Power Operations (Annual… "Monthly a…
+#> 3 rto                             Electric Power Operations (Daily … "Hourly an…
+#> 4 state-electricity-profiles      State Specific Data                "State Spe…
+#> 5 operating-generator-capacity    Inventory of Operable Generators   "Inventory…
+#> 6 facility-fuel                   Electric Power Operations for Ind… "Annual an…
 ```
 
 ### Get data
@@ -118,7 +119,7 @@ Get annual retail electric sales for the Ohio residential sector since
   facets = list(stateid = "OH", sectorid = "RES"),
   freq = "annual",
   start = "2010",
-  sort = list(cols = "period", ordr = "asc"),
+  sort = list(cols = "period", order = "asc"),
 ))
 #> # A tibble: 13 × 7
 #>    period stateid stateDescription sectorid sectorName   sales `sales-units`    
