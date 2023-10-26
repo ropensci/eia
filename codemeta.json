@@ -2,19 +2,19 @@
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "eia",
-  "description": "Provides API access to data from the 'US Energy Information Administration' ('EIA') <https://www.eia.gov/>. Use of the API requires a free API key obtainable at <https://www.eia.gov/opendata/register.php>. The package includes functions for searching 'EIA' data categories and importing time series and geoset time series datasets. Datasets returned by these functions are provided in a tidy format or alternatively in more raw form. It also offers helper functions for working with 'EIA' date strings and time formats and for inspecting different summaries of series metadata. The package also provides control over API key storage and caching of API request results. ",
+  "description": "Provides API access to data from the 'US Energy Information Administration' ('EIA') <https://www.eia.gov/>. Use of the API requires a free API key obtainable at <https://www.eia.gov/opendata/register.php>. The package includes functions for searching 'EIA' data categories and importing time series and geoset time series datasets. Datasets returned by these functions are provided in a tidy format or alternatively in more raw form. It also offers helper functions for working with 'EIA' date strings and time formats and for inspecting different summaries of series metadata. The package also provides control over API key storage and caching of API request results.",
   "name": "eia: API Wrapper for 'US Energy Information Administration' Open Data",
   "relatedLink": "https://docs.ropensci.org/eia/",
   "codeRepository": "https://github.com/ropensci/eia",
   "issueTracker": "https://github.com/ropensci/eia/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.3.8",
+  "version": "0.4.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
+  "runtimePlatform": "R version 4.3.1 (2023-06-16 ucrt)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -231,5 +231,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "185.851KB"
+  "fileSize": "188.143KB"
 }

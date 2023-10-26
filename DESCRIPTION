@@ -1,6 +1,6 @@
 Package: eia
 Title: API Wrapper for 'US Energy Information Administration' Open Data
-Version: 0.3.8
+Version: 0.4.0
 Authors@R: 
     c(person(
         given = "Matthew",
@@ -16,15 +16,13 @@ Authors@R:
         email = "matthew.g.hoff@gmail.com"
       )
     )
-Description: Provides API access to data from the 'US Energy Information Administration' ('EIA') <https://www.eia.gov/>. 
+Description: Provides API access to data from the 'US Energy Information Administration' ('EIA') <https://www.eia.gov/>.
     Use of the API requires a free API key obtainable at <https://www.eia.gov/opendata/register.php>.
-    The package includes functions for searching 'EIA' data categories and importing time series and geoset time series datasets. 
-    Datasets returned by these functions are provided in a tidy format or alternatively in more raw form. 
+    The package includes functions for searching 'EIA' data categories and importing time series and geoset time series datasets.
+    Datasets returned by these functions are provided in a tidy format or alternatively in more raw form.
     It also offers helper functions for working with 'EIA' date strings and time formats and for inspecting different summaries of series metadata.
-    The package also provides control over API key storage and caching of API request results. 
+    The package also provides control over API key storage and caching of API request results.
 License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: true
 URL: https://docs.ropensci.org/eia/ (website) https://github.com/ropensci/eia
 BugReports: https://github.com/ropensci/eia/issues
 Imports: 
@@ -45,7 +43,9 @@ Suggests:
     ggplot2,
     spelling
 VignetteBuilder: knitr
+Config/testthat/edition: 3
+Encoding: UTF-8
 Language: en-US
+LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-Config/testthat/edition: 3
