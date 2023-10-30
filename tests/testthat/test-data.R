@@ -1,24 +1,19 @@
-options(eia_antidos = 0)
 suppressWarnings(key <- eia_get_key())
 
-test_that("data queries returns as expected", {
+test_that("data queries return as expected", {
   if(is.null(key)) skip("API key not available.")
 
+  # Test character object returned given `tidy = NA`
+  x <- eia_data("electricity/retail-sales", tidy = NA)
+  expect_type(x, "character")
+
   # Test JSON list returned given `tidy = FALSE`
-  x <- eia_data(
-    dir = "electricity/retail-sales",
-    tidy = FALSE
-  )
+  x <- eia_data("electricity/retail-sales", tidy = FALSE)
   expect_type(x, "list")
   expect_equal(length(x), 3)
   expect_equal(names(x), c("response", "request", "apiVersion"))
 
-  # Test character object returned given `tidy = NA`
-  x <- eia_data(
-    dir = "electricity/retail-sales",
-    tidy = NA
-  )
-  expect_type(x, "character")
+  options(eia_antidos = 3)
 
   # Test tidy-returned data
   x <- eia_data(
@@ -28,6 +23,9 @@ test_that("data queries returns as expected", {
     freq = "annual", start = "2011", end = "2020",
     sort = list(cols = "period", order = "asc")
   )
+
+  options(eia_antidos = 0)
+
   expect_s3_class(x, "tbl_df")
   expect_equal(ncol(x), 7)
   expect_equal(nrow(x), 10)
@@ -36,7 +34,7 @@ test_that("data queries returns as expected", {
   expect_true("price" %in% names(x))
 
   # Test warning that API limit has been reached
-  expect_warning(eia_data(dir = "electricity/retail-sales"))
+  expect_warning(eia_data("electricity/retail-sales"))
 
   # Test warning that more data is available even if API limit not reached
   wrn <- paste("Rows returned: 8\nRows available: 10")
@@ -52,21 +50,24 @@ test_that("data queries returns as expected", {
     wrn
   )
 
+  # Test no data
+  expect_error(suppressMessages(eia_data("electricity/zzz")), "Page not found")
+
   # Test non-character "start" input value
   err <- "'start' must be a character matching the required frequency format."
-  expect_error(eia_data(dir = "electricity/retail-sales", freq = "annual", start = 2010), err)
+  expect_error(eia_data("electricity/retail-sales", freq = "annual", start = 2010), err)
 
   # Test non-character "start" input value
   err <- "'end' must be a character matching the required frequency format."
-  expect_error(eia_data(dir = "electricity/retail-sales", freq = "annual", end = 2010), err)
+  expect_error(eia_data("electricity/retail-sales", freq = "annual", end = 2010), err)
 
   # Test non-numeric "length" input value
   err <- "'length' must be a single numeric value between 0 and 5000."
-  expect_error(eia_data(dir = "electricity/retail-sales", length = "10"), err)
+  expect_error(eia_data("electricity/retail-sales", length = "10"), err)
 
   # Test non-numeric offset input value
   err <- "'offset' must be a single numeric value greater than 0."
-  expect_error(eia_data(dir = "electricity/retail-sales", offset = "10"), err)
+  expect_error(eia_data("electricity/retail-sales", offset = "10"), err)
 
   # Test misspelling of sort objects
   err <- paste0(
@@ -123,3 +124,5 @@ test_that("metadata helper returns as expected", {
   expect_length(x, 3)
 
 })
+
+options(eia_antidos = 1)

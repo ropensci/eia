@@ -4,6 +4,9 @@ suppressWarnings(key <- eia_get_key())
 test_that("directory functions returns as expected", {
   if(is.null(key)) skip("API key not available.")
 
+  x <- eia_dir(tidy = NA)
+  expect_type(x, "character")
+
   x <- eia_dir(tidy = FALSE, key = key)
   expect_type(x, "list")
   expect_equal(names(x), c("response", "request", "apiVersion"))
@@ -12,9 +15,6 @@ test_that("directory functions returns as expected", {
   expect_identical(x, x2)
   x2 <- eia_dir(tidy = FALSE, cache = FALSE)
   expect_identical(x, x2)
-
-  x <- eia_dir(tidy = NA)
-  expect_type(x, "character")
 
   x <- eia_dir()
   expect_s3_class(x, "tbl_df")
@@ -25,3 +25,5 @@ test_that("directory functions returns as expected", {
   expect_s3_class(x, "tbl_df")
   expect_equal(dim(x), c(6, 3))
 })
+
+options(eia_antidos = 1)
