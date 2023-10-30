@@ -1,6 +1,8 @@
 suppressWarnings(key <- eia_get_key())
 
 test_that("facets working as expected", {
+  if(is.null(key)) skip("API key not available.")
+
   x <- eia_facets("electricity/retail-sales", facet = "sectorid")
   expect_s3_class(x, "tbl_df")
   expect_equal(ncol(x), 3)
