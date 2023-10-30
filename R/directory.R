@@ -44,10 +44,10 @@ eia_dir <- function(dir = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   if (!is.null(r$response$routes)){
     r <- r$response$routes
   } else {
-    message(paste0(
+    message(
       "No further sub-directories to discover.\n",
       "Use `eia_metadata('", dir, "')` to explore this data."
-    ))
+    )
   }
   if(tidy && is.data.frame(r))
     tibble::as_tibble(sapply(r, function(x) { gsub("( \\r\\n) *", " ", x) }))
