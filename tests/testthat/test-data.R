@@ -68,13 +68,17 @@ test_that("data queries return as expected", {
   expect_error(eia_data("electricity/retail-sales", freq = "annual", end = 2010), err)
 
   # Test "length" input value
-  x <- eia_data("electricity/retail-sales", length = 10)
+  expect_warning(
+    x <- eia_data("electricity/retail-sales", length = 10)
+  )
   expect_equal(nrow(x), 10)
   err <- "'length' must be a single numeric value between 0 and 5000."
   expect_error(eia_data("electricity/retail-sales", length = "10"), err)
 
   # Test "offset" input value
-  x <- eia_data("electricity/retail-sales", length = 10, offset = 10)
+  expect_warning(
+    x <- eia_data("electricity/retail-sales", length = 10, offset = 10)
+  )
   expect_equal(nrow(x), 10)
   err <- "'offset' must be a single numeric value greater than 0."
   expect_error(eia_data("electricity/retail-sales", offset = "10"), err)
