@@ -1,3 +1,5 @@
+suppressWarnings(key <- eia_get_key())
+
 test_that("facets working as expected", {
   x <- eia_facets("electricity/retail-sales", facet = "sectorid")
   expect_s3_class(x, "tbl_df")
