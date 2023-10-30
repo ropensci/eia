@@ -123,6 +123,9 @@ test_that("metadata helper returns as expected", {
   expect_type(x, "list")
   expect_length(x, 3)
 
+  x <- eia_metadata("electricity/retail-sales", tidy = NA, cache = FALSE)
+  expect_type(x, "character")
+
 })
 
 options(eia_antidos = 1)
