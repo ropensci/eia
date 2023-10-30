@@ -33,6 +33,7 @@ jobs:
       - name: Test coverage
         run: |
           covr::codecov(
+            line_exclusions = list("R/zzz.R" = 4),
             quiet = FALSE,
             clean = FALSE,
             install_path = file.path(Sys.getenv("RUNNER_TEMP"), "package")
