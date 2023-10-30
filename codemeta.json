@@ -26,7 +26,6 @@
       "@type": "Person",
       "givenName": "Matthew",
       "familyName": "Leonawicz",
-      "email": "mfleonawicz@gmail.com",
       "@id": "https://orcid.org/0000-0001-9452-2771"
     },
     {
@@ -40,9 +39,8 @@
     {
       "@type": "Person",
       "givenName": "Matthew",
-      "familyName": "Leonawicz",
-      "email": "mfleonawicz@gmail.com",
-      "@id": "https://orcid.org/0000-0001-9452-2771"
+      "familyName": "Hoff",
+      "email": "matthew.g.hoff@gmail.com"
     }
   ],
   "softwareSuggestions": [
@@ -231,5 +229,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "188.143KB"
+  "fileSize": "193.829KB"
 }
