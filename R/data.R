@@ -149,12 +149,12 @@ eia_data <- function(dir, data = NULL, facets = NULL,
 
 .lng_specs <- function(length){
   if (!is.numeric(length) | length > 5000)
-    stop("'length' must be a numeric value between 0 and 5000.")
+    stop("'length' must be a single numeric value between 0 and 5000.")
   paste0("&length=", length)
 }
 
 .ofs_specs <- function(offset){
   if (!is.numeric(offset) | offset < 0)
-    stop("'offset' must be a numeric value greater than 0.")
+    stop("'offset' must be a single numeric value greater than 0.")
   paste0("&offset=", offset)
 }
