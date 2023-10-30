@@ -16,17 +16,6 @@ NULL
   gsub("//", "/", file.path("https://api.eia.gov/v2/", path))
 }
 
-.eia_time_params <- function(start = NULL, end = NULL, n = NULL){
-  if(!is.null(start)) n <- NULL
-  if(is.null(start) & is.null(end)){
-    return(list(start = start, end = end, n = n))
-  }
-  if(!is.null(start) & !is.null(end)){
-    return(list(start = start, end = end, n = NULL))
-  }
-  list(start = start, end = end, n = n)
-}
-
 #' @importFrom httr GET content
 .eia_get <- function(url){
   .antidos_before("eia")
