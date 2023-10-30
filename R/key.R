@@ -48,32 +48,23 @@
 #' @examples
 #' eia_set_key("fake")
 #' eia_get_key()
-#' # eia_get_key("options") returns an error if not set
+#' # eia_get_key("options") # `NULL` with warning if not set where specified
 eia_set_key <- function(key, store = c("env", "options", "sysenv")){
   store <- match.arg(store)
-  err <- "Failed to set key."
   if(store == "env"){
     .session_eia_env$key <- key
-    if(.session_eia_env$key == key){
+    if(identical(.session_eia_env$key, key))
       message("Key stored successfully in package environment.")
-    } else {
-      stop(err, call. = FALSE)
-    }
   } else if(store == "options"){
     options(EIA_KEY = key)
-    if(options()$EIA_KEY == key){
+    if(identical(options()$EIA_KEY, key))
       message("Key stored successfully in options().")
-    } else {
-      stop(err, call. = FALSE)
-    }
   } else {
     Sys.setenv(EIA_KEY = key)
-    if(Sys.getenv("EIA_KEY") == key){
+    if(identical(Sys.getenv("EIA_KEY"), key))
       message("Key stored successfully in system environment.")
-    } else {
-      stop(err, call. = FALSE)
-    }
   }
+  if(is.null(suppressWarnings(eia_get_key(store)))) stop("Failed to set key.", call. = FALSE)
   invisible()
 }
 
@@ -82,6 +73,7 @@ eia_set_key <- function(key, store = c("env", "options", "sysenv")){
 eia_get_key <- function(store = c("env", "options", "sysenv")){
   store <- if(missing(store)) c("env", "options", "sysenv") else
     match.arg(store)
+
   if("env" %in% store){
     key <- .session_eia_env$key
     if(!is.null(key)) return(key)
@@ -94,10 +86,21 @@ eia_get_key <- function(store = c("env", "options", "sysenv")){
     key <- Sys.getenv("EIA_KEY")
     if(!is.null(key) && key != "") return(key)
   }
-  wrn <- paste(
-    "EIA API key not found in package environment,",
-    "global options, or system enivronment variables."
-  )
+
+  wrn <- "EIA API key not found in"
+  if(length(store) == 3){
+    wrn <- paste(wrn, "package environment, global options, or system enivronment variables.")
+  } else {
+    wrn <- paste(
+      wrn,
+      switch(
+        store,
+        "env" = "package environment.",
+        "options" = "global options.",
+        "sysenv" = "system enivronment variables."
+      )
+    )
+  }
   warning(wrn, call. = FALSE)
   NULL
 }

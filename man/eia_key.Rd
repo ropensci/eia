@@ -68,5 +68,5 @@ like \code{.Renviron}; \code{Sys.setenv} in R cannot achieve this.
 \examples{
 eia_set_key("fake")
 eia_get_key()
-# eia_get_key("options") returns an error if not set
+# eia_get_key("options") # `NULL` with warning if not set where specified
 }
