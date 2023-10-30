@@ -27,7 +27,7 @@ test_that("directory functions returns as expected", {
 
   suppressMessages(msg <- message(
     "No further sub-directories to discover.\n",
-    "Use `eia_metadata('electricity/retail-sales')` to explore this data."
+    "Use `eia_metadata(\"electricity/retail-sales\")` to explore this data."
   ))
   expect_message(eia_dir("electricity/retail-sales", cache = F), msg)
 

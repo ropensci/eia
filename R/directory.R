@@ -46,7 +46,7 @@ eia_dir <- function(dir = NULL, tidy = TRUE, cache = TRUE, key = eia_get_key()){
   } else {
     message(
       "No further sub-directories to discover.\n",
-      "Use `eia_metadata('", dir, "')` to explore this data."
+      'Use `eia_metadata("', dir, '")` to explore this data.'
     )
   }
   if(tidy && is.data.frame(r))
