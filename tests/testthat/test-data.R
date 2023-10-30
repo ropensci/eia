@@ -53,19 +53,29 @@ test_that("data queries return as expected", {
   # Test no data
   expect_error(suppressMessages(eia_data("electricity/zzz")), "Page not found")
 
+  # Test "freq" input value
+  err <- "'freq' must be one of: 'annual', 'yearly', 'monthly', 'daily', or 'hourly'."
+  expect_error(eia_data("electricity/retail-sales", freq = "anual"), err)
+  err <- "'freq' must be a character value of length 1."
+  expect_error(eia_data("electricity/retail-sales", freq = c("annual", "monthly")), err)
+
   # Test non-character "start" input value
   err <- "'start' must be a character matching the required frequency format."
   expect_error(eia_data("electricity/retail-sales", freq = "annual", start = 2010), err)
 
-  # Test non-character "start" input value
+  # Test non-character "end" input value
   err <- "'end' must be a character matching the required frequency format."
   expect_error(eia_data("electricity/retail-sales", freq = "annual", end = 2010), err)
 
-  # Test non-numeric "length" input value
+  # Test "length" input value
+  x <- eia_data("electricity/retail-sales", length = 10)
+  expect_equal(nrow(x), 10)
   err <- "'length' must be a single numeric value between 0 and 5000."
   expect_error(eia_data("electricity/retail-sales", length = "10"), err)
 
-  # Test non-numeric offset input value
+  # Test "offset" input value
+  x <- eia_data("electricity/retail-sales", length = 10, offset = 10)
+  expect_equal(nrow(x), 10)
   err <- "'offset' must be a single numeric value greater than 0."
   expect_error(eia_data("electricity/retail-sales", offset = "10"), err)
 
@@ -122,6 +132,9 @@ test_that("metadata helper returns as expected", {
   x <- eia_metadata("electricity/retail-sales", tidy = FALSE, cache = FALSE)
   expect_type(x, "list")
   expect_length(x, 3)
+
+  x <- eia_metadata("electricity/retail-sales", tidy = NA, cache = FALSE)
+  expect_type(x, "character")
 
 })
 
