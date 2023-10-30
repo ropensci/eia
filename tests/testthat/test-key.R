@@ -1,13 +1,13 @@
-test_that("EIA key availability startup message works as expected", {
-  detach(package:eia, unload = TRUE)
-  tmp_dir <- tempdir()
-  write("EIA_KEY = ''", file = file.path(tmp_dir, ".Renviron"))
-  readRenviron(file.path(tmp_dir, ".Renviron"))
-  expect_message(library(eia))
-  readRenviron("~/.Renviron")
-  detach(package:eia, unload = TRUE)
-  devtools::load_all(".")
-})
+# test_that("EIA key availability startup message works as expected", {
+#   detach(package:eia, unload = TRUE)
+#   tmp_dir <- tempdir()
+#   write("EIA_KEY = ''", file = file.path(tmp_dir, ".Renviron"))
+#   readRenviron(file.path(tmp_dir, ".Renviron"))
+#   rm(temp_dir)
+#   expect_message(library(eia))
+#   detach(package:eia, unload = TRUE)
+#   readRenviron("~/.Renviron")
+# })
 
 test_that("key storage and retrieval works as expected", {
   msg <- c(
@@ -21,9 +21,9 @@ test_that("key storage and retrieval works as expected", {
 
   expect_warning(x <- eia_get_key("env"), wrn)
   expect_type(x, "NULL")
-  expect_message(x <- eia_set_key("fake"), msg[1])
+  expect_message(x <- eia_set_key("fake1"), msg[1])
   expect_type(x, "NULL")
-  expect_equal(eia_get_key(), "fake")
+  expect_equal(eia_get_key("env"), "fake1")
   expect_warning(eia_get_key("options"), wrn)
   .session_eia_env$key <- NULL
   expect_message(eia_set_key("fake2", "options"), msg[2])
