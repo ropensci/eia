@@ -1,3 +1,14 @@
+test_that("EIA key availability startup message works as expected", {
+  detach(package:eia, unload = TRUE)
+  tmp_dir <- tempdir()
+  write("EIA_KEY = ''", file = file.path(tmp_dir, ".Renviron"))
+  readRenviron(file.path(tmp_dir, ".Renviron"))
+  expect_message(library(eia))
+  readRenviron("~/.Renviron")
+  detach(package:eia, unload = TRUE)
+  devtools::load_all(".")
+})
+
 test_that("key storage and retrieval works as expected", {
   msg <- c(
     "Key stored successfully in package environment.",
