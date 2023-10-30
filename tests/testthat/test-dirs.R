@@ -24,6 +24,13 @@ test_that("directory functions returns as expected", {
   x <- eia_dir("electricity")
   expect_s3_class(x, "tbl_df")
   expect_equal(dim(x), c(6, 3))
+
+  msg <- paste0(
+    "No further sub-directories to discover.\n",
+    "Use `eia_metadata('electricity/retail-sales')` to explore this data."
+  )
+  expect_message(eia_dir("electricity/retail-sales"), msg)
+
 })
 
 options(eia_antidos = 1)
