@@ -10,7 +10,7 @@ eia_report(id, ...)
 report_drilling_productivity()
 }
 \arguments{
-\item{id}{character, the report ID. See details for the list of available reports.}
+\item{id}{character, the report ID. See examples for available reports.}
 
 \item{...}{arguments passed to individual report data functions.}
 }
@@ -18,10 +18,12 @@ report_drilling_productivity()
 a list, typically a list of data frames
 }
 \description{
-These functions download data for various EIA reports found on the EIA website but not necessarily available through the EIA API.
+These functions download data for various EIA reports found on the EIA
+website but not necessarily available through the EIA API.
 }
 \details{
-The wrapper function and the individual report functions do not make API calls and do not require an API key.
+The wrapper function and the individual report functions do not make API
+calls and do not require an API key.
 }
 \examples{
 \dontrun{

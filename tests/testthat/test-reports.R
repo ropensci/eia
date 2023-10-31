@@ -1,8 +1,6 @@
-context("reports")
-
 test_that("eia_report returns as expected", {
   x <- eia_report(id = "drilling productivity")
-  expect_is(x, "list")
+  expect_type(x, "list")
   expect_equal(length(x), 2)
   expect_equal(names(x), c("data", "counties"))
   v <- c("Region", "Fuel", "Month", "Rig count", "Production per rig",
