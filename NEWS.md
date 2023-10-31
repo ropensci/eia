@@ -1,12 +1,13 @@
-# eia 0.3.8
+# eia 0.4.0
 
 * Updated functions and functionality based on the new v2 API, effective March 2023;
 due to the nature of the API changes, `eia` has undergone an extensive refactor in which
 many of the previous functions are no longer applicable and do not exist.
-* Replaced `eia_categories`, `eia_subcategories`, `eia_child_cats`, and `eia_parent_cats` with `eia_dir`.
-* Replaced `eia_series_*` and `eia_geosets` with `eia_metadata` and `eia_data`.
-* Removed `eia_updates`.
+* Replaced `eia_categories()` etc. with `eia_dir()`.
+* Removed `eia_series_*`, `eia_geosets()`, and  `eia_updates()` functions.
+* Added `eia_metadata()` and `eia_data()`.
 * Updated docs and vignettes.
+* Updated tests.
 
 # eia 0.3.7
 
