@@ -10,7 +10,7 @@
 |collate  |English_United States.utf8                                                           |
 |ctype    |English_United States.utf8                                                           |
 |tz       |America/Denver                                                                       |
-|date     |2023-10-25                                                                           |
+|date     |2023-10-31                                                                           |
 |rstudio  |2023.06.1+524 Mountain Hydrangea (desktop)                                           |
 |pandoc   |3.1.1 @ C:/Program Files/RStudio/resources/app/bin/quarto/bin/tools/ (via rmarkdown) |
 
@@ -18,7 +18,7 @@
 
 |package     |old   |new   |Δ  |
 |:-----------|:-----|:-----|:--|
-|eia         |0.3.7 |0.3.8 |*  |
+|eia         |0.3.7 |0.4.0 |*  |
 |askpass     |1.2.0 |1.2.0 |   |
 |cachem      |1.0.8 |1.0.8 |   |
 |cellranger  |1.1.0 |1.1.0 |   |
@@ -55,7 +55,7 @@
 |timechange  |0.2.0 |0.2.0 |   |
 |utf8        |1.2.4 |1.2.4 |   |
 |vctrs       |0.6.4 |0.6.4 |   |
-|withr       |2.5.1 |NA    |*  |
+|withr       |2.5.2 |NA    |*  |
 
 # Revdeps
 
