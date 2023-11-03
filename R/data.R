@@ -105,9 +105,9 @@ eia_data <- function(dir, data = NULL, facets = NULL,
 .freq_specs <- function(freq){
   if (!is.character(freq) | length(freq) > 1)
     stop("'freq' must be a character value of length 1.")
-  freqs <- c("annual", "yearly", "quarterly", "monthly", "daily", "hourly")
+  freqs <- c("annual", "yearly", "quarterly", "monthly", "weekly", "daily", "hourly")
   if (!freq %in% freqs)
-    stop("'freq' must be one of: 'annual', 'yearly', 'monthly', 'daily', or 'hourly'.")
+    stop("'freq' must be one of: 'annual', 'yearly', 'monthly', 'weekly', 'daily', or 'hourly'.")
   paste0("&frequency=", freq)
 }
 
