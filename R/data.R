@@ -58,7 +58,8 @@ eia_data <- function(dir, data = NULL, facets = NULL,
 }
 
 .eia_data <- function(dir, data, facets, freq, start, end, sort, length, offset, tidy, key){
-  r <- .eia_get(.eia_data_url(dir, data, facets, freq, start, end, sort, length, offset, key))
+  md <- .eia_metadata(dir, TRUE, key)
+  r <- .eia_get(.eia_data_url(md, dir, data, facets, freq, start, end, sort, length, offset, key))
   if(is.na(tidy)) return(r)
   r <- jsonlite::fromJSON(r)
   if(!tidy) return(r)
@@ -77,24 +78,32 @@ eia_data <- function(dir, data = NULL, facets = NULL,
 
 .eia_data_memoized <- memoise::memoise(.eia_data)
 
-.eia_data_url <- function(dir, data, facets, freq, start, end, sort, length, offset, key){
+.eia_data_url <- function(md, dir, data, facets, freq, start, end, sort, length, offset, key){
   dir <- .eia_url(path = paste0(dir, "/data/?api_key=", key))
-  dat_spcs <- if(!is.null(data)) .data_specs(data)
-  fct_spcs <- if(!is.null(facets)) .facet_specs(facets)
-  frq_spcs <- if(!is.null(freq)) .freq_specs(freq)
-  str_spcs <- if(!is.null(start)) .start_specs(start)
-  end_spcs <- if(!is.null(end)) .end_specs(end)
+  dat_spcs <- if(!is.null(data)) .data_specs(data, md$Data$id)
+  fct_spcs <- if(!is.null(facets)) .facet_specs(facets, md$Facets$id)
+  frq_spcs <- if(!is.null(freq)) .freq_specs(freq, md$Frequency$id)
+  md_strt <- md$Period$start; md_end <- md$Period$end
+  str_spcs <- if(!is.null(start)) .start_specs(start, freq, md$Frequency, md_strt, md_end)
+  end_spcs <- if(!is.null(end)) .end_specs(end, freq, md$Frequency, md_end, md_strt)
   srt_spcs <- if(!is.null(sort)) .sort_specs(sort)
   lng_spcs <- if(!is.null(length)) .lng_specs(length)
   ofs_spcs <- if(!is.null(offset)) .ofs_specs(offset)
   paste0(dir, dat_spcs, fct_spcs, frq_spcs, str_spcs, end_spcs, srt_spcs, lng_spcs, ofs_spcs)
 }
 
-.data_specs <- function(data){
+.data_specs <- function(data, ids){
+  if (!all(data %in% ids))
+    stop("'data' must be some combination of: ", paste(ids, collapse = ", "), call. = FALSE)
   paste0("&data[]=", data, collapse = "")
 }
 
-.facet_specs <- function(facets){
+.facet_specs <- function(facets, ids){
+  nms <- names(facets)
+  if (!all(nms %in% ids))
+    stop("names of the 'facets' list input must be some combination of: ",
+         paste(ids, collapse = ", "),
+         call. = FALSE)
   paste0(unlist(lapply(
     1:length(facets),
     function(x){
@@ -102,24 +111,35 @@ eia_data <- function(dir, data = NULL, facets = NULL,
   })), collapse = "")
 }
 
-.freq_specs <- function(freq){
+.freq_specs <- function(freq, ids){
   if (!is.character(freq) | length(freq) > 1)
-    stop("'freq' must be a character value of length 1.")
-  freqs <- c("annual", "yearly", "quarterly", "monthly", "weekly", "daily", "hourly")
-  if (!freq %in% freqs)
-    stop("'freq' must be one of: 'annual', 'yearly', 'monthly', 'weekly', 'daily', or 'hourly'.")
+    stop("'freq' must be a character value of length 1.",
+         "\n'freq' options are: ", paste(ids, collapse = ", "),
+         call. = FALSE)
+  if (!(freq %in% ids))
+    stop("'freq' must be one of: ", paste(ids, collapse = ", "), call. = FALSE)
   paste0("&frequency=", freq)
 }
 
-.start_specs <- function(start, freq){
-  if (!is.character(start))
-    stop("'start' must be a character matching the required frequency format.")
+.start_specs <- function(start, freq, md_frqtbl, mds, mde){
+  fmt <- md_frqtbl[md_frqtbl$id == freq, ]$format
+  if (!is.character(start) | nchar(start) != nchar(fmt))
+    stop("'start' must be a character string of format: ", fmt, call.=FALSE)
+  if (start > mde)
+    stop("'start' is beyond the end of available data.", call.=FALSE)
+  if (start < mds)
+    warning("'start' is beyond available history. Earliest available: ", mds, call.=FALSE)
   paste0("&start=", start)
 }
 
-.end_specs <- function(end, freq){
-  if (!is.character(end))
-    stop("'end' must be a character matching the required frequency format.")
+.end_specs <- function(end, freq, md_frqtbl, mde, mds){
+  fmt <- md_frqtbl[md_frqtbl$id == freq, ]$format
+  if (!is.character(end) | nchar(end) != nchar(fmt))
+    stop("'end' must be a character string of format: ", fmt, call.=FALSE)
+  if (end < mds)
+    stop("'end' is before the start of available data.", call.=FALSE)
+  if (end > mde)
+    warning("'end' is beyond available history. Latest available: ", mde, call.=FALSE)
   paste0("&end=", end)
 }
 
