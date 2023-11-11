@@ -80,16 +80,17 @@ eia_data <- function(dir, data = NULL, facets = NULL,
 .eia_data_memoized <- memoise::memoise(.eia_data)
 
 .eia_data_url <- function(dir, data, facets, freq, start, end, sort, length, offset, key){
-    dir <- .eia_url(path = paste0(dir, "/data/?api_key=", key))
-    dat_spcs <- if(!is.null(data)) .data_specs(data)
-    fct_spcs <- if(!is.null(facets)) .facet_specs(facets)
-    frq_spcs <- if(!is.null(freq)) .freq_specs(freq)
-    str_spcs <- if(!is.null(start)) .start_specs(start)
-    end_spcs <- if(!is.null(end)) .end_specs(end)
-    srt_spcs <- if(!is.null(sort)) .sort_specs(sort)
-    lng_spcs <- if(!is.null(length)) .lng_specs(length)
-    ofs_spcs <- if(!is.null(offset)) .ofs_specs(offset)
-    paste0(dir, dat_spcs, fct_spcs, frq_spcs, str_spcs, end_spcs, srt_spcs, lng_spcs, ofs_spcs)
+  paste0(
+    .eia_url(path = paste0(dir, "/data/?api_key=", key)),
+    if(!is.null(data)) .data_specs(data),
+    if(!is.null(facets)) .facet_specs(facets),
+    if(!is.null(freq)) .freq_specs(freq),
+    if(!is.null(start)) .start_specs(start),
+    if(!is.null(end)) .end_specs(end),
+    if(!is.null(sort)) .sort_specs(sort),
+    if(!is.null(length)) .lng_specs(length),
+    if(!is.null(offset)) .ofs_specs(offset)
+  )
 }
 
 .eia_data_check <- function(md, dir, data, facets, freq, start, end, sort, length, offset){
