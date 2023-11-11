@@ -94,7 +94,7 @@ eia_data <- function(dir, data = NULL, facets = NULL,
 
 .data_specs <- function(data, ids){
   if (!all(data %in% ids))
-    stop("'data' must be some combination of: ", paste(ids, collapse = ", "), call. = FALSE)
+    stop("'data' must be some combination of: ", paste(ids, collapse = ", "), call.=FALSE)
   paste0("&data[]=", data, collapse = "")
 }
 
@@ -103,7 +103,7 @@ eia_data <- function(dir, data = NULL, facets = NULL,
   if (!all(nms %in% ids))
     stop("names of the 'facets' list input must be some combination of: ",
          paste(ids, collapse = ", "),
-         call. = FALSE)
+         call.=FALSE)
   paste0(unlist(lapply(
     1:length(facets),
     function(x){
@@ -115,9 +115,9 @@ eia_data <- function(dir, data = NULL, facets = NULL,
   if (!is.character(freq) | length(freq) > 1)
     stop("'freq' must be a character value of length 1.",
          "\n'freq' options are: ", paste(ids, collapse = ", "),
-         call. = FALSE)
+         call.=FALSE)
   if (!(freq %in% ids))
-    stop("'freq' must be one of: ", paste(ids, collapse = ", "), call. = FALSE)
+    stop("'freq' must be one of: ", paste(ids, collapse = ", "), call.=FALSE)
   paste0("&frequency=", freq)
 }
 
@@ -147,7 +147,8 @@ eia_data <- function(dir, data = NULL, facets = NULL,
   if (length(sort) != 2 || !all(names(sort) %in% c("cols", "order")))
     stop(
       "'sort' must be a named list of length 2 containing the following:\n",
-      "'cols' and 'order' of arbitrary length and of length 1, respectively."
+      "'cols' and 'order' of arbitrary length and of length 1, respectively.",
+      call.=FALSE
     )
   cols <- sort$cols
   order <- sort$order
@@ -157,9 +158,9 @@ eia_data <- function(dir, data = NULL, facets = NULL,
       paste0("&sort[", x, "][column]=", unlist(cols[x]), collapse = "")
     })
   if (length(order) > 1)
-    stop("must provide a single value for 'order': 'asc' or 'desc'.")
+    stop("must provide a single value for 'order': 'asc' or 'desc'.", call.=FALSE)
   if (!order %in% c("asc", "desc"))
-    stop("'order' must be one of 'asc' or 'desc'.")
+    stop("'order' must be one of 'asc' or 'desc'.", call.=FALSE)
   sort_order <- lapply(
     1:length(cols),
     function(x) { paste0("&sort[", x, "][direction]=", order) }
@@ -169,12 +170,12 @@ eia_data <- function(dir, data = NULL, facets = NULL,
 
 .lng_specs <- function(length){
   if (!is.numeric(length) | length > 5000)
-    stop("'length' must be a single numeric value between 0 and 5000.")
+    stop("'length' must be a single numeric value between 0 and 5000.", call.=FALSE)
   paste0("&length=", length)
 }
 
 .ofs_specs <- function(offset){
   if (!is.numeric(offset) | offset < 0)
-    stop("'offset' must be a single numeric value greater than 0.")
+    stop("'offset' must be a single numeric value greater than 0.", call.=FALSE)
   paste0("&offset=", offset)
 }
