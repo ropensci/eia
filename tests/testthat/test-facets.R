@@ -11,8 +11,8 @@ test_that("facets working as expected", {
   # Test JSON list returned given `tidy = FALSE`
   x <- eia_facets("electricity/retail-sales", facet = "sectorid", tidy = FALSE)
   expect_type(x, "list")
-  expect_equal(length(x), 3)
-  expect_equal(names(x), c("response", "request", "apiVersion"))
+  expect_equal(length(x), 4)
+  expect_equal(names(x), c("response", "request", "apiVersion", "ExcelAddInVersion"))
 
   # Test character object returned given `tidy = NA`
   x <- eia_facets("electricity/retail-sales", facet = "sectorid", tidy = NA)
