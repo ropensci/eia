@@ -10,8 +10,8 @@ test_that("data queries return as expected", {
   # Test JSON list returned given `tidy = FALSE`
   x <- eia_data("electricity/retail-sales", tidy = FALSE)
   expect_type(x, "list")
-  expect_equal(length(x), 3)
-  expect_equal(names(x), c("response", "request", "apiVersion"))
+  expect_equal(length(x), 4)
+  expect_equal(names(x), c("response", "request", "apiVersion", "ExcelAddInVersion"))
 
   options(eia_antidos = 3)
 
@@ -53,19 +53,49 @@ test_that("data queries return as expected", {
   # Test no data
   expect_error(suppressMessages(eia_data("electricity/zzz")), "Page not found")
 
+  # Test "data" input value
+  err <- "'data' must be some combination of: revenue, sales, price, customers"
+  expect_error(eia_data("electricity/retail-sales", data = "prce"), err)
+
+  # Test "facet" input value
+  err <- "names of the 'facets' list input must be some combination of: stateid, sectorid"
+  expect_error(eia_data("electricity/retail-sales", facets = list(statid = "OH")), err)
+
   # Test "freq" input value
-  err <- "'freq' must be one of: 'annual', 'yearly', 'monthly', 'daily', or 'hourly'."
+  err <- "'freq' must be one of: monthly, quarterly, annual"
   expect_error(eia_data("electricity/retail-sales", freq = "anual"), err)
   err <- "'freq' must be a character value of length 1."
   expect_error(eia_data("electricity/retail-sales", freq = c("annual", "monthly")), err)
 
-  # Test non-character "start" input value
-  err <- "'start' must be a character matching the required frequency format."
-  expect_error(eia_data("electricity/retail-sales", freq = "annual", start = 2010), err)
+  # Test "start" input value
+  err <- "'start' must be a character string of format: YYYY"
+  expect_error(eia_data("electricity/retail-sales", freq="annual", start=2010), err)
+  err <- "'start' is beyond the end of available data."
+  expect_error(eia_data("electricity/retail-sales", freq="annual", start="2099"), err)
+  err <- "'start' must be a character string of format: YYYY"
+  expect_error(eia_data("electricity/retail-sales", freq="annual", start="2020-06"), err)
+  err <- "'start' must be a character string of format: YYYY-MM"
+  expect_error(eia_data("electricity/retail-sales", freq="monthly", start="2020"), err)
+  wrn <- "'start' is beyond available history. Earliest available: 2001-01"
+  expect_warning(
+    eia_data("electricity/retail-sales", facets=list(stateid="OH"), freq="annual", start="1980", end="2020"),
+    wrn
+  )
 
-  # Test non-character "end" input value
-  err <- "'end' must be a character matching the required frequency format."
-  expect_error(eia_data("electricity/retail-sales", freq = "annual", end = 2010), err)
+  # Test "end" input value
+  err <- "'end' must be a character string of format: YYYY"
+  expect_error(eia_data("electricity/retail-sales", freq="annual", end=2010), err)
+  err <- "'end' is before the start of available data."
+  expect_error(eia_data("electricity/retail-sales", freq="annual", end="1980"), err)
+  err <- "'end' must be a character string of format: YYYY"
+  expect_error(eia_data("electricity/retail-sales", freq="annual", end="2020-06"), err)
+  err <- "'end' must be a character string of format: YYYY-MM"
+  expect_error(eia_data("electricity/retail-sales", freq="monthly", end="2020"), err)
+  wrn <- "'end' is beyond available history. Latest available: 2023-08"
+  expect_warning(
+    eia_data("electricity/retail-sales", facets=list(stateid="OH"), freq="annual", start="2020", end="2099"),
+    wrn
+  )
 
   # Test "length" input value
   expect_warning(
@@ -135,7 +165,8 @@ test_that("metadata helper returns as expected", {
 
   x <- eia_metadata("electricity/retail-sales", tidy = FALSE, cache = FALSE)
   expect_type(x, "list")
-  expect_length(x, 3)
+  expect_length(x, 4)
+  expect_equal(names(x), c("response", "request", "apiVersion", "ExcelAddInVersion"))
 
   x <- eia_metadata("electricity/retail-sales", tidy = NA, cache = FALSE)
   expect_type(x, "character")
