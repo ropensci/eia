@@ -58,7 +58,7 @@ eia_data <- function(dir, data = NULL, facets = NULL,
 }
 
 .eia_data <- function(dir, data, facets, freq, start, end, sort, length, offset, tidy, key){
-  md <- .eia_metadata(dir, TRUE, key)
+  md <- eia_metadata(dir, TRUE, TRUE, key)
   .eia_data_check(md, dir, data, facets, freq, start, end, sort, length, offset)
   r <- .eia_get(.eia_data_url(dir, data, facets, freq, start, end, sort, length, offset, key))
   if(is.na(tidy)) return(r)
