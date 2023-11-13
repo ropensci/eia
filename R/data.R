@@ -82,146 +82,163 @@ eia_data <- function(dir, data = NULL, facets = NULL,
 .eia_data_url <- function(dir, data, facets, freq, start, end, sort, length, offset, key){
   paste0(
     .eia_url(path = paste0(dir, "/data/?api_key=", key)),
-    if(!is.null(data)) .data_specs(data),
-    if(!is.null(facets)) .facet_specs(facets),
-    if(!is.null(freq)) .freq_specs(freq),
-    if(!is.null(start)) .start_specs(start),
-    if(!is.null(end)) .end_specs(end),
-    if(!is.null(sort)) .sort_specs(sort),
-    if(!is.null(length)) .lng_specs(length),
-    if(!is.null(offset)) .ofs_specs(offset)
+    .data_specs(data),
+    .facet_specs(facets),
+    .freq_specs(freq),
+    .start_specs(start),
+    .end_specs(end),
+    .sort_specs(sort),
+    .lng_specs(length),
+    .ofs_specs(offset)
   )
 }
 
 .eia_data_check <- function(md, dir, data, facets, freq, start, end, sort, length, offset){
-  if(!is.null(data)) .data_check(data, md$Data$id)
-  if(!is.null(facets)) .facet_check(facets, md$Facets$id)
-  if(!is.null(freq)) .freq_check(freq, md$Frequency$id)
+  .data_check(data, md$Data$id)
+  .facet_check(facets, md$Facets$id)
+  .freq_check(freq, md$Frequency$id)
   md_start <- md$Period$start; md_end <- md$Period$end
-  if(!is.null(start)) .start_check(start, freq, md$Frequency, md_start, md_end)
-  if(!is.null(end)) .end_check(end, freq, md$Frequency, md_end, md_start)
-  if(!is.null(sort)) .sort_check(sort)
-  if(!is.null(length)) .lng_check(length)
-  if(!is.null(offset)) .ofs_check(offset)
+  .start_check(start, freq, md$Frequency, md_start, md_end)
+  .end_check(end, freq, md$Frequency, md_end, md_start)
+  .sort_check(sort)
+  .lng_check(length)
+  .ofs_check(offset)
 }
 
 .data_specs <- function(data){
-  paste0("&data[]=", data, collapse = "")
+  if (!is.null(data)) paste0("&data[]=", data, collapse = "")
 }
 
 .data_check <- function(data, ids){
-  if (!all(data %in% ids))
+  if (!is.null(data) && !all(data %in% ids))
     stop("'data' must be some combination of: ", paste(ids, collapse = ", "),
          call. = FALSE)
 }
 
 .facet_specs <- function(facets){
-  paste0(unlist(lapply(1:length(facets),
-    function(x){
-      paste0("&facets[", names(facets[x]), "][]=", unlist(facets[x]), collapse = "")
-    })), collapse = "")
+  if(!is.null(facets))
+    paste0(unlist(lapply(1:length(facets),
+      function(x){
+        paste0("&facets[", names(facets[x]), "][]=", unlist(facets[x]), collapse = "")
+      })), collapse = "")
 }
 
 .facet_check <- function(facets, ids){
-  nms <- names(facets)
-  if (!all(nms %in% ids))
-    stop("names of the 'facets' list input must be some combination of: ",
-         paste(ids, collapse = ", "),
-         call. = FALSE)
+  if(!is.null(facets)){
+    nms <- names(facets)
+    if (!all(nms %in% ids)){
+      stop("names of the 'facets' list input must be some combination of: ",
+           paste(ids, collapse = ", "),
+           call. = FALSE)
+    }
+  }
 }
 
 .freq_specs <- function(freq){
-  paste0("&frequency=", freq)
+  if (!is.null(freq)) paste0("&frequency=", freq)
 }
 
 .freq_check <- function(freq, ids){
-  if (!is.character(freq) | length(freq) > 1)
-    stop("'freq' must be a character value of length 1.",
-         "\n'freq' options are: ", paste(ids, collapse = ", "),
-         call. = FALSE)
-  if (!(freq %in% ids))
-    stop("'freq' must be one of: ", paste(ids, collapse = ", "),
-         call. = FALSE)
+  if (!is.null(freq)){
+    if (!is.character(freq) | length(freq) > 1)
+      stop("'freq' must be a character value of length 1.",
+           "\n'freq' options are: ", paste(ids, collapse = ", "),
+           call. = FALSE)
+    if (!(freq %in% ids))
+      stop("'freq' must be one of: ", paste(ids, collapse = ", "),
+           call. = FALSE)
+  }
 }
 
 .start_specs <- function(start){
-  paste0("&start=", start)
+  if(!is.null(start)) paste0("&start=", start)
 }
 
 .start_check <- function(start, freq, md_frq_tbl, mds, mde){
-  fmt <- md_frq_tbl[md_frq_tbl$id == freq, ]$format
-  if (!is.character(start) | nchar(start) != nchar(fmt))
-    stop("'start' must be a character string of format: ", fmt,
-         call. = FALSE)
-  if (start > mde)
-    stop("'start' is beyond the end of available data.",
-         call. = FALSE)
-  if (start < mds)
-    warning("'start' is beyond available history. Earliest available: ", mds,
-            call. = FALSE)
+  if(!is.null(start)){
+    fmt <- md_frq_tbl[md_frq_tbl$id == freq, ]$format
+    if (!is.character(start) | nchar(start) != nchar(fmt))
+      stop("'start' must be a character string of format: ", fmt,
+           call. = FALSE)
+    if (start > mde)
+      stop("'start' is beyond the end of available data.",
+           call. = FALSE)
+    if (start < mds)
+      warning("'start' is beyond available history. Earliest available: ", mds,
+              call. = FALSE)
+  }
 }
 
 .end_specs <- function(end){
-  paste0("&end=", end)
+  if (!is.null(end)) paste0("&end=", end)
 }
 
 .end_check <- function(end, freq, md_frq_tbl, mde, mds){
-  fmt <- md_frq_tbl[md_frq_tbl$id == freq, ]$format
-  if (!is.character(end) | nchar(end) != nchar(fmt))
-    stop("'end' must be a character string of format: ", fmt,
-         call. = FALSE)
-  if (end < mds)
-    stop("'end' is before the start of available data.",
-         call. = FALSE)
-  if (end > mde)
-    warning("'end' is beyond available history. Latest available: ", mde,
-            call. = FALSE)
+  if (!is.null(end)){
+    fmt <- md_frq_tbl[md_frq_tbl$id == freq, ]$format
+    if (!is.character(end) | nchar(end) != nchar(fmt))
+      stop("'end' must be a character string of format: ", fmt,
+           call. = FALSE)
+    if (end < mds)
+      stop("'end' is before the start of available data.",
+           call. = FALSE)
+    if (end > mde)
+      warning("'end' is beyond available history. Latest available: ", mde,
+              call. = FALSE)
+  }
 }
 
 .sort_specs <- function(sort){
-  cols <- sort$cols
-  sort_cols <- lapply(1:length(cols),
-    function(x){paste0("&sort[", x, "][column]=", unlist(cols[x]), collapse = "")}
-  )
-  order <- sort$order
-  sort_order <- lapply(
-    1:length(cols),
-    function(x) {paste0("&sort[", x, "][direction]=", order)}
-  )
-  paste0(unlist(sort_cols), sort_order, collapse = "")
+  if (!is.null(sort)){
+    cols <- sort$cols
+    sort_cols <- lapply(1:length(cols),
+      function(x){paste0("&sort[", x, "][column]=", unlist(cols[x]), collapse = "")}
+    )
+    order <- sort$order
+    sort_order <- lapply(1:length(cols),
+      function(x) {paste0("&sort[", x, "][direction]=", order)}
+    )
+    paste0(unlist(sort_cols), sort_order, collapse = "")
+  }
 }
 
 .sort_check <- function(sort){
-  if (length(sort) != 2 || !all(names(sort) %in% c("cols", "order")))
-    stop("'sort' must be a named list of length 2 containing the following:\n",
-         "'cols' and 'order' of arbitrary length and of length 1, respectively.",
-         call.=FALSE)
-  cols <- sort$cols
-  order <- sort$order
-  if (length(order) > 1)
-    stop("must provide a single value for 'order': 'asc' or 'desc'.",
-         call. = FALSE)
-  if (!order %in% c("asc", "desc"))
-    stop("'order' must be one of 'asc' or 'desc'.",
-         call. = FALSE)
+  if (!is.null(sort)){
+    if (length(sort) != 2 || !all(names(sort) %in% c("cols", "order")))
+      stop("'sort' must be a named list of length 2 containing the following:\n",
+           "'cols' and 'order' of arbitrary length and of length 1, respectively.",
+           call.=FALSE)
+    cols <- sort$cols
+    order <- sort$order
+    if (length(order) > 1)
+      stop("must provide a single value for 'order': 'asc' or 'desc'.",
+           call. = FALSE)
+    if (!order %in% c("asc", "desc"))
+      stop("'order' must be one of 'asc' or 'desc'.",
+           call. = FALSE)
+  }
 }
 
 .lng_specs <- function(length){
-  paste0("&length=", length)
+  if (!is.null(length)) paste0("&length=", length)
 }
 
 .lng_check <- function(length){
-  if (!is.numeric(length) | length > 5000)
-    stop("'length' must be a single numeric value between 0 and 5000.",
-         call. = FALSE)
+  if (!is.null(length)){
+    if (!is.numeric(length) | length > 5000)
+      stop("'length' must be a single numeric value between 0 and 5000.",
+           call. = FALSE)
+  }
 }
 
 .ofs_specs <- function(offset){
-  paste0("&offset=", offset)
+  if (!is.null(offset)) paste0("&offset=", offset)
 }
 
 .ofs_check <- function(offset){
-  if (!is.numeric(offset) | offset < 0)
-    stop("'offset' must be a single numeric value greater than 0.",
-         call. = FALSE)
+  if (!is.null(offset)){
+    if (!is.numeric(offset) | offset < 0)
+      stop("'offset' must be a single numeric value greater than 0.",
+           call. = FALSE)
+  }
 }
