@@ -54,6 +54,8 @@ test_that("data queries return as expected", {
   expect_error(suppressMessages(eia_data("electricity/zzz")), "Page not found")
 
   # Test "data" input value
+  err <- "Invalid data 'prce' provided. The only valid data are 'revenue', 'sales', 'price', and 'customers'."
+  expect_error(eia_data("electricity/retail-sales", data = "prce"), err)
   err <- "'data' must be some combination of: revenue, sales, price, customers"
   expect_error(eia_data("electricity/retail-sales", data = "prce", check_metadata = TRUE), err)
 
