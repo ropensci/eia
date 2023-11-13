@@ -29,8 +29,7 @@
 #' @param length numeric or `NULL`, number of rows to return.
 #' @param offset numeric or `NULL`, number of rows to skip before return.
 #' @param tidy logical or `NULL`, return a tidier result. See details.
-#' @param check_metadata logical, if `TRUE` makes preemptive call to data metadata endpoint
-#' to validate all input values against.
+#' @param check_metadata logical, if `TRUE` checks input values against metadata endpoint.
 #' @param cache logical, cache result for duration of R session using memoization.
 #' See details.
 #' @param key API key: character if set explicitly; not needed if key is set

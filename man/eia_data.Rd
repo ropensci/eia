@@ -45,8 +45,7 @@ eia_data(
 
 \item{tidy}{logical or \code{NULL}, return a tidier result. See details.}
 
-\item{check_metadata}{logical, if \code{TRUE} makes preemptive call to data metadata endpoint
-to validate all input values against.}
+\item{check_metadata}{logical, if \code{TRUE} checks input values against metadata endpoint.}
 
 \item{cache}{logical, cache result for duration of R session using memoization.
 See details.}
