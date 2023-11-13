@@ -55,45 +55,59 @@ test_that("data queries return as expected", {
 
   # Test "data" input value
   err <- "'data' must be some combination of: revenue, sales, price, customers"
-  expect_error(eia_data("electricity/retail-sales", data = "prce"), err)
+  expect_error(eia_data("electricity/retail-sales", data = "prce", check_metadata = TRUE), err)
 
   # Test "facet" input value
   err <- "names of the 'facets' list input must be some combination of: stateid, sectorid"
-  expect_error(eia_data("electricity/retail-sales", facets = list(statid = "OH")), err)
+  expect_error(eia_data("electricity/retail-sales", facets = list(statid = "OH"), check_metadata = TRUE), err)
 
   # Test "freq" input value
   err <- "'freq' must be one of: monthly, quarterly, annual"
-  expect_error(eia_data("electricity/retail-sales", freq = "anual"), err)
+  expect_error(eia_data("electricity/retail-sales", freq = "anual", check_metadata = TRUE), err)
   err <- "'freq' must be a character value of length 1."
-  expect_error(eia_data("electricity/retail-sales", freq = c("annual", "monthly")), err)
+  expect_error(eia_data("electricity/retail-sales", freq = c("annual", "monthly"), check_metadata = TRUE), err)
 
   # Test "start" input value
   err <- "'start' must be a character string of format: YYYY"
-  expect_error(eia_data("electricity/retail-sales", freq="annual", start=2010), err)
+  expect_error(eia_data("electricity/retail-sales", freq="annual", start=2010, check_metadata = TRUE), err)
   err <- "'start' is beyond the end of available data."
-  expect_error(eia_data("electricity/retail-sales", freq="annual", start="2099"), err)
+  expect_error(eia_data("electricity/retail-sales", freq="annual", start="2099", check_metadata = TRUE), err)
   err <- "'start' must be a character string of format: YYYY"
-  expect_error(eia_data("electricity/retail-sales", freq="annual", start="2020-06"), err)
+  expect_error(eia_data("electricity/retail-sales", freq="annual", start="2020-06", check_metadata = TRUE), err)
   err <- "'start' must be a character string of format: YYYY-MM"
-  expect_error(eia_data("electricity/retail-sales", freq="monthly", start="2020"), err)
+  expect_error(eia_data("electricity/retail-sales", freq="monthly", start="2020", check_metadata = TRUE), err)
   wrn <- "'start' is beyond available history. Earliest available: 2001-01"
   expect_warning(
-    eia_data("electricity/retail-sales", facets=list(stateid="OH"), freq="annual", start="1980", end="2020"),
+    eia_data(
+      "electricity/retail-sales",
+      facets=list(stateid="OH"),
+      freq="annual",
+      start="1980",
+      end="2020",
+      check_metadata = TRUE
+    ),
     wrn
   )
 
   # Test "end" input value
   err <- "'end' must be a character string of format: YYYY"
-  expect_error(eia_data("electricity/retail-sales", freq="annual", end=2010), err)
+  expect_error(eia_data("electricity/retail-sales", freq="annual", end=2010, check_metadata = TRUE), err)
   err <- "'end' is before the start of available data."
-  expect_error(eia_data("electricity/retail-sales", freq="annual", end="1980"), err)
+  expect_error(eia_data("electricity/retail-sales", freq="annual", end="1980", check_metadata = TRUE), err)
   err <- "'end' must be a character string of format: YYYY"
-  expect_error(eia_data("electricity/retail-sales", freq="annual", end="2020-06"), err)
+  expect_error(eia_data("electricity/retail-sales", freq="annual", end="2020-06", check_metadata = TRUE), err)
   err <- "'end' must be a character string of format: YYYY-MM"
-  expect_error(eia_data("electricity/retail-sales", freq="monthly", end="2020"), err)
+  expect_error(eia_data("electricity/retail-sales", freq="monthly", end="2020", check_metadata = TRUE), err)
   wrn <- "'end' is beyond available history. Latest available: 2023-08"
   expect_warning(
-    eia_data("electricity/retail-sales", facets=list(stateid="OH"), freq="annual", start="2020", end="2099"),
+    eia_data(
+      "electricity/retail-sales",
+      facets=list(stateid="OH"),
+      freq="annual",
+      start="2020",
+      end="2099",
+      check_metadata = TRUE
+    ),
     wrn
   )
 
@@ -103,7 +117,7 @@ test_that("data queries return as expected", {
   )
   expect_equal(nrow(x), 10)
   err <- "'length' must be a single numeric value between 0 and 5000."
-  expect_error(eia_data("electricity/retail-sales", length = "10"), err)
+  expect_error(eia_data("electricity/retail-sales", length = "10", check_metadata = TRUE), err)
 
   # Test "offset" input value
   expect_warning(
@@ -111,7 +125,7 @@ test_that("data queries return as expected", {
   )
   expect_equal(nrow(x), 10)
   err <- "'offset' must be a single numeric value greater than 0."
-  expect_error(eia_data("electricity/retail-sales", offset = "10"), err)
+  expect_error(eia_data("electricity/retail-sales", offset = "10", check_metadata = TRUE), err)
 
   # Test misspelling of sort objects
   err <- paste0(
@@ -124,7 +138,8 @@ test_that("data queries return as expected", {
       data = "price",
       facets = list(stateid = "OH", sectorid = "RES"),
       freq = "annual", start = "2011", end = "2020",
-      sort = list(cols = "period", ordr = "asc")
+      sort = list(cols = "period", ordr = "asc"),
+      check_metadata = TRUE
     ),
     err
   )
@@ -137,7 +152,8 @@ test_that("data queries return as expected", {
       data = "price",
       facets = list(stateid = "OH", sectorid = c("RES", "COM")),
       freq = "annual", start = "2011", end = "2020",
-      sort = list(cols = c("sectorid", "period"), order = c("asc", "desc"))
+      sort = list(cols = c("sectorid", "period"), order = c("asc", "desc")),
+      check_metadata = TRUE
     ),
     err
   )
@@ -150,7 +166,8 @@ test_that("data queries return as expected", {
       data = "price",
       facets = list(stateid = "OH", sectorid = "RES"),
       freq = "annual", start = "2011", end = "2020",
-      sort = list(cols = "period", order = "ascc")
+      sort = list(cols = "period", order = "ascc"),
+      check_metadata = TRUE
     ),
     err
   )

@@ -1,6 +1,8 @@
 # eia 0.4.1
 
-* Added dynamic error handling to `eia_data()` via metadata layer.
+* Added dynamic error handling to `eia_data()` via metadata layer conditioned on
+new function argument `check_metadata`.
+
 
 # eia 0.4.0
 

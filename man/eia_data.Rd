@@ -15,6 +15,7 @@ eia_data(
   length = NULL,
   offset = NULL,
   tidy = TRUE,
+  check_metadata = FALSE,
   cache = TRUE,
   key = eia_get_key()
 )
@@ -43,6 +44,9 @@ eia_data(
 \item{offset}{numeric or \code{NULL}, number of rows to skip before return.}
 
 \item{tidy}{logical or \code{NULL}, return a tidier result. See details.}
+
+\item{check_metadata}{logical, if \code{TRUE} makes preemptive call to data metadata endpoint
+to validate all input values against.}
 
 \item{cache}{logical, cache result for duration of R session using memoization.
 See details.}

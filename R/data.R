@@ -29,6 +29,8 @@
 #' @param length numeric or `NULL`, number of rows to return.
 #' @param offset numeric or `NULL`, number of rows to skip before return.
 #' @param tidy logical or `NULL`, return a tidier result. See details.
+#' @param check_metadata logical, if `TRUE` makes preemptive call to data metadata endpoint
+#' to validate all input values against.
 #' @param cache logical, cache result for duration of R session using memoization.
 #' See details.
 #' @param key API key: character if set explicitly; not needed if key is set
@@ -48,18 +50,19 @@
 eia_data <- function(dir, data = NULL, facets = NULL,
                      freq = NULL, start = NULL, end = NULL,
                      sort = NULL, length = NULL, offset = NULL,
-                     tidy = TRUE, cache = TRUE, key = eia_get_key()){
+                     tidy = TRUE, check_metadata = FALSE, cache = TRUE,
+                     key = eia_get_key()){
   .key_check(key)
-  if(cache){
+  if (check_metadata)
+    .eia_metadata_check(dir, data, facets, freq, start, end, sort, length, offset, key)
+  if (cache){
     .eia_data_memoized(dir, data, facets, freq, start, end, sort, length, offset, tidy, key)
-  } else {
+   }else {
     .eia_data(dir, data, facets, freq, start, end, sort, length, offset, tidy, key)
   }
 }
 
 .eia_data <- function(dir, data, facets, freq, start, end, sort, length, offset, tidy, key){
-  md <- eia_metadata(dir, TRUE, TRUE, key)
-  .eia_data_check(md, dir, data, facets, freq, start, end, sort, length, offset)
   r <- .eia_get(.eia_data_url(dir, data, facets, freq, start, end, sort, length, offset, key))
   if(is.na(tidy)) return(r)
   r <- jsonlite::fromJSON(r)
@@ -93,7 +96,12 @@ eia_data <- function(dir, data = NULL, facets = NULL,
   )
 }
 
-.eia_data_check <- function(md, dir, data, facets, freq, start, end, sort, length, offset){
+.eia_metadata_check <- function(dir, data, facets, freq, start, end, sort, length, offset, key){
+  md <- eia_metadata(dir, TRUE, TRUE, key)
+  .eia_check_call(md, dir, data, facets, freq, start, end, sort, length, offset)
+}
+
+.eia_check_call <- function(md, dir, data, facets, freq, start, end, sort, length, offset){
   .data_check(data, md$Data$id)
   .facet_check(facets, md$Facets$id)
   .freq_check(freq, md$Frequency$id)
