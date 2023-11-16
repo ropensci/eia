@@ -9,7 +9,8 @@ test_that("directory functions returns as expected", {
 
   x <- eia_dir(tidy = FALSE, key = key)
   expect_type(x, "list")
-  expect_equal(names(x), c("response", "request", "apiVersion"))
+  expect_equal(length(x), 4)
+  expect_equal(names(x), c("response", "request", "apiVersion", "ExcelAddInVersion"))
 
   x2 <- eia_dir(tidy = FALSE)
   expect_identical(x, x2)

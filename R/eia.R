@@ -22,6 +22,11 @@ NULL
   r <- httr::RETRY(verb = "GET", url = url, .session_eia_env$ua)
   .antidos_after("eia")
   if(r$status_code == "404") stop("Page not found", call. = FALSE)
+  if(r$status_code == "400"){
+    x <- httr::content(r, as = "text", encoding = "UTF-8")
+    x <- jsonlite::fromJSON(x)
+    stop(x$error, call. = FALSE)
+  }
   httr::content(r, as = "text", encoding = "UTF-8")
 }
 

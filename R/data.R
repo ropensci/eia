@@ -3,7 +3,7 @@
 #' Obtain data from the EIA.
 #'
 #' By default, `data`, `facets`, and `freq` are set to `NULL`. To obtain valid
-#' input values for each of these arguments, one must use the specific ID labels
+#' input values for each of these arguments, use the specific ID labels
 #' as provided by `eia_metadata()`.
 #'
 #' By default, additional processing is done to return a list containing tibble data frames.
@@ -19,16 +19,16 @@
 #' @param dir character, directory path.
 #' @param data character or `NULL`, see details.
 #' @param facets character list or `NULL`, see details.
-#' @param freq character or `NULL`, if char, then one of: "yearly", "monthly",
-#' "daily", "hourly".
-#' @param start,end character or `NULL`, must match format of default or supplied
-#' `freq`; i.e. if `freq = "yearly"`, then format of `start` must be `YYYY`.
+#' @param freq character or `NULL`, see details.
+#' @param start,end character, integer or `NULL`, must match format of default or supplied
+#' `freq`; e.g. if `freq = "yearly"`, then format must be `YYYY`.
 #' @param sort named list of two.
 #'   * `cols`: list column names on which to sort.
 #'   * `order`: `"asc"` or `"desc"` for ascending or descending, respectively.
 #' @param length numeric or `NULL`, number of rows to return.
 #' @param offset numeric or `NULL`, number of rows to skip before return.
 #' @param tidy logical or `NULL`, return a tidier result. See details.
+#' @param check_metadata logical, if `TRUE` checks input values against metadata endpoint.
 #' @param cache logical, cache result for duration of R session using memoization.
 #' See details.
 #' @param key API key: character if set explicitly; not needed if key is set
@@ -45,14 +45,18 @@
 #'   facets = list(sectorid = c("COM", "RES"), stateid = "OH")
 #' )
 #' }
-eia_data <- function(dir, data = NULL, facets = NULL,
+eia_data <- function(dir,
+                     data = NULL, facets = NULL,
                      freq = NULL, start = NULL, end = NULL,
                      sort = NULL, length = NULL, offset = NULL,
-                     tidy = TRUE, cache = TRUE, key = eia_get_key()){
+                     tidy = TRUE, check_metadata = FALSE, cache = TRUE,
+                     key = eia_get_key()){
   .key_check(key)
-  if(cache){
+  if (check_metadata)
+    .eia_metadata_check(dir, data, facets, freq, start, end, key)
+  if (cache){
     .eia_data_memoized(dir, data, facets, freq, start, end, sort, length, offset, tidy, key)
-  } else {
+   } else {
     .eia_data(dir, data, facets, freq, start, end, sort, length, offset, tidy, key)
   }
 }
@@ -64,13 +68,12 @@ eia_data <- function(dir, data = NULL, facets = NULL,
   if(!tidy) return(r)
   if (!is.null(r$response$warnings) & is.null(length)){
     wrngs <- paste0(r$response$warnings[[1]], "\n", r$response$warnings[[2]])
-    ttlrs <- r$response$total
-    warning(wrngs, "\nTotal available rows: ", ttlrs, call. = FALSE)
+    warning(wrngs, "\nTotal available rows: ", r$response$total, call. = FALSE)
   } else {
-    rtrnd <- nrow(r$response$data)
-    ttlrs <- r$response$total
-    if (rtrnd != ttlrs)
-      warning("Rows returned: ", rtrnd, "\nRows available: ", ttlrs, call. = FALSE)
+    if (r$response$total == 0)
+      stop("No data available - check inputs.", call. = FALSE)
+    if (nrow(r$response$data) != r$response$total)
+      warning("Rows returned: ", nrow(r$response$data), "\nRows available: ", r$response$total, call. = FALSE)
   }
   tibble::as_tibble(r$response$data)
 }
@@ -78,83 +81,160 @@ eia_data <- function(dir, data = NULL, facets = NULL,
 .eia_data_memoized <- memoise::memoise(.eia_data)
 
 .eia_data_url <- function(dir, data, facets, freq, start, end, sort, length, offset, key){
-  dir <- .eia_url(path = paste0(dir, "/data/?api_key=", key))
-  dat_spcs <- if(!is.null(data)) .data_specs(data)
-  fct_spcs <- if(!is.null(facets)) .facet_specs(facets)
-  frq_spcs <- if(!is.null(freq)) .freq_specs(freq)
-  str_spcs <- if(!is.null(start)) .start_specs(start)
-  end_spcs <- if(!is.null(end)) .end_specs(end)
-  srt_spcs <- if(!is.null(sort)) .sort_specs(sort)
-  lng_spcs <- if(!is.null(length)) .lng_specs(length)
-  ofs_spcs <- if(!is.null(offset)) .ofs_specs(offset)
-  paste0(dir, dat_spcs, fct_spcs, frq_spcs, str_spcs, end_spcs, srt_spcs, lng_spcs, ofs_spcs)
-}
-
-.data_specs <- function(data){
-  paste0("&data[]=", data, collapse = "")
-}
-
-.facet_specs <- function(facets){
-  paste0(unlist(lapply(
-    1:length(facets),
-    function(x){
-      paste0("&facets[", names(facets[x]), "][]=", unlist(facets[x]), collapse = "")
-  })), collapse = "")
-}
-
-.freq_specs <- function(freq){
-  if (!is.character(freq) | length(freq) > 1)
-    stop("'freq' must be a character value of length 1.")
-  freqs <- c("annual", "yearly", "quarterly", "monthly", "daily", "hourly")
-  if (!freq %in% freqs)
-    stop("'freq' must be one of: 'annual', 'yearly', 'monthly', 'daily', or 'hourly'.")
-  paste0("&frequency=", freq)
-}
-
-.start_specs <- function(start, freq){
-  if (!is.character(start))
-    stop("'start' must be a character matching the required frequency format.")
-  paste0("&start=", start)
-}
-
-.end_specs <- function(end, freq){
-  if (!is.character(end))
-    stop("'end' must be a character matching the required frequency format.")
-  paste0("&end=", end)
-}
-
-.sort_specs <- function(sort){
-  if (length(sort) != 2 || !all(names(sort) %in% c("cols", "order")))
-    stop(
-      "'sort' must be a named list of length 2 containing the following:\n",
-      "'cols' and 'order' of arbitrary length and of length 1, respectively."
-    )
-  cols <- sort$cols
-  order <- sort$order
-  sort_cols <- lapply(
-    1:length(cols),
-    function(x){
-      paste0("&sort[", x, "][column]=", unlist(cols[x]), collapse = "")
-    })
-  if (length(order) > 1)
-    stop("must provide a single value for 'order': 'asc' or 'desc'.")
-  if (!order %in% c("asc", "desc"))
-    stop("'order' must be one of 'asc' or 'desc'.")
-  sort_order <- lapply(
-    1:length(cols),
-    function(x) { paste0("&sort[", x, "][direction]=", order) }
+  paste0(
+    .eia_url(path = paste0(dir, "/data/?api_key=", key)),
+    .data_specs(data),
+    .facet_specs(facets),
+    .freq_specs(freq),
+    .start_specs(start, freq),
+    .end_specs(end, freq),
+    .sort_specs(sort),
+    .lng_specs(length),
+    .ofs_specs(offset)
   )
-  paste0(unlist(sort_cols), sort_order, collapse = "")
 }
 
+.eia_metadata_check <- function(dir, data, facets, freq, start, end, key){
+  md <- eia_metadata(dir, TRUE, TRUE, key)
+  .eia_md_check(md, dir, data, facets, freq, start, end)
+}
+
+.eia_md_check <- function(md, dir, data, facets, freq, start, end){
+  .data_check(data, md$Data$id)
+  .facet_check(facets, md$Facets$id)
+  .freq_check(freq, md$Frequency$id)
+  .start_check(start, freq, md$Frequency, md$Period$start, md$Period$end)
+  .end_check(end, freq, md$Frequency, md$Period$end, md$Period$start)
+}
+
+# Data input formatting and validation
+.data_specs <- function(data){
+  if (!is.null(data)) paste0("&data[]=", data, collapse = "")
+}
+
+.data_check <- function(data, dat_ids){
+  if (!is.null(data) && !all(data %in% dat_ids))
+    stop("Invalid 'data' provided. Options are: '", paste(dat_ids, collapse = "', '"), "'",
+         call. = FALSE)
+}
+
+# Facets input formatting and validation
+.facet_specs <- function(facets){
+  if(!is.null(facets))
+    paste0(unlist(lapply(1:length(facets),
+      function(x){
+        paste0("&facets[", names(facets[x]), "][]=", unlist(facets[x]), collapse = "")
+      })), collapse = "")
+}
+
+.facet_check <- function(facets, fct_ids){
+  if(!is.null(facets)){
+    nms <- names(facets)
+    if (!all(nms %in% fct_ids))
+      stop("Invalid 'facets' provided. Options are: '", paste(fct_ids, collapse = "', '"), "'",
+           call. = FALSE)
+  }
+}
+
+# Frequency input formatting and validation
+.freq_specs <- function(freq){
+  if (!is.null(freq))
+    paste0("&frequency=", freq[1])
+}
+
+.freq_check <- function(freq, frq_ids){
+  if (!is.null(freq)){
+    if (!is.character(freq) | length(freq) > 1 || !(freq %in% frq_ids))
+      stop("Invalid 'freq' provided. Must be one of: '", paste(frq_ids, collapse = "', '"), "'",
+           call. = FALSE)
+  }
+}
+
+# Start input formatting and validation
+.start_specs <- function(start, freq){
+  if(!is.null(start)){
+    if(is.null(freq))
+      stop("'start' requires 'freq' be non-NULL.", call. = FALSE)
+    paste0("&start=", start)
+  }
+}
+
+.start_check <- function(start, freq, md_frq_tbl, mds, mde){
+  if(!is.null(start)){
+    if (is.null(freq))
+      stop("'start' requires 'freq' be non-NULL.", call. = FALSE)
+    fmt <- md_frq_tbl[md_frq_tbl$id == freq, ]$format
+    if (nchar(start) != nchar(fmt))
+      stop("'start' must be a string of format: ", fmt, call. = FALSE)
+    if (start > mde)
+      stop("'start' is beyond the end of available data.", call. = FALSE)
+    if (start < mds)
+      warning("'start' is beyond available history. Earliest available: ", mds, call. = FALSE)
+  }
+}
+
+# End input formatting and validation
+.end_specs <- function(end, freq){
+  if (!is.null(end)){
+    if(is.null(freq))
+      stop("'end' requires 'freq' be non-NULL.", call. = FALSE)
+    paste0("&end=", end)
+  }
+}
+
+.end_check <- function(end, freq, md_frq_tbl, mde, mds){
+  if (!is.null(end)){
+    if (is.null(freq))
+      stop("'end' requires 'freq' be non-NULL.", call. = FALSE)
+    fmt <- md_frq_tbl[md_frq_tbl$id == freq, ]$format
+    if (nchar(end) != nchar(fmt))
+      stop("'end' must be a string of format: ", fmt, call. = FALSE)
+    if (end < mds)
+      stop("'end' is before the start of available data.", call. = FALSE)
+    if (end > mde)
+      warning("'end' is beyond available history. Latest available: ", mde, call. = FALSE)
+  }
+}
+
+# Sort input formatting and validation
+.sort_specs <- function(sort){
+  if (!is.null(sort)){
+    if (length(sort) != 2 || !all(names(sort) %in% c("cols", "order")))
+      stop("'sort' must be a named list of length 2 containing the following:\n",
+           "'cols' and 'order' of arbitrary length and of length 1, respectively.",
+           call. = FALSE)
+    cols <- sort$cols
+    order <- sort$order
+    if (length(cols) < length(order))
+      order <- order[1:length(cols)]
+    if (length(cols) > length(order))
+      order <- rep(order[length(order)], length(cols))
+    sort_cols <- lapply(
+      1:length(cols),
+      function(x){paste0("&sort[", x, "][column]=", unlist(cols[x]), collapse = "")}
+    )
+    sort_order <- lapply(
+      1:length(order),
+      function(x) {paste0("&sort[", x, "][direction]=", unlist(order[x]), collapse = "")}
+    )
+    paste0(sort_cols, sort_order, collapse = "")
+  }
+}
+
+# Length input formatting and validation
 .lng_specs <- function(length){
-  if (!is.numeric(length) | length > 5000)
-    stop("'length' must be a single numeric value between 0 and 5000.")
-  paste0("&length=", length)
+  if (!is.null(length)){
+    if (length > 5000 | length < 0)
+      stop("'length' must be a single value between 0 and 5000.", call. = FALSE)
+    paste0("&length=", length)
+  }
 }
 
+# Offset input formatting and validation
 .ofs_specs <- function(offset){
-  if (!is.numeric(offset) | offset < 0)
-    stop("'offset' must be a single numeric value greater than 0.")
-  paste0("&offset=", offset)
+  if (!is.null(offset)){
+    if (offset < 0)
+      stop("'offset' must be a single value greater than 0.", call. = FALSE)
+    paste0("&offset=", offset)
+  }
 }

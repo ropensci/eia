@@ -1,3 +1,9 @@
+# eia 0.4.1
+
+* Added dynamic error handling to `eia_data()` via metadata layer conditioned on
+new function argument `check_metadata`.
+
+
 # eia 0.4.0
 
 * Updated functions and functionality based on the new v2 API, effective March 2023;
