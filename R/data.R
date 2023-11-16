@@ -162,7 +162,7 @@ eia_data <- function(dir,
 .start_check <- function(start, freq, md_frq_tbl, mds, mde){
   if(!is.null(start)){
     if (is.null(freq))
-      stop("'freq' must be non-NULL.")
+      stop("'start' requires 'freq' be non-NULL.", call. = FALSE)
     fmt <- md_frq_tbl[md_frq_tbl$id == freq, ]$format
     if (nchar(start) != nchar(fmt))
       stop("'start' must be a string of format: ", fmt, call. = FALSE)
@@ -185,7 +185,7 @@ eia_data <- function(dir,
 .end_check <- function(end, freq, md_frq_tbl, mde, mds){
   if (!is.null(end)){
     if (is.null(freq))
-      stop("'freq' must be non-NULL.")
+      stop("'end' requires 'freq' be non-NULL.", call. = FALSE)
     fmt <- md_frq_tbl[md_frq_tbl$id == freq, ]$format
     if (nchar(end) != nchar(fmt))
       stop("'end' must be a string of format: ", fmt, call. = FALSE)
