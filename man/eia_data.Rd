@@ -27,11 +27,10 @@ eia_data(
 
 \item{facets}{character list or \code{NULL}, see details.}
 
-\item{freq}{character or \code{NULL}, if char, then one of: "yearly", "monthly",
-"daily", "hourly".}
+\item{freq}{character or \code{NULL}, see details.}
 
-\item{start, end}{character or \code{NULL}, must match format of default or supplied
-\code{freq}; i.e. if \code{freq = "yearly"}, then format of \code{start} must be \code{YYYY}.}
+\item{start, end}{character, integer or \code{NULL}, must match format of default or supplied
+\code{freq}; e.g. if \code{freq = "yearly"}, then format must be \code{YYYY}.}
 
 \item{sort}{named list of two.
 \itemize{
@@ -61,7 +60,7 @@ Obtain data from the EIA.
 }
 \details{
 By default, \code{data}, \code{facets}, and \code{freq} are set to \code{NULL}. To obtain valid
-input values for each of these arguments, one must use the specific ID labels
+input values for each of these arguments, use the specific ID labels
 as provided by \code{eia_metadata()}.
 
 By default, additional processing is done to return a list containing tibble data frames.
