@@ -1,4 +1,4 @@
-options(eia_antidos = 2)
+options(eia_antidos = 1)
 suppressWarnings(key <- eia_get_key())
 
 test_that("data queries return data as expected", {
@@ -32,6 +32,8 @@ test_that("data queries return data as expected", {
   # Test warning that API limit has been reached
   expect_warning(eia_data("electricity/retail-sales", data = "price"))
 
+  options(antidos = 0)
+
   # Test warning that more data is available even if API limit not reached
   wrn <- paste("Rows returned: 8\nRows available: 10")
   expect_warning(
@@ -48,6 +50,8 @@ test_that("data queries return data as expected", {
 
   # Test no data
   expect_error(suppressMessages(eia_data("electricity/zzz")), "Page not found")
+
+  options(antidos = 1)
 
 })
 
@@ -84,6 +88,7 @@ test_that("'start' and 'end' error/warning messages return as expected", {
   # Test "start" input value
   err <- "'start' requires 'freq' be non-NULL."
   expect_error(eia_data("electricity/retail-sales", start = 2020), err)
+  expect_error(eia_data("electricity/retail-sales", start = 2020, check_metadata = TRUE), err)
   expect_no_error(eia_data("electricity/retail-sales", freq = "annual", start = 2020))
   err <- "No data available - check inputs."
   expect_error(eia_data("electricity/retail-sales", freq = "annual", start = 2099), err)
@@ -98,11 +103,20 @@ test_that("'start' and 'end' error/warning messages return as expected", {
   expect_error(eia_data("electricity/retail-sales", freq = "monthly", start = 2020, check_metadata = TRUE), err)
   eia_clear_data()
   expect_error(eia_data("electricity/retail-sales", freq = "monthly", start = "2020", check_metadata = TRUE), err)
-  expect_warning(eia_data("electricity/retail-sales", freq = "annual", start = 1980))
+  wrn <- "'start' is beyond available history. Earliest available: 2001-01"
+  expect_warning(
+    eia_data(
+      "electricity/retail-sales", "price",
+      facets = list(stateid = "OH", sectorid = "RES"),
+      freq = "annual", start = 1980,
+      check_metadata = TRUE
+    )
+  )
 
   # Test "end" input value
   err <- "'end' requires 'freq' be non-NULL."
   expect_error(eia_data("electricity/retail-sales", end = 2001), err)
+  expect_error(eia_data("electricity/retail-sales", end = 2001, check_metadata = TRUE), err)
   expect_no_error(eia_data("electricity/retail-sales", freq = "annual", end = 2001))
   err <- "No data available - check inputs."
   expect_error(eia_data("electricity/retail-sales", freq = "annual", end = 1980), err)
@@ -116,7 +130,15 @@ test_that("'start' and 'end' error/warning messages return as expected", {
   expect_error(eia_data("electricity/retail-sales", freq = "monthly", end = 2020, check_metadata = TRUE), err)
   eia_clear_cache()
   expect_error(eia_data("electricity/retail-sales", freq = "monthly", end = "2020", check_metadata = TRUE), err)
-  expect_warning(eia_data("electricity/retail-sales", freq = "annual", end = 2099))
+  wrn <- "'end' is beyond available history. Latest available: 2023-08"
+  expect_warning(
+    eia_data(
+      "electricity/retail-sales", "price",
+      facets = list(stateid = "OH", sectorid = "RES"),
+      freq = "annual", end = 2099,
+      check_metadata = TRUE
+    )
+  )
 
 })
 
@@ -125,6 +147,21 @@ test_that("'sort' error/warning messages return as expected", {
   if(is.null(key)) skip("API key not available.")
 
   # Test "sort" input values
+  expect_no_error(
+    eia_data(
+      "electricity/retail-sales", "price",
+      facets = list(stateid = "OH", sectorid = "RES"),
+      freq = "annual", start = 2020, end = 2020,
+      sort = list(cols = c("period", "stateid"), order = "asc")
+    )
+  )
+  expect_no_error(
+    eia_data(
+      "electricity/retail-sales", "price",
+      facets = list(stateid = "OH", sectorid = "RES"),
+      freq = "annual", start = 2020, end = 2020,
+      sort = list(cols = "period", order = c("asc", "desc")))
+  )
   err <- paste0(
     "'sort' must be a named list of length 2 containing the following:\n",
     "'cols' and 'order' of arbitrary length and of length 1, respectively."
