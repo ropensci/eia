@@ -8,8 +8,7 @@
 
 ## Update release
 
-* This update includes a maintainer change/email address update.
-* Refactored package to work with newer version 2 of the US Energy Information Administration API.
+* Code updates and additional unit testing.
 
 ## R CMD check results
 
