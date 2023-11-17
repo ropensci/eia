@@ -1,8 +1,14 @@
 # eia 0.4.1
 
-* Added dynamic error handling to `eia_data()` via metadata layer conditioned on
-new function argument `check_metadata`.
-
+* Re-factor of `eia_data()`:
+  * Added dynamic error handling via metadata layer conditioned on new function argument `check_metadata`.
+  * Forced `start` and `end` input values to character.
+  * Forced `length` and `offset` input values to numeric.
+  * Augmented `sort` functionality to now handle multiple, varying "asc"/"desc" inputs 
+  to `order` as a list, rather than just one value of "asc" or "desc" applied to all
+  specified columns.
+  * Improved error messaging with `check_metadata = TRUE` to more closely resemble
+  those provided by the API (i.e. with `check_metadata = FALSE`).
 
 # eia 0.4.0
 
