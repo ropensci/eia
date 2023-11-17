@@ -29,8 +29,7 @@ eia_data(
 
 \item{freq}{character or \code{NULL}, see details.}
 
-\item{start, end}{character, integer or \code{NULL}, must match format of default or supplied
-\code{freq}; e.g. if \code{freq = "yearly"}, then format must be \code{YYYY}.}
+\item{start, end}{character or \code{NULL}, see details.}
 
 \item{sort}{named list of two.
 \itemize{
@@ -62,6 +61,14 @@ Obtain data from the EIA.
 By default, \code{data}, \code{facets}, and \code{freq} are set to \code{NULL}. To obtain valid
 input values for each of these arguments, use the specific ID labels
 as provided by \code{eia_metadata()}.
+
+The use of \code{start} and \code{end} require some input to \code{freq}.
+By default (\code{check_metadata = FALSE}), the resulting data will match the
+temporal resolution provided to \code{freq}, however, \code{check_metadata = TRUE} applies
+further restrictions such that the format of values provided to \code{start}/\code{end} must match
+that of \code{freq}. Furthermore, regardless of the input format provided to \code{start}/\code{end},
+the resulting data will always match the specification of \code{freq}. And lastly,
+regardless of chosen format, \code{end} must be strictly greater than \code{start} to return data.
 
 By default, additional processing is done to return a list containing tibble data frames.
 Set \code{tidy = FALSE} to return only the initial list result of \code{jsonlite::fromJSON}.

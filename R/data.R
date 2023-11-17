@@ -6,6 +6,14 @@
 #' input values for each of these arguments, use the specific ID labels
 #' as provided by `eia_metadata()`.
 #'
+#' The use of `start` and `end` require some input to `freq`.
+#' By default (`check_metadata = FALSE`), the resulting data will match the
+#' temporal resolution provided to `freq`, however, `check_metadata = TRUE` applies
+#' further restrictions such that the format of values provided to `start`/`end` must match
+#' that of `freq`. Furthermore, regardless of the input format provided to `start`/`end`,
+#' the resulting data will always match the specification of `freq`. And lastly,
+#' regardless of chosen format, `end` must be strictly greater than `start` to return data.
+#'
 #' By default, additional processing is done to return a list containing tibble data frames.
 #' Set `tidy = FALSE` to return only the initial list result of `jsonlite::fromJSON`.
 #' Set `tidy = NA` to return the original JSON as a character string.
@@ -20,8 +28,7 @@
 #' @param data character or `NULL`, see details.
 #' @param facets character list or `NULL`, see details.
 #' @param freq character or `NULL`, see details.
-#' @param start,end character, integer or `NULL`, must match format of default or supplied
-#' `freq`; e.g. if `freq = "yearly"`, then format must be `YYYY`.
+#' @param start,end character or `NULL`, see details.
 #' @param sort named list of two.
 #'   * `cols`: list column names on which to sort.
 #'   * `order`: `"asc"` or `"desc"` for ascending or descending, respectively.
@@ -153,6 +160,8 @@ eia_data <- function(dir,
 # Start input formatting and validation
 .start_specs <- function(start, freq){
   if(!is.null(start)){
+    if(!is.character(start))
+      stop("'start' must be a character string of length 1.", call. = FALSE)
     if(is.null(freq))
       stop("'start' requires 'freq' be non-NULL.", call. = FALSE)
     paste0("&start=", start)
@@ -161,11 +170,13 @@ eia_data <- function(dir,
 
 .start_check <- function(start, freq, md_frq_tbl, mds, mde){
   if(!is.null(start)){
+    if(!is.character(start))
+      stop("'start' must be a character string of length 1.", call. = FALSE)
     if (is.null(freq))
       stop("'start' requires 'freq' be non-NULL.", call. = FALSE)
     fmt <- md_frq_tbl[md_frq_tbl$id == freq, ]$format
     if (nchar(start) != nchar(fmt))
-      stop("'start' must be a string of format: ", fmt, call. = FALSE)
+      stop("'start' must be a character string of format: ", fmt, call. = FALSE)
     if (start > mde)
       stop("'start' is beyond the end of available data.", call. = FALSE)
     if (start < mds)
@@ -176,6 +187,8 @@ eia_data <- function(dir,
 # End input formatting and validation
 .end_specs <- function(end, freq){
   if (!is.null(end)){
+    if(!is.character(end))
+      stop("'end' must be a character string of length 1.", call. = FALSE)
     if(is.null(freq))
       stop("'end' requires 'freq' be non-NULL.", call. = FALSE)
     paste0("&end=", end)
@@ -184,11 +197,13 @@ eia_data <- function(dir,
 
 .end_check <- function(end, freq, md_frq_tbl, mde, mds){
   if (!is.null(end)){
+    if(!is.character(end))
+      stop("'end' must be a character string of length 1.", call. = FALSE)
     if (is.null(freq))
       stop("'end' requires 'freq' be non-NULL.", call. = FALSE)
     fmt <- md_frq_tbl[md_frq_tbl$id == freq, ]$format
     if (nchar(end) != nchar(fmt))
-      stop("'end' must be a string of format: ", fmt, call. = FALSE)
+      stop("'end' must be a character string of format: ", fmt, call. = FALSE)
     if (end < mds)
       stop("'end' is before the start of available data.", call. = FALSE)
     if (end > mde)
@@ -224,8 +239,8 @@ eia_data <- function(dir,
 # Length input formatting and validation
 .lng_specs <- function(length){
   if (!is.null(length)){
-    if (length > 5000 | length < 0)
-      stop("'length' must be a single value between 0 and 5000.", call. = FALSE)
+    if (!is.numeric(length) | length > 5000 | length < 0)
+      stop("'length' must be a numeric value between 0 and 5000.", call. = FALSE)
     paste0("&length=", length)
   }
 }
@@ -233,8 +248,8 @@ eia_data <- function(dir,
 # Offset input formatting and validation
 .ofs_specs <- function(offset){
   if (!is.null(offset)){
-    if (offset < 0)
-      stop("'offset' must be a single value greater than 0.", call. = FALSE)
+    if (!is.numeric(offset) | offset < 0)
+      stop("'offset' must be a numeric value greater than 0.", call. = FALSE)
     paste0("&offset=", offset)
   }
 }
