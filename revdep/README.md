@@ -10,7 +10,7 @@
 |collate  |English_United States.utf8                                                           |
 |ctype    |English_United States.utf8                                                           |
 |tz       |America/Denver                                                                       |
-|date     |2023-10-31                                                                           |
+|date     |2023-11-17                                                                           |
 |rstudio  |2023.06.1+524 Mountain Hydrangea (desktop)                                           |
 |pandoc   |3.1.1 @ C:/Program Files/RStudio/resources/app/bin/quarto/bin/tools/ (via rmarkdown) |
 
@@ -18,7 +18,7 @@
 
 |package     |old   |new   |Δ  |
 |:-----------|:-----|:-----|:--|
-|eia         |0.3.7 |0.4.0 |*  |
+|eia         |0.4.0 |0.4.1 |*  |
 |askpass     |1.2.0 |1.2.0 |   |
 |cachem      |1.0.8 |1.0.8 |   |
 |cellranger  |1.1.0 |1.1.0 |   |
@@ -26,7 +26,6 @@
 |cpp11       |0.4.6 |0.4.6 |   |
 |crayon      |1.5.2 |1.5.2 |   |
 |curl        |5.1.0 |5.1.0 |   |
-|dplyr       |1.1.3 |NA    |*  |
 |fansi       |1.0.5 |1.0.5 |   |
 |fastmap     |1.1.1 |1.1.1 |   |
 |generics    |0.1.3 |0.1.3 |   |
@@ -34,7 +33,7 @@
 |hms         |1.1.3 |1.1.3 |   |
 |httr        |1.4.7 |1.4.7 |   |
 |jsonlite    |1.8.7 |1.8.7 |   |
-|lifecycle   |1.0.3 |1.0.3 |   |
+|lifecycle   |1.0.4 |1.0.4 |   |
 |lubridate   |1.9.3 |1.9.3 |   |
 |magrittr    |2.0.3 |2.0.3 |   |
 |memoise     |2.0.1 |2.0.1 |   |
@@ -48,14 +47,12 @@
 |R6          |2.5.1 |2.5.1 |   |
 |readxl      |1.4.3 |1.4.3 |   |
 |rematch     |2.0.0 |2.0.0 |   |
-|rlang       |1.1.1 |1.1.1 |   |
+|rlang       |1.1.2 |1.1.2 |   |
 |sys         |3.4.2 |3.4.2 |   |
 |tibble      |3.2.1 |3.2.1 |   |
-|tidyselect  |1.2.0 |NA    |*  |
 |timechange  |0.2.0 |0.2.0 |   |
 |utf8        |1.2.4 |1.2.4 |   |
 |vctrs       |0.6.4 |0.6.4 |   |
-|withr       |2.5.2 |NA    |*  |
 
 # Revdeps
 
