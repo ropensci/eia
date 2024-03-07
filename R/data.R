@@ -25,7 +25,10 @@
 #' You can reset the entire cache by calling `eia_clear_cache()`.
 #'
 #' @param dir character, directory path.
-#' @param data character or `NULL`, see details.
+#' @param data character or `NULL`,
+#'  * note: if `NULL`, `eia_data()` will only return column headings; must input a character value
+#'  as provided by `eia_metadata()` for data to be returned.
+#'  * see details.
 #' @param facets character list or `NULL`, see details.
 #' @param freq character or `NULL`, see details.
 #' @param start,end character or `NULL`, see details.
