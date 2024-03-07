@@ -23,7 +23,12 @@ eia_data(
 \arguments{
 \item{dir}{character, directory path.}
 
-\item{data}{character or \code{NULL}, see details.}
+\item{data}{character or \code{NULL},
+\itemize{
+\item note: if \code{NULL}, \code{eia_data()} will only return column headings; must input a character value
+as provided by \code{eia_metadata()} for data to be returned.
+\item see details.
+}}
 
 \item{facets}{character list or \code{NULL}, see details.}
 

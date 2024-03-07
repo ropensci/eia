@@ -9,3 +9,20 @@
 This package provides API access to data from the US
 \href{https://www.eia.gov/}{Energy Information Administration} (EIA).
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://docs.ropensci.org/eia/ (website) https://github.com/ropensci/eia}
+  \item Report bugs at \url{https://github.com/ropensci/eia/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Matthew Hoff \email{matthew.g.hoff@gmail.com}
+
+Authors:
+\itemize{
+  \item Matthew Leonawicz (\href{https://orcid.org/0000-0001-9452-2771}{ORCID})
+}
+
+}
