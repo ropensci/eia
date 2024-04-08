@@ -20,7 +20,6 @@ reference:
 - title: Other functions
   contents:
   - eia_clear_cache
-  - eia_report
   - eiadate
 
 navbar:

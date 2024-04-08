@@ -1,6 +1,6 @@
 Package: eia
 Title: API Wrapper for 'US Energy Information Administration' Open Data
-Version: 0.4.1
+Version: 0.4.2
 Authors@R: 
     c(person(
         given = "Matthew",
@@ -28,10 +28,8 @@ Imports:
     tibble,
     httr,
     jsonlite,
-    purrr,
     memoise,
-    lubridate,
-    readxl
+    lubridate
 Suggests: 
     testthat (>= 3.0.0),
     knitr,

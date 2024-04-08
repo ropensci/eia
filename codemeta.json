@@ -8,13 +8,13 @@
   "codeRepository": "https://github.com/ropensci/eia",
   "issueTracker": "https://github.com/ropensci/eia/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.3.1 (2023-06-16)",
+  "runtimePlatform": "R version 4.3.1 (2023-06-16 ucrt)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -181,18 +181,6 @@
     },
     "4": {
       "@type": "SoftwareApplication",
-      "identifier": "purrr",
-      "name": "purrr",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=purrr"
-    },
-    "5": {
-      "@type": "SoftwareApplication",
       "identifier": "memoise",
       "name": "memoise",
       "provider": {
@@ -203,7 +191,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=memoise"
     },
-    "6": {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "lubridate",
       "name": "lubridate",
@@ -215,19 +203,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=lubridate"
     },
-    "7": {
-      "@type": "SoftwareApplication",
-      "identifier": "readxl",
-      "name": "readxl",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=readxl"
-    },
     "SystemRequirements": null
   },
-  "fileSize": "202.642KB"
+  "fileSize": "205.522KB"
 }

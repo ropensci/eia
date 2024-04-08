@@ -1,3 +1,9 @@
+# eia 0.4.2
+
+* Removed one-off, non-API, report download function that no longer works but also do not intend to support within the scope of the package.
+* Removed related, no longer needed package imports.
+* Updated documentation.
+
 # eia 0.4.1
 
 * Re-factor of `eia_data()`:

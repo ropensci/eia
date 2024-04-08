@@ -1,6 +1,6 @@
 ## Test environments
 
-* Local Windows 10 install: R 4.3.1
+* Local Windows 10 install: R 4.3.3
 * Win Builder: R-devel, R-release
 * Windows latest: R-release
 * Ubuntu latest: R-devel, R-release, R-oldrel
@@ -8,7 +8,7 @@
 
 ## Update release
 
-* Code updates and additional unit testing.
+* Fix failing functionality as requested by CRAN.
 
 ## R CMD check results
 
