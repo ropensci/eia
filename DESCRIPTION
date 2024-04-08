@@ -28,10 +28,8 @@ Imports:
     tibble,
     httr,
     jsonlite,
-    purrr,
     memoise,
-    lubridate,
-    readxl
+    lubridate
 Suggests: 
     testthat (>= 3.0.0),
     knitr,

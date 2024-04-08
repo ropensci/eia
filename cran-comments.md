@@ -8,7 +8,7 @@
 
 ## Update release
 
-* Code updates and additional unit testing.
+* Fix failing functionality as requested by CRAN.
 
 ## R CMD check results
 
