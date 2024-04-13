@@ -12,7 +12,8 @@ This package provides API access to data from the US
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://docs.ropensci.org/eia/ (website) https://github.com/ropensci/eia}
+  \item \url{https://docs.ropensci.org/eia/}
+  \item \url{https://github.com/ropensci/eia}
   \item Report bugs at \url{https://github.com/ropensci/eia/issues}
 }
 
