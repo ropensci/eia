@@ -81,7 +81,7 @@ eia_data <- function(dir,
     warning(wrngs, "\nTotal available rows: ", r$response$total, call. = FALSE)
   } else {
     if (r$response$total == 0)
-      stop("No data available - check temporal inputs.", call. = FALSE)
+      stop("No data available.", call. = FALSE)
     if (nrow(r$response$data) != r$response$total)
       warning("Rows returned: ", nrow(r$response$data), "\nRows available: ", r$response$total, call. = FALSE)
   }
