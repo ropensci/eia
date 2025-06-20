@@ -133,7 +133,9 @@ eia_data <- function(dir,
   if(!is.null(facets))
     paste0(unlist(lapply(1:length(facets),
       function(x){
-        paste0("&facets[", names(facets[x]), "][]=", unlist(facets[x]), collapse = "")
+        fct_names <- names(facets[x])
+        fct_unlst <- gsub(' ', '%20', unlist(facets[x]))
+        paste0("&facets[", fct_names, "][]=", fct_unlst, collapse = "")
       })), collapse = "")
 }
 
