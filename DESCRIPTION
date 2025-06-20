@@ -1,6 +1,6 @@
 Package: eia
 Title: API Wrapper for U.S. Energy Information Administration ('EIA') Open Data
-Version: 0.4.2
+Version: 0.4.3
 Authors@R: 
     c(person(
         given = "Matthew",

@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/ropensci/eia",
   "issueTracker": "https://github.com/ropensci/eia/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -205,5 +205,5 @@
     },
     "SystemRequirements": null
   },
-  "fileSize": "202.885KB"
+  "fileSize": "203.159KB"
 }

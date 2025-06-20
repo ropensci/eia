@@ -8,7 +8,8 @@
 
 ## Update release
 
-* Fix failing functionality as requested by CRAN.
+* Fixed bug relating to spaces in provided facet ids - replaced with '%20' for valid URL request.
+* Fixed bug relating to changes in the EIA API that now wraps all bad requests in an initial HTTP 500 error code which returns a JSON body containing the true HTTP error code.
 
 ## R CMD check results
 

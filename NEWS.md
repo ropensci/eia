@@ -1,3 +1,8 @@
+# eia 0.4.3
+
+* Fixed bug relating to spaces in provided facet ids - replaced with '%20' for valid URL request.
+* Fixed bug relating to changes in the EIA API that now wraps all bad requests in an initial HTTP 500 error code which returns a JSON body containing the true HTTP error code.
+
 # eia 0.4.2
 
 * Removed one-off, non-API, report download function that no longer works but also do not intend to support within the scope of the package.
