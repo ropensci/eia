@@ -18,10 +18,9 @@ NULL
 #' @importFrom httr GET content
 .eia_get <- function(url){
   .antidos_before("eia")
-  r <- httr::RETRY(verb = "GET", url = url, .session_eia_env$ua)
+  r <- httr::RETRY(verb = "GET", url = url, config = .session_eia_env$ua, terminate_on = 500)
   .antidos_after("eia")
-  if(r$status_code == "404") stop("Page not found", call. = FALSE)
-  if(r$status_code == "400"){
+  if(r$status_code %in% c("400", "404", "500")) {
     x <- httr::content(r, as = "text", encoding = "UTF-8")
     x <- jsonlite::fromJSON(x)
     stop(x$error, call. = FALSE)

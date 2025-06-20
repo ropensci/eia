@@ -49,7 +49,7 @@ test_that("data queries return data as expected", {
   )
 
   # Test no data
-  expect_error(suppressMessages(eia_data("electricity/zzz")), "Page not found")
+  expect_error(suppressMessages(eia_data("electricity/zzz")), "Not found.")
 
   options(antidos = 1)
 
@@ -93,7 +93,7 @@ test_that("'start' and 'end' error/warning messages return as expected", {
   expect_error(eia_data("electricity/retail-sales", freq = "annual", start = 2020), err)
   expect_error(eia_data("electricity/retail-sales", freq = "annual", start = 2020, check_metadata = TRUE), err)
   expect_no_error(eia_data("electricity/retail-sales", freq = "annual", start = "2020"))
-  err <- "No data available - check temporal inputs."
+  err <- "No data available."
   expect_error(eia_data("electricity/retail-sales", freq = "annual", start = "2099"), err)
   err <- "'start' is beyond the end of available data."
   expect_error(eia_data("electricity/retail-sales", freq = "annual", start = "2099", check_metadata = TRUE), err)
@@ -120,7 +120,7 @@ test_that("'start' and 'end' error/warning messages return as expected", {
   expect_error(eia_data("electricity/retail-sales", freq = "annual", end = 2001), err)
   expect_error(eia_data("electricity/retail-sales", freq = "annual", end = 2001, check_metadata = TRUE), err)
   expect_no_error(eia_data("electricity/retail-sales", freq = "annual", end = "2001"))
-  err <- "No data available - check temporal inputs."
+  err <- "No data available."
   expect_error(eia_data("electricity/retail-sales", freq = "annual", end = "1980"), err)
   err <- "'end' is before the start of available data."
   expect_error(eia_data("electricity/retail-sales", freq = "annual", end = "1980", check_metadata = TRUE), err)
@@ -149,7 +149,7 @@ test_that("'start' and 'end' error/warning messages return as expected", {
   expect_equal(nrow(xw1), 53)
   expect_equal(ncol(xw1), 11)
   xd1 <- eia_data("petroleum/pri/spt", "value", list(series = "RBRTE"), "daily", "2021", "2022")
-  expect_equal(nrow(xd1), 256)
+  expect_equal(nrow(xd1), 253)
   expect_equal(ncol(xd1), 11)
   xa2 <- eia_data("petroleum/pri/spt", "value", list(series = "RBRTE"), "annual", "2021-01-01", "2022-01-01")
   expect_equal(nrow(xa2), 1)
@@ -164,7 +164,7 @@ test_that("'start' and 'end' error/warning messages return as expected", {
   expect_equal(ncol(xw2), 11)
   expect_equal(dim(xw1), dim(xw2))
   xd2 <- eia_data("petroleum/pri/spt", "value", list(series = "RBRTE"), "daily", "2021-01-01", "2022-01-01")
-  expect_equal(nrow(xd2), 256)
+  expect_equal(nrow(xd2), 253)
   expect_equal(ncol(xd2), 11)
   expect_equal(dim(xd2), dim(xd2))
 
